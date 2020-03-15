@@ -60,30 +60,6 @@ export function chapter_save() {
     const arr = chapter_list$.value
     return fs_write('json', [book.src, 'chapter'], arr)
 }
-/** 更新章名 */
-export function chapter_rename(chapter: chapter, name: string): Promise<boolean> {
-    if (ENV === 'electron') {
-        return new Promise<boolean>((res) => {
-            // const b = ipc().sendSync('chapter-rename', chapter.src, name)
-            // res(b)
-        })
-    }
-    return new Promise((res) => {
-        res(false)
-    })
-}
-/** 更新节名 */
-export function node_rename(node: node, name: string): Promise<boolean> {
-    if (ENV === 'electron') {
-        return new Promise<boolean>((res) => {
-            const b = ipc().sendSync('node-rename', node.id, name)
-            res(b)
-        })
-    }
-    return new Promise((res) => {
-        res(false)
-    })
-}
 
 export function of_chapter(shard: Object): chapter {
     const re = {

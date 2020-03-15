@@ -2,6 +2,7 @@ import { ipcMain, dialog } from 'electron'
 import path from 'path'
 import fs from 'fs'
 import { reply, id32 } from './util'
+import { get_chapters } from '@/func/fs'
 
 export function watch_book() {
     /** 根据路径列表读取书的信息 */
@@ -113,8 +114,7 @@ function book_search_text(e: Electron.IpcMainEvent, book_src: string, match_temp
         return
     }
     try {
-        const jsont = fs.readFileSync(path.join(book_src, 'chapter.json'), 'utf-8')
-        const cps: any[] = JSON.parse(jsont)
+        const cps = get_chapters(book_src)
         const re: {
             chapter: any
             matchs: {

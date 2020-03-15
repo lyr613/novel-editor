@@ -1,7 +1,6 @@
 import { watch_npc } from './npc'
 import { watch_book } from './book'
 import { watch_node } from './node'
-import { watch_chapter_node } from './chapter-node'
 import { watch_hotkey } from './hot-key'
 import { watch_outline } from './outline'
 import { watch_incident } from './incident'
@@ -12,7 +11,6 @@ import { watch_git } from './git'
 
 export function watch(win: Electron.BrowserWindow) {
     watch_book()
-    watch_chapter_node()
     watch_npc()
     watch_node()
     watch_outline()

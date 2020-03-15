@@ -5,6 +5,7 @@ import fs from 'fs'
 import { reply, id32 } from './util'
 import cp from 'child_process'
 import { ENV } from '@/const'
+import { get_chapters } from '@/func/fs'
 
 export function watch_zip() {
     // 导入文件内容
@@ -100,8 +101,7 @@ function import_txt(e: Electron.IpcMainEvent, file_src: string, dir_src: string,
  */
 function export_txt(e: Electron.IpcMainEvent, book_src: string, export_src: string) {
     try {
-        const index_txt = fs.readFileSync(path.join(book_src, 'chapter.json'), 'utf-8')
-        const cps: any[] = JSON.parse(index_txt)
+        const cps = get_chapters(book_src)
         let export_txt_src = path.join(export_src, path.basename(book_src))
         let i = 0
         while (fs.existsSync(export_txt_src + i + '.txt')) {
