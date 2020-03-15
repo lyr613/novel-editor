@@ -3,14 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import {
-    npc_focu$,
-    create_npc,
-    chapter_list$,
-    node_focu$,
-    node_focu_buffer$,
-    find_node_text_from_fs_auto,
-} from '@/source'
+import { npc_focu$, create_npc, chapter_list$, node_focu$, node_focu_buffer$ } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
 import ThemeButton from '@/component/theme-button'
@@ -56,9 +49,6 @@ function TimeLine() {
                                             }
                                             node_focu_buffer$.next(new_buffer)
                                             next_router('edit')
-                                            setTimeout(() => {
-                                                find_node_text_from_fs_auto()
-                                            }, 1000)
                                             break
                                         }
                                     }

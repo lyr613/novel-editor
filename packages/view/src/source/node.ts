@@ -35,7 +35,6 @@ export function focu_node_then_edit(id: string) {
         node_buffer_add_by_id(id, nodes)
         node_focu$.next(fi)
         next_router('edit')
-        find_node_text_from_fs_auto()
     }
 }
 
@@ -73,7 +72,7 @@ book_focu$.pipe(debounceTime(0)).subscribe(() => {
 })
 
 const node_text_from_fs_finder$ = node_focu$.pipe(
-    filter((v) => !v),
+    filter((v) => !!v),
     map((node) => {
         const booksrc = book_focu$.value?.src
         if (booksrc) {

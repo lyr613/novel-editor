@@ -64,7 +64,6 @@ function Head() {
                     key={nd.id}
                     onClick={() => {
                         node_focu$.next(nd)
-                        find_node_text_from_fs_auto()
                     }}
                 >
                     <span className={s.name}>{nd.name}</span>
@@ -79,7 +78,6 @@ function Head() {
                             if (nd.id === focu?.id) {
                                 const ni = Math.max(0, i - 1)
                                 node_focu$.next(arr[ni] || null)
-                                find_node_text_from_fs_auto()
                             }
                         }}
                     ></Icon>
@@ -142,11 +140,14 @@ function Write() {
                     })
                     node_id_text_map$.next(m)
                 }
+            } else {
+                alert('当前没有选中节, 无法保存编辑内容')
             }
         })
         // 切换节时
         const ob_change_node = node_focu$.subscribe(() => {
             editer.revealLine(0) // 滚动到第一行
+            find_node_text_from_fs_auto() // 更新文本内容
         })
         // 自动大小
         const ob = editer_setting$

@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { debounceTime, merge } from 'rxjs/operators'
-import { node_focu$, chapter_list$, node_focu_buffer$, find_node_text_from_fs_auto } from '@/source'
+import { node_focu$, chapter_list$, node_focu_buffer$ } from '@/source'
 
 /** 进入禅模式 */
 export const zen$ = new BehaviorSubject(false)
@@ -66,7 +66,6 @@ etprev$.pipe(merge(etnext$), debounceTime(300)).subscribe(() => {
     if (!node) {
         return
     }
-    find_node_text_from_fs_auto()
 
     const arr = node_focu_buffer$.value
     if (!arr.find((v) => v.id === node.id)) {

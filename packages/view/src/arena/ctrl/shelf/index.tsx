@@ -201,6 +201,7 @@ function NewOne() {
                             p.shelf.book_list.unshift(re.src)
                         }
                         editer_setting$.next(p)
+                        load_books_auto()
                     }
                 })
             }}
