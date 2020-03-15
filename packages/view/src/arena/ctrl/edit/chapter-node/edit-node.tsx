@@ -23,8 +23,8 @@ import {
 	of_node,
 	fs_write,
 	chapter_save,
-	chapter_list_find$,
 	node_focu$,
+    find_chapter_list_auto,
 } from '@/source'
 import { map } from 'rxjs/operators'
 
@@ -190,8 +190,8 @@ export function EditNode() {
 						const cfi = chapter_list$.value.findIndex(v => v.id === cp_focu.id)
 						chapter_list$.value.splice(cfi, 1, cp_focu)
 
-						await chapter_save()
-						chapter_list_find$.next()
+                        await chapter_save()
+                        find_chapter_list_auto()
 						show_node_edit$.next(false)
 					}}
 				>

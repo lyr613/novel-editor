@@ -175,6 +175,9 @@ function _check_type(ts: string[], t: string) {
  * @param type 扩展名
  */
 function _compose_src(srcs: string[], type: string): string {
+    if (srcs.find((v) => !v)) {
+        throw '有空路径'
+    }
     const la = srcs.length - 1
     const reg = new RegExp(`\\.${type}$`)
     if (!reg.test(srcs[la])) {

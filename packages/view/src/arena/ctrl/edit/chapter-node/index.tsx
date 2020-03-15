@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, ActionButton } from 'office-ui-fabric-react'
 import {
-	chapter_list_find$,
 	chapter_list$,
 	node_focu$,
 	chapter_focu$,
@@ -14,6 +13,7 @@ import {
 	book_focu$,
 	node_text_from_editer$,
 	node_text_from_fs$,
+    find_chapter_list_auto,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, filter, debounceTime } from 'rxjs/operators'
@@ -76,7 +76,7 @@ function Head() {
 				iconName="SyncOccurence"
 				title="刷新"
 				onClick={() => {
-					chapter_list_find$.next()
+                    find_chapter_list_auto()
 				}}
 			></Icon>
 		</div>

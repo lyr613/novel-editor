@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { book_focu$, focu_node_then_edit, chapter_list_find$, get_now_node_list, chapter_list$ } from '@/source'
+import { book_focu$, focu_node_then_edit,   get_now_node_list, chapter_list$, find_chapter_list_auto } from '@/source'
 import { next_router } from '@/function/router'
 import { TextField } from 'office-ui-fabric-react'
 import IconButton from '@/component/icon-button'
@@ -20,7 +20,7 @@ const node_line$ = new BehaviorSubject<(node & { did_match: boolean })[]>([])
 /** 搜索 */
 export default function Search() {
 	useEffect(() => {
-		chapter_list_find$.next()
+        find_chapter_list_auto()
 	}, [])
 	if (!book_focu$.value) {
 		next_router('shelf')

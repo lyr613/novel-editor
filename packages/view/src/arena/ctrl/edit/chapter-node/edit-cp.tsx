@@ -5,7 +5,7 @@ import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dia
 import { PrimaryButton, DefaultButton, ActionButton } from 'office-ui-fabric-react/lib/Button'
 import { TextField, ChoiceGroup, IChoiceGroupOption, Dropdown, IDropdownOption } from 'office-ui-fabric-react'
 import { Icon, Slider, Label } from 'office-ui-fabric-react'
-import { chapter_list_find$, chapter_list$, book_focu$, of_chapter, chapter_focu$, chapter_save } from '@/source'
+import {   chapter_list$, book_focu$, of_chapter, chapter_focu$, chapter_save, find_chapter_list_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { id32 } from '@/function/id32'
 import { fs_write, mk_dir, fs_rename } from '@/source/fs-common'
@@ -119,7 +119,7 @@ export function EditChapter() {
 				onChange={(_, opt) => {
 					const k = opt?.key ?? 'last'
 					if (k === 'insert') {
-						chapter_list_find$.next()
+                        find_chapter_list_auto()
 					}
 					set_posi(k as any)
 				}}
@@ -161,8 +161,7 @@ export function EditChapter() {
 							alert('修改章节配置文件失败')
 							return
 						}
-
-						chapter_list_find$.next()
+                        find_chapter_list_auto()
 						mk_dir([book.src, 'chapters'])
 						console.log('修改章成功')
 						hidd_cp$.next(true)
@@ -218,7 +217,7 @@ export function DeleteChapter() {
 						focu.hidden = true
 						const opt_re = await chapter_save()
 						if (opt_re) {
-							chapter_list_find$.next()
+                            find_chapter_list_auto()
 							console.log('删除成功')
 						} else {
 							alert('删除失败')

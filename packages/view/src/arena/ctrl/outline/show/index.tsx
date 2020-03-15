@@ -4,12 +4,12 @@ import s from './s.module.scss'
 import {
 	book_focu$,
 	chapter_list$,
-	chapter_list_find$,
 	npc_find$,
 	npc_map$,
 	chapter_map$,
 	incident_map$,
 	incident_find$,
+    find_chapter_list_auto,
 } from '@/source'
 import { next_router } from '@/function/router'
 import { useObservable } from 'rxjs-hooks'
@@ -27,8 +27,8 @@ export default function Show() {
 	const incident_map = useObservable(() => incident_map$)
 	useEffect(() => {
 		npc_find$.next()
-		incident_find$.next()
-		chapter_list_find$.next()
+        incident_find$.next()
+        find_chapter_list_auto()
 		outline_find$.next()
 	}, [])
 	if (!book_focu$.value?.src) {

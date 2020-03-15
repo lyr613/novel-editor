@@ -1,5 +1,5 @@
 import { BehaviorSubject, Subject, of } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
+import { map, switchMap, take } from 'rxjs/operators'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import { id32 } from '@/function/id32'
@@ -19,6 +19,7 @@ function find_book(srcs: string[]): book[] {
 export function load_books_auto() {
     editer_setting$
         .pipe(
+            take(1),
             map((v) => v.shelf.book_list ?? []),
             map(find_book),
         )
