@@ -1,6 +1,8 @@
 {
     "name": "writer-electron",
     "version": "0.0.3",
+    "author": "秋无衣",
+    "description": "小说编辑器",
     "main": "build/index.js",
     "scripts": {
         "watch": " npx webpack --mode development --watch ",
@@ -23,7 +25,7 @@
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.10"
     },
-    "repository": "https://github.com/lyr613/writer",
+    "repository": "https://github.com/lyr613/novel-editer",
     "publish": [
         "github"
     ],

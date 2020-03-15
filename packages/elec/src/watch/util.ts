@@ -1,4 +1,3 @@
-import { ipcMain } from 'electron'
 import { v4 as uuid } from 'uuid'
 
 /**
