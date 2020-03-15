@@ -9,9 +9,10 @@ import { next_router } from '@/function/router'
 /** 聚焦的节 */
 export const node_focu$ = new BehaviorSubject<null | node>(null)
 
+/** 编辑页顶部的节标签 */
 export const node_focu_buffer$ = new BehaviorSubject<node[]>([])
 
-/** 根据id向buffer添加一个 */
+/** 根据id向编辑页buffer添加一个 */
 export function node_buffer_add_by_id(id: string, node_list?: node[]) {
     const arr = node_list || get_now_node_list()
     const fi = arr.find((v) => v.id === id)
@@ -46,7 +47,7 @@ const node_id_text_map_default = new Map<
     string,
     { book_src: string; text: string; node_id: string; node_name: string }
 >()
-/** 从编辑器传来的 node_id: text的映射表 */
+/** 从编辑器传来的 node_id: text的映射表, 用于保存 */
 export const node_id_text_map$ = new BehaviorSubject(node_id_text_map_default)
 /** 自动保存 */
 node_id_text_map$.pipe(debounceTime(2000)).subscribe((m) => {
