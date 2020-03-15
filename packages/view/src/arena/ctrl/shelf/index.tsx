@@ -159,9 +159,12 @@ function BookList() {
                             </DefaultButton>
                         </div>
                     </div>
-                    <div className={s.cover}>
-                        {book.cover ? <img className={s.img} src={book.cover} alt="" /> : null}
-                    </div>
+                    <div
+                        className={s.cover}
+                        style={{
+                            backgroundImage: `url(${book.cover})`,
+                        }}
+                    ></div>
                 </div>
             ))}
         </div>

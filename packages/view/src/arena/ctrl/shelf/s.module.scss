@@ -1,54 +1,55 @@
 .Shelf {
-	min-height: 100vh;
-	background-color: var(--CLRl7);
-	font-size: 0;
-	color: var(--CLRt2);
+    min-height: 100vh;
+    background-color: var(--CLRl7);
+    font-size: 0;
+    color: var(--CLRt2);
 }
 .newone {
-	margin: 10px 10px 0;
+    margin: 10px 10px 0;
 }
 
 .BookList {
-	.book {
-		margin: 10px;
-		position: relative;
-		overflow: hidden;
-		box-sizing: border-box;
-		padding: 10px;
-		background-color: var(--CLRl6);
-		.left {
-			display: inline-block;
-			vertical-align: top;
-			.line {
-				display: flex;
-				width: 100%;
-				font-size: 16px;
-				align-items: center;
-				color: var(--CLRt2);
-				.label {
-					&::after {
-						content: ':';
-						padding-right: 10px;
-					}
-				}
-			}
-			.booksrc {
-				cursor: pointer;
-				&:hover {
-					color: var(--CLRl1);
-				}
-			}
-		}
+    .book {
+        margin: 10px;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+        padding: 10px;
+        background-color: var(--CLRl6);
+        .left {
+            display: inline-block;
+            vertical-align: top;
+            .line {
+                display: flex;
+                width: 100%;
+                font-size: 16px;
+                align-items: center;
+                color: var(--CLRt2);
+                .label {
+                    &::after {
+                        content: ':';
+                        padding-right: 10px;
+                    }
+                }
+            }
+            .booksrc {
+                cursor: pointer;
+                &:hover {
+                    color: var(--CLRl1);
+                }
+            }
+        }
 
-		.cover {
-			float: right;
-			vertical-align: top;
-			width: 120px;
-			height: 160px;
-			background-color: var(--CLRl5);
-			.img {
-				height: 100%;
-			}
-		}
-	}
+        .cover {
+            float: right;
+            vertical-align: top;
+            width: 120px;
+            height: 160px;
+            background-color: var(--CLRl5);
+            text-align: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
 }
