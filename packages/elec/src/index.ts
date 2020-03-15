@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import { create_option, did_create } from '@/create'
-import { watch } from './watch'
+import { set_watch } from './watch'
 import { update_check } from './update'
 
 console.log(process.env.NODE_ENV)
@@ -27,7 +27,7 @@ app.on('activate', function() {
 function createWindow() {
     main_window = new BrowserWindow(create_option())
 
-    watch(main_window)
+    set_watch(main_window)
     did_create(main_window)
 
     main_window.on('closed', function() {

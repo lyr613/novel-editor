@@ -9,7 +9,7 @@ import { watch_zip } from './zip'
 import { watch_book_common } from './book-common'
 import { watch_git } from './git'
 
-export function watch(win: Electron.BrowserWindow) {
+export function set_watch(win: Electron.BrowserWindow) {
     watch_book()
     watch_npc()
     watch_node()

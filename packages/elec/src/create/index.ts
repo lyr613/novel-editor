@@ -1,5 +1,4 @@
 import path from 'path'
-import fs from 'fs'
 import url from 'url'
 import Electron, { globalShortcut, MenuItem, Menu, dialog } from 'electron'
 import { ENV } from '@/const'
@@ -23,12 +22,12 @@ export function create_option(): Electron.BrowserWindowConstructorOptions {
 }
 
 /**
- * 创建结束
+ * 创建结束后
+ * 窗口最大化, 设置菜单, 加载页面
  */
 export function did_create(win: Electron.BrowserWindow) {
     win.maximize()
     set_menu(win)
-    win.webContents.openDevTools()
     load_page(win)
 }
 
@@ -100,6 +99,3 @@ function load_page(win: Electron.BrowserWindow) {
         )
     }
 }
-
-/** 预置 */
-function preset() {}
