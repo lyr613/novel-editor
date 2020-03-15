@@ -1,0 +1,33 @@
+.Edit {
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	.use {
+		display: flex;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		box-sizing: border-box;
+		width: 50%;
+		height: 80%;
+		background-color: transparent;
+		font-size: 16px;
+		align-items: center;
+		justify-content: center;
+		// border-color: transparent;
+		// outline-color: transparent;
+		// resize: none;
+	}
+}
+
+.SlineErect {
+	position: absolute;
+	left: 0;
+	top: 0;
+	transform: translateX(-50%);
+	width: 10px;
+	height: 100%;
+	background-color: #fff;
+	cursor: ew-resize;
+}

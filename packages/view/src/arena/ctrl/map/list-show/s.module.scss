@@ -1,0 +1,38 @@
+.ListShow {
+	grid-area: e;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background-color: var(--CLRl6);
+	.one {
+		margin: 0 auto;
+		overflow: hidden;
+		height: 240px;
+		// background-color: var(--CLRl4);
+		text-align: center;
+		opacity: 0.6;
+		cursor: pointer;
+		&:hover {
+			opacity: 1;
+		}
+
+		.cns {
+			margin-top: 10px;
+			width: 200px;
+			height: 200px;
+			background-color: #fff;
+		}
+		.name {
+			margin: 0 auto;
+			width: 200px;
+			height: 30px;
+			line-height: 30px;
+			background-color: var(--CLRl5);
+			font-size: 14px;
+			color: var(--CLRt2);
+		}
+	}
+	.focu {
+		opacity: 1;
+	}
+}

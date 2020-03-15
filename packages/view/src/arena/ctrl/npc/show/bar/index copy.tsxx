@@ -1,0 +1,98 @@
+// eslint-disable-next-line
+import React, { useState, useEffect } from 'react'
+import s from './s.module.scss'
+import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
+import { next_router } from '@/function/router'
+import { npc_focu$, create_npc } from '@/source'
+import { format_date } from '@/util'
+import { useObservable } from 'rxjs-hooks'
+import { filter$ } from '../subj'
+import { map } from 'rxjs/operators'
+import Slider from '@/component/slider'
+import { theme$, theme_colors } from '@/subject'
+import ThemeButton from '@/component/theme-button'
+import { shallowCopy } from '@/rx/shallow-copy'
+
+/**
+ * 控制栏
+ */
+export default function Bar() {
+	return (
+		<div className={s.Bar}>
+			<TimeLine />
+			<Action />
+		</div>
+	)
+}
+
+/** 顶部时间轴 */
+function TimeLine() {
+	const filter = useObservable(() => filter$.pipe(shallowCopy()))
+	if (!filter) {
+		return null
+	}
+	return (
+		<div className={s.TimeLine}>
+			<Slider
+				label=""
+				value={filter.active}
+				onChanged={(_, n2) => {
+					filter.active[0] = n2[0]
+					filter.active[1] = n2[1]
+					filter$.next(filter)
+				}}
+				onChange={n2 => {
+					filter.active[0] = n2[0]
+					filter.active[1] = n2[1]
+					filter$.next(filter)
+				}}
+				min={-40000}
+				max={40000}
+				valueFormat1={format_date}
+				valueFormat2={format_date}
+				styles={{
+					root: {
+						margin: '5px 0',
+					},
+					label_miner: {
+						width: '100px',
+						textAlign: 'right',
+					},
+					label_maxer: {
+						width: '100px',
+					},
+				}}
+			/>
+		</div>
+	)
+}
+function Action() {
+	const fil = useObservable(() => filter$.pipe(shallowCopy()))
+	if (!fil) {
+		return null
+	}
+	return (
+		<div className={s.Action}>
+			<ThemeButton
+				onClick={() => {
+					npc_focu$.next(create_npc())
+					next_router('npc', 'edit')
+				}}
+			>
+				新角色
+			</ThemeButton>
+			<TextField
+				placeholder="搜索"
+				value={fil.name}
+				onChange={(_, str) => {
+					fil.name = str || ''
+					filter$.next(fil)
+				}}
+				onFocus={() => {
+					fil.name = ''
+					filter$.next(fil)
+				}}
+			></TextField>
+		</div>
+	)
+}

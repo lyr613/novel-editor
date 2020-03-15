@@ -1,0 +1,10 @@
+node_modules
+
+build/
+build-final/
+build-page/
+
+yarn.lock
+.vscode
+
+publish.js

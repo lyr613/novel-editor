@@ -1,0 +1,12 @@
+#app {
+	display: flex;
+	background-color: var(--CLRl8);
+}
+
+.no-scroll::-webkit-scrollbar {
+	display: none;
+}
+
+.canclk {
+	cursor: pointer;
+}

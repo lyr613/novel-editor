@@ -1,0 +1,36 @@
+.Form {
+	.section {
+		.label {
+			margin: 0;
+			box-sizing: border-box;
+			height: 40px;
+			line-height: 40px;
+			padding-left: 10px;
+			background-color: var(--CLRl7);
+			font-size: 16px;
+		}
+		.ctrl {
+			margin: 0 10px;
+			overflow: hidden;
+			box-sizing: border-box;
+			padding: 0 10px;
+			user-select: none;
+			// background-color: var(--CLRl7);
+		}
+		.row {
+			margin: 10px 0;
+		}
+		.flexrow {
+			display: flex;
+			margin: 10px 0;
+
+			align-items: flex-end;
+		}
+	}
+	.input {
+		width: 400px;
+	}
+	.namelabel {
+		margin-left: 10px;
+	}
+}

@@ -1,0 +1,54 @@
+{
+    "name": "qv-writer",
+    "private": false,
+    "keywords": [
+        "novel",
+        "fiction"
+    ],
+    "author": "秋无衣",
+    "license": "MIT",
+    "workspaces": [
+        "packages/*"
+    ],
+    "dependencies": {
+        "@types/fs-extra": "^8.1.0",
+        "@types/uuid": "^7.0.0",
+        "uuid": "^7.0.2"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^8.2.0",
+        "@commitlint/config-angular": "^8.2.0",
+        "@commitlint/config-conventional": "^8.2.0",
+        "husky": "^3.1.0",
+        "lint-staged": "^9.5.0",
+        "prettier": "^1.19.1"
+    },
+    "scripts": {
+        "install-nod_emodules": " yarn -W ",
+        "build": " node ./scripts/build.js "
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "packages/**/*.{js,jsx,json,ts,tsx,css,scss}": [
+            "prettier --write",
+            "git add"
+        ],
+        "*.{js,ts}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "prettier": {
+        "printWidth": 120,
+        "semi": false,
+        "tabWidth": 4,
+        "trailingComma": "all",
+        "singleQuote": true,
+        "arrowParens": "always"
+    }
+}

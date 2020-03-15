@@ -1,0 +1,70 @@
+.Edit {
+	user-select: none;
+	.header {
+		box-sizing: border-box;
+		padding-left: 10px;
+		height: 40px;
+		line-height: 40px;
+		font-size: 14px;
+		background-color: var(--CLRl6);
+		color: var(--CLRt2);
+	}
+	.btnbox {
+		margin: 10px;
+	}
+	.labelbox {
+		display: flex;
+		padding: 0 10px 10px;
+		.one {
+			padding: 3px 10px;
+		}
+		.hold {
+			color: var(--CLRl1) !important;
+
+			background-color: var(--CLRl7);
+		}
+	}
+	.iptbox {
+		display: flex;
+		margin: 0 10px 10px;
+		width: 420px;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		.ipt {
+			width: 200px;
+		}
+		.ipt2 {
+			margin-bottom: 10px;
+			width: 400px;
+		}
+	}
+}
+
+.Cells {
+	.labelbox {
+		display: block;
+	}
+}
+
+.Preview {
+	font-size: 16px;
+	.table {
+		margin: 10px;
+		border-collapse: collapse;
+		.td {
+			padding: 3px 5px;
+			border: 1px solid var(--CLRl3);
+			color: var(--CLRt2);
+		}
+		.hold {
+			color: var(--CLRl1);
+		}
+		.canclick {
+			cursor: pointer;
+		}
+	}
+}
+
+.iconbtn {
+	margin: 0 10px;
+}

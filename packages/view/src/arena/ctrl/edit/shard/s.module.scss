@@ -1,0 +1,27 @@
+.Shard {
+	display: flex;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	box-sizing: border-box;
+	width: 200px;
+	height: 30px;
+	padding-left: 10px;
+	background-color: var(--CLRl4);
+	white-space: nowrap;
+	font-size: 14px;
+	line-height: 30px;
+	color: var(--CLRt2);
+}
+
+.Sensitive {
+	padding-left: 10px;
+	.one {
+		padding: 0 0 0 10px;
+		cursor: pointer;
+		&:hover {
+			color: var(--CLRl1);
+		}
+	}
+}

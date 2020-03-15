@@ -1,0 +1,29 @@
+.Mapp {
+	display: grid;
+	width: 100%;
+	height: 100vh;
+	grid-template-columns: 220px auto;
+	grid-template-rows: 30px calc(100vh - 66px) 36px;
+	grid-template-areas:
+		'a b'
+		'e d'
+		'e c';
+	.a {
+		grid-area: a;
+	}
+	.b {
+		grid-area: b;
+		background-color: var(--CLRl7);
+	}
+	.c {
+		grid-area: c;
+		outline: 1px solid red;
+	}
+	.d {
+		grid-area: d;
+	}
+	.e {
+		grid-area: e;
+		background-color: var(--CLRl7);
+	}
+}

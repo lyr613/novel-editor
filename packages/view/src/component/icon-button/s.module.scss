@@ -1,0 +1,9 @@
+.IconButton {
+	cursor: pointer;
+	font-size: 14px;
+	color: var(--CLRt2);
+	user-select: none;
+	&:hover {
+		color: var(--CLRl1);
+	}
+}

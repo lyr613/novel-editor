@@ -1,0 +1,17 @@
+.Bar {
+	display: flex;
+	grid-area: b;
+	width: 100%;
+	height: 30px;
+	background-color: var(--CLRl6);
+	align-items: center;
+	.hline {
+		width: 2px;
+		height: 100%;
+		background-color: var(--CLRl7);
+	}
+	.label {
+		margin: 0 10px;
+		cursor: pointer;
+	}
+}

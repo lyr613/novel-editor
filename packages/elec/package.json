@@ -1,0 +1,82 @@
+{
+    "name": "writer-electron",
+    "version": "0.0.3",
+    "main": "build/index.js",
+    "scripts": {
+        "watch": " npx webpack --mode development --watch ",
+        "electron-start": " node ./scripts/electron-start.js ",
+        "electron-build": " npx webpack --mode production && npx electron-builder ",
+        "prerelease": " npx webpack --mode production ",
+        "release": " node ./scripts/publish.js "
+    },
+    "dependencies": {
+        "@types/fs-extra": "^8.1.0",
+        "typescript": "^3.8.3"
+    },
+    "devDependencies": {
+        "clean-webpack-plugin": "^3.0.0",
+        "directory-named-webpack-plugin": "4.0.1",
+        "electron": "7.1.7",
+        "electron-builder": "^21.2.0",
+        "electron-updater": "^4.2.0",
+        "ts-loader": "^6.2.1",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10"
+    },
+    "repository": "https://github.com/lyr613/writer",
+    "publish": [
+        "github"
+    ],
+    "build": {
+        "productName": "soft-writer",
+        "appId": "org.simulatedgreg.writer",
+        "directories": {
+            "output": "build-final"
+        },
+        "files": [
+            "./*",
+            "./build/**",
+            "./build-page/**",
+            "./process/**"
+        ],
+        "mac": {
+            "target": "dmg"
+        },
+        "dmg": {
+            "contents": [
+                {
+                    "x": 410,
+                    "y": 150,
+                    "type": "link",
+                    "path": "/Applications"
+                },
+                {
+                    "x": 130,
+                    "y": 150,
+                    "type": "file"
+                }
+            ]
+        },
+        "nsis": {
+            "oneClick": false,
+            "perMachine": false,
+            "allowElevation": true,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "runAfterFinish": true,
+            "shortcutName": "soft-writer"
+        },
+        "win": {
+            "artifactName": "${productName}_setup_${version}.${ext}",
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "ia32"
+                    ]
+                }
+            ]
+        }
+    }
+}

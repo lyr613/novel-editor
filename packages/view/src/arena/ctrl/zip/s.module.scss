@@ -1,0 +1,51 @@
+.Zip {
+	font-size: 15px;
+	white-space: pre;
+}
+
+.Bar {
+	margin: 10px;
+	.btn {
+		margin-right: 10px;
+	}
+}
+
+.Import {
+	margin: 0 10px;
+	height: 200px;
+	.section {
+		margin: 0 -10px;
+		box-sizing: border-box;
+		height: 40px;
+		line-height: 40px;
+		padding-left: 10px;
+		background-color: var(--CLRl6);
+		color: var(--CLRt2);
+	}
+	.line {
+		margin: 10px 0;
+	}
+	.Step {
+		font-size: 16px;
+	}
+	.input {
+		width: 400px;
+	}
+}
+
+.Export {
+	.section {
+		box-sizing: border-box;
+		height: 40px;
+		line-height: 40px;
+		padding-left: 10px;
+		background-color: var(--CLRl6);
+		color: var(--CLRt2);
+	}
+	.line {
+		margin: 10px;
+	}
+	.dropdown {
+		width: 400px;
+	}
+}

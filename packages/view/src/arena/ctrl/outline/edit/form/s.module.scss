@@ -1,0 +1,62 @@
+.section {
+	margin: 10px 10px;
+	box-sizing: border-box;
+	padding: 10px;
+	background-color: var(--CLRl8);
+	.title {
+		box-sizing: border-box;
+		height: 40px;
+		line-height: 40px;
+		padding-left: 20px;
+		background-color: rgb(243, 243, 243);
+		font-size: 16px;
+	}
+	.line {
+		margin: 0 20px;
+		height: 1px;
+		background-color: gray;
+	}
+}
+.commlabel {
+	display: block;
+	box-sizing: border-box;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 10px;
+	font-size: 14px;
+	background-color: var(--CLRl6);
+}
+
+.npc {
+	.selected {
+		margin: 20px;
+		.label {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 14px;
+		}
+	}
+	.will {
+		display: flex;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 20px;
+
+		.label {
+			margin-right: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 14px;
+			white-space: nowrap;
+		}
+		.names {
+			margin-left: 20px;
+		}
+	}
+	.btn {
+		margin: 0 10px 10px 0;
+	}
+}

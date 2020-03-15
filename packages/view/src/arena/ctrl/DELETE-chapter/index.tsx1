@@ -1,0 +1,153 @@
+// eslint-disable-next-line
+import React, { useState, useEffect } from 'react'
+import s from './s.module.scss'
+import { book_focu$, chapter_list$, node_focu$, chapter_list_find$, chapter_rename, node_rename } from '@/source'
+import { useObservable } from 'rxjs-hooks'
+import { electron } from '@/const'
+import { DefaultButton, TextField, ActionButton, Icon } from 'office-ui-fabric-react'
+import { next_router } from '@/function/router'
+const ipc = electron().ipcRenderer
+
+/** 章节 */
+export default function Chapter() {
+	const book = useObservable(() => book_focu$)
+	/** 章列表 */
+	const c_list = useObservable(() => chapter_list$, [])
+	useEffect(() => {
+		/** 进入时更新章节列表 */
+		chapter_list_find$.next()
+	}, [])
+	if (!book_focu$.value) {
+		next_router('shelf')
+		return null
+	}
+	if (!book || !book.path) {
+		return null
+	}
+	return (
+		<div className={s.Chapter}>
+			{c_list.map(chapter => (
+				<div className={s.item} key={chapter.id}>
+					{/* 每一章 */}
+					<div className={s.name}>
+						<TextField
+							label=""
+							underlined
+							defaultValue={chapter.name}
+							onKeyDown={e => {
+								e.persist()
+								if (e.keyCode !== 13) {
+									return
+								}
+								e.preventDefault()
+								const new_name = (e.target as any).value
+								chapter_rename(chapter, new_name).then(b => {
+									if (b) {
+										chapter_list_find$.next()
+									}
+								})
+							}}
+							styles={{
+								fieldGroup: {
+									backgroundColor: 'transparent',
+								},
+							}}
+						></TextField>
+					</div>
+					<div>
+						{chapter.children.map(node => (
+							<NodeShow node={node} key={node.id} />
+						))}
+					</div>
+					<div>
+						{/* <ActionButton
+							iconProps={{ iconName: 'Add' }}
+							onClick={() => {
+								const last = chapter.children[chapter.children.length - 1]
+								const order = last ? ((last.order / 10) | 0) * 10 + 10 : 10
+								const path = chapter.src
+								const re = ipc.sendSync('node-new', path, order)
+								if (re) {
+									chapter_list_find$.next()
+								}
+							}}
+						>
+							新一节
+						</ActionButton> */}
+					</div>
+				</div>
+			))}
+			<div>
+				<ActionButton
+					iconProps={{ iconName: 'Add' }}
+					onClick={() => {
+						const last = c_list[c_list.length - 1]
+						const src = book.path
+						const order = last ? ((last.order / 10) | 0) * 10 + 10 : 10
+						const re = ipc.sendSync('chapter-new', src, order)
+						if (re) {
+							chapter_list_find$.next()
+						}
+					}}
+				>
+					新一章
+				</ActionButton>
+			</div>
+		</div>
+	)
+}
+
+/**
+ * 展示一节, 鼠标悬浮可编辑
+ * @param p
+ */
+function NodeShow(p: { node: node }) {
+	const { node } = p
+	const [hovering, set_hovering] = useState(false)
+	return (
+		<div
+			className={s.node}
+			key={node.id}
+			onMouseEnter={() => {
+				set_hovering(true)
+			}}
+			onMouseLeave={() => {
+				set_hovering(false)
+			}}
+		>
+			{/* 每一节 */}
+			{hovering ? (
+				<>
+					<TextField
+						className={s.textfield}
+						defaultValue={node.name}
+						onKeyDown={e => {
+							e.persist()
+							if (e.keyCode !== 13) {
+								return
+							}
+							e.preventDefault()
+							const new_name = (e.target as any).value
+							node_rename(node, new_name).then(b => {
+								if (b) {
+									chapter_list_find$.next()
+								}
+							})
+						}}
+					></TextField>
+					<Icon
+						className={s.icon}
+						iconName="Edit"
+						title="编辑内容"
+						onClick={() => {
+							node_focu$.next(node)
+							next_router('edit')
+						}}
+					></Icon>
+				</>
+			) : (
+				<div className={s['node-name']}>{node.name}</div>
+			)}
+		</div>
+	)
+}

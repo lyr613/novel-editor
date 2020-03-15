@@ -1,0 +1,143 @@
+// eslint-disable-next-line
+import React, { useState, useEffect } from 'react'
+import s from './s.module.scss'
+import {
+	book_focu$,
+	chapter_list$,
+	chapter_list_find$,
+	npc_find$,
+	npc_map$,
+	chapter_map$,
+	incident_map$,
+	incident_find$,
+} from '@/source'
+import { next_router } from '@/function/router'
+import { useObservable } from 'rxjs-hooks'
+import { outline_find$, outline_focu$, outline_list$, outline_map$, of_outline } from '@/source'
+import { Icon, Label, ActionButton } from 'office-ui-fabric-react'
+
+/**
+ * 大纲
+ */
+export default function Show() {
+	const chapters = useObservable(() => chapter_list$)
+	const outlines = useObservable(() => outline_list$)
+	const outline_map = useObservable(() => outline_map$)
+	const npc_map = useObservable(() => npc_map$)
+	const chapter_map = useObservable(() => chapter_map$)
+	const incident_map = useObservable(() => incident_map$)
+	const [list, set_list] = useState<outline[]>([])
+	useEffect(() => {
+		npc_find$.next()
+		incident_find$.next()
+		chapter_list_find$.next()
+		outline_find$.next()
+	}, [])
+	useEffect(() => {
+		// 构造展示大纲列表
+		if (!chapters || !outlines || !npc_map || !outline_map) {
+			return
+		}
+		const ids = ['all'].concat(chapters.map(v => v.id))
+		const ots = ids.map(id => {
+			const ot = outline_map.get(id)
+			if (ot) {
+				return ot
+			} else {
+				return of_outline({ id })
+			}
+		})
+		set_list(ots)
+	}, [chapters, outlines, npc_map, outline_map])
+	if (!book_focu$.value?.path) {
+		next_router('shelf')
+		return null
+	}
+	if (!list.length || !chapter_map || !incident_map || !npc_map) {
+		return null
+	}
+
+	return (
+		<div className={s.Outline}>
+			{list.map(outline => (
+				<div className={s.one} key={outline.id}>
+					<div
+						className={s.title}
+						onClick={() => {
+							outline_focu$.next(outline)
+							next_router('outline', 'edit')
+						}}
+					>
+						<span>{chapter_map.get(outline.id)?.name ?? '总纲'}</span>
+						<Icon className={s.toedit} iconName="Edit"></Icon>
+					</div>
+					<div className={s.text}>{map_text(outline.text)}</div>
+					<div className={s.line}></div>
+					<div className={s.incident}>
+						<span
+							style={{
+								whiteSpace: 'nowrap',
+							}}
+						>
+							相关事件:
+						</span>
+						<div>
+							{outline.incident_ids
+								.map(id => incident_map.get(id)!)
+								.filter(v => !!v)
+								.map(incident => (
+									<ActionButton key={incident.id}>{incident.label}</ActionButton>
+								))}
+						</div>
+					</div>
+					<div className={s.line}></div>
+					<div className={s.npc}>
+						<span
+							style={{
+								whiteSpace: 'nowrap',
+							}}
+						>
+							相关角色:
+						</span>
+						<div className={s.npcbox}>
+							<Npcs incident_ids={outline.incident_ids} incident_map={incident_map} npc_map={npc_map} />
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+	)
+}
+interface p_npc {
+	incident_ids: string[]
+	incident_map: Map<string, incident>
+	npc_map: Map<string, npc>
+}
+/** 相关npc */
+function Npcs(p: p_npc) {
+	const incis = p.incident_ids.map(id => p.incident_map.get(id)!).filter(v => !!v)
+	const npcids = new Set<string>()
+	for (const inci of incis) {
+		for (const npcid of inci.npc_ids) {
+			npcids.add(npcid)
+		}
+	}
+	const nids = Array.from(npcids)
+	const npcs = nids.map(id => p.npc_map.get(id)!).filter(v => !!v)
+	return (
+		<>
+			{npcs.map(npc => (
+				<ActionButton key={npc.id}>{npc.base.name}</ActionButton>
+			))}
+		</>
+	)
+}
+
+/** 转化文本以便查看 */
+function map_text(old: string) {
+	return old
+		.replace(/\n+/g, '\n')
+		.split('\n')
+		.map(s => s.replace(/^\s*/, '    '))
+		.join('\n\n')
+}

@@ -1,0 +1,31 @@
+.bar {
+	display: flex;
+	box-sizing: border-box;
+	height: 60px;
+	padding: 10px;
+	align-items: center;
+	.drop {
+		width: 400px;
+	}
+}
+
+.Table {
+	position: relative;
+	overflow: auto;
+	box-sizing: border-box;
+	width: 100%;
+	height: calc(100vh - 60px);
+	padding: 10px;
+	.line {
+		display: flex;
+		height: 40px;
+	}
+	.td {
+		outline: 2px solid var(--CLRl4);
+		outline-offset: -1px;
+		width: 120px;
+		text-align: center;
+		line-height: 40px;
+		font-size: 16px;
+	}
+}
