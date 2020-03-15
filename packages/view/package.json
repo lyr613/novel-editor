@@ -2,6 +2,7 @@
     "name": "writer-view",
     "version": "0.0.3",
     "private": false,
+    "homepage": ".",
     "dependencies": {
         "@babel/core": "7.8.4",
         "@svgr/webpack": "4.3.3",

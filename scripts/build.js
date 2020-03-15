@@ -40,5 +40,5 @@ function build_page() {
 
 function build_elec() {
     console.log('开始打包elec')
-    cp.execSync(` cd ${elec} && yarn electron-builder `)
+    cp.execSync(` cd ${elec} && yarn electron-build `)
 }
