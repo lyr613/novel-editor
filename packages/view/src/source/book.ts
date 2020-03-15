@@ -4,32 +4,26 @@ import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import { id32 } from '@/function/id32'
 
-/** 获取书目列表 */
-export const book_find$ = new Subject<Param | null>()
-
 /** 书目列表 */
 export const book_list$ = new BehaviorSubject<book[]>([])
 
 /** 聚焦的书目 */
 export const book_focu$ = new BehaviorSubject<null | book>(null)
 
-/**
- * 获取书目列表
- */
-book_find$
-    .pipe(
-        switchMap(() => {
-            return editer_setting$.pipe(map((v) => v.shelf.book_list))
-        }),
-        map((srcs) => {
-            const books = ipc().sendSync('load_books', srcs) || []
-            return books.filter(Boolean)
-        }),
-    )
-    .subscribe((li) => {
-        book_list$.next(li)
-        // book_local.next(li)
-    })
+function find_book(srcs: string[]): book[] {
+    const re = ipc().sendSync('load_books', srcs) || []
+    return re
+}
+
+/** 更新书目列表的简单方法, 调用即更新 */
+export function load_books_auto() {
+    editer_setting$
+        .pipe(
+            map((v) => v.shelf.book_list ?? []),
+            map(find_book),
+        )
+        .subscribe(book_list$)
+}
 
 /** 创建一本新书 */
 export function of_book(part?: Param | book): book {

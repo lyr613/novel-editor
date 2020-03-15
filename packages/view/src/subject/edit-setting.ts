@@ -63,6 +63,6 @@ function load_set() {
     return obj || default_set()
 }
 
-editer_setting$.pipe(debounceTime(5000)).subscribe((obj) => {
+editer_setting$.pipe(debounceTime(2000)).subscribe((obj) => {
     fs_write('json', [ipc().sendSync('app_set_src'), 'settings.json'], obj)
 })

@@ -48,26 +48,8 @@ const node_id_text_map_default = new Map<
 >()
 /** 从编辑器传来的 node_id: text的映射表 */
 export const node_id_text_map$ = new BehaviorSubject(node_id_text_map_default)
-/** 节文本可以自动保存 */
-export const can_node_text_auto_save$ = new BehaviorSubject(true)
-
-/** 订阅自动保存 */
-can_node_text_auto_save$
-    .pipe(
-        switchMap((b) => {
-            if (b) {
-                return interval(5000)
-            }
-            return of(null)
-        }),
-        filter((v) => v !== null),
-    )
-    .subscribe(() => {
-        save_node_text()
-    })
-/** 保存文本 */
-export function save_node_text() {
-    const m = node_id_text_map$.value
+/** 自动保存 */
+node_id_text_map$.pipe(debounceTime(2000)).subscribe((m) => {
     m.forEach((v, k) => {
         try {
             fs_write('txt', [v.book_src, 'chapters', v.node_id + '.txt'], v.text)
@@ -76,7 +58,7 @@ export function save_node_text() {
             alert(`保存章节${v.node_name}失败`)
         }
     })
-}
+})
 
 // 当切换书时, 清空buffer和text
 book_focu$.pipe(debounceTime(0)).subscribe(() => {

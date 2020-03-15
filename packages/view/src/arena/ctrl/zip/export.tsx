@@ -3,82 +3,82 @@ import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import ThemeLabel from '@/component/theme-label'
 import { DefaultButton, Dropdown } from 'office-ui-fabric-react'
-import { select_dir, book_list$, book_find$ } from '@/source'
+import { select_dir, book_list$, load_books_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 
 export default function Exprt() {
-	const [dir_src, set_dir_src] = useState('')
-	const [book_src, set_book_src] = useState('')
-	const books = useObservable(() => book_list$, [])
+    const [dir_src, set_dir_src] = useState('')
+    const [book_src, set_book_src] = useState('')
+    const books = useObservable(() => book_list$, [])
 
-	const book_sel = books.map(bk => ({
-		key: bk.src,
-		text: bk.name,
-	}))
-	useEffect(() => {
-		book_find$.next()
-	}, [])
+    const book_sel = books.map((bk) => ({
+        key: bk.src,
+        text: bk.name,
+    }))
+    useEffect(() => {
+        load_books_auto()
+    }, [])
 
-	return (
-		<div className={s.Export}>
-			<div className={s.section}>导出文本</div>
-			<div className={s.line}>
-				<ThemeLabel> 要导出的书</ThemeLabel>
-				<Dropdown
-					options={book_sel}
-					className={s.dropdown}
-					onChange={(_, opt) => {
-						const src = opt?.key as string
-						set_book_src(src)
-					}}
-				></Dropdown>
-			</div>
-			<div className={s.line}>
-				<ThemeLabel>选择一个文件夹: {dir_src}</ThemeLabel>
-				<DefaultButton
-					onClick={async () => {
-						const re = await select_dir()
-						set_dir_src(re.src)
-					}}
-				>
-					选择存放位置
-				</DefaultButton>
-			</div>
-			<div className={s.line}>
-				<ThemeButton
-					onClick={() => {
-						ipc().send('export_txt', book_src, dir_src)
-					}}
-				>
-					开始导出
-				</ThemeButton>
+    return (
+        <div className={s.Export}>
+            <div className={s.section}>导出文本</div>
+            <div className={s.line}>
+                <ThemeLabel> 要导出的书</ThemeLabel>
+                <Dropdown
+                    options={book_sel}
+                    className={s.dropdown}
+                    onChange={(_, opt) => {
+                        const src = opt?.key as string
+                        set_book_src(src)
+                    }}
+                ></Dropdown>
+            </div>
+            <div className={s.line}>
+                <ThemeLabel>选择一个文件夹: {dir_src}</ThemeLabel>
+                <DefaultButton
+                    onClick={async () => {
+                        const re = await select_dir()
+                        set_dir_src(re.src)
+                    }}
+                >
+                    选择存放位置
+                </DefaultButton>
+            </div>
+            <div className={s.line}>
+                <ThemeButton
+                    onClick={() => {
+                        ipc().send('export_txt', book_src, dir_src)
+                    }}
+                >
+                    开始导出
+                </ThemeButton>
 
-				<Step />
-			</div>
-		</div>
-	)
+                <Step />
+            </div>
+        </div>
+    )
 }
 
 /** 解析步骤 */
 function Step() {
-	const [arr, set_arr] = useReducer<(arr: string[], nw: string) => string[]>((arr, nw) => [...arr, nw], [])
-	useEffect(() => {
-		const lin = (_: any, str: string) => {
-			set_arr(str)
-		}
+    const [arr, set_arr] = useReducer<(arr: string[], nw: string) => string[]>((arr, nw) => [...arr, nw], [])
+    useEffect(() => {
+        const lin = (_: any, str: string) => {
+            set_arr(str)
+        }
 
-		ipc().on('export_txt_step', lin)
-		return () => {
-			ipc().removeListener('export_txt_step', lin)
-		}
-	}, [])
-	return (
-		<div className={s.Step}>
-			{arr.map((st, i) => (
-				<ThemeLabel key={i}>{st}</ThemeLabel>
-			))}
-		</div>
-	)
+        ipc().on('export_txt_step', lin)
+        return () => {
+            ipc().removeListener('export_txt_step', lin)
+        }
+    }, [])
+    return (
+        <div className={s.Step}>
+            {arr.map((st, i) => (
+                <ThemeLabel key={i}>{st}</ThemeLabel>
+            ))}
+        </div>
+    )
 }

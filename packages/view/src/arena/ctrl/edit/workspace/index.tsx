@@ -11,7 +11,6 @@ import {
     node_text_from_editer$,
     node_id_text_map$,
     book_focu$,
-    can_node_text_auto_save$,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, switchMap, merge, debounceTime } from 'rxjs/operators'
@@ -145,7 +144,7 @@ function Write() {
                 }
             }
         })
-        // 切换节时, 保存一下
+        // 切换节时
         const ob_change_node = node_focu$.subscribe(() => {
             editer.revealLine(0) // 滚动到第一行
         })
