@@ -7,10 +7,10 @@ import {
     node_focu$,
     node_text_from_fs$,
     node_focu_buffer$,
-    node_text_from_fs_find$,
     node_text_from_editer$,
     node_id_text_map$,
     book_focu$,
+    find_node_text_from_fs_auto,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, switchMap, merge, debounceTime } from 'rxjs/operators'
@@ -64,7 +64,7 @@ function Head() {
                     key={nd.id}
                     onClick={() => {
                         node_focu$.next(nd)
-                        node_text_from_fs_find$.next()
+                        find_node_text_from_fs_auto()
                     }}
                 >
                     <span className={s.name}>{nd.name}</span>
@@ -79,7 +79,7 @@ function Head() {
                             if (nd.id === focu?.id) {
                                 const ni = Math.max(0, i - 1)
                                 node_focu$.next(arr[ni] || null)
-                                node_text_from_fs_find$.next()
+                                find_node_text_from_fs_auto()
                             }
                         }}
                     ></Icon>

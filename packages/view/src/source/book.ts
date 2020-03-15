@@ -23,7 +23,9 @@ export function load_books_auto() {
             map((v) => v.shelf.book_list ?? []),
             map(find_book),
         )
-        .subscribe(book_list$)
+        .subscribe((li) => {
+            book_list$.next(li)
+        })
 }
 
 /** 创建一本新书 */

@@ -21,7 +21,9 @@ export const find_chapter_list$ = book_focu$.pipe(
 )
 /** 方便的更新章节列表, 执行即可 */
 export function find_chapter_list_auto() {
-    find_chapter_list$.subscribe(chapter_list$)
+    find_chapter_list$.subscribe((li) => {
+        chapter_list$.next(li)
+    })
 }
 export const chapter_focu$ = new BehaviorSubject<null | chapter>(null)
 

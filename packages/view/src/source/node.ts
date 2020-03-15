@@ -35,7 +35,7 @@ export function focu_node_then_edit(id: string) {
         node_buffer_add_by_id(id, nodes)
         node_focu$.next(fi)
         next_router('edit')
-        node_text_from_fs_find$.next()
+        find_node_text_from_fs_auto()
     }
 }
 
@@ -43,6 +43,8 @@ export function focu_node_then_edit(id: string) {
 export const node_text_from_fs$ = new BehaviorSubject<string>('')
 /** 从编辑器传来的文本 */
 export const node_text_from_editer$ = new BehaviorSubject('')
+
+// ---- 自动保存部分 ----
 const node_id_text_map_default = new Map<
     string,
     { book_src: string; text: string; node_id: string; node_name: string }
@@ -61,6 +63,8 @@ node_id_text_map$.pipe(debounceTime(2000)).subscribe((m) => {
     })
 })
 
+// ----
+
 // 当切换书时, 清空buffer和text
 book_focu$.pipe(debounceTime(0)).subscribe(() => {
     node_focu_buffer$.next([])
@@ -68,26 +72,20 @@ book_focu$.pipe(debounceTime(0)).subscribe(() => {
     node_focu$.next(null)
 })
 
-/** 读取节点内容 */
-export const node_text_from_fs_find$ = new Subject()
+const node_text_from_fs_finder$ = node_focu$.pipe(
+    filter((v) => !v),
+    map((node) => {
+        const booksrc = book_focu$.value?.src
+        if (booksrc) {
+            return fs_read('txt', [booksrc, 'chapters', node!.id]) || ''
+        }
+        return ''
+    }),
+)
 
-/** 读取节点内容 */
-node_text_from_fs_find$
-    .pipe(
-        map(() => node_focu$.value!),
-        filter((v) => !!v),
-        map((node) => {
-            const src = node.id
-            const booksrc = book_focu$.value?.src
-            if (booksrc) {
-                return fs_read('txt', [booksrc, 'chapters', node.id]) || ''
-            }
-
-            return ''
-        }),
-    )
-    .subscribe((text) => {
+/** 方便的读取节的文本, 执行即可 */
+export function find_node_text_from_fs_auto() {
+    node_text_from_fs_finder$.pipe(take(1)).subscribe((text) => {
         node_text_from_fs$.next(text)
     })
-
-// class NodeTextAutoSave {w
+}

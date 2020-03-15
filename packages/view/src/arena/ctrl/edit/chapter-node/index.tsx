@@ -6,7 +6,6 @@ import {
 	chapter_list$,
 	node_focu$,
 	chapter_focu$,
-	node_text_from_fs_find$,
 	node_focu_buffer$,
 	chapter_save,
 	fs_write,
@@ -14,6 +13,7 @@ import {
 	node_text_from_editer$,
 	node_text_from_fs$,
     find_chapter_list_auto,
+    find_node_text_from_fs_auto,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, filter, debounceTime } from 'rxjs/operators'
@@ -219,8 +219,8 @@ function Node(p: nd) {
 			className={[s.Node, p.nd.id === focu_node_id ? s.focu : ''].join(' ')}
 			onClick={() => {
 				chapter_focu$.next(p.cp)
-				node_focu$.next(p.nd)
-				node_text_from_fs_find$.next()
+                node_focu$.next(p.nd)
+                find_node_text_from_fs_auto()
 				const arr = node_focu_buffer$.value
 				if (!arr.find(v => v.id === p.nd.id)) {
 					arr.push(p.nd)
