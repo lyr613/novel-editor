@@ -1,6 +1,6 @@
 {
     "name": "qv-writer",
-    "private": false,
+    "private": true,
     "keywords": [
         "novel",
         "fiction"
