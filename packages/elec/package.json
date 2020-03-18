@@ -30,8 +30,8 @@
         "github"
     ],
     "build": {
-        "productName": "soft-writer",
-        "appId": "org.simulatedgreg.writer",
+        "productName": "qv-writer",
+        "appId": "org.simulatedgreg.qvwriter",
         "directories": {
             "output": "build-final"
         },
