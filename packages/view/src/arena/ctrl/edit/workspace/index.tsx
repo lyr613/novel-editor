@@ -110,7 +110,7 @@ function Write() {
             wordWrap: 'on',
             fontSize: 16,
             lineHeight: 26,
-            fontFamily: '黑体',
+            fontFamily: 'siyuangooglelight',
             // 分割文本
             wordSeparators: '~!@#$%^&*()-=+[{]}\\|;:\'",.<>/?，。？！……：”“—',
             // 控制编辑器是否显示缩进参考线。
@@ -118,6 +118,7 @@ function Write() {
             minimap: {
                 enabled: false,
             },
+            contextmenu: false,
         }
 
         const editer = monaco.editor.create(dom, options)
