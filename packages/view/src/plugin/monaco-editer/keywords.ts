@@ -20,7 +20,7 @@ export function auto_keyword() {
         }
 
         /** 敏感词 */
-        const sensitive = sensitive_check_list$.value
+        const sensitive = sensitive_check_list$.value.filter(Boolean)
         if (sensitive.length) {
             const sensitive_reg = new RegExp(`(${sensitive.join('|')})`)
             root.unshift([sensitive_reg, 'sensitive'])
