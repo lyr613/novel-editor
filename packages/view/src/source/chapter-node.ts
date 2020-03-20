@@ -14,7 +14,7 @@ export const find_chapter_list$ = book_focu$.pipe(
     switchMap((book_src) => {
         return new Promise<chapter[]>((suc) => {
             fs_read('json', [book_src, 'chapter'], (s) => {
-                suc(s as chapter[])
+                suc((s as chapter[]) || [])
             })
         })
     }),
