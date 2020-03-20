@@ -1,12 +1,12 @@
 import * as monaco from 'monaco-editor'
 import { npc_list$ } from '@/source'
-import { merge } from 'rxjs/operators'
-import { sensitive_check_list$ } from '@/subject/sensitive'
+import { merge, take } from 'rxjs/operators'
+import { sensitive_check_list$, sensitive_can_check$ } from '@/subject/sensitive'
 import { table_list$ } from '@/source/table'
 
 /** 设置关键字 */
 export function auto_keyword() {
-    npc_list$.pipe(merge(table_list$), merge(sensitive_check_list$)).subscribe(() => {
+    npc_list$.pipe(merge(table_list$), merge(sensitive_check_list$), merge(sensitive_can_check$)).subscribe(() => {
         const root: any[] = [
             // [npc_reg, 'npc'],
             // [sensitive_reg, 'sensitive'],
@@ -20,7 +20,10 @@ export function auto_keyword() {
         }
 
         /** 敏感词 */
-        const sensitive = sensitive_check_list$.value.filter(Boolean)
+        let sensitive: string[] = []
+        sensitive_check_list$.pipe(take(1)).subscribe((li) => {
+            sensitive = li
+        })
         if (sensitive.length) {
             const sensitive_reg = new RegExp(`(${sensitive.join('|')})`)
             root.unshift([sensitive_reg, 'sensitive'])

@@ -6,9 +6,8 @@ import ThemeButton from '@/component/theme-button'
 import { Dialog, DialogType, TextField, DialogFooter, DefaultButton, Label } from 'office-ui-fabric-react'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
-import { sensitive_list$ } from '@/subject/sensitive'
-import { map } from 'rxjs/operators'
 import { shallowCopy } from '@/rx/shallow-copy'
+import { editer_setting$ } from '@/subject'
 
 const will_delete$ = new BehaviorSubject('')
 
@@ -28,7 +27,11 @@ export default function Sensitive() {
 }
 
 function List() {
-    const list = useObservable(() => sensitive_list$.pipe(shallowCopy()), [])
+    const opt = useObservable(() => editer_setting$.pipe(shallowCopy()))
+    const list = opt?.sensitive ?? []
+    useEffect(() => {
+        console.log('敏感词列表', list)
+    }, [list])
 
     return (
         <div className={s.List}>
@@ -115,11 +118,13 @@ function AddOne() {
 
 function _add_words(ws: string) {
     const words = ws.split(/\s+/)
-    const arr = [...sensitive_list$.value]
+    const opt = editer_setting$.value
+    const arr = opt.sensitive ?? []
+    opt.sensitive = arr
     words.forEach((word) => {
         add_one(word)
     })
-    sensitive_list$.next(arr)
+    editer_setting$.next(opt)
     function add_one(word: string) {
         for (let i = 0; i < arr.length; i++) {
             let [a, b] = [arr[i], word]
@@ -159,8 +164,10 @@ function DeleteOne() {
             <DialogFooter>
                 <ThemeButton
                     onClick={() => {
-                        const list = sensitive_list$.value.filter((v) => v !== word)
-                        sensitive_list$.next(list)
+                        const opt = editer_setting$.value
+                        opt.sensitive = (opt.sensitive ?? []).filter((v) => v !== word)
+                        editer_setting$.next(opt)
+
                         will_delete$.next('')
                     }}
                 >

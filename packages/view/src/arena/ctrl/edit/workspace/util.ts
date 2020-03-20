@@ -1,13 +1,13 @@
 import * as monaco from 'monaco-editor'
-import { sensitive_list$, sensitive_can_check$ } from '@/subject/sensitive'
 import { sensitive_searched_list$ } from '../subj'
 import { Subject } from 'rxjs'
 import { debounceTime, switchMap, tap } from 'rxjs/operators'
+import { editer_setting$ } from '@/subject'
 
 /** 推入编辑器实例, 检查敏感词 */
 export const check_words$ = new Subject<monaco.editor.IStandaloneCodeEditor>()
 
-sensitive_list$
+editer_setting$
     .pipe(
         debounceTime(300),
         switchMap(() => check_words$),
@@ -17,8 +17,7 @@ sensitive_list$
         const model = editer.getModel()
         if (model) {
             // 实际一直检测, 但是区分展示不展示, 不然不检测后, 切换节, 再显示获取不到变化
-            const words = sensitive_list$.value
-            const can = sensitive_can_check$.value
+            const words = (editer_setting$.value.sensitive ?? []).filter(Boolean)
             if (!words.length) {
                 return
             }

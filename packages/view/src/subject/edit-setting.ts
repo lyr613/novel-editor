@@ -27,6 +27,8 @@ interface setting {
         /** 编辑窗口偏移 */
         editer_transform: wh
     }
+    /** 敏感词 */
+    sensitive?: string[]
 }
 
 /** 编辑器设置 */
@@ -55,6 +57,7 @@ function default_set(): setting {
                 height: 0,
             },
         },
+        sensitive: [],
     }
 }
 
