@@ -15,7 +15,6 @@ import { table_list_find$ } from '@/source/table'
 import { editer_setting$ } from '@/subject'
 import { timer } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { load_monaco } from '@/plugin/monaco-editer'
 const ChapterNode = lazy(() => import('./chapter-node'))
 const Outline = lazy(() => import('./outline'))
 const Workspace = lazy(() => import('./workspace'))
@@ -45,10 +44,6 @@ export default function Edit() {
         npc_find$.next()
         find_chapter_list_auto()
         table_list_find$.next()
-    }, [])
-
-    useEffect(() => {
-        load_monaco()
     }, [])
 
     if (!book_focu$.value) {
