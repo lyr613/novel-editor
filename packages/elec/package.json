@@ -1,6 +1,6 @@
 {
     "name": "writer-electron",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "author": "秋无衣",
     "description": "小说编辑器",
     "main": "build/index.js",
