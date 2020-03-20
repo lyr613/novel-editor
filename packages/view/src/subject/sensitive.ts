@@ -1,9 +1,8 @@
 import { BehaviorSubject } from 'rxjs'
-import { sensitive_sg } from '@/storage/sensitive'
 import { switchMap, map } from 'rxjs/operators'
 
 /** 敏感词列表 */
-export const sensitive_list$ = new BehaviorSubject(sensitive_sg.value)
+export const sensitive_list$ = new BehaviorSubject([''])
 
 /** 是否检查敏感词 */
 export const sensitive_can_check$ = new BehaviorSubject(true)
@@ -28,5 +27,5 @@ sensitive_list$
     })
 
 sensitive_list$.subscribe((li) => {
-    sensitive_sg.save(li)
+    // sensitive_sg.save(li)
 })
