@@ -16,6 +16,7 @@ export function create_option(): Electron.BrowserWindowConstructorOptions {
             /** 查看本地图片, 设置成false才可以 */
             webSecurity: false,
             /** 允许打开控制台 */
+            // devTools: true,
             devTools: process.env.NODE_ENV === 'development',
         },
     }
