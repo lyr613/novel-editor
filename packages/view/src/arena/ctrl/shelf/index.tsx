@@ -133,7 +133,7 @@ function BookList() {
                             >
                                 地图
                             </DefaultButton>
-                            <DefaultButton
+                            {/* <DefaultButton
                                 onClick={() => {
                                     book_focu$.next(book)
                                     next_router('git')
@@ -143,7 +143,7 @@ function BookList() {
                                 }}
                             >
                                 仓库
-                            </DefaultButton>
+                            </DefaultButton> */}
                             <DefaultButton
                                 onClick={() => {
                                     const p = editer_setting$.value
