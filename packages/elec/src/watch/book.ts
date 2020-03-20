@@ -144,7 +144,7 @@ function book_search_text(e: Electron.IpcMainEvent, book_src: string, match_temp
                         // 取前后两段
                         const fi = tarr.findIndex((v) => v.match(match_temp))
                         const si = Math.max(0, fi - 2)
-                        const ei = Math.min(tarr.length - 1, fi + 3)
+                        const ei = Math.min(tarr.length, fi + 3)
                         const ret = tarr.slice(si, ei)
                         matchs.push({
                             node: nd,
