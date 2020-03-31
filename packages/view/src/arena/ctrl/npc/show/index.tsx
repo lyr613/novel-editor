@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import Bar from './bar'
 import ListLike from './list'
-import { npc_find$, find_chapter_list_auto } from '@/source'
+import { find_npc_li_auto, find_chapter_list_auto } from '@/source'
 
 export default function Show() {
     useEffect(() => {
-        npc_find$.next()
+        find_npc_li_auto()
         find_chapter_list_auto()
     }, [])
     return (

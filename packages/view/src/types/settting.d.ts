@@ -19,8 +19,12 @@ declare namespace Setting {
         uneed: {
             /** 寿命 [y,m,d,y,m,d] */
             life: string[]
-            /** 关系 {link_name ,npc_uuid}[] */
-            links: { link_name: string; npc_uuid: string }[]
+            /** 关系  */
+            links: {
+                /** 描述 */
+                description: string
+                npc_id: string
+            }[]
             /** 别名, 以空格分割 */
             alias?: string
             /** 重要度, 默认0 */

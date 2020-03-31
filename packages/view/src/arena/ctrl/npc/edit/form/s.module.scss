@@ -1,36 +1,55 @@
 .Form {
-	.section {
-		.label {
-			margin: 0;
-			box-sizing: border-box;
-			height: 40px;
-			line-height: 40px;
-			padding-left: 10px;
-			background-color: var(--CLRl7);
-			font-size: 16px;
-		}
-		.ctrl {
-			margin: 0 10px;
-			overflow: hidden;
-			box-sizing: border-box;
-			padding: 0 10px;
-			user-select: none;
-			// background-color: var(--CLRl7);
-		}
-		.row {
-			margin: 10px 0;
-		}
-		.flexrow {
-			display: flex;
-			margin: 10px 0;
+    .section {
+        .label {
+            margin: 0;
+            box-sizing: border-box;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 10px;
+            background-color: var(--CLRl7);
+            font-size: 16px;
+        }
+        .ctrl {
+            margin: 0 10px;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 0 10px;
+            user-select: none;
+            // background-color: var(--CLRl7);
+        }
+        .row {
+            margin: 10px 0;
+        }
+        .flexrow {
+            display: flex;
+            margin: 10px 0;
 
-			align-items: flex-end;
-		}
-	}
-	.input {
-		width: 400px;
-	}
-	.namelabel {
-		margin-left: 10px;
-	}
+            align-items: flex-end;
+        }
+        .linkbox {
+            margin: 10px;
+            .linkline {
+                display: flex;
+                line-height: 26px;
+                font-size: 16px;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
+            }
+            .linkname {
+                padding: 0 10px;
+                width: 100px;
+            }
+            .linkdescription {
+                padding: 0 10px;
+                width: 180px;
+            }
+        }
+    }
+    .input {
+        width: 400px;
+    }
+    .namelabel {
+        margin-left: 10px;
+    }
 }

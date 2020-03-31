@@ -12,14 +12,14 @@ let wait_quit = false
 
 const App: React.FC = () => {
     const eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
-    const theme = eset?.common.theme ?? 'word'
+    const theme = eset?.common.theme
     useEffect(() => {
         const ob = key$.subscribe((e) => {
-            // alt + r
+            // alt + r 重载
             if (e.code === 82 && e.alt) {
                 ipc().send('key-reload')
             }
-            // alt + q
+            // alt + q 退出
             if (e.code === 81 && e.alt) {
                 if (wait_quit) {
                     ipc().send('key-quit')

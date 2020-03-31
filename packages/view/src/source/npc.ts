@@ -1,11 +1,8 @@
 import { BehaviorSubject, Subject } from 'rxjs'
-import { map, filter, switchMap } from 'rxjs/operators'
+import { map, filter, switchMap, take } from 'rxjs/operators'
 import { book_focu$ } from './book'
-import { npc_find_ipc } from './ipc/npc'
 import { id32 } from '@/function/id32'
-
-/** 查找npc */
-export const npc_find$ = new Subject()
+import { ipc } from '@/const'
 
 export const npc_list$ = new BehaviorSubject<npc[]>([])
 
@@ -21,21 +18,23 @@ export const npc_map$ = npc_list$.pipe(
         return m
     }),
 )
+/** 查找npc */
+export const npc_li_finder$ = book_focu$.pipe(
+    take(1),
+    map((v) => v?.src),
+    map((book_src): npc[] => {
+        if (!book_src) {
+            return []
+        }
+        return ipc().sendSync('npc-list', book_src)
+    }),
+)
 
-/** 查询npc */
-npc_find$
-    .pipe(
-        map(() => {
-            return book_focu$.value?.src!
-        }),
-        filter((src) => !!src),
-        switchMap((src) => {
-            return npc_find_ipc(src)
-        }),
-    )
-    .subscribe((li: npc[]) => {
+export function find_npc_li_auto() {
+    npc_li_finder$.subscribe((li) => {
         npc_list$.next(li)
     })
+}
 
 /**
  * 新建npc

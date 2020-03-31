@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import s from './s.module.scss'
-import { book_focu$, npc_find$, find_chapter_list_auto } from '@/source'
+import { book_focu$, find_npc_li_auto, find_chapter_list_auto } from '@/source'
 import { next_router } from '@/function/router'
 // import ChapterNode from './chapter-node'
 // import Outline from './outline'
@@ -41,7 +41,7 @@ export default function Edit() {
     }, [])
 
     useEffect(() => {
-        npc_find$.next()
+        find_npc_li_auto()
         find_chapter_list_auto()
         table_list_find$.next()
     }, [])
