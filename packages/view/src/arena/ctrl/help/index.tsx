@@ -7,9 +7,11 @@ import SectionHeader from '@/component/section-header'
 export default function Help() {
     return (
         <div className={s.Help}>
+            <About />
             <HotKey />
             <Common />
             <Incident />
+            <Table />
         </div>
     )
 }
@@ -44,12 +46,30 @@ function Incident() {
                 节奏线: 顶部的节奏线, 根据线索设置的开始结束章节字数绘制成. 单击方块可以选中对应事件,
                 双击可以使对应事件进入可视区域
             </div>
-            <div className={s.aline}>线索: 多线叙事使用, 清晰事件节奏</div>
+        </section>
+    )
+}
+/** 表格 */
+function Table() {
+    return (
+        <section className={s.Incident}>
+            <SectionHeader>表格</SectionHeader>
+            <div className={s.aline}>在表格双击其中一项, 会跳到搜索页自动搜索</div>
+        </section>
+    )
+}
+/** 关于  */
+function About() {
+    return (
+        <section className={s.About}>
+            <SectionHeader>关于</SectionHeader>
+            <div className={s.aline}>作者: 秋无衣</div>
+            <div className={s.aline}>有意见建议b站搜索我发私信即可</div>
         </section>
     )
 }
 /**  */
-function SSSS() {
+function TEMP() {
     return (
         <section className={s.Incident}>
             <SectionHeader>通用</SectionHeader>
