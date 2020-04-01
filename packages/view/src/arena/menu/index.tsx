@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { next_router, routers } from '@/function/router'
 import { useObservable } from 'rxjs-hooks'
-import { book_focu$ } from '@/source'
+import { book_use$ } from '@/source'
 import { useLocation } from 'react-router-dom'
 
 export function Menu() {
-    const book = useObservable(() => book_focu$)
+    const book = useObservable(() => book_use$)
 
     return (
         <div className={s.Menu}>

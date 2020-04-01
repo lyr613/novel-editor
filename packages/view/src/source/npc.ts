@@ -1,25 +1,51 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, filter, switchMap, take } from 'rxjs/operators'
-import { book_focu$ } from './book'
+import { book_use$ } from './book'
 import { id32 } from '@/function/id32'
 import { ipc } from '@/const'
+import { shallowCopy } from '@/rx/shallow-copy'
 
+/** npc列表 */
 export const npc_list$ = new BehaviorSubject<npc[]>([])
 
-export const npc_focu$ = new BehaviorSubject<null | npc>(create_npc())
+/** 使用npc的id */
+export const npc_use_id$ = new BehaviorSubject('')
 
-/** {id: npc} */
-export const npc_map$ = npc_list$.pipe(
-    map((li) => {
-        const m = new Map<string, npc>()
-        li.forEach((npc) => {
-            m.set(npc.id, npc)
+/** 使用的npc */
+export const npc_use$ = npc_list$.pipe(switchMap((li) => npc_use_id$.pipe(map((id) => li.find((v) => v.id === id)))))
+
+/** 编辑的npc */
+export const npc_edit$ = new BehaviorSubject(of_npc())
+
+/** 自动编辑在用的npc, 如果没有就创造一个 */
+export function edit_npc_auto() {
+    npc_use$
+        .pipe(
+            take(1),
+            shallowCopy(),
+            map((v) => v ?? of_npc()),
+        )
+        .subscribe((npc) => {
+            npc_edit$.next(npc)
         })
-        return m
-    }),
-)
+}
+
+export const npc_focu$ = new BehaviorSubject<null | npc>(of_npc())
+
+/** npc哈希表 {id: npc} */
+export const npc_map$ = npc_list$.pipe(map(mk_npc_map))
+
+/** 构造npc哈希表 */
+export function mk_npc_map(npcs: npc[]) {
+    const m = new Map<string, npc>()
+    npcs.forEach((npc) => {
+        m.set(npc.id, npc)
+    })
+    return m
+}
+
 /** 查找npc */
-export const npc_li_finder$ = book_focu$.pipe(
+export const npc_li_finder$ = book_use$.pipe(
     take(1),
     map((v) => v?.src),
     map((book_src): npc[] => {
@@ -39,7 +65,7 @@ export function find_npc_li_auto() {
 /**
  * 新建npc
  */
-export function create_npc(): npc {
+export function of_npc(): npc {
     return {
         id: id32(),
         base: {

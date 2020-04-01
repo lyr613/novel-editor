@@ -1,7 +1,7 @@
 import { Subject, BehaviorSubject, timer, of, ReplaySubject, interval } from 'rxjs'
 import { map, filter, switchMap, tap, take, debounceTime } from 'rxjs/operators'
 import { ipc, ENV } from '@/const'
-import { book_focu$ } from './book'
+import { book_use$ } from './book'
 import { fs_write, fs_read } from './fs-common'
 import { get_now_node_list } from './chapter-node'
 import { next_router } from '@/function/router'
@@ -65,7 +65,7 @@ node_id_text_map$.pipe(debounceTime(2000)).subscribe((m) => {
 // ----
 
 // 当切换书时, 清空buffer和text
-book_focu$.pipe(debounceTime(0)).subscribe(() => {
+book_use$.pipe(debounceTime(0)).subscribe(() => {
     node_focu_buffer$.next([])
     node_text_from_fs$.next('')
     node_focu$.next(null)
@@ -74,7 +74,7 @@ book_focu$.pipe(debounceTime(0)).subscribe(() => {
 const node_text_from_fs_finder$ = node_focu$.pipe(
     filter((v) => !!v),
     map((node) => {
-        const booksrc = book_focu$.value?.src
+        const booksrc = book_use$.value?.src
         if (booksrc) {
             return fs_read('txt', [booksrc, 'chapters', node!.id]) || ''
         }

@@ -9,7 +9,7 @@ import {
     node_focu_buffer$,
     chapter_save,
     fs_write,
-    book_focu$,
+    book_use$,
     node_text_from_fs$,
     find_chapter_list_auto,
 } from '@/source'
@@ -256,7 +256,7 @@ function Node(p: nd) {
                     if (fi > -1) {
                         p.cp.children.splice(fi, 1)
                         const arr = chapter_list$.value
-                        fs_write('json', [book_focu$.value?.src!, 'chapter.json'], arr)
+                        fs_write('json', [book_use$.value?.src!, 'chapter.json'], arr)
                     }
                 }}
                 style={{ marginLeft: 'auto' }}

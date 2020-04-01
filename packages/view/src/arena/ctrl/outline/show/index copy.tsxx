@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import {
-	book_focu$,
+	book_use$,
 	chapter_list$,
 	chapter_list_find$,
 	npc_find$,
@@ -49,7 +49,7 @@ export default function Show() {
 		})
 		set_list(ots)
 	}, [chapters, outlines, npc_map, outline_map])
-	if (!book_focu$.value?.path) {
+	if (!book_use$.value?.path) {
 		next_router('shelf')
 		return null
 	}

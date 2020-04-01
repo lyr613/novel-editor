@@ -8,7 +8,7 @@ import { id32 } from '@/function/id32'
 export const book_list$ = new BehaviorSubject<book[]>([])
 
 /** 聚焦的书目 */
-export const book_focu$ = new BehaviorSubject<null | book>(null)
+export const book_use$ = new BehaviorSubject<null | book>(null)
 
 function find_book(srcs: string[]): book[] {
     const re = ipc().sendSync('load_books', srcs) || []
@@ -42,7 +42,7 @@ export function of_book(part?: Param | book): book {
 
 // 0----0
 // 切换书时, 改app标题
-book_focu$.subscribe((bk) => {
+book_use$.subscribe((bk) => {
     if (bk?.name) {
         document.title = bk.name
     }

@@ -9,7 +9,7 @@ import {
     node_focu_buffer$,
     node_text_from_editer$,
     node_id_text_map$,
-    book_focu$,
+    book_use$,
     find_node_text_from_fs_auto,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
@@ -128,7 +128,7 @@ function Write() {
             const t = editer.getValue()
             node_text_from_editer$.next(t)
             const node = node_focu$.value
-            const book = book_focu$.value
+            const book = book_use$.value
             if (node) {
                 check_words$.next(editer) // 检查敏感词
                 if (book?.src) {

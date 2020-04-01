@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { npc_focu$, create_npc, chapter_list$, node_focu$, node_focu_buffer$ } from '@/source'
+import { npc_focu$, chapter_list$, node_focu$, node_focu_buffer$, of_npc } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
 import ThemeButton from '@/component/theme-button'
@@ -73,7 +73,7 @@ function Action() {
         <div className={s.Action}>
             <ThemeButton
                 onClick={() => {
-                    npc_focu$.next(create_npc())
+                    npc_focu$.next(of_npc())
                     next_router('npc', 'edit')
                 }}
             >

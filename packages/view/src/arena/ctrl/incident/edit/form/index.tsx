@@ -12,7 +12,7 @@ import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { shallowCopy } from '@/rx/shallow-copy'
 import IconButton from '@/component/icon-button'
-import { chapter_list$, fs_write, book_focu$, focu_node_then_edit } from '@/source'
+import { chapter_list$, fs_write, book_use$, focu_node_then_edit } from '@/source'
 
 export default function Form() {
     useEffect(() => {
@@ -316,7 +316,7 @@ function Confirm() {
                     incident_edit$.next()
                     const ins = incident_list$.value
                     const nin = incident_focu$.value
-                    const book = book_focu$.value
+                    const book = book_use$.value
                     if (!nin || !book) {
                         alert('意外的丢失了本次编辑信息, 重载app试试')
                         return

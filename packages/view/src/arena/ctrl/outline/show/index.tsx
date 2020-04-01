@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import {
-    book_focu$,
+    book_use$,
     chapter_list$,
     find_npc_li_auto,
     npc_map$,
@@ -31,7 +31,7 @@ export default function Show() {
         find_chapter_list_auto()
         outline_find$.next()
     }, [])
-    if (!book_focu$.value?.src) {
+    if (!book_use$.value?.src) {
         next_router('shelf')
         return null
     }

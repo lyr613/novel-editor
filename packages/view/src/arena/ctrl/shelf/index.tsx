@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { DefaultButton, ActionButton, PrimaryButton } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import { book_list$, of_book, book_focu$, select_dir, load_books_auto } from '@/source'
+import { book_list$, of_book, book_use$, select_dir, load_books_auto } from '@/source'
 import { ipc } from '@/const'
 import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
@@ -58,10 +58,10 @@ function BookList() {
                         >
                             <ThemeButton
                                 onClick={() => {
-                                    // if (book_focu$.value?.id !== book.id) {
+                                    // if (book_use$.value?.id !== book.id) {
                                     // 	node_focu_buffer$.next([])
                                     // }
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('edit')
                                 }}
                                 style={{
@@ -72,7 +72,7 @@ function BookList() {
                             </ThemeButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('search')
                                 }}
                             >
@@ -80,7 +80,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('outline')
                                 }}
                                 style={{
@@ -91,7 +91,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('incident')
                                 }}
                                 style={{
@@ -102,7 +102,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('npc')
                                 }}
                                 style={{
@@ -113,7 +113,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('table')
                                 }}
                                 style={{
@@ -124,7 +124,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('map')
                                 }}
                                 style={{
@@ -135,7 +135,7 @@ function BookList() {
                             </DefaultButton>
                             {/* <DefaultButton
                                 onClick={() => {
-                                    book_focu$.next(book)
+                                    book_use$.next(book)
                                     next_router('git')
                                 }}
                                 style={{

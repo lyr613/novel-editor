@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
-import { book_focu$, incident_find$, find_npc_li_auto, find_chapter_list_auto } from '@/source'
+import { book_use$, incident_find$, find_npc_li_auto, find_chapter_list_auto } from '@/source'
 import { next_router } from '@/function/router'
 import Show from './show'
 import Edit from './edit'
@@ -16,7 +16,7 @@ export default function Incident() {
         find_npc_li_auto()
     }, [])
 
-    if (!book_focu$.value?.src) {
+    if (!book_use$.value?.src) {
         next_router('shelf')
         return null
     }

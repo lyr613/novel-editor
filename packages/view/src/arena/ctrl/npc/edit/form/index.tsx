@@ -16,7 +16,7 @@ import {
 import { sty_text } from './office-style'
 import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
-import { npc_focu$, book_focu$, npc_list$, npc_map$, fs_write } from '@/source'
+import { npc_focu$, book_use$, npc_list$, npc_map$, fs_write } from '@/source'
 import { electron } from '@/const'
 import { next_router } from '@/function/router'
 import DateYMD from '@/component/date'
@@ -383,7 +383,7 @@ function Confirm() {
             onClick={() => {
                 _hand_all_npc_link()
 
-                const re = fs_write('json', [book_focu$.value?.src ?? '', 'npc'], npc_list$.value)
+                const re = fs_write('json', [book_use$.value?.src ?? '', 'npc'], npc_list$.value)
                 if (re === true) {
                     next_router('npc')
                 } else {

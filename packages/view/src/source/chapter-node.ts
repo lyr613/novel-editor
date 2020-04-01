@@ -1,13 +1,13 @@
 import { BehaviorSubject, Subject, of } from 'rxjs'
 import { electron, ENV, ipc } from '@/const'
 import { debounceTime, tap, switchMap, map, catchError, filter, take } from 'rxjs/operators'
-import { book_focu$ } from './book'
+import { book_use$ } from './book'
 import { id32 } from '@/function/id32'
 import { fs_write, fs_read } from './fs-common'
 /** 章节列表 */
 export const chapter_list$ = new BehaviorSubject<chapter[]>([])
 
-export const find_chapter_list$ = book_focu$.pipe(
+export const find_chapter_list$ = book_use$.pipe(
     take(1),
     filter((v) => !!v?.src),
     map((v) => v?.src || ''),
@@ -27,9 +27,6 @@ export function find_chapter_list_auto() {
 }
 export const chapter_focu$ = new BehaviorSubject<null | chapter>(null)
 
-/** 聚焦节的内容 */
-export const edit_txt$ = new BehaviorSubject('')
-
 export const chapter_map$ = chapter_list$.pipe(
     map((li) => {
         const m = new Map<string, chapter>()
@@ -42,7 +39,7 @@ export const chapter_map$ = chapter_list$.pipe(
 
 /** 储存章节列表 */
 export function chapter_save() {
-    const book = book_focu$.value!
+    const book = book_use$.value!
     const arr = chapter_list$.value
     return fs_write('json', [book.src, 'chapter'], arr)
 }
