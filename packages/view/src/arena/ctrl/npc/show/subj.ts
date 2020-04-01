@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { npc_list$ } from '@/source'
+import { npc_li$ } from '@/source'
 import { switchMap, map, tap, debounceTime } from 'rxjs/operators'
 import { shallowCopy } from '@/rx/shallow-copy'
 
@@ -12,10 +12,10 @@ export function create_filter() {
     }
 }
 
-export const filterd_list$ = npc_list$.pipe(
+export const filterd_list$ = npc_li$.pipe(
     switchMap((list) =>
         filter$.pipe(
-            debounceTime(500),
+            debounceTime(200),
             map((opt) =>
                 list.filter((npc) => {
                     if (!npc.base.name.match(opt.name)) {

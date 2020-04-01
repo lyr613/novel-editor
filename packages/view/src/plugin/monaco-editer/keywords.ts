@@ -1,19 +1,19 @@
 import * as monaco from 'monaco-editor'
-import { npc_list$ } from '@/source'
+import { npc_li$ } from '@/source'
 import { merge, take } from 'rxjs/operators'
 import { sensitive_check_list$ } from '@/subject/sensitive'
 import { table_list$ } from '@/source/table'
 
 /** 设置关键字 */
 export function auto_keyword() {
-    npc_list$.pipe(merge(table_list$), merge(sensitive_check_list$)).subscribe(() => {
+    npc_li$.pipe(merge(table_list$), merge(sensitive_check_list$)).subscribe(() => {
         const root: any[] = [
             // [npc_reg, 'npc'],
             // [sensitive_reg, 'sensitive'],
             [/./, 'common'],
         ]
         /** 人物 */
-        if (npc_list$.value.length) {
+        if (npc_li$.value.length) {
             const npc_names = get_npc_names()
             const npc_reg = new RegExp(`(${npc_names.join('|')})`)
             root.unshift([npc_reg, 'npc'])
@@ -41,14 +41,14 @@ export function auto_keyword() {
             },
         })
     })
-    // npc_list$.subscribe(npcs => {
+    // npc_li$.subscribe(npcs => {
     // 	const names = npcs.map(n => n.base.name)
     // 	monaco.languages.setMonarchTokensProvider('book', build_keywords(names))
     // })
 }
 
 function get_npc_names() {
-    const npcs = npc_list$.value
+    const npcs = npc_li$.value
     const re = npcs.map((v) => v.base.name)
     npcs.forEach((npc) => {
         const { alias } = npc.uneed

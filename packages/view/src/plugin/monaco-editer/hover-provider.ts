@@ -1,11 +1,11 @@
 import * as monaco from 'monaco-editor'
-import { npc_list$ } from '@/source'
+import { npc_li$ } from '@/source'
 import { table_list$ } from '@/source/table'
 /** 悬浮提示 */
 export function hover_provider() {
     monaco.languages.registerHoverProvider('book', {
         provideHover: (model, pos, token) => {
-            const npcs = npc_list$.value || []
+            const npcs = npc_li$.value || []
             if (!npcs.length) {
                 return
             }
@@ -46,7 +46,7 @@ export function hover_provider() {
 }
 
 function get_npc_extends() {
-    const npcs = npc_list$.value
+    const npcs = npc_li$.value
     const re_map = new Map<string, string>()
     const re_arr: string[] = npcs.map((v) => v.base.name)
     npcs.forEach((npc) => {

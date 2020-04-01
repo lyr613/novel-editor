@@ -18,7 +18,8 @@ export function fs_read<T = string>(type: 'txt' | 'json', srcs: string[], hand?:
     }
 }
 /**
- * 写文件
+ * 同步写文件
+ * 使用的时候自动检查空路径
  * @param type
  * @param srcs
  * @param inset
@@ -33,6 +34,7 @@ export function fs_write(type: 'txt' | 'json', srcs: string[], inset: string | O
 
 /**
  * 新建文件夹
+ * 使用的时候自动检查空路径
  * @param srcs
  */
 export function mk_dir(srcs: string[]): boolean {

@@ -16,7 +16,7 @@ import {
 import { sty_text } from './office-style'
 import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
-import { npc_focu$, book_use$, npc_list$, npc_map$, fs_write } from '@/source'
+import { book_use$, npc_li$, npc_map$, fs_write, npc_edit$, npc_edited_save } from '@/source'
 import { electron } from '@/const'
 import { next_router } from '@/function/router'
 import DateYMD from '@/component/date'
@@ -25,8 +25,6 @@ import { shallowCopy } from '@/rx/shallow-copy'
 import ThemeLabel from '@/component/theme-label'
 import { get_ran_name } from './util-name'
 import IconButton from '@/component/icon-button'
-
-const ipc = electron().ipcRenderer
 
 export default function NpcForm() {
     return (
@@ -39,7 +37,7 @@ export default function NpcForm() {
 }
 
 function Base() {
-    const npc = useObservable(() => npc_focu$.pipe(shallowCopy()))
+    const npc = useObservable(() => npc_edit$.pipe(shallowCopy()))
     if (!npc) {
         return null
     }
@@ -57,7 +55,7 @@ function Base() {
                         onChange={(_, str) => {
                             const nstr = (str || '').trim()
                             base.name = nstr
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                         autoComplete="off"
                     ></TextField>
@@ -65,7 +63,7 @@ function Base() {
                         add_class={[s.namelabel]}
                         onClick={() => {
                             base.name = get_ran_name()
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                     >
                         随机
@@ -92,7 +90,7 @@ function Base() {
                         ]}
                         onChange={(_, opt) => {
                             base.gender = (opt?.key ?? '0') as any
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                     ></Dropdown>
                 </li>
@@ -149,7 +147,7 @@ function Base() {
                         value={npc.base.description}
                         onChange={(_, ss) => {
                             npc.base.description = ss || ''
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                         required
                         multiline
@@ -172,8 +170,8 @@ function Base() {
  * 出生死亡, 人际关系
  */
 function Uneed() {
-    const npc = useObservable(() => npc_focu$.pipe(shallowCopy()))
-    const npc_li = useObservable(() => npc_list$.pipe(shallowCopy()))
+    const npc = useObservable(() => npc_edit$.pipe(shallowCopy()))
+    const npc_li = useObservable(() => npc_li$.pipe(shallowCopy()))
     const npc_map = useObservable(() => npc_map$)
     const [can_show_link_dialog, set_can_show_link_dialog] = useState(false)
     const [form_link_id, set_form_link_id] = useState('')
@@ -203,15 +201,15 @@ function Uneed() {
                         value3={uneed.life[2]}
                         onChange1={(str) => {
                             uneed.life[0] = str
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                         onChange2={(str) => {
                             uneed.life[1] = str
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                         onChange3={(str) => {
                             uneed.life[2] = str
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                     ></DateYMD>
                     <span
@@ -230,15 +228,15 @@ function Uneed() {
                         value3={uneed.life[5]}
                         onChange1={(str) => {
                             uneed.life[3] = str
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                         onChange2={(str) => {
                             uneed.life[4] = str
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                         onChange3={(str) => {
                             uneed.life[5] = str
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                     ></DateYMD>
                 </li>
@@ -251,7 +249,7 @@ function Uneed() {
                         onChange={(_, ns) => {
                             ns = (ns || '').trim()
                             npc.uneed.alias = ns
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                     ></TextField>
                 </li>
@@ -264,7 +262,7 @@ function Uneed() {
                         onChange={(_, ns) => {
                             ns = (ns || '').replace(/[^0-9]/g, '')
                             npc.uneed.important = Math.min(99999, Number(ns))
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                     ></TextField>
                 </li>
@@ -293,7 +291,7 @@ function Uneed() {
                                         icon="Delete"
                                         onDoubleClick={() => {
                                             npc.uneed.links = npc.uneed.links.filter((v) => v.npc_id !== link.npc_id)
-                                            npc_focu$.next(npc)
+                                            npc_edit$.next(npc)
                                         }}
                                     ></IconButton>
                                 </div>
@@ -365,7 +363,7 @@ function Uneed() {
                                 description: form_link_description,
                             })
                             close_dialog()
-                            npc_focu$.next(npc)
+                            npc_edit$.next(npc)
                         }}
                     >
                         好
@@ -382,8 +380,7 @@ function Confirm() {
         <ThemeButton
             onClick={() => {
                 _hand_all_npc_link()
-
-                const re = fs_write('json', [book_use$.value?.src ?? '', 'npc'], npc_list$.value)
+                const re = npc_edited_save()
                 if (re === true) {
                     next_router('npc')
                 } else {
@@ -401,8 +398,8 @@ function Confirm() {
 
 /** 提交修改时, 处理人物关系, 自动给添加了关系的对方人物加上 */
 function _hand_all_npc_link() {
-    const npc = npc_focu$.value
-    const li = npc_list$.value
+    const npc = npc_edit$.value
+    const li = npc_li$.value
 
     if (!npc) {
         return

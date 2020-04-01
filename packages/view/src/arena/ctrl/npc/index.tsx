@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
-import { book_use$, npc_list$ } from '@/source'
+import { book_use$, npc_li$ } from '@/source'
 import { Route, useRouteMatch } from 'react-router-dom'
 
 import EditUser from './edit'

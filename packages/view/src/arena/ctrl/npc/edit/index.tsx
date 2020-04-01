@@ -3,15 +3,16 @@ import React, { useState, useEffect } from 'react'
 import { DefaultButton } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
 import Form from './form'
-import { npc_focu$, of_npc } from '@/source'
+import { npc_use_id$, edit_npc_auto, npc_edit$ } from '@/source'
 
 /**
  * 编辑页
  */
 export default function EditUser() {
     useEffect(() => {
+        edit_npc_auto()
         return () => {
-            npc_focu$.next(of_npc())
+            npc_use_id$.next(npc_edit$.value.id)
         }
     }, [])
     return (

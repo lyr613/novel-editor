@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { npc_focu$, chapter_list$, node_focu$, node_focu_buffer$, of_npc } from '@/source'
+import { chapter_list$, node_focu$, node_focu_buffer$, npc_use_id$, edit_npc_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
 import ThemeButton from '@/component/theme-button'
@@ -25,8 +25,8 @@ export default function Bar() {
 /** 顶部时间轴 */
 function TimeLine() {
     const fres = useObservable(() => npc_frequency_find$, [])
-    const npcf = useObservable(() => npc_focu$)
-    const infor = fres.filter((v) => v.id === npcf?.id)[0]
+    const npc_use_id = useObservable(() => npc_use_id$)
+    const infor = fres.filter((v) => v.id === npc_use_id)[0]
 
     return (
         <div className={s.TimeLine} title="单击角色, 重要度高于100的将展示出现频率">
@@ -73,7 +73,8 @@ function Action() {
         <div className={s.Action}>
             <ThemeButton
                 onClick={() => {
-                    npc_focu$.next(of_npc())
+                    npc_use_id$.next('')
+                    edit_npc_auto()
                     next_router('npc', 'edit')
                 }}
             >

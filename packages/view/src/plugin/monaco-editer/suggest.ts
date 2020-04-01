@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor'
-import { npc_list$ } from '@/source'
+import { npc_li$ } from '@/source'
 import { table_list$ } from '@/source/table'
 
 /** 片段提示 */
@@ -24,7 +24,7 @@ function get_seggest(
     // ~ 表格里的类型
     const flag = model.getLineContent(pos.lineNumber).slice(-1)
     if (flag === '@') {
-        const npcs = npc_list$.value
+        const npcs = npc_li$.value
         const keywords = npcs.map((npc) => {
             const sg: monaco.languages.CompletionItem = {
                 label: '@' + npc.base.name,

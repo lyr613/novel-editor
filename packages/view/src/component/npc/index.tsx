@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
-import { npc_list$, find_npc_li_auto } from '@/source'
+import { npc_li$, find_npc_li_auto } from '@/source'
 import { Label, ActionButton, TextField } from 'office-ui-fabric-react'
 
 interface p {
@@ -13,7 +13,7 @@ interface p {
 }
 /** 选择npc */
 export default function NpcSelect(p: p) {
-    const list_all = useObservable(() => npc_list$, [])
+    const list_all = useObservable(() => npc_li$, [])
     const list_did = list_all.filter((v) => p.did_ids.includes(v.id))
     const [fitstr, set_fitstr] = useState('')
     const list_will = list_all.filter((v) => {
