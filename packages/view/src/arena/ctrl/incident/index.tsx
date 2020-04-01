@@ -11,9 +11,11 @@ export default function Incident() {
     const { path } = useRouteMatch()
 
     useEffect(() => {
-        find_chapter_list_auto()
-        incident_find$.next()
-        find_npc_li_auto()
+        setTimeout(() => {
+            find_chapter_list_auto()
+            incident_find$.next()
+            find_npc_li_auto()
+        }, 50)
     }, [])
 
     if (!book_use$.value?.src) {

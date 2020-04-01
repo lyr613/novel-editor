@@ -14,7 +14,9 @@ import { shallowCopy } from '@/rx/shallow-copy'
 /** 书架 */
 export default function Shelf() {
     useEffect(() => {
-        load_books_auto()
+        setTimeout(() => {
+            load_books_auto()
+        }, 50)
     }, [])
     return (
         <div className={s.Shelf}>

@@ -26,10 +26,12 @@ export default function Show() {
     const chapter_map = useObservable(() => chapter_map$)
     const incident_map = useObservable(() => incident_map$)
     useEffect(() => {
-        find_npc_li_auto()
-        incident_find$.next()
-        find_chapter_list_auto()
-        outline_find$.next()
+        setTimeout(() => {
+            find_npc_li_auto()
+            incident_find$.next()
+            find_chapter_list_auto()
+            outline_find$.next()
+        }, 50)
     }, [])
     if (!book_use$.value?.src) {
         next_router('shelf')

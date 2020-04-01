@@ -41,9 +41,11 @@ export default function Edit() {
     }, [])
 
     useEffect(() => {
-        find_npc_li_auto()
-        find_chapter_list_auto()
-        table_list_find$.next()
+        setTimeout(() => {
+            find_npc_li_auto()
+            find_chapter_list_auto()
+            table_list_find$.next()
+        }, 50)
     }, [])
 
     if (!book_use$.value) {

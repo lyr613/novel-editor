@@ -20,7 +20,9 @@ const node_line$ = new BehaviorSubject<(node & { did_match: boolean })[]>([])
 /** 搜索 */
 export default function Search() {
     useEffect(() => {
-        find_chapter_list_auto()
+        setTimeout(() => {
+            find_chapter_list_auto()
+        }, 50)
     }, [])
     if (!book_use$.value) {
         next_router('shelf')

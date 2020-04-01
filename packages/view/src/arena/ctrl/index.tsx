@@ -24,42 +24,18 @@ export default function MainCtrl() {
     }, [])
     return (
         <div className={s.Stage}>
-            <Suspense fallback={null}>
-                <Route exact path="/shelf" component={Shelf}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route exact path="/edit" component={Edit}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route exact path="/help" component={Help}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/npc" component={Npc}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/search" component={Search}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/table" component={Table}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/map" component={Mapp}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/git" component={Git}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/incident" component={Incident}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/outline" component={Outline}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/option" component={Option}></Route>
-            </Suspense>
-            <Suspense fallback={null}>
-                <Route path="/zip" component={Zipp}></Route>
-            </Suspense>
+            <Route exact path="/shelf" component={Shelf}></Route>
+            <Route exact path="/edit" component={Edit}></Route>
+            <Route exact path="/help" component={Help}></Route>
+            <Route path="/npc" component={Npc}></Route>
+            <Route path="/search" component={Search}></Route>
+            <Route path="/table" component={Table}></Route>
+            <Route path="/map" component={Mapp}></Route>
+            <Route path="/git" component={Git}></Route>
+            <Route path="/incident" component={Incident}></Route>
+            <Route path="/outline" component={Outline}></Route>
+            <Route path="/option" component={Option}></Route>
+            <Route path="/zip" component={Zipp}></Route>
         </div>
     )
 }

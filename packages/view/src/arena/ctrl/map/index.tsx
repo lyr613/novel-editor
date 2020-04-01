@@ -13,9 +13,11 @@ import { map_list_find$ } from './subj'
 /** 地图 */
 export default function Mapp() {
     useEffect(() => {
-        if (book_use$.value?.src) {
-            map_list_find$.next()
-        }
+        setTimeout(() => {
+            if (book_use$.value?.src) {
+                map_list_find$.next()
+            }
+        }, 50)
     }, [])
     if (!book_use$.value?.src) {
         next_router('shelf')
