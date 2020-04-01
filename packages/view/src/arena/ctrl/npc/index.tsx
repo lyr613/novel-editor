@@ -10,12 +10,7 @@ import { next_router } from '@/function/router'
 /** 角色 */
 export default function Npc() {
     const { path } = useRouteMatch()!
-    useEffect(() => {
-        setTimeout(() => {
-            find_npc_li_auto()
-            find_chapter_list_auto()
-        }, 50)
-    }, [])
+    useEffect(() => {}, [])
     if (!book_use$.value?.src) {
         next_router('shelf')
         return null
