@@ -53,7 +53,7 @@ export const npc_li_finder$ = book_use$.pipe(
 )
 
 export function find_npc_li_auto() {
-    npc_li_finder$.subscribe((li) => {
+    npc_li_finder$.pipe(take(1)).subscribe((li) => {
         npc_li$.next(li)
     })
 }
