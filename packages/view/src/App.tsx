@@ -3,7 +3,7 @@ import { key$ } from './subscribe'
 import { ipc } from './const'
 import { HashRouter } from 'react-router-dom'
 import { useObservable } from 'rxjs-hooks'
-import { editer_setting$ } from './subject'
+import { editer_setting$, load_edit_set } from './subject'
 import { Menu } from './arena/menu'
 import Ctrl from './arena/ctrl'
 import { shallowCopy } from './rx/shallow-copy'
@@ -12,8 +12,9 @@ let wait_quit = false
 
 const App: React.FC = () => {
     const eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
-    const theme = eset?.common.theme
+    const theme = eset?.common.theme ?? 'word'
     useEffect(() => {
+        // 热键
         const ob = key$.subscribe((e) => {
             // alt + r 重载
             if (e.code === 82 && e.alt) {
@@ -38,9 +39,12 @@ const App: React.FC = () => {
         })
         return () => ob.unsubscribe()
     }, [])
-    if (!theme) {
-        return null
-    }
+    useEffect(() => {
+        // 加载编辑器设置
+        setTimeout(() => {
+            editer_setting$.next(load_edit_set())
+        }, 20)
+    }, [])
     return (
         <div id="app" className={'theme-' + theme}>
             <HashRouter>

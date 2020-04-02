@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs'
 import { fs_read, fs_write } from '@/source'
-import { debounceTime } from 'rxjs/operators'
+import { debounceTime, skip } from 'rxjs/operators'
 import { ipc } from '@/const'
 
 interface wh {
@@ -32,7 +32,7 @@ interface setting {
 }
 
 /** 编辑器设置 */
-export const editer_setting$ = new BehaviorSubject(load_set())
+export const editer_setting$ = new BehaviorSubject(default_set())
 
 /** 默认 */
 function default_set(): setting {
@@ -61,11 +61,11 @@ function default_set(): setting {
     }
 }
 
-function load_set() {
+export function load_edit_set() {
     const obj = fs_read<setting>('json', [ipc().sendSync('app_set_src'), 'settings.json'])
     return obj || default_set()
 }
 
-editer_setting$.pipe(debounceTime(2000)).subscribe((obj) => {
+editer_setting$.pipe(skip(2), debounceTime(2000)).subscribe((obj) => {
     fs_write('json', [ipc().sendSync('app_set_src'), 'settings.json'], obj)
 })

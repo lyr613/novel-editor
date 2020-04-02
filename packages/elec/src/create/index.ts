@@ -8,7 +8,7 @@ export function create_option(): Electron.BrowserWindowConstructorOptions {
         width: 960,
         height: 600,
         // fullscreen: true,
-        // autoHideMenuBar: true,
+        autoHideMenuBar: true,
 
         webPreferences: {
             /** 让网页获取electorn对象 */
