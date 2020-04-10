@@ -11,6 +11,13 @@ import { switchMap, map } from 'rxjs/operators'
 export default function LinkGraph() {
     const ref = useRef<null | HTMLDivElement>(null)
     useEffect(() => {
+        // 默认一个, 以后在此页加上列表选择
+        if (!npc_use_id$.value) {
+            const li = npc_li$.value
+            npc_use_id$.next(li[0]?.id ?? '')
+        }
+    }, [])
+    useEffect(() => {
         const dom = ref.current
         if (!dom) {
             return
