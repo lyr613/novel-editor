@@ -28,17 +28,18 @@ export default function LinkGraph() {
             height: dom.clientHeight,
             linkCenter: true,
             modes: {
-                default: [],
+                default: ['drag-canvas', 'zoom-canvas'],
             },
             layout: {
                 type: 'radial',
-                unitRadius: 70,
                 preventOverlap: true,
-                strictRadial: false,
+                strictRadial: true,
+                nodeSize: 120,
+                nodeSpacing: 120,
             },
             defaultNode: {
                 type: 'circle',
-                size: [20],
+                size: 60,
                 color: '#5B8FF9',
                 style: {
                     fill: '#9EC9FF',
@@ -47,7 +48,7 @@ export default function LinkGraph() {
                 labelCfg: {
                     style: {
                         fill: '#fff',
-                        fontSize: 5,
+                        fontSize: 15,
                     },
                 },
             },
@@ -55,10 +56,11 @@ export default function LinkGraph() {
                 style: {
                     stroke: '#e2e2e2',
                 },
+                size: [3],
                 labelCfg: {
                     style: {
                         fill: '#000',
-                        fontSize: 5,
+                        fontSize: 15,
                     },
                 },
             },
@@ -76,6 +78,9 @@ export default function LinkGraph() {
             )
             .subscribe((p) => {
                 graph.data(_get_edges(p.li, p.use))
+                // if (p.use) {
+                //     graph.focusItem(graph.findById(p.use.id))
+                // }
                 graph.render()
                 graph.fitView()
             })
@@ -84,14 +89,6 @@ export default function LinkGraph() {
             if (id) {
                 npc_use_id$.next(id)
             }
-        })
-        graph.on('edge:click', (e: any) => {
-            console.log(e)
-
-            // const id = e?.item?.defaultCfg?.id
-            // if (id) {
-            //     npc_use_id$.next(id)
-            // }
         })
         return () => {
             ob.unsubscribe()

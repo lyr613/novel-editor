@@ -20,6 +20,10 @@ const App: React.FC = () => {
             if (e.code === 82 && e.alt) {
                 ipc().send('key-reload')
             }
+            // alt + f 全屏
+            if (e.code === 70 && e.alt) {
+                ipc().send('key-full-screen', null)
+            }
             // alt + q 退出
             if (e.code === 81 && e.alt) {
                 if (wait_quit) {
@@ -35,7 +39,7 @@ const App: React.FC = () => {
             if (e.code === 73 && e.alt) {
                 ipc().send('key-devtool')
             }
-            // console.log(e)
+            console.log(e)
         })
         return () => ob.unsubscribe()
     }, [])

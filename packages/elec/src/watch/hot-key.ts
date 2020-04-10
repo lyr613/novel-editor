@@ -17,8 +17,12 @@ export function watch_hotkey(win: Electron.BrowserWindow) {
         win.webContents.toggleDevTools()
     })
     /** 全屏  */
-    ipcMain.on('key-full-screen', () => {
-        const b = win.isFullScreen()
-        win.setFullScreen(!b)
+    ipcMain.on('key-full-screen', (_, force) => {
+        if (force === null) {
+            const b = win.isFullScreen()
+            win.setFullScreen(!b)
+        } else {
+            win.setFullScreen(force)
+        }
     })
 }

@@ -119,6 +119,7 @@ function Write() {
                 enabled: false,
             },
             contextmenu: false,
+            tabSize: 8,
         }
 
         const editer = monaco.editor.create(dom, options)

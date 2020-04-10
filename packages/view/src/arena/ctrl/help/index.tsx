@@ -23,6 +23,7 @@ function HotKey() {
 
             <div className={s.aline}>退出: 快速连续两次 alt/command + q</div>
             <div className={s.aline}>重载app: alt/command + r</div>
+            <div className={s.aline}>切换全屏: alt/command + f</div>
         </section>
     )
 }
