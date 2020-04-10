@@ -4,6 +4,7 @@
     "private": false,
     "homepage": ".",
     "dependencies": {
+        "@antv/g6": "^3.4.4",
         "@babel/core": "7.8.4",
         "@svgr/webpack": "4.3.3",
         "@testing-library/jest-dom": "^4.2.4",

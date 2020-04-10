@@ -1,0 +1,14 @@
+.LinkGraph {
+    position: relative;
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 10px;
+    .bar {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+    .graph {
+        height: 100%;
+    }
+}

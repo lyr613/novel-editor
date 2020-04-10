@@ -6,6 +6,7 @@ import { Route, useRouteMatch } from 'react-router-dom'
 import EditUser from './edit'
 import Show from './show'
 import { next_router } from '@/function/router'
+import LinkGraph from './link-graph'
 
 /** 角色 */
 export default function Npc() {
@@ -19,6 +20,7 @@ export default function Npc() {
     return (
         <>
             <Route path={path + '/edit'} component={EditUser}></Route>
+            <Route path={path + '/link-graph'} component={LinkGraph}></Route>
             <Route exact path={path} component={Show}></Route>
         </>
     )

@@ -80,6 +80,14 @@ function Action() {
             >
                 新角色
             </ThemeButton>
+            <ThemeButton
+                onClick={() => {
+                    next_router('npc', 'link-graph')
+                }}
+                add_class={[s.btn]}
+            >
+                关系图
+            </ThemeButton>
             <TextField
                 placeholder="搜索"
                 value={fil.name}
