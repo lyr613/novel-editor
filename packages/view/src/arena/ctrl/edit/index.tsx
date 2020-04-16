@@ -3,10 +3,10 @@ import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import s from './s.module.scss'
 import { book_use$, find_npc_li_auto, find_chapter_list_auto } from '@/source'
 import { next_router } from '@/function/router'
-// import ChapterNode from './chapter-node'
-// import Outline from './outline'
-// import Workspace from './workspace'
-// import Shard from './shard'
+import ChapterNode from './chapter-node'
+import Outline from './outline'
+import Workspace from './workspace'
+import Shard from './shard'
 import { Screen$ } from '@/subscribe'
 import DragLine from '@/component/drag-line'
 import { useObservable } from 'rxjs-hooks'
@@ -15,10 +15,6 @@ import { table_list_find$ } from '@/source/table'
 import { editer_setting$ } from '@/subject'
 import { timer } from 'rxjs'
 import { take } from 'rxjs/operators'
-const ChapterNode = lazy(() => import('./chapter-node'))
-const Outline = lazy(() => import('./outline'))
-const Workspace = lazy(() => import('./workspace'))
-const Shard = lazy(() => import('./shard'))
 
 /** 编辑文本页 */
 export default function Edit() {
@@ -65,7 +61,6 @@ interface inset {
 }
 function Inset(p: inset) {
     const Eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
-    const t = useObservable(() => timer(0, 100).pipe(take(5)), 0)
     if (!Eset) {
         return null
     }
@@ -74,12 +69,10 @@ function Inset(p: inset) {
 
     return (
         <>
-            <Suspense fallback={null}>
-                <ChapterNode w={lens.width} h={p.h - lens.height} />
-            </Suspense>
-            <Suspense fallback={null}>{t > 0 && <Outline w={lens.width} h={lens.height} />}</Suspense>
-            <Suspense fallback={null}>{t > 2 && <Workspace w={p.w - lens.width} h={p.h - 30} />}</Suspense>
-            <Suspense fallback={null}>{t > 1 && <Shard w={p.w - lens.width} h={30} />}</Suspense>
+            <ChapterNode w={lens.width} h={p.h - lens.height} />
+            <Outline w={lens.width} h={lens.height} />
+            <Workspace w={p.w - lens.width} h={p.h - 30} />
+            <Shard w={p.w - lens.width} h={30} />
             <DragLine
                 datum="left"
                 on_drag={drag_w}

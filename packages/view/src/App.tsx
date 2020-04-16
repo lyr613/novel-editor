@@ -39,7 +39,7 @@ const App: React.FC = () => {
             if (e.code === 73 && e.alt) {
                 ipc().send('key-devtool')
             }
-            console.log(e)
+            // console.log(e)
         })
         return () => ob.unsubscribe()
     }, [])
