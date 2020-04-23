@@ -15,7 +15,7 @@ export const monaco_option_use$ = monaco_option$.pipe(
     switchMap((opt) =>
         editer_setting$.pipe(
             map((edit) => {
-                opt.fontFamily = edit.font?.family ?? 'syhei4'
+                opt.fontFamily = edit.font?.family ?? 'syhei2'
                 opt.fontSize = edit.font?.size ?? 16
                 return opt
             }),
