@@ -18,11 +18,13 @@ import { Screen$, key$ } from '@/subscribe'
 import { editer$ } from '../subj'
 import { editer_setting$ } from '@/subject'
 import useScroll from '@/hook/scroll-hock'
-import { zen$, mini$, etbottom$, ettop$, etnext$, etprev$ } from './subj'
+import { zen$, etbottom$, ettop$, etnext$, etprev$ } from './subj'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { check_words$ } from './util'
 import CtrlBar from './ctrl-bar'
 import { search_text$ } from '@/subject/search'
+import { default_editer_option } from '@/plugin/monaco-editer/option'
+import { monaco_option_use$ } from '@/subject/monaco'
 
 interface p {
     w: number
@@ -102,26 +104,7 @@ function Write() {
         if (!dom) {
             return
         }
-        const options: monaco.editor.IStandaloneEditorConstructionOptions = {
-            value: '',
-            language: 'book',
-            lineNumbers: 'off',
-            theme: 'word',
-            wordWrap: 'on',
-            fontSize: 16,
-            lineHeight: 26,
-            fontFamily: 'siyuangooglelight',
-            // 分割文本
-            wordSeparators: '~!@#$%^&*()-=+[{]}\\|;:\'",.<>/?，。？！……：”“—',
-            // 控制编辑器是否显示缩进参考线。
-            renderIndentGuides: false,
-            minimap: {
-                enabled: false,
-            },
-            contextmenu: false,
-            tabSize: 8,
-        }
-
+        const options = default_editer_option()
         const editer = monaco.editor.create(dom, options)
         editer$.next(editer)
 
@@ -154,7 +137,7 @@ function Write() {
         })
         // 自动大小
         const ob = editer_setting$
-            .pipe(merge(Screen$.pipe(debounceTime(1000))), merge(zen$.pipe(debounceTime(500))))
+            .pipe(merge(Screen$.pipe(debounceTime(500))), merge(zen$.pipe(debounceTime(500))))
             .subscribe(() => {
                 const layout = editer_setting$.value.editer.editer_layout
                 const o = {
@@ -165,14 +148,15 @@ function Write() {
                 set_h(o.height)
                 editer.layout(o)
             })
-        // 主题
-        const ob_theme = editer_setting$.subscribe((t) => {
+        // 观察应用配置
+        const ob_app = editer_setting$.subscribe((t) => {
             monaco.editor.setTheme(t.common.theme)
         })
-        // 缩略图
-        const ob_mini = mini$.subscribe((b) => {
-            options.minimap!.enabled = b
-            editer.updateOptions(options)
+        /** monaco配置
+         * 因为链了编辑器设置, 所以加个抖动
+         */
+        const ob_opt = monaco_option_use$.pipe(debounceTime(100)).subscribe((opt) => {
+            editer.updateOptions(opt)
             editer.render()
         })
         // 文本, 加一个延迟是为了缩放后, 切到别的页面切回来不闪一下
@@ -197,11 +181,11 @@ function Write() {
             editer.dispose()
             ob_t.unsubscribe()
             ob.unsubscribe()
-            ob_theme.unsubscribe()
+            ob_app.unsubscribe()
             ob_change_node.unsubscribe()
-            ob_mini.unsubscribe()
             ob_scroll_bottom.unsubscribe()
             ob_scroll_top.unsubscribe()
+            ob_opt.unsubscribe()
         }
     }, [])
     useEffect(() => {

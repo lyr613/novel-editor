@@ -5,9 +5,6 @@ import { node_focu$, chapter_list$, node_focu_buffer$ } from '@/source'
 /** 进入禅模式 */
 export const zen$ = new BehaviorSubject(false)
 
-/** 显示缩略图 */
-export const mini$ = new BehaviorSubject(false)
-
 /** 编辑器向下滚动文本 */
 export const etbottom$ = new Subject()
 /** 编辑器向上滚动文本 */

@@ -1,12 +1,37 @@
 #app {
-	display: flex;
-	background-color: var(--CLRl8);
+    display: flex;
+    background-color: var(--CLRl8);
 }
 
 .no-scroll::-webkit-scrollbar {
-	display: none;
+    display: none;
 }
 
 .canclk {
-	cursor: pointer;
+    cursor: pointer;
+}
+
+@font-face {
+    font-family: syhei1;
+    src: url(./SourceHanSansCN-ExtraLight.otf);
+}
+@font-face {
+    font-family: syhei2;
+    src: url(./SourceHanSansCN-Light.otf);
+}
+@font-face {
+    font-family: syhei4;
+    src: url(./SourceHanSansCN-Regular.otf);
+}
+@font-face {
+    font-family: syhei3;
+    src: url(./SourceHanSansCN-Normal.otf);
+}
+@font-face {
+    font-family: syhei5;
+    src: url(./SourceHanSansCN-Bold.otf);
+}
+@font-face {
+    font-family: syhei6;
+    src: url(./SourceHanSansCN-Heavy.otf);
 }

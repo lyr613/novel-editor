@@ -80,17 +80,3 @@
 .editer-glyphMargin {
     background: red;
 }
-
-@font-face {
-    font-family: 'siyuancuhei';
-    src: url(./_思源黑体SourceHanSansCN-Heavy.otf);
-}
-
-@font-face {
-    font-family: 'siyuangoogle';
-    src: url(./NotoSansCJK-Regular-1.otf);
-}
-@font-face {
-    font-family: 'siyuangooglelight';
-    src: url(./NotoSansCJK-Light-3.otf);
-}

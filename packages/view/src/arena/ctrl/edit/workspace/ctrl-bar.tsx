@@ -7,8 +7,9 @@ import { editer_setting$ } from '@/subject'
 import useScroll from '@/hook/scroll-hock'
 import { Slider } from 'office-ui-fabric-react'
 import ThemeLabel from '@/component/theme-label'
-import { zen$, mini$ } from './subj'
+import { zen$ } from './subj'
 import { sensitive_can_check$ } from '@/subject/sensitive'
+import { monaco_option$ } from '@/subject/monaco'
 
 /** 控制栏 */
 export default function CtrlBar() {
@@ -142,7 +143,7 @@ function Len() {
 function Model() {
     const zen = useObservable(() => zen$)
     const sensitive_can_check = useObservable(() => sensitive_can_check$)
-    const mini = useObservable(() => mini$)
+    const opt = useObservable(() => monaco_option$.pipe(shallowCopy()))
     return (
         <div className={s.Model}>
             <ThemeLabel
@@ -174,11 +175,13 @@ function Model() {
             <ThemeLabel
                 add_class={[s.zen]}
                 onClick={() => {
-                    mini$.next(!mini$.value)
+                    const opt = monaco_option$.value
+                    opt.minimap!.enabled = !opt.minimap?.enabled
+                    monaco_option$.next(opt)
                 }}
                 styles={{
                     root: {
-                        opacity: mini ? 1 : 0.6,
+                        opacity: opt?.minimap?.enabled ? 1 : 0.6,
                     },
                 }}
             >

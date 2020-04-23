@@ -29,6 +29,10 @@ interface setting {
     }
     /** 敏感词 */
     sensitive?: string[]
+    font?: {
+        size: number
+        family: string
+    }
 }
 
 /** 编辑器设置 */
@@ -58,6 +62,10 @@ function default_set(): setting {
             },
         },
         sensitive: [],
+        font: {
+            size: 16,
+            family: 'syhei4',
+        },
     }
 }
 
