@@ -10,6 +10,7 @@ import ThemeLabel from '@/component/theme-label'
 import { zen$ } from './subj'
 import { sensitive_can_check$ } from '@/subject/sensitive'
 import { monaco_option$ } from '@/subject/monaco'
+import { ipc } from '@/const'
 
 /** 控制栏 */
 export default function CtrlBar() {
@@ -149,6 +150,9 @@ function Model() {
             <ThemeLabel
                 add_class={[s.zen]}
                 onClick={() => {
+                    if (!zen) {
+                        ipc().send('key-full-screen', true)
+                    }
                     zen$.next(!zen$.value)
                 }}
                 styles={{
