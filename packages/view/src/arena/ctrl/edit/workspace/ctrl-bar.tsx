@@ -13,10 +13,8 @@ import { ipc } from '@/const'
 
 /** 控制栏 */
 export default function CtrlBar() {
-    const ref = useRef<null | HTMLDivElement>(null)
-
     return (
-        <div className={s.CtrlBar} ref={ref} title="鼠标滚轮或双指滑动">
+        <div className={s.CtrlBar}>
             <Len />
             <Model />
         </div>
