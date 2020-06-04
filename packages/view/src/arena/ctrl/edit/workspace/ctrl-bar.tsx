@@ -4,7 +4,6 @@ import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { editer_setting$ } from '@/subject'
-import useScroll from '@/hook/scroll-hock'
 import { Slider } from 'office-ui-fabric-react'
 import ThemeLabel from '@/component/theme-label'
 import { zen$ } from './subj'
@@ -15,7 +14,6 @@ import { ipc } from '@/const'
 /** 控制栏 */
 export default function CtrlBar() {
     const ref = useRef<null | HTMLDivElement>(null)
-    useScroll(ref, 'w')
 
     return (
         <div className={s.CtrlBar} ref={ref} title="鼠标滚轮或双指滑动">
@@ -29,7 +27,8 @@ export default function CtrlBar() {
 function Len() {
     const ESet = useObservable(() => editer_setting$.pipe(shallowCopy()))
     /** 横向最大偏移量 */
-    const max_tran = window.innerWidth / 3
+    const max_tran = (window.innerWidth / 3) | 0
+    const max_tran_y = (window.innerHeight / 3) | 0
 
     if (!ESet) {
         return null
@@ -125,8 +124,8 @@ function Len() {
             </span>
             <Slider
                 className={s.slider}
-                min={-200}
-                max={200}
+                min={-max_tran_y}
+                max={max_tran_y}
                 value={transform.height}
                 onChange={(n) => {
                     transform.height = n
