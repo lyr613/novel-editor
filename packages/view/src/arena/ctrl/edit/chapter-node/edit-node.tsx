@@ -25,6 +25,7 @@ import {
     chapter_save,
     node_focu$,
     find_chapter_list_auto,
+    node_buffer_add_by_id,
 } from '@/source'
 import { map } from 'rxjs/operators'
 
@@ -193,6 +194,8 @@ export function EditNode() {
                         await chapter_save()
                         find_chapter_list_auto()
                         show_node_edit$.next(false)
+                        node_focu$.next(the_node)
+                        node_buffer_add_by_id(the_node.id)
                     }}
                 >
                     好

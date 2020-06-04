@@ -127,7 +127,8 @@ function Write() {
                     node_id_text_map$.next(m)
                 }
             } else {
-                alert('当前没有选中节, 无法保存编辑内容')
+                // alert('当前没有选中节, 无法保存编辑内容')
+                editer.setValue('当前没有选中节, 无法保存编辑内容')
             }
         })
         // 切换节时
