@@ -13,7 +13,10 @@ export const find_chapter_list$ = book_use$.pipe(
     map((v) => v?.src || ''),
     switchMap((book_src) => {
         return new Promise<chapter[]>((suc) => {
-            fs_read('json', [book_src, 'chapter'], (s) => {
+            fs_read('json', [book_src, 'chapter'], (s: any) => {
+                s.forEach((vv: any) => {
+                    vv.expand = false
+                })
                 suc((s as chapter[]) || [])
             })
         })
