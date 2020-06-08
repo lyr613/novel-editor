@@ -14,6 +14,7 @@ import {
     be_drawing$,
     map_txt_buffer$,
     map_foo_color$,
+    map_hover_line$,
 } from '../subj'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -30,12 +31,46 @@ export default function WorkSpace() {
             <div className={s.square}>
                 {be_editing && !!foid && be_drawing && <DrawBuffer />}
                 {be_editing && !!foid && !be_drawing && <TextBuffer />}
+                {!be_editing && <HoverLine />}
                 <DrawResult />
                 <TextResult />
             </div>
             <DrawCellBox />
         </div>
     )
+}
+
+/** 悬浮高亮线 */
+function HoverLine() {
+    const ref = useRef<null | HTMLCanvasElement>(null)
+    useEffect(() => {
+        const dom = ref.current
+        if (!dom) {
+            return
+        }
+        const cns = dom.getContext('2d')!
+        cns.lineWidth = 10
+        cns.strokeStyle = '#000000'
+        const ob = map_hover_line$.subscribe((arr) => {
+            cns.clearRect(0, 0, 1000, 1000)
+            if (!arr.length) {
+                return
+            }
+
+            const l = new Path2D()
+
+            l.moveTo(arr[0].x, arr[0].y)
+            arr.forEach((pt) => {
+                l.lineTo(pt.x, pt.y)
+            })
+            cns.stroke(l)
+        })
+        return () => {
+            ob.unsubscribe()
+        }
+    }, [])
+
+    return <canvas className={s.HoverLine} ref={ref} width={1000} height={1000} />
 }
 
 /** 绘制一条线的暂存 */

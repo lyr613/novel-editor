@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
-import { map_focu$, pen_, map_txt, of_txt, map_list$ } from '../subj'
+import { map_focu$, pen_, map_txt, of_txt, map_list$, map_hover_line$ } from '../subj'
 import IconButton from '@/component/icon-button'
 import { TextField } from 'office-ui-fabric-react'
 
@@ -92,7 +92,15 @@ function OnePen(p: p_histroy_one_draw) {
         cns.stroke(l)
     }, [pen])
     return (
-        <div className={s.one}>
+        <div
+            className={s.one}
+            onMouseEnter={() => {
+                map_hover_line$.next(p.pen.points)
+            }}
+            onMouseLeave={() => {
+                map_hover_line$.next([])
+            }}
+        >
             <canvas className={s.cns} ref={ref_cns} width="100" height="100"></canvas>
             <IconButton
                 add_class={[s.iconbtn]}

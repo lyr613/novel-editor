@@ -14,7 +14,7 @@
         background-color: rgb(247, 247, 247);
         .draw {
             position: absolute;
-            z-index: 20;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
@@ -38,7 +38,7 @@
         }
         .TextResult {
             position: absolute;
-            z-index: 8;
+            z-index: 800;
             left: 0;
             top: 0;
             width: 100%;
@@ -59,7 +59,7 @@
         }
         .TextBuffer {
             position: absolute;
-            z-index: 20;
+            z-index: 1100;
             left: 0;
             top: 0;
             width: 100%;
@@ -101,6 +101,15 @@
             color: var(--CLRt2);
         }
     }
+}
+
+.HoverLine {
+    position: absolute;
+    z-index: 500;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
 }
 
 // 一张图的绘制记录
