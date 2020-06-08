@@ -57,6 +57,8 @@ export interface amap {
     pens: pen_[]
     /** 文字 */
     txts: map_txt[]
+    /** 备注 */
+    remark: string
 }
 /** 地图列表 */
 export const map_list$ = new BehaviorSubject<amap[]>([])
@@ -86,6 +88,7 @@ export function of_map(): amap {
         name: '地图名称',
         pens: [],
         txts: [],
+        remark: '',
     }
 }
 
