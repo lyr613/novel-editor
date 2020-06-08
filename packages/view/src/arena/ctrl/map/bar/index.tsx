@@ -51,6 +51,7 @@ export default function Bar() {
             <div className={s.hline}></div>
 
             <TextField
+                label="名称"
                 value={focu?.name ?? '没有选择地图'}
                 onChange={(_, ns) => {
                     ns = (ns || '').replace(/\s/g, '')
@@ -66,7 +67,7 @@ export default function Bar() {
                 styles={{
                     root: {
                         margin: '0 10px',
-                        width: '120px',
+                        width: '180px',
                     },
                     fieldGroup: {
                         backgroundColor: 'rgb(0,0,0,0)',

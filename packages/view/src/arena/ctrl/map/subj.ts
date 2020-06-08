@@ -9,26 +9,24 @@ export interface point_ {
     y: number
 }
 
-export type color_ = 'red' | 'blue' | 'green' | 'black'
-
 export interface pen_ {
     type: 'pen'
     id: string
-    color: color_
+    color: string
     points: point_[]
 }
 export function of_pen(): pen_ {
     return {
         type: 'pen',
         id: id32(),
-        color: 'red',
+        color: 'ff0000',
         points: [],
     }
 }
 
 export interface map_txt {
     id: string
-    color: color_
+    color: string
     txt: string
     description: string
     position: point_
@@ -112,6 +110,11 @@ export const be_selecting$ = new BehaviorSubject(false)
 
 /** 查找地图列表 */
 export const map_list_find$ = new Subject()
+
+/** 底部设置的颜色
+ * 在保存时直接取用这个值去覆盖就好了
+ */
+export const map_foo_color$ = new BehaviorSubject('ff0000')
 
 map_list_find$.pipe(throttleTime(2000)).subscribe(() => {
     const bs = book_use$.value?.src
