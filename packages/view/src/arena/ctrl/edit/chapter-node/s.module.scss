@@ -1,117 +1,120 @@
 .ChapterNode {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 200px;
-	height: 600px;
-	background-color: var(--CLRl6);
-	color: var(--CLRt2);
-	user-select: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 600px;
+    background-color: var(--CLRl6);
+    color: var(--CLRt2);
+    user-select: none;
 }
 
 .Head {
-	display: flex;
-	box-sizing: border-box;
-	width: 100%;
-	height: 30px;
-	// border: 1px solid black;
-	// border-width: 0 1px 1px 0;
-	padding: 0 10px;
-	background-color: var(--CLRl7);
-	align-items: center;
-	justify-content: space-between;
-	font-size: 14px;
-	white-space: nowrap;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 30px;
+    // border: 1px solid black;
+    // border-width: 0 1px 1px 0;
+    padding: 0 10px;
+    background-color: var(--CLRl7);
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    white-space: nowrap;
 
-	.txt {
-		margin-right: auto;
-	}
-	.icon {
-		margin: 0 0 0 10px;
-		cursor: pointer;
-		&:hover {
-			color: var(--CLRt1);
-		}
-	}
+    .txt {
+        margin-right: auto;
+    }
+    .icon {
+        margin: 0 0 0 10px;
+        cursor: pointer;
+        &:hover {
+            color: var(--CLRt1);
+        }
+    }
 }
 
 .Tree {
-	overflow: hidden;
-	height: calc(100% - 30px);
+    overflow: hidden;
+    height: calc(100% - 30px);
+    &:hover {
+        overflow-y: auto;
+    }
 }
 
 .Chapter {
-	white-space: nowrap;
-	.name {
-		display: flex;
-		position: relative;
+    white-space: nowrap;
+    .name {
+        display: flex;
+        position: relative;
 
-		box-sizing: border-box;
-		width: 100%;
-		height: 24px;
-		line-height: 24px;
-		padding: 0;
-		font-size: 12px;
-		align-items: center;
-		&:hover {
-			background-color: var(--CLRl5);
-		}
-		.icon {
-			flex-shrink: 0;
-			width: 24px;
-			text-align: center;
-		}
-		.cname {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			flex-grow: 1;
-			flex-shrink: 1;
-		}
-		.iconr {
-			flex-shrink: 0;
-			text-align: center;
-			width: 24px;
-			cursor: pointer;
-			&:hover {
-				color: var(--CLRt1);
-			}
-		}
-	}
+        box-sizing: border-box;
+        width: 100%;
+        height: 24px;
+        line-height: 24px;
+        padding: 0;
+        font-size: 12px;
+        align-items: center;
+        &:hover {
+            background-color: var(--CLRl5);
+        }
+        .icon {
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+        }
+        .cname {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        .iconr {
+            flex-shrink: 0;
+            text-align: center;
+            width: 24px;
+            cursor: pointer;
+            &:hover {
+                color: var(--CLRt1);
+            }
+        }
+    }
 }
 .Node {
-	display: flex;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	box-sizing: border-box;
-	width: 100%;
-	height: 24px;
-	line-height: 24px;
-	padding: 0 0 0 40px;
-	font-size: 12px;
-	.ndname {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		flex-grow: 1;
-		flex-shrink: 1;
-	}
-	.iconr {
-		display: none;
-		flex-shrink: 0;
-		text-align: center;
-		width: 24px;
-		cursor: pointer;
-		&:hover {
-			color: var(--CLRt1);
-		}
-	}
-	&:hover {
-		background-color: var(--CLRl5);
-		.iconr {
-			display: unset;
-		}
-	}
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    width: 100%;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0 0 40px;
+    font-size: 12px;
+    .ndname {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    .iconr {
+        display: none;
+        flex-shrink: 0;
+        text-align: center;
+        width: 24px;
+        cursor: pointer;
+        &:hover {
+            color: var(--CLRt1);
+        }
+    }
+    &:hover {
+        background-color: var(--CLRl5);
+        .iconr {
+            display: unset;
+        }
+    }
 }
 
 .focu {
-	background-color: var(--CLRl4) !important;
+    background-color: var(--CLRl4) !important;
 }

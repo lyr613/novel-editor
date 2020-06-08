@@ -86,7 +86,6 @@ function Tree() {
     const ref = useRef<null | HTMLDivElement>(null)
     const focu_node = useObservable(() => node_focu$)
 
-    useScroll(ref, 'h')
     // 节聚焦时, 滚动
     useEffect(() => {
         const dom = ref.current

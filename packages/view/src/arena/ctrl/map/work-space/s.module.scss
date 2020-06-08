@@ -1,141 +1,144 @@
 .WorkSpace {
-	display: flex;
-	grid-area: d;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
-	padding: 10px;
-	background-color: var(--CLRl7);
-	user-select: none;
-	.square {
-		position: relative;
-		width: calc(100vh - 80px);
-		height: 100%;
-		background-color: rgb(247, 247, 247);
-		.draw {
-			position: absolute;
-			z-index: 20;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-		}
-		.cns {
-			position: absolute;
-			z-index: 10;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-		}
-		.DrawResult {
-			position: absolute;
-			z-index: 5;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-		}
-		.TextResult {
-			position: absolute;
-			z-index: 8;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			.txt {
-				position: absolute;
-				padding: 10px;
-				font-size: 16px;
-				color: red;
-				transform: translate(-50%, -50%);
-			}
-			.canclktxt {
-				cursor: pointer;
-				&:hover {
-					background-color: rgba(0, 0, 0, 0.2);
-				}
-			}
-		}
-		.TextBuffer {
-			position: absolute;
-			z-index: 20;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			.txt {
-				position: absolute;
-				font-size: 16px;
-				color: black;
-				transform: translate(-50%, -50%);
-			}
-		}
-	}
-	.DrawCellBox {
-		margin-left: 10px;
-		flex-grow: 0;
-		overflow-y: auto;
-		height: 100%;
-		width: calc(100vw - 280px - 100vh + 50px);
-		background-color: var(--CLRl6);
-		.title {
-			box-sizing: border-box;
-			height: 30px;
-			line-height: 30px;
-			background-color: var(--CLRl5);
+    display: flex;
+    grid-area: d;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: var(--CLRl7);
+    user-select: none;
+    .square {
+        position: relative;
+        width: calc(100vh - 80px);
+        height: 100%;
+        background-color: rgb(247, 247, 247);
+        .draw {
+            position: absolute;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .cns {
+            position: absolute;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .DrawResult {
+            position: absolute;
+            z-index: 5;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .TextResult {
+            position: absolute;
+            z-index: 8;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            .txt {
+                position: absolute;
+                padding: 10px;
+                font-size: 16px;
+                color: red;
+                transform: translate(-50%, -50%);
+            }
+            .canclktxt {
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+        .TextBuffer {
+            position: absolute;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            .txt {
+                position: absolute;
+                font-size: 16px;
+                color: black;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+    .DrawCellBox {
+        margin-left: 10px;
+        flex-grow: 0;
+        overflow-y: hidden;
+        height: 100%;
+        width: calc(100vw - 280px - 100vh + 50px);
+        background-color: var(--CLRl6);
+        &:hover {
+            overflow-y: auto;
+        }
+        .title {
+            box-sizing: border-box;
+            height: 30px;
+            line-height: 30px;
+            background-color: var(--CLRl5);
 
-			padding-left: 10px;
-			font-size: 14px;
-			color: var(--CLRt2);
-			cursor: pointer;
-		}
-		.havemore {
-			height: 10px;
-			line-height: 10px;
-			font-size: 12px;
-			text-align: center;
-			color: var(--CLRt2);
-		}
-	}
+            padding-left: 10px;
+            font-size: 14px;
+            color: var(--CLRt2);
+            cursor: pointer;
+        }
+        .havemore {
+            height: 10px;
+            line-height: 10px;
+            font-size: 12px;
+            text-align: center;
+            color: var(--CLRt2);
+        }
+    }
 }
 
 // 一张图的绘制记录
 .Pens {
-	font-size: 24px;
-	.one {
-		margin: 10px;
-		height: 80px;
-		background-color: var(--CLRl5);
-		.cns {
-			margin: 10px;
-			width: 60px;
-			height: 60px;
-			background-color: var(--CLRl6);
-		}
-		.iconbtn {
-			float: right;
-			padding: 10px;
-		}
-	}
+    font-size: 24px;
+    .one {
+        margin: 10px;
+        height: 80px;
+        background-color: var(--CLRl5);
+        .cns {
+            margin: 10px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--CLRl6);
+        }
+        .iconbtn {
+            float: right;
+            padding: 10px;
+        }
+    }
 }
 
 .Texts {
-	margin-top: 10px;
-	width: 100%;
-	.one {
-		position: relative;
-		margin: 10px;
-		overflow: hidden;
-		box-sizing: border-box;
-		padding: 10px;
-		background-color: var(--CLRl5);
-		font-size: 14px;
-		.iconbtn {
-			position: absolute;
-			right: 0;
-			top: 0;
-			padding: 10px;
-		}
-	}
+    margin-top: 10px;
+    width: 100%;
+    .one {
+        position: relative;
+        margin: 10px;
+        overflow: hidden;
+        box-sizing: border-box;
+        padding: 10px;
+        background-color: var(--CLRl5);
+        font-size: 14px;
+        .iconbtn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 10px;
+        }
+    }
 }
