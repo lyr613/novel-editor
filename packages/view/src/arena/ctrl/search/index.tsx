@@ -20,9 +20,12 @@ const node_line$ = new BehaviorSubject<(node & { did_match: boolean })[]>([])
 /** 搜索 */
 export default function Search() {
     useEffect(() => {
-        setTimeout(() => {
+        const t = setTimeout(() => {
             find_chapter_list_auto()
         }, 50)
+        return () => {
+            clearTimeout(t)
+        }
     }, [])
     if (!book_use$.value) {
         next_router('shelf')
@@ -139,7 +142,7 @@ function Result() {
 
     useEffect(() => {
         function func(_: any, re: any[]) {
-            // console.log(re)
+            console.log('搜索结果', re)
             search_re$.next(re)
         }
         ipc().on('book_search_text', func)

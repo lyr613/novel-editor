@@ -113,6 +113,8 @@ function book_search_text(e: Electron.IpcMainEvent, book_src: string, match_temp
     if (!book_src || !match_temp || !fs.existsSync(book_src)) {
         return
     }
+    console.log('开始搜索', match_temp)
+
     try {
         const cps = get_chapters(book_src)
         const re: {
@@ -156,11 +158,14 @@ function book_search_text(e: Electron.IpcMainEvent, book_src: string, match_temp
                     node_count++
                 } catch (error) {}
             })
-            re.push({
-                chapter: cp,
-                matchs: matchs,
-            })
+            if (matchs.length) {
+                re.push({
+                    chapter: cp,
+                    matchs: matchs,
+                })
+            }
         })
+
         reply(e, 'book_search_text', re)
         // 继续做百分比展示
         const per_map = new Map<number, any>()
@@ -173,5 +178,8 @@ function book_search_text(e: Electron.IpcMainEvent, book_src: string, match_temp
         })
 
         reply(e, 'book_search_text_pers', Array.from(per_map.values()))
-    } catch (error) {}
+        console.log('搜索结果,', re.length, '条')
+    } catch (error) {
+        console.log('搜索失败')
+    }
 }
