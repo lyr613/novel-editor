@@ -2,12 +2,26 @@
 import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
-import { map_list$, of_map, map_focu_id$, be_editing$, be_selecting$, map_focu$, map_txt_buffer$, amap } from '../subj'
-import useScroll from '@/hook/scroll-hock'
+import {
+    map_list$,
+    map_focu_id$,
+    be_editing$,
+    be_selecting$,
+    map_txt_buffer$,
+    amap,
+    map_list_name_filter$,
+} from '../subj'
+import { switchMap, map } from 'rxjs/operators'
 
 /** 地图列表 */
 export default function ListShow() {
-    const list = useObservable(() => map_list$, [])
+    const list = useObservable(
+        () =>
+            map_list$.pipe(
+                switchMap((li) => map_list_name_filter$.pipe(map((fil) => li.filter((v) => v.name.match(fil))))),
+            ),
+        [],
+    )
     const foid = useObservable(() => map_focu_id$, '')
     return (
         <div className={s.ListShow}>

@@ -2,12 +2,14 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import IconButton from '@/component/icon-button'
-import { of_map, map_list$, map_focu_id$, map_focu$, be_editing$ } from '../subj'
+import { of_map, map_list$, map_focu_id$, map_focu$, be_editing$, map_list_name_filter$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
+import { TextField } from 'office-ui-fabric-react'
 
 /** 左上角列表控制, 添加 删除 */
 export default function ListCtrl() {
     const use = useObservable(() => map_focu_id$)
+    const name_fil = useObservable(() => map_list_name_filter$, '')
     return (
         <div className={s.ListCtrl}>
             <IconButton
@@ -26,7 +28,7 @@ export default function ListCtrl() {
             {use && (
                 <IconButton
                     icon="Delete"
-                    add_class={[s.btn]}
+                    add_class={[s.btn, s.del]}
                     onDoubleClick={() => {
                         const arr = map_list$.value
                         const fid = map_focu_id$.value
@@ -37,6 +39,24 @@ export default function ListCtrl() {
                     }}
                 />
             )}
+            <TextField
+                underlined
+                value={name_fil}
+                onChange={(_, ns) => {
+                    ns = ns || ''
+                    map_list_name_filter$.next(ns)
+                }}
+                styles={{
+                    root: {
+                        margin: '0 10px',
+                        width: '120px',
+                    },
+                    fieldGroup: {
+                        backgroundColor: 'rgb(0,0,0,0)',
+                    },
+                }}
+                iconProps={{ iconName: 'Zoom' }}
+            />
         </div>
     )
 }

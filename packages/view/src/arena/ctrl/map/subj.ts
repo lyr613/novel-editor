@@ -122,6 +122,9 @@ export const map_foo_color$ = new BehaviorSubject('ff0000')
 /** 右侧的某条线悬浮时, 在大图上高亮显示 */
 export const map_hover_line$ = new BehaviorSubject<point_[]>([])
 
+/** 左上角过滤地图名字 */
+export const map_list_name_filter$ = new BehaviorSubject('')
+
 map_list_find$.pipe(throttleTime(2000)).subscribe(() => {
     const bs = book_use$.value?.src
     if (!bs) {
