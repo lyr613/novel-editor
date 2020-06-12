@@ -147,7 +147,7 @@ function BookList() {
                                 仓库
                             </DefaultButton> */}
                             <DefaultButton
-                                onClick={() => {
+                                onDoubleClick={() => {
                                     const p = editer_setting$.value
                                     p.shelf.book_list = p.shelf.book_list.filter((v) => v !== book.src)
                                     editer_setting$.next(p)
@@ -157,7 +157,7 @@ function BookList() {
                                     marginRight: '10px',
                                 }}
                             >
-                                移除
+                                隐藏
                             </DefaultButton>
                         </div>
                     </div>
