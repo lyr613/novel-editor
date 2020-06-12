@@ -18,7 +18,7 @@ import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import {
     chapter_list$,
-    chapter_focu$,
+    chapter_use$,
     book_use$,
     of_node,
     fs_write,
@@ -52,7 +52,7 @@ export function EditNode() {
     /** 章列表 */
     const cps = useObservable(() => chapter_list$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     /** 聚焦的章 */
-    const cp_focu = useObservable(() => chapter_focu$) ?? cps[0]
+    const cp_focu = useObservable(() => chapter_use$) ?? cps[0]
     /** 聚焦的节 */
     const node_focu = useObservable(() => node_focu$)
 
@@ -140,7 +140,7 @@ export function EditNode() {
                     const id = opt?.key
                     const nf = arr.find((v) => v.id === id)
                     if (nf) {
-                        chapter_focu$.next(nf)
+                        chapter_use$.next(nf)
                     }
                 }}
             ></Dropdown>

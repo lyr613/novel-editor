@@ -5,7 +5,7 @@ import { Icon, ActionButton } from 'office-ui-fabric-react'
 import {
     chapter_list$,
     node_focu$,
-    chapter_focu$,
+    chapter_use$,
     node_focu_buffer$,
     chapter_save,
     fs_write,
@@ -17,7 +17,6 @@ import { useObservable } from 'rxjs-hooks'
 import { map, filter, debounceTime } from 'rxjs/operators'
 import { EditChapter, DeleteChapter, action_cp$, hidd_cp$, show_del_cp$ } from './edit-cp'
 import { EditNode, show_node_edit$, action_nd$ } from './edit-node'
-import useScroll from '@/hook/scroll-hock'
 
 interface p {
     w: number
@@ -157,7 +156,7 @@ function Chapter(p: cp) {
             <header
                 className={s.name}
                 onClick={() => {
-                    chapter_focu$.next(p.cp)
+                    chapter_use$.next(p.cp)
                     p.cp.expand = !p.cp.expand
                     const arr = chapter_list$.value
                     chapter_list$.next(arr)
@@ -178,7 +177,7 @@ function Chapter(p: cp) {
                             onClick={(e) => {
                                 e.stopPropagation()
                                 e.preventDefault()
-                                chapter_focu$.next(p.cp)
+                                chapter_use$.next(p.cp)
                                 action_cp$.next('change')
                                 hidd_cp$.next(false)
                             }}
@@ -190,7 +189,7 @@ function Chapter(p: cp) {
 							onClick={e => {
 								e.stopPropagation()
 								e.preventDefault()
-								chapter_focu$.next(p.cp)
+								chapter_use$.next(p.cp)
 								show_del_cp$.next(true)
 							}}
 						></Icon> */}
@@ -215,7 +214,7 @@ function Node(p: nd) {
             title={p.nd.name}
             className={[s.Node, p.nd.id === focu_node_id ? s.focu : ''].join(' ')}
             onClick={() => {
-                chapter_focu$.next(p.cp)
+                chapter_use$.next(p.cp)
                 node_focu$.next(p.nd)
                 const arr = node_focu_buffer$.value
                 if (!arr.find((v) => v.id === p.nd.id)) {
@@ -231,7 +230,7 @@ function Node(p: nd) {
                 onClick={(e) => {
                     e.stopPropagation()
                     e.preventDefault()
-                    chapter_focu$.next(p.cp)
+                    chapter_use$.next(p.cp)
                     node_focu$.next(p.nd)
                     action_nd$.next('change')
                     show_node_edit$.next(true)

@@ -5,7 +5,7 @@ import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dia
 import { PrimaryButton, DefaultButton, ActionButton } from 'office-ui-fabric-react/lib/Button'
 import { TextField, ChoiceGroup, IChoiceGroupOption, Dropdown, IDropdownOption } from 'office-ui-fabric-react'
 import { Icon, Slider, Label } from 'office-ui-fabric-react'
-import { chapter_list$, book_use$, of_chapter, chapter_focu$, chapter_save, find_chapter_list_auto } from '@/source'
+import { chapter_list$, book_use$, of_chapter, chapter_use$, chapter_save, find_chapter_list_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { id32 } from '@/function/id32'
 import { fs_write, mk_dir, fs_rename } from '@/source/fs-common'
@@ -30,7 +30,7 @@ export function EditChapter() {
     /** 章列表 */
     const cps = useObservable(() => chapter_list$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     /** 聚焦的章 */
-    const focu = useObservable(() => chapter_focu$)
+    const focu = useObservable(() => chapter_use$)
     /** 聚焦的书 */
     const book = useObservable(() => book_use$)
     /** 操作 添加或删除 */
@@ -58,7 +58,7 @@ export function EditChapter() {
         const ob = action_cp$
             .pipe(
                 filter((s) => s === 'change'),
-                switchMap(() => chapter_focu$.pipe(take(1))),
+                switchMap(() => chapter_use$.pipe(take(1))),
                 filter((v) => !!v),
                 map((v) => v!),
             )
@@ -189,7 +189,7 @@ export function DeleteChapter() {
     /** 显示弹窗 */
     const show = useObservable(() => show_del_cp$, false)
     /** 聚焦的章 */
-    const focu = useObservable(() => chapter_focu$)
+    const focu = useObservable(() => chapter_use$)
     /** 聚焦的书 */
     const book = useObservable(() => book_use$)
     if (!focu || !book) {

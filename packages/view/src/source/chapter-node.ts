@@ -28,7 +28,7 @@ export function find_chapter_list_auto() {
         chapter_list$.next(li)
     })
 }
-export const chapter_focu$ = new BehaviorSubject<null | chapter>(null)
+export const chapter_use$ = new BehaviorSubject<null | chapter>(null)
 
 export const chapter_map$ = chapter_list$.pipe(
     map((li) => {
