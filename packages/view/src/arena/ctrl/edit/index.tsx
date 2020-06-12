@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import s from './s.module.scss'
-import { book_use$, find_npc_li_auto, find_chapter_list_auto } from '@/source'
+import { book_use$, find_npc_li_auto, find_chapter_list_auto, load_prev_buffer, node_use_buffer$ } from '@/source'
 import { next_router } from '@/function/router'
 import ChapterNode from './chapter-node'
 import Outline from './outline'
@@ -13,8 +13,6 @@ import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { table_list_find$ } from '@/source/table'
 import { editer_setting$ } from '@/subject'
-import { timer } from 'rxjs'
-import { take } from 'rxjs/operators'
 
 /** 编辑文本页 */
 export default function Edit() {
@@ -37,11 +35,19 @@ export default function Edit() {
     }, [])
 
     useEffect(() => {
-        setTimeout(() => {
+        const a = setTimeout(() => {
             find_npc_li_auto()
             find_chapter_list_auto()
             table_list_find$.next()
+            if (!node_use_buffer$.value.length) {
+                setTimeout(() => {
+                    load_prev_buffer()
+                }, 100)
+            }
         }, 50)
+        return () => {
+            clearTimeout(a)
+        }
     }, [])
 
     if (!book_use$.value) {

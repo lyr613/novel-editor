@@ -1,5 +1,5 @@
 import { Subject, BehaviorSubject, timer, of, ReplaySubject, interval } from 'rxjs'
-import { map, filter, switchMap, tap, take, debounceTime } from 'rxjs/operators'
+import { map, filter, switchMap, tap, take, debounceTime, skip } from 'rxjs/operators'
 import { ipc, ENV } from '@/const'
 import { book_use$ } from './book'
 import { fs_write, fs_read } from './fs-common'
@@ -21,9 +21,31 @@ export function node_buffer_add_by_id(id: string, node_list?: node[]) {
     }
     const buffer = node_use_buffer$.value
     if (!buffer.find((v) => v.id === id)) {
-        const arr = [...buffer, fi].slice(-5)
+        const arr = [...buffer, fi].slice(-8)
         node_use_buffer$.next(arr)
     }
+}
+/** 根据id列表向编辑页buffer添加多个 */
+export function node_buffer_add_by_ids(ids: string[], node_list?: node[]) {
+    const arr = node_list || get_now_node_list()
+    const nmap = new Map<string, boolean>()
+    ids.forEach((id) => {
+        nmap.set(id, true)
+    })
+    const fis = arr.filter((v) => nmap.get(v.id))
+    if (!fis.length) {
+        return
+    }
+    const next_buffer = [...node_use_buffer$.value]
+    fis.forEach((node) => {
+        if (!next_buffer.find((v) => v.id === node.id)) {
+            next_buffer.push(node)
+            if (next_buffer.length > 8) {
+                next_buffer.shift()
+            }
+        }
+    })
+    node_use_buffer$.next(next_buffer)
 }
 
 /** 选中一个节, 并跳到编辑页开始编辑 */
@@ -65,7 +87,7 @@ node_id_text_map$.pipe(debounceTime(2000)).subscribe((m) => {
 // ----
 
 // 当切换书时, 清空buffer和text
-book_use$.pipe(debounceTime(0)).subscribe(() => {
+book_use$.pipe(debounceTime(10)).subscribe(() => {
     node_use_buffer$.next([])
     node_text_from_fs$.next('')
     node_use$.next(null)
@@ -87,4 +109,52 @@ export function find_node_text_from_fs_auto() {
     node_text_from_fs_finder$.pipe(take(1)).subscribe((text) => {
         node_text_from_fs$.next(text)
     })
+}
+
+/** 更新buffer时, 储存到硬盘以便下次直接打开 */
+node_use$
+    .pipe(
+        switchMap(() => node_use_buffer$),
+        filter((bs) => !!bs.length),
+        debounceTime(500),
+    )
+    .subscribe((buf) => {
+        const booksrc = book_use$.value?.src
+        if (!booksrc) {
+            return
+        }
+        const ids = buf.map((v) => v.id)
+        const use_id = node_use$.value?.id ?? ''
+        const dto = {
+            ids,
+            use_id,
+        }
+        fs_write('json', [booksrc, 'prev-edit'], dto)
+    })
+
+/** 编辑页使用此方法, 加载上一次的编辑, 如果已经有buffer, 则不加载 */
+export function load_prev_buffer() {
+    const booksrc = book_use$.value?.src
+    if (!booksrc) {
+        return
+    }
+    const dto = fs_read('json', [booksrc, 'prev-edit'], (s: any) => {
+        return s
+            ? {
+                  ids: s.ids,
+                  use_id: s.use_id,
+              }
+            : null
+    })
+    if (!dto) {
+        return
+    }
+
+    node_buffer_add_by_ids(dto.ids)
+
+    const nodeall = get_now_node_list()
+    const fiuse = nodeall.find((v) => v.id === dto.use_id)
+    if (fiuse) {
+        node_use$.next(fiuse)
+    }
 }
