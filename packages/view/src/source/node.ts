@@ -7,10 +7,10 @@ import { get_now_node_list } from './chapter-node'
 import { next_router } from '@/function/router'
 
 /** 聚焦的节 */
-export const node_focu$ = new BehaviorSubject<null | node>(null)
+export const node_use$ = new BehaviorSubject<null | node>(null)
 
 /** 编辑页顶部的节标签 */
-export const node_focu_buffer$ = new BehaviorSubject<node[]>([])
+export const node_use_buffer$ = new BehaviorSubject<node[]>([])
 
 /** 根据id向编辑页buffer添加一个 */
 export function node_buffer_add_by_id(id: string, node_list?: node[]) {
@@ -19,10 +19,10 @@ export function node_buffer_add_by_id(id: string, node_list?: node[]) {
     if (!fi) {
         return
     }
-    const buffer = node_focu_buffer$.value
+    const buffer = node_use_buffer$.value
     if (!buffer.find((v) => v.id === id)) {
         const arr = [...buffer, fi].slice(-5)
-        node_focu_buffer$.next(arr)
+        node_use_buffer$.next(arr)
     }
 }
 
@@ -33,7 +33,7 @@ export function focu_node_then_edit(id: string) {
 
     if (fi) {
         node_buffer_add_by_id(id, nodes)
-        node_focu$.next(fi)
+        node_use$.next(fi)
         next_router('edit')
     }
 }
@@ -66,12 +66,12 @@ node_id_text_map$.pipe(debounceTime(2000)).subscribe((m) => {
 
 // 当切换书时, 清空buffer和text
 book_use$.pipe(debounceTime(0)).subscribe(() => {
-    node_focu_buffer$.next([])
+    node_use_buffer$.next([])
     node_text_from_fs$.next('')
-    node_focu$.next(null)
+    node_use$.next(null)
 })
 
-const node_text_from_fs_finder$ = node_focu$.pipe(
+const node_text_from_fs_finder$ = node_use$.pipe(
     filter((v) => !!v),
     map((node) => {
         const booksrc = book_use$.value?.src

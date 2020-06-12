@@ -4,9 +4,9 @@ import s from './s.module.scss'
 import { Icon, Slider, Label } from 'office-ui-fabric-react'
 import * as monaco from 'monaco-editor'
 import {
-    node_focu$,
+    node_use$,
     node_text_from_fs$,
-    node_focu_buffer$,
+    node_use_buffer$,
     node_text_from_editer$,
     node_id_text_map$,
     book_use$,
@@ -53,8 +53,8 @@ export default function Workspace(p: p) {
 
 /** 活动节, 最多5个 */
 function Head() {
-    const li = useObservable(() => node_focu_buffer$, [])
-    const focu = useObservable(() => node_focu$)
+    const li = useObservable(() => node_use_buffer$, [])
+    const focu = useObservable(() => node_use$)
 
     const ref_box = useRef<null | HTMLUListElement>(null)
     useScroll(ref_box, 'w')
@@ -65,7 +65,7 @@ function Head() {
                     className={[s.one, focu?.id === nd.id ? s.focu : ''].join(' ')}
                     key={nd.id}
                     onClick={() => {
-                        node_focu$.next(nd)
+                        node_use$.next(nd)
                     }}
                 >
                     <span className={s.name}>{nd.name}</span>
@@ -74,12 +74,12 @@ function Head() {
                         className={s.icon}
                         onClick={(e) => {
                             e.stopPropagation()
-                            const i = node_focu_buffer$.value.findIndex((v) => v.id === nd.id)
-                            const arr = node_focu_buffer$.value.filter((v) => v.id !== nd.id)
-                            node_focu_buffer$.next(arr)
+                            const i = node_use_buffer$.value.findIndex((v) => v.id === nd.id)
+                            const arr = node_use_buffer$.value.filter((v) => v.id !== nd.id)
+                            node_use_buffer$.next(arr)
                             if (nd.id === focu?.id) {
                                 const ni = Math.max(0, i - 1)
-                                node_focu$.next(arr[ni] || null)
+                                node_use$.next(arr[ni] || null)
                             }
                         }}
                     ></Icon>
@@ -111,7 +111,7 @@ function Write() {
         editer.onKeyUp(() => {
             const t = editer.getValue()
             node_text_from_editer$.next(t)
-            const node = node_focu$.value
+            const node = node_use$.value
             const book = book_use$.value
             if (node) {
                 check_words$.next(editer) // 检查敏感词
@@ -132,7 +132,7 @@ function Write() {
             }
         })
         // 切换节时
-        const ob_change_node = node_focu$.subscribe(() => {
+        const ob_change_node = node_use$.subscribe(() => {
             editer.revealLine(0) // 滚动到第一行
             find_node_text_from_fs_auto() // 更新文本内容
         })

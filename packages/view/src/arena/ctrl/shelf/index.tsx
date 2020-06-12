@@ -61,7 +61,7 @@ function BookList() {
                             <ThemeButton
                                 onClick={() => {
                                     // if (book_use$.value?.id !== book.id) {
-                                    // 	node_focu_buffer$.next([])
+                                    // 	node_use_buffer$.next([])
                                     // }
                                     book_use$.next(book)
                                     next_router('edit')

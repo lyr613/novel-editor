@@ -4,9 +4,9 @@ import s from './s.module.scss'
 import { Icon, ActionButton } from 'office-ui-fabric-react'
 import {
     chapter_list$,
-    node_focu$,
+    node_use$,
     chapter_use$,
-    node_focu_buffer$,
+    node_use_buffer$,
     chapter_save,
     fs_write,
     book_use$,
@@ -83,7 +83,7 @@ function Head() {
 function Tree() {
     const list = useObservable(() => chapter_list$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     const ref = useRef<null | HTMLDivElement>(null)
-    const focu_node = useObservable(() => node_focu$)
+    const focu_node = useObservable(() => node_use$)
 
     // 节聚焦时, 滚动
     useEffect(() => {
@@ -91,7 +91,7 @@ function Tree() {
         if (!dom) {
             return
         }
-        const ob = node_focu$
+        const ob = node_use$
             .pipe(
                 filter((v) => !!v),
                 debounceTime(500),
@@ -215,12 +215,12 @@ function Node(p: nd) {
             className={[s.Node, p.nd.id === focu_node_id ? s.focu : ''].join(' ')}
             onClick={() => {
                 chapter_use$.next(p.cp)
-                node_focu$.next(p.nd)
-                const arr = node_focu_buffer$.value
+                node_use$.next(p.nd)
+                const arr = node_use_buffer$.value
                 if (!arr.find((v) => v.id === p.nd.id)) {
                     arr.push(p.nd)
                 }
-                node_focu_buffer$.next([...arr].slice(-5))
+                node_use_buffer$.next([...arr].slice(-5))
             }}
         >
             <span className={s.ndname}>{p.nd.name}</span>
@@ -231,7 +231,7 @@ function Node(p: nd) {
                     e.stopPropagation()
                     e.preventDefault()
                     chapter_use$.next(p.cp)
-                    node_focu$.next(p.nd)
+                    node_use$.next(p.nd)
                     action_nd$.next('change')
                     show_node_edit$.next(true)
                 }}
@@ -246,8 +246,8 @@ function Node(p: nd) {
                 onDoubleClick={(e) => {
                     e.stopPropagation()
                     e.preventDefault()
-                    if (node_focu$.value?.id === p.nd.id) {
-                        node_focu$.next(null)
+                    if (node_use$.value?.id === p.nd.id) {
+                        node_use$.next(null)
                         node_text_from_fs$.next('')
                     }
                     const fi = p.cp.children.findIndex((v) => v.id === p.nd.id)

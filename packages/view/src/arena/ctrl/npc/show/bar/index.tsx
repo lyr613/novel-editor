@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { chapter_list$, node_focu$, node_focu_buffer$, npc_use_id$, edit_npc_auto } from '@/source'
+import { chapter_list$, node_use$, node_use_buffer$, npc_use_id$, edit_npc_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
 import ThemeButton from '@/component/theme-button'
@@ -42,12 +42,12 @@ function TimeLine() {
                                     for (const node of cp.children) {
                                         // 如果查到章节, 跳到编辑页
                                         if (node.id === appear.node_id) {
-                                            node_focu$.next(node)
-                                            const new_buffer = [...node_focu_buffer$.value]
+                                            node_use$.next(node)
+                                            const new_buffer = [...node_use_buffer$.value]
                                             if (!new_buffer.find((v) => v.id === appear.node_id)) {
                                                 new_buffer.push(node)
                                             }
-                                            node_focu_buffer$.next(new_buffer)
+                                            node_use_buffer$.next(new_buffer)
                                             next_router('edit')
                                             break
                                         }

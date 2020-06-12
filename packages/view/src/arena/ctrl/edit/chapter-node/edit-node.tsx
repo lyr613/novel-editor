@@ -23,7 +23,7 @@ import {
     of_node,
     fs_write,
     chapter_save,
-    node_focu$,
+    node_use$,
     find_chapter_list_auto,
     node_buffer_add_by_id,
 } from '@/source'
@@ -54,7 +54,7 @@ export function EditNode() {
     /** 聚焦的章 */
     const cp_focu = useObservable(() => chapter_use$) ?? cps[0]
     /** 聚焦的节 */
-    const node_focu = useObservable(() => node_focu$)
+    const node_use = useObservable(() => node_use$)
 
     /** 所在章下拉列表 */
     const cp_sel_opt: IDropdownOption[] = cps.map((cp) => {
@@ -88,13 +88,13 @@ export function EditNode() {
             }, 500)
         } else {
             // 修改时获取现有信息
-            if (action === 'change' && !!node_focu) {
-                set_name(node_focu.name)
+            if (action === 'change' && !!node_use) {
+                set_name(node_use.name)
                 const { children } = cp_focu
                 if (children.length === 0) {
                     set_posi('first')
                 } else {
-                    const fi = children.findIndex((v) => v.id === node_focu.id)
+                    const fi = children.findIndex((v) => v.id === node_use.id)
                     if (fi === 0) {
                         set_posi('first')
                     } else if (fi === children.length - 1) {
@@ -108,7 +108,7 @@ export function EditNode() {
                 }
             }
         }
-    }, [show, action, node_focu, cp_focu])
+    }, [show, action, node_use, cp_focu])
     if (!book) {
         return null
     }
@@ -170,7 +170,7 @@ export function EditNode() {
                             await fs_write('txt', [book.src, 'chapters', the_node.id], '')
                         } else {
                             // 删掉原来的
-                            the_node = node_focu!
+                            the_node = node_use!
                             const cp = chapter_list$.value.find((v) => v.id === the_node?.chapter_id)
                             if (cp) {
                                 cp.children = cp.children.filter((v) => v.id !== the_node?.id)
@@ -194,7 +194,7 @@ export function EditNode() {
                         await chapter_save()
                         find_chapter_list_auto()
                         show_node_edit$.next(false)
-                        node_focu$.next(the_node)
+                        node_use$.next(the_node)
                         node_buffer_add_by_id(the_node.id)
                     }}
                 >
