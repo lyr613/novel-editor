@@ -25,17 +25,17 @@ export function update_check(main_window: BrowserWindow) {
             .showMessageBox(main_window, {
                 title: '有更新',
                 message: String(up.releaseNotes).replace(/<.*>/g, ''),
-                buttons: ['打开下载窗口', '从系统浏览器打开', '忽略'],
+                buttons: ['从系统浏览器打开', '忽略'],
             })
             .then((res) => {
                 switch (res.response) {
                     case 0:
-                        let win: any = new BrowserWindow(create_option())
-                        win.loadURL('https://github.com/lyr613/writer/releases')
-                        win.on('close', () => (win = null))
-                        break
-                    case 1:
-                        shell.openExternal('https://github.com/lyr613/writer/releases')
+                        //     let win: any = new BrowserWindow(create_option())
+                        //     win.loadURL('https://github.com/lyr613/novel-editer/releases')
+                        //     win.on('close', () => (win = null))
+                        //     break
+                        // case 1:
+                        shell.openExternal('https://github.com/lyr613/novel-editer/releases')
                         break
 
                     default:
