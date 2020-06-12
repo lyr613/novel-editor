@@ -128,7 +128,7 @@ export function EditNode() {
                 label="节名"
                 value={name}
                 onChange={(_, ns) => {
-                    const ss = (ns || '').trim()
+                    const ss = ns || ''
                     set_name(ss)
                 }}
             ></TextField>
@@ -162,7 +162,7 @@ export function EditNode() {
             ></Dropdown>
             <DialogFooter>
                 <PrimaryButton
-                    disabled={!name.length}
+                    disabled={!name.trim().length}
                     onClick={async () => {
                         let the_node: null | node = null
                         if (action === 'add') {
@@ -176,7 +176,7 @@ export function EditNode() {
                                 cp.children = cp.children.filter((v) => v.id !== the_node?.id)
                             }
                         }
-                        the_node.name = name
+                        the_node.name = name.trim()
                         the_node.chapter_id = cp_focu.id
                         //
                         if (posi === 'last') {

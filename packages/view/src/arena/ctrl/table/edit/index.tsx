@@ -128,20 +128,21 @@ function Systems() {
                         className={s.ipt}
                         value={ipt}
                         onChange={(_, ns) => {
-                            const str = (ns || '').replace(/\s/g, '')
+                            const str = ns || ''
                             set_ipt(str)
                         }}
                     ></TextField>
                     <DefaultButton
-                        disabled={!ipt}
+                        disabled={!ipt.trim()}
                         onClick={() => {
+                            const iptuse = ipt.trim()
                             const fi = systems.find((v) => v.id === sid)
                             if (fi) {
-                                fi.name = ipt
+                                fi.name = iptuse
                             } else {
                                 const new_sys: system = {
                                     id: id32(),
-                                    name: ipt,
+                                    name: iptuse,
                                     types: [],
                                 }
                                 systems.push(new_sys)
@@ -167,6 +168,7 @@ function Types() {
     const tid = useObservable(() => type_id$, '')
     const [can_show_input, set_can_show_input] = useState(false)
     const [ipt, set_ipt] = useState('')
+    const iptuse = ipt.trim()
     function reset() {
         set_ipt('')
         set_can_show_input(false)
@@ -226,12 +228,12 @@ function Types() {
                         className={s.ipt}
                         value={ipt}
                         onChange={(_, ns) => {
-                            const str = (ns || '').replace(/\s/g, '')
+                            const str = ns || ''
                             set_ipt(str)
                         }}
                     ></TextField>
                     <DefaultButton
-                        disabled={!ipt}
+                        disabled={!iptuse}
                         onClick={() => {
                             const fisys = systems.find((v) => v.id === sid)
                             if (!fisys) {
@@ -242,12 +244,12 @@ function Types() {
                             if (!fi) {
                                 const opt: atype = {
                                     id: id32(),
-                                    name: ipt,
+                                    name: iptuse,
                                     cells: [],
                                 }
                                 types.push(opt)
                             } else {
-                                fi.name = ipt
+                                fi.name = iptuse
                             }
                             system_list$.next(systems)
                             set_can_show_input(false)
@@ -273,6 +275,7 @@ function Cells() {
     const [can_show_input, set_can_show_input] = useState(false)
     const [ipt_level, set_ipt_level] = useState(0)
     const [ipt_name, set_ipt_name] = useState('')
+    const ipt_name_use = ipt_name.trim()
     // 描述
     const [ipt_des, set_ipt_des] = useState('')
     function reset() {
@@ -372,7 +375,7 @@ function Cells() {
                         autoAdjustHeight={true}
                     ></TextField>
                     <DefaultButton
-                        disabled={!ipt_name}
+                        disabled={!ipt_name_use}
                         onClick={() => {
                             const fisys = systems.find((v) => v.id === sid)
                             const fits = types.find((v) => v.id === tid)
@@ -384,7 +387,7 @@ function Cells() {
                             if (!fi) {
                                 const opt: cell = {
                                     id: id32(),
-                                    name: ipt_name,
+                                    name: ipt_name_use,
                                     level: ipt_level,
                                     description: ipt_des,
                                 }
@@ -395,7 +398,7 @@ function Cells() {
                                 fits.cells.push(opt)
                             } else {
                                 fi.level = ipt_level
-                                fi.name = ipt_name
+                                fi.name = ipt_name_use
                                 fi.description = ipt_des
                             }
                             fits.cells.sort((a, b) => b.level - a.level)

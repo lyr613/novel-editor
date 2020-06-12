@@ -54,7 +54,7 @@ export default function Bar() {
                 label="名称"
                 value={focu?.name ?? '没有选择地图'}
                 onChange={(_, ns) => {
-                    ns = (ns || '').replace(/\s/g, '')
+                    ns = ns || ''
                     const focu = map_focu$.value
                     if (focu) {
                         focu.name = ns

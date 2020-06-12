@@ -53,7 +53,7 @@ function Base() {
                         value={base.name}
                         required
                         onChange={(_, str) => {
-                            const nstr = (str || '').trim()
+                            const nstr = str || ''
                             base.name = nstr
                             npc_edit$.next(npc)
                         }}
@@ -247,7 +247,7 @@ function Uneed() {
                         value={npc.uneed.alias ?? ''}
                         placeholder="多个别名以空格分割"
                         onChange={(_, ns) => {
-                            ns = (ns || '').trim()
+                            ns = ns || ''
                             npc.uneed.alias = ns
                             npc_edit$.next(npc)
                         }}
@@ -349,7 +349,7 @@ function Uneed() {
                     label="描述"
                     value={form_link_description}
                     onChange={(_, ns) => {
-                        ns = (ns || '').trim().slice(0, 8)
+                        ns = (ns || '').slice(0, 8)
                         set_form_link_description(ns)
                     }}
                 ></TextField>
@@ -362,6 +362,8 @@ function Uneed() {
                                 npc_id: form_link_id,
                                 description: form_link_description,
                             })
+                            npc.base.name = npc.base.name.trim()
+                            npc.uneed.alias && (npc.uneed.alias = npc.uneed.alias.trim())
                             close_dialog()
                             npc_edit$.next(npc)
                         }}

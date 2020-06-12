@@ -108,7 +108,7 @@ export function EditChapter() {
                 label="章名"
                 value={cp_name}
                 onChange={(_, ns) => {
-                    set_cp_name((ns || '').trim())
+                    set_cp_name(ns || '')
                 }}
             ></TextField>
             {}
@@ -140,7 +140,7 @@ export function EditChapter() {
                         // 操作章列表, 改写chapter.json文件
                         const id = action === 'change' ? focu?.id ?? id32() : id32()
                         const children = action === 'change' ? focu?.children ?? [] : []
-                        const the_cp = of_chapter({ id, name: cp_name, children })
+                        const the_cp = of_chapter({ id, name: cp_name.trim(), children })
                         const arr = chapter_list$.value.filter((v) => {
                             if (action === 'add') {
                                 return true
