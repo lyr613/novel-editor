@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { switchMap, take, filter, map } from 'rxjs/operators'
-import { book_use$ } from './book'
+import { book_use$, get_cur_book_src } from './book'
 import { ipc } from '@/const'
 import { id32 } from '@/function/id32'
 
@@ -23,7 +23,7 @@ export const incident_map$ = incident_list$.pipe(
 
 incident_find$
     .pipe(
-        map(() => book_use$.value?.src!),
+        map(() => get_cur_book_src()),
         filter((v) => !!v),
         switchMap((src) => {
             return incident_find_ip(src)
@@ -70,8 +70,7 @@ export const incident_edit_re$ = incident_edit$.pipe(
     filter((v) => !!v),
     take(1),
     switchMap((incident) => {
-        const src = book_use$.value?.src!
-        return incident_edit_ipc(src, incident!)
+        return incident_edit_ipc(get_cur_book_src(), incident!)
     }),
 )
 

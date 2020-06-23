@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { id32 } from '@/function/id32'
 import { switchMap, map, throttleTime } from 'rxjs/operators'
-import { fs_read, book_use$ } from '@/source'
+import { fs_read, book_use$, get_cur_book_src } from '@/source'
 
 /** 点的位置, 千分比整数 */
 export interface point_ {
@@ -126,7 +126,7 @@ export const map_hover_line$ = new BehaviorSubject<point_[]>([])
 export const map_list_name_filter$ = new BehaviorSubject('')
 
 map_list_find$.pipe(throttleTime(2000)).subscribe(() => {
-    const bs = book_use$.value?.src
+    const bs = get_cur_book_src()
     if (!bs) {
         return
     }

@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { fs_read } from './fs-common'
-import { book_use$ } from './book'
+import { book_use$, get_cur_book_src } from './book'
 
 interface cell {
     id: string
@@ -26,10 +26,11 @@ export const table_list$ = new BehaviorSubject<system[]>([])
 export const table_list_find$ = new Subject()
 
 table_list_find$.subscribe(() => {
-    if (!book_use$.value?.src) {
+    const bs = get_cur_book_src()
+    if (!bs) {
         return
     }
-    const txt = fs_read<null | system[]>('json', [book_use$.value!.src, 'data-settings.json'])
+    const txt = fs_read<null | system[]>('json', [bs, 'data-settings.json'])
     if (txt) {
         table_list$.next(txt)
     }

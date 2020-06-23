@@ -1,7 +1,15 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import s from './s.module.scss'
-import { book_use$, find_npc_li_auto, find_chapter_list_auto, load_prev_buffer, node_use_buffer$ } from '@/source'
+import {
+    book_use$,
+    find_npc_li_auto,
+    find_chapter_list_auto,
+    load_prev_buffer,
+    node_use_buffer$,
+    book_use_id$,
+    get_cur_book_src,
+} from '@/source'
 import { next_router } from '@/function/router'
 import ChapterNode from './chapter-node'
 import Outline from './outline'
@@ -50,7 +58,7 @@ export default function Edit() {
         }
     }, [])
 
-    if (!book_use$.value) {
+    if (!get_cur_book_src()) {
         next_router('shelf')
         return null
     }

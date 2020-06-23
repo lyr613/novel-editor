@@ -1,6 +1,6 @@
 import React from 'react'
 import { IColumn, DefaultButton, ActionButton } from 'office-ui-fabric-react'
-import { npc_li$, book_use$, find_npc_li_auto, npc_use_id$ } from '@/source'
+import { npc_li$, book_use$, find_npc_li_auto, npc_use_id$, get_cur_book_src } from '@/source'
 import { next_router } from '@/function/router'
 import { ReplaySubject } from 'rxjs'
 import { gender_decode } from '@/util'
@@ -89,7 +89,7 @@ export function how_render(item: npc_show, index?: number, column?: IColumn) {
                             const list = npc_li$.value
                             const npc = list.find((v) => v.id === item.id) || null
                             if (npc) {
-                                const re = ipc.sendSync('npc-del', book_use$.value?.src, npc, true)
+                                const re = ipc.sendSync('npc-del', get_cur_book_src(), npc, true)
                                 if (re === true) {
                                     find_npc_li_auto()
                                 }

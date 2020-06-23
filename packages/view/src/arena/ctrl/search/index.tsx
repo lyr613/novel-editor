@@ -1,7 +1,14 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { book_use$, focu_node_then_edit, get_now_node_list, chapter_list$, find_chapter_list_auto } from '@/source'
+import {
+    book_use$,
+    focu_node_then_edit,
+    get_now_node_list,
+    chapter_list$,
+    find_chapter_list_auto,
+    get_cur_book_src,
+} from '@/source'
 import { next_router } from '@/function/router'
 import { TextField } from 'office-ui-fabric-react'
 import IconButton from '@/component/icon-button'
@@ -27,7 +34,7 @@ export default function Search() {
             clearTimeout(t)
         }
     }, [])
-    if (!book_use$.value) {
+    if (!get_cur_book_src()) {
         next_router('shelf')
         return null
     }
@@ -47,7 +54,7 @@ function Bar() {
     useEffect(() => {
         const st = search_text$.value
         if (st) {
-            ipc().send('book_search_text', book_use$.value?.src, st)
+            ipc().send('book_search_text', get_cur_book_src(), st)
         }
     }, [])
 
@@ -64,7 +71,7 @@ function Bar() {
                     if (e.charCode === 13) {
                         search_text$.next(ipt)
                         navigator.clipboard.writeText(ipt)
-                        ipc().send('book_search_text', book_use$.value?.src, ipt)
+                        ipc().send('book_search_text', get_cur_book_src(), ipt)
                     }
                 }}
                 className={s.ipt}
@@ -75,7 +82,7 @@ function Bar() {
                     search_text$.next(ipt)
                     navigator.clipboard.writeText(ipt)
 
-                    ipc().send('book_search_text', book_use$.value?.src, ipt)
+                    ipc().send('book_search_text', get_cur_book_src(), ipt)
                 }}
             ></IconButton>
         </div>

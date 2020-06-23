@@ -3,16 +3,17 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
 import { ipc } from '@/const'
-import { book_use$ } from '@/source'
+import { book_use$, get_cur_book_src } from '@/source'
 import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
 
-/** 史诗 */
+/** git仓库 */
 export default function Git() {
     const [has, set_has] = useState<null | boolean>(null)
     useEffect(() => {
-        if (book_use$.value) {
-            ipc().send('git_check', book_use$.value?.src)
+        const book_src = get_cur_book_src()
+        if (book_src) {
+            ipc().send('git_check', book_src)
             ipc().once('git_check', (_, b) => {
                 if (typeof b === 'boolean') {
                     set_has(b)
@@ -20,7 +21,7 @@ export default function Git() {
             })
         }
     }, [])
-    if (!book_use$.value) {
+    if (!get_cur_book_src()) {
         next_router('shelf')
         return null
     }
@@ -52,7 +53,7 @@ function NoHas() {
             <div>当前目录没有创建仓库</div>
             <ThemeButton
                 onClick={() => {
-                    const b = ipc().sendSync('git_init', book_use$.value?.src)
+                    const b = ipc().sendSync('git_init', get_cur_book_src())
                     console.log(b)
                 }}
             >

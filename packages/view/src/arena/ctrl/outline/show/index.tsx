@@ -10,6 +10,7 @@ import {
     incident_map$,
     incident_find$,
     find_chapter_list_auto,
+    get_cur_book_src,
 } from '@/source'
 import { next_router } from '@/function/router'
 import { useObservable } from 'rxjs-hooks'
@@ -33,7 +34,7 @@ export default function Show() {
             outline_find$.next()
         }, 50)
     }, [])
-    if (!book_use$.value?.src) {
+    if (!get_cur_book_src()) {
         next_router('shelf')
         return null
     }

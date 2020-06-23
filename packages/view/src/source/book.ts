@@ -7,8 +7,19 @@ import { id32 } from '@/function/id32'
 /** 书目列表 */
 export const book_list$ = new BehaviorSubject<book[]>([])
 
+export const book_use_id$ = new BehaviorSubject('')
+
 /** 聚焦的书目 */
-export const book_use$ = new BehaviorSubject<null | book>(null)
+export const book_use$ = book_list$.pipe(switchMap((li) => book_use_id$.pipe(map((id) => li.find((v) => v.id === id)))))
+
+/** 方便获取当前书的路径, 空为空字符串 */
+export function get_cur_book_src() {
+    let re = ''
+    book_use$.pipe(take(1)).subscribe((b) => {
+        re = b?.src ?? ''
+    })
+    return re
+}
 
 function find_book(srcs: string[]): book[] {
     const re = ipc().sendSync('load_books', srcs) || []

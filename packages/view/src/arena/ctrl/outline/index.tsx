@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
-import { book_use$ } from '@/source'
+import { book_use$, get_cur_book_src } from '@/source'
 import { next_router } from '@/function/router'
 import { Route, useRouteMatch } from 'react-router-dom'
 import Show from './show'
@@ -12,7 +12,7 @@ import Edit from './edit'
 export default function Outline() {
     const { path } = useRouteMatch()!
 
-    if (!book_use$.value?.src) {
+    if (!get_cur_book_src()) {
         next_router('shelf')
         return null
     }

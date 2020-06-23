@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { DefaultButton, ActionButton, PrimaryButton } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import { book_list$, of_book, book_use$, select_dir, load_books_auto } from '@/source'
+import { book_list$, of_book, book_use$, select_dir, load_books_auto, book_use_id$ } from '@/source'
 import { ipc } from '@/const'
 import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
@@ -30,7 +30,7 @@ function BookList() {
     const list = useObservable(() => book_list$.pipe(shallowCopy()), [])
     return (
         <div className={s.BookList}>
-            {list.map((book, i) => (
+            {list.map((book) => (
                 <div className={s.book} key={book.id}>
                     <div className={s.left}>
                         <div className={s.line}>
@@ -63,7 +63,7 @@ function BookList() {
                                     // if (book_use$.value?.id !== book.id) {
                                     // 	node_use_buffer$.next([])
                                     // }
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('edit')
                                 }}
                                 style={{
@@ -74,7 +74,7 @@ function BookList() {
                             </ThemeButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('search')
                                 }}
                             >
@@ -82,7 +82,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('outline')
                                 }}
                                 style={{
@@ -93,7 +93,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('incident')
                                 }}
                                 style={{
@@ -104,7 +104,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('npc')
                                 }}
                                 style={{
@@ -115,7 +115,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('table')
                                 }}
                                 style={{
@@ -126,7 +126,7 @@ function BookList() {
                             </DefaultButton>
                             <DefaultButton
                                 onClick={() => {
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('map')
                                 }}
                                 style={{
@@ -135,9 +135,9 @@ function BookList() {
                             >
                                 地图
                             </DefaultButton>
-                            {/* <DefaultButton
+                            <DefaultButton
                                 onClick={() => {
-                                    book_use$.next(book)
+                                    book_use_id$.next(book.id)
                                     next_router('git')
                                 }}
                                 style={{
@@ -145,7 +145,7 @@ function BookList() {
                                 }}
                             >
                                 仓库
-                            </DefaultButton> */}
+                            </DefaultButton>
                             <DefaultButton
                                 onDoubleClick={() => {
                                     const p = editer_setting$.value

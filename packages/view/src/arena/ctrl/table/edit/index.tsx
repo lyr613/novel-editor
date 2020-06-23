@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { id32 } from '@/function/id32'
 import { shallowCopy } from '@/rx/shallow-copy'
-import { fs_read, book_use$, fs_write } from '@/source'
+import { fs_read, book_use$, fs_write, get_cur_book_src } from '@/source'
 import { debounceTime, skip } from 'rxjs/operators'
 import IconButton from '@/component/icon-button'
 import { table_list$ } from '@/source/table'
@@ -41,15 +41,15 @@ export default function Edit() {
     useEffect(() => {
         // 读写文件
         system_list$.next([])
-        if (!book_use$.value?.src) {
+        if (!get_cur_book_src()) {
             return
         }
-        const txt = fs_read<null | system[]>('json', [book_use$.value.src, 'data-settings.json'])
+        const txt = fs_read<null | system[]>('json', [get_cur_book_src(), 'data-settings.json'])
         if (txt) {
             system_list$.next(txt)
         }
         const ob = system_list$.pipe(debounceTime(2000), skip(1)).subscribe((li) => {
-            fs_write('json', [book_use$.value!.src, 'data-settings.json'], li)
+            fs_write('json', [get_cur_book_src(), 'data-settings.json'], li)
         })
         return () => ob.unsubscribe()
     }, [])

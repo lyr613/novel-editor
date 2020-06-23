@@ -19,7 +19,7 @@ export function fs_read<T = string>(type: 'txt' | 'json', srcs: string[], hand?:
 }
 /**
  * 同步写文件
- * 使用的时候自动检查空路径
+ * 使用的时候自动检查空路径(抛出错误)
  * @param type
  * @param srcs
  * @param inset

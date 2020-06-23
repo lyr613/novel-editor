@@ -11,6 +11,7 @@ import {
     node_id_text_map$,
     book_use$,
     find_node_text_from_fs_auto,
+    get_cur_book_src,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, switchMap, merge, debounceTime } from 'rxjs/operators'
@@ -112,14 +113,14 @@ function Write() {
             const t = editer.getValue()
             node_text_from_editer$.next(t)
             const node = node_use$.value
-            const book = book_use$.value
+            const book_src = get_cur_book_src()
             if (node) {
                 check_words$.next(editer) // 检查敏感词
-                if (book?.src) {
+                if (book_src) {
                     // 存储保存需要的资料
                     const m = node_id_text_map$.value
                     m.set(node.id, {
-                        book_src: book.src,
+                        book_src: book_src,
                         node_id: node.id,
                         text: t,
                         node_name: node.name,

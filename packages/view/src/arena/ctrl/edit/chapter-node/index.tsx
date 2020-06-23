@@ -12,6 +12,7 @@ import {
     book_use$,
     node_text_from_fs$,
     find_chapter_list_auto,
+    get_cur_book_src,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, filter, debounceTime } from 'rxjs/operators'
@@ -254,7 +255,7 @@ function Node(p: nd) {
                     if (fi > -1) {
                         p.cp.children.splice(fi, 1)
                         const arr = chapter_list$.value
-                        fs_write('json', [book_use$.value?.src!, 'chapter.json'], arr)
+                        fs_write('json', [get_cur_book_src(), 'chapter.json'], arr)
                     }
                 }}
                 style={{ marginLeft: 'auto' }}

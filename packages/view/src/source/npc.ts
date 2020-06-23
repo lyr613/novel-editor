@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, filter, switchMap, take } from 'rxjs/operators'
-import { book_use$ } from './book'
+import { book_use$, get_cur_book_src } from './book'
 import { id32 } from '@/function/id32'
 import { ipc } from '@/const'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -93,9 +93,9 @@ export function npc_edited_save() {
 
 /** 保存npc列表 */
 export function npc_li_save(npcs: npc[]) {
-    const book = book_use$.value
-    if (!book) {
+    const book_src = get_cur_book_src()
+    if (!book_src) {
         return false
     }
-    return fs_write('json', [book.src, 'npc'], npcs)
+    return fs_write('json', [book_src, 'npc'], npcs)
 }

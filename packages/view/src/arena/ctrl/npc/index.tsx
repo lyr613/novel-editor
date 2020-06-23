@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
-import { book_use$, npc_li$, find_npc_li_auto, find_chapter_list_auto } from '@/source'
+import { book_use$, npc_li$, find_npc_li_auto, find_chapter_list_auto, get_cur_book_src } from '@/source'
 import { Route, useRouteMatch } from 'react-router-dom'
 
 import EditUser from './edit'
@@ -12,7 +12,7 @@ import LinkGraph from './link-graph'
 export default function Npc() {
     const { path } = useRouteMatch()!
     useEffect(() => {}, [])
-    if (!book_use$.value?.src) {
+    if (!get_cur_book_src()) {
         next_router('shelf')
         return null
     }

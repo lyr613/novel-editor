@@ -1,7 +1,7 @@
 import { Subject, BehaviorSubject, timer, of, ReplaySubject, interval } from 'rxjs'
 import { map, filter, switchMap, tap, take, debounceTime, skip } from 'rxjs/operators'
 import { ipc, ENV } from '@/const'
-import { book_use$ } from './book'
+import { book_use$, get_cur_book_src } from './book'
 import { fs_write, fs_read } from './fs-common'
 import { get_now_node_list } from './chapter-node'
 import { next_router } from '@/function/router'
@@ -96,7 +96,7 @@ book_use$.pipe(debounceTime(10)).subscribe(() => {
 const node_text_from_fs_finder$ = node_use$.pipe(
     filter((v) => !!v),
     map((node) => {
-        const booksrc = book_use$.value?.src
+        const booksrc = get_cur_book_src()
         if (booksrc) {
             return fs_read('txt', [booksrc, 'chapters', node!.id]) || ''
         }
@@ -119,7 +119,7 @@ node_use$
         debounceTime(500),
     )
     .subscribe((buf) => {
-        const booksrc = book_use$.value?.src
+        const booksrc = get_cur_book_src()
         if (!booksrc) {
             return
         }
@@ -134,7 +134,7 @@ node_use$
 
 /** 编辑页使用此方法, 加载上一次的编辑, 如果已经有buffer, 则不加载 */
 export function load_prev_buffer() {
-    const booksrc = book_use$.value?.src
+    const booksrc = get_cur_book_src()
     if (!booksrc) {
         return
     }

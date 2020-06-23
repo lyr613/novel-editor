@@ -1,7 +1,7 @@
 import { Subject, BehaviorSubject, ReplaySubject, of } from 'rxjs'
 import { ipc, ENV } from '@/const'
 import { switchMap, map, filter, take } from 'rxjs/operators'
-import { book_use$ } from './book'
+import { book_use$, get_cur_book_src } from './book'
 import { fs_read } from './fs-common'
 
 /** 读取文件的类型, id为章id或all */
@@ -19,7 +19,7 @@ export const outline_map$ = new BehaviorSubject<outline_file>({})
 outline_find$
     .pipe(
         map(() => {
-            return book_use$.value?.src!
+            return get_cur_book_src()
         }),
         filter((src) => !!src),
         map((book_src) => {

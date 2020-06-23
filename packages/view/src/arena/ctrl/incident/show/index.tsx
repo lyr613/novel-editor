@@ -5,7 +5,7 @@ import { Icon, ActionButton, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
 import { incident_focu$, of_incident, incident_find$, incident_list$ } from '@/source/incident'
 import { useObservable } from 'rxjs-hooks'
-import { npc_map$, find_npc_li_auto, book_use$, get_now_node_list, fs_write } from '@/source'
+import { npc_map$, find_npc_li_auto, book_use$, get_now_node_list, fs_write, get_cur_book_src } from '@/source'
 import { incident_list_filted$, filter$ } from './subj'
 import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -51,7 +51,6 @@ function TimeLine() {
     const [show, set_show] = useState<line_incidents[][]>([])
     const focu = useObservable(() => incident_focu$)
     useEffect(() => {
-        const book = book_use$.value
         // 这里加个延时, 先加载底下的列表
         const ob = incident_list$.pipe(shallowCopy(), debounceTime(200)).subscribe((li) => {
             if (!li.length) {
@@ -62,7 +61,7 @@ function TimeLine() {
             const line_incidents: line_incidents[][] = []
             // 获取每节的字数
             const nodes = get_now_node_list()
-            ipc().send('bookc_node_words', book?.src, nodes)
+            ipc().send('bookc_node_words', get_cur_book_src(), nodes)
             ipc().once('bookc_node_words', (_, mp: node_word_c) => {
                 /** 总字数 */
                 if (!mp || !mp.all) {
@@ -241,7 +240,7 @@ function List() {
                                 const arr = incident_list$.value
                                 const narr = arr.filter((v) => v.id !== incident.id)
                                 incident_list$.next(narr)
-                                fs_write('json', [book_use$.value?.src!, 'incident.json'], narr)
+                                fs_write('json', [get_cur_book_src(), 'incident.json'], narr)
                             }}
                         ></IconButton>
                     </div>

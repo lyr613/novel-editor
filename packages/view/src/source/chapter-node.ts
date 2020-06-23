@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subject, of } from 'rxjs'
 import { electron, ENV, ipc } from '@/const'
 import { debounceTime, tap, switchMap, map, catchError, filter, take } from 'rxjs/operators'
-import { book_use$ } from './book'
+import { book_use$, get_cur_book_src } from './book'
 import { id32 } from '@/function/id32'
 import { fs_write, fs_read } from './fs-common'
 /** 章节列表 */
@@ -42,9 +42,8 @@ export const chapter_map$ = chapter_list$.pipe(
 
 /** 储存章节列表 */
 export function chapter_save() {
-    const book = book_use$.value!
     const arr = chapter_list$.value
-    return fs_write('json', [book.src, 'chapter'], arr)
+    return fs_write('json', [get_cur_book_src(), 'chapter'], arr)
 }
 
 /** 创造一个章 */
