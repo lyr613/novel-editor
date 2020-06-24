@@ -1,14 +1,13 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { DefaultButton, ActionButton, PrimaryButton } from 'office-ui-fabric-react'
+import { DefaultButton } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import { book_list$, of_book, book_use$, select_dir, load_books_auto, book_use_id$ } from '@/source'
+import { book_list$, select_dir, load_books_auto, book_use_id$ } from '@/source'
 import { ipc } from '@/const'
 import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
 import { editer_setting$ } from '@/subject'
-import { map } from 'rxjs/operators'
 import { shallowCopy } from '@/rx/shallow-copy'
 
 /** 书架 */
@@ -60,9 +59,6 @@ function BookList() {
                         >
                             <ThemeButton
                                 onClick={() => {
-                                    // if (book_use$.value?.id !== book.id) {
-                                    // 	node_use_buffer$.next([])
-                                    // }
                                     book_use_id$.next(book.id)
                                     next_router('edit')
                                 }}

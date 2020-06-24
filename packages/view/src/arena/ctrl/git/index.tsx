@@ -3,22 +3,33 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
 import { ipc } from '@/const'
-import { book_use$, get_cur_book_src } from '@/source'
+import { get_cur_book_src } from '@/source'
 import { next_router } from '@/function/router'
-import ThemeButton from '@/component/theme-button'
+import Checking0 from './checking0'
+import NoHas1 from './no-has1'
+import DidInit2 from './did-init2'
+import { git_init_status$ } from './subj'
+import { useObservable } from 'rxjs-hooks'
 
-/** git仓库 */
+/** git仓库
+ * 0: 初始: 检查中
+ * 1: 没有初始化过
+ * 2: 已经有
+ * -1: 查找失败
+ */
 export default function Git() {
-    const [has, set_has] = useState<null | boolean>(null)
+    const status = useObservable(() => git_init_status$, 0)
     useEffect(() => {
         const book_src = get_cur_book_src()
         if (book_src) {
             ipc().send('git_check', book_src)
-            ipc().once('git_check', (_, b) => {
-                if (typeof b === 'boolean') {
-                    set_has(b)
-                }
+            ipc().once('git_check', (_, n) => {
+                console.log('git 状态码', n)
+                git_init_status$.next(Number(n))
             })
+        }
+        return () => {
+            git_init_status$.next(0)
         }
     }, [])
     if (!get_cur_book_src()) {
@@ -27,38 +38,9 @@ export default function Git() {
     }
     return (
         <div className={s.Git}>
-            <SectionHeader> 史诗</SectionHeader>
-            {has ? <Histroy /> : <NoHas />}
-        </div>
-    )
-}
-
-function Histroy() {
-    return (
-        <div className={s.Histroy}>
-            <ThemeButton
-                onClick={() => {
-                    // ipc().sendSync('git_save')
-                }}
-            >
-                333
-            </ThemeButton>
-        </div>
-    )
-}
-
-function NoHas() {
-    return (
-        <div className={s.NoHas}>
-            <div>当前目录没有创建仓库</div>
-            <ThemeButton
-                onClick={() => {
-                    const b = ipc().sendSync('git_init', get_cur_book_src())
-                    console.log(b)
-                }}
-            >
-                创建
-            </ThemeButton>
+            {status === 0 && <Checking0 />}
+            {status === 1 && <NoHas1 />}
+            {status === 2 && <DidInit2 />}
         </div>
     )
 }
