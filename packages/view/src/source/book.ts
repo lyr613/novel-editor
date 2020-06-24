@@ -46,6 +46,7 @@ export function of_book(part?: Param | book): book {
         name: '',
         src: '',
         cover: '',
+        git: false,
     }
     Object.assign(re, part)
     return re

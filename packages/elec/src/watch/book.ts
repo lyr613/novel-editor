@@ -53,6 +53,7 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
                     name: path.basename(src),
                     src,
                     cover: find_cover(src),
+                    git: check_git(src),
                 }
             } catch (error) {
                 return {
@@ -60,6 +61,7 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
                     name: '读取失败',
                     src,
                     cover: '',
+                    git: false,
                 }
             }
         })
@@ -71,6 +73,15 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
         const files = fs.readdirSync(src)
         const fi = files.find((str) => /^封面\.(png|jpg|gif)/.test(str))
         return fi ? path.resolve(src, fi) : ''
+    }
+    function check_git(src: string) {
+        src = path.join(src, '.git', 'config')
+        if (!fs.existsSync(src)) {
+            return false
+        }
+        const txt = fs.readFileSync(src, 'utf-8')
+        const has = /\[remote "origin"\]/.test(txt)
+        return has
     }
 }
 

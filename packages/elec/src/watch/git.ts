@@ -184,9 +184,16 @@ function git_pull(e: Electron.IpcMainEvent, book_src: string) {
             console.log('err', err)
             console.log('out', out)
             const suc = !err
-            reply(e, 'git_pull', suc)
+            const re = {
+                be_suc: suc,
+                src: book_src,
+            }
+            reply(e, 'git_pull', re)
         })
     } catch (str) {
-        reply(e, 'git_pull', false)
+        reply(e, 'git_pull', {
+            be_suc: false,
+            src: book_src,
+        })
     }
 }

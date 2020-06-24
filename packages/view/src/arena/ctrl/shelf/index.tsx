@@ -9,6 +9,7 @@ import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
 import { editer_setting$ } from '@/subject'
 import { shallowCopy } from '@/rx/shallow-copy'
+import ThemeLabel from '@/component/theme-label'
 
 /** 书架 */
 export default function Shelf() {
@@ -30,140 +31,7 @@ function BookList() {
     return (
         <div className={s.BookList}>
             {list.map((book) => (
-                <div className={s.book} key={book.id}>
-                    <div className={s.left}>
-                        <div className={s.line}>
-                            <span className={s.label}>书名</span>
-                            <span>{book.name || '未命名'}</span>
-                        </div>
-                        <div className={s.line}>
-                            <span className={s.label}>路径</span>
-                            <span
-                                className={s.booksrc}
-                                style={{ paddingRight: '10px' }}
-                                onClick={() => {
-                                    ipc().send('fs_show', [book.src])
-                                }}
-                            >
-                                {book.src}
-                            </span>
-                        </div>
-                        <div
-                            className={s.line}
-                            style={{
-                                position: 'absolute',
-                                left: 0,
-                                bottom: 0,
-                                margin: '10px',
-                            }}
-                        >
-                            <ThemeButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('edit')
-                                }}
-                                style={{
-                                    marginRight: '10px',
-                                }}
-                            >
-                                编写
-                            </ThemeButton>
-                            <DefaultButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('search')
-                                }}
-                            >
-                                搜索
-                            </DefaultButton>
-                            <DefaultButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('outline')
-                                }}
-                                style={{
-                                    margin: '0 10px',
-                                }}
-                            >
-                                大纲
-                            </DefaultButton>
-                            <DefaultButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('incident')
-                                }}
-                                style={{
-                                    marginRight: '10px',
-                                }}
-                            >
-                                事件
-                            </DefaultButton>
-                            <DefaultButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('npc')
-                                }}
-                                style={{
-                                    marginRight: '10px',
-                                }}
-                            >
-                                角色
-                            </DefaultButton>
-                            <DefaultButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('table')
-                                }}
-                                style={{
-                                    marginRight: '10px',
-                                }}
-                            >
-                                表格
-                            </DefaultButton>
-                            <DefaultButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('map')
-                                }}
-                                style={{
-                                    marginRight: '10px',
-                                }}
-                            >
-                                地图
-                            </DefaultButton>
-                            <DefaultButton
-                                onClick={() => {
-                                    book_use_id$.next(book.id)
-                                    next_router('git')
-                                }}
-                                style={{
-                                    marginRight: '10px',
-                                }}
-                            >
-                                仓库
-                            </DefaultButton>
-                            <DefaultButton
-                                onDoubleClick={() => {
-                                    const p = editer_setting$.value
-                                    p.shelf.book_list = p.shelf.book_list.filter((v) => v !== book.src)
-                                    editer_setting$.next(p)
-                                    load_books_auto()
-                                }}
-                                style={{
-                                    marginRight: '10px',
-                                }}
-                            >
-                                隐藏
-                            </DefaultButton>
-                        </div>
-                    </div>
-                    <div
-                        className={s.cover}
-                        style={{
-                            backgroundImage: `url(${book.cover})`,
-                        }}
-                    ></div>
-                </div>
+                <OneBook book={book} key={book.id} />
             ))}
         </div>
     )
@@ -171,27 +39,6 @@ function BookList() {
 
 function NewOne() {
     return (
-        // <ActionButton
-        // 	iconProps={{ iconName: 'Add' }}
-        // 	className={s.newone}
-        // 	onClick={() => {
-        // 		const part = ipcRenderer.sendSync('book-new', ['openDirectory'])
-        // 		if (part) {
-        // 			const nbook = of_book(part)
-        // 			const li = [...book_list$.value, nbook]
-        // 			book_list$.next(li)
-        // 			book_local.next(li)
-        // 			book_local.save()
-        // 		}
-        // 	}}
-        // 	styles={{
-        // 		label: {
-        // 			color: clrs[8],
-        // 		},
-        // 	}}
-        // >
-        // 	新一本
-        // </ActionButton>
         <ThemeButton
             className={s.newone}
             onClick={() => {
@@ -209,5 +56,195 @@ function NewOne() {
         >
             新一本
         </ThemeButton>
+    )
+}
+
+/** 一本 */
+function OneBook(p: { book: book }) {
+    const { book } = p
+    return (
+        <div className={s.book} key={book.id}>
+            <div className={s.left}>
+                <div className={s.line}>
+                    <span className={s.label}>书名</span>
+                    <span>{book.name || '未命名'}</span>
+                </div>
+                <div className={s.line}>
+                    <span className={s.label}>路径</span>
+                    <span
+                        className={s.booksrc}
+                        style={{ paddingRight: '10px' }}
+                        onClick={() => {
+                            ipc().send('fs_show', [book.src])
+                        }}
+                    >
+                        {book.src}
+                    </span>
+                </div>
+                <Remote src={book.src} />
+                <div
+                    className={s.line}
+                    style={{
+                        position: 'absolute',
+                        left: 0,
+                        bottom: 0,
+                        margin: '10px',
+                    }}
+                >
+                    <ThemeButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('edit')
+                        }}
+                        style={{
+                            marginRight: '10px',
+                        }}
+                    >
+                        编写
+                    </ThemeButton>
+                    <DefaultButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('search')
+                        }}
+                    >
+                        搜索
+                    </DefaultButton>
+                    <DefaultButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('outline')
+                        }}
+                        style={{
+                            margin: '0 10px',
+                        }}
+                    >
+                        大纲
+                    </DefaultButton>
+                    <DefaultButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('incident')
+                        }}
+                        style={{
+                            marginRight: '10px',
+                        }}
+                    >
+                        事件
+                    </DefaultButton>
+                    <DefaultButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('npc')
+                        }}
+                        style={{
+                            marginRight: '10px',
+                        }}
+                    >
+                        角色
+                    </DefaultButton>
+                    <DefaultButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('table')
+                        }}
+                        style={{
+                            marginRight: '10px',
+                        }}
+                    >
+                        表格
+                    </DefaultButton>
+                    <DefaultButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('map')
+                        }}
+                        style={{
+                            marginRight: '10px',
+                        }}
+                    >
+                        地图
+                    </DefaultButton>
+                    <DefaultButton
+                        onClick={() => {
+                            book_use_id$.next(book.id)
+                            next_router('git')
+                        }}
+                        style={{
+                            marginRight: '10px',
+                        }}
+                    >
+                        仓库
+                    </DefaultButton>
+                    <DefaultButton
+                        onDoubleClick={() => {
+                            const p = editer_setting$.value
+                            p.shelf.book_list = p.shelf.book_list.filter((v) => v !== book.src)
+                            editer_setting$.next(p)
+                            load_books_auto()
+                        }}
+                        style={{
+                            marginRight: '10px',
+                        }}
+                    >
+                        隐藏
+                    </DefaultButton>
+                </div>
+            </div>
+            <div
+                className={s.cover}
+                style={{
+                    backgroundImage: `url(${book.cover})`,
+                }}
+            ></div>
+        </div>
+    )
+}
+
+/** 有远程仓库时, 显示此方便更新 */
+function Remote(p: { src: string }) {
+    const { src } = p
+    const [label, set_label] = useState('检查到远程仓库, 点此拉取更新到本地')
+    const [can_pull, set_can_pull] = useState(true)
+    useEffect(() => {
+        function pull(_: any, re: any) {
+            const b = re.be_suc
+            const src = re.src
+            if (src !== p.src) {
+                return
+            }
+            console.log('拉取', b)
+            if (b) {
+                set_label('已拉取到本地')
+            } else {
+                set_label('拉取失败, 可能是网络问题')
+            }
+        }
+        ipc().on('git_pull', pull)
+        return () => {
+            ipc().removeListener('git_pull', pull)
+        }
+    }, [])
+    return (
+        <div className={s.Remote}>
+            <ThemeLabel
+                onClick={() => {
+                    if (!can_pull) {
+                        return
+                    }
+                    ipc().send('git_pull', src)
+                    set_label('拉取中...')
+                    set_can_pull(false)
+                }}
+                disabled={!can_pull}
+                styles={{
+                    root: {
+                        cursor: can_pull ? 'pointer' : '',
+                    },
+                }}
+            >
+                {label}
+            </ThemeLabel>
+        </div>
     )
 }

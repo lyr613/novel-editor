@@ -38,7 +38,9 @@ function Action() {
                 set_push_msg('推送失败, 重载app试试')
             }
         }
-        function pull(_: any, b: boolean) {
+        function pull(_: any, re: any) {
+            const b = re.be_suc
+            // const src = re.src
             console.log('拉取', b)
             if (b) {
                 set_pull_msg('远程仓库已拉取到本地')

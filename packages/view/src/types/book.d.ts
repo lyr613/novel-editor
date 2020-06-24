@@ -8,6 +8,8 @@ declare namespace Book {
         src: string
         /** 封面 */
         cover: string
+        /** 是否为git仓库, 这里只检查远程仓库 */
+        git: boolean
     }
     /** 章 */
     interface chapter {

@@ -45,9 +45,9 @@ export function Menu() {
                 <Item path="map" disable={!book}>
                     地图
                 </Item>
-                {/* <Item path="git" disable={!book}>
-					仓库
-				</Item> */}
+                <Item path="git" disable={!book}>
+                    仓库
+                </Item>
                 <li className={s.line} />
                 <Item path="option">设置</Item>
                 <Item path="zip">归档</Item>
