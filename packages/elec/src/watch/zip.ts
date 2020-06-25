@@ -12,6 +12,8 @@ export function watch_zip() {
     ipcMain.on('import_txt', import_txt)
     // 导出文件内容
     ipcMain.on('export_txt', export_txt)
+    // 导入git仓库
+    ipcMain.on('import_git', import_git)
 }
 
 /**
@@ -132,4 +134,43 @@ function export_txt(e: Electron.IpcMainEvent, book_src: string, export_src: stri
         })
         reply(e, 'export_txt_step', '导出完毕')
     } catch (error) {}
+}
+
+/**
+ * 读取文件内容
+ * @param e
+ * @param git_src 仓库地址
+ * @param dir_src 存放路径
+ * @returns 成功: 文本或obj, 失败: null
+ */
+function import_git(e: Electron.IpcMainEvent, git_src: string, dir_src: string) {
+    try {
+        reply(e, 'import_git_step', '开始从git仓库导入')
+
+        cp.exec(
+            `git clone ${git_src}`,
+            {
+                cwd: dir_src,
+            },
+            (err, out) => {
+                console.log('err', err)
+                console.log('out', out)
+                if (err) {
+                    throw 'git仓库下载失败'
+                }
+                reply(e, 'import_git_step', '从远程仓库下载成功')
+                reply(e, 'import_git_step', '导入成功')
+                const remote_name = git_src
+                    .split('/')
+                    .slice(-1)[0]
+                    .replace('.git', '')
+                console.log('remote_name', remote_name)
+                const fi_src = path.join(dir_src, remote_name)
+
+                reply(e, 'import_git_step', 'end:' + fi_src)
+            },
+        )
+    } catch (error) {
+        reply(e, 'import_git_step', '导入失败')
+    }
 }

@@ -1,31 +1,39 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
-import { DefaultButton, TextField } from 'office-ui-fabric-react'
-import { select_dir, select_file } from '@/source'
+import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
+import { TextField, DefaultButton } from 'office-ui-fabric-react'
+import { select_dir } from '@/source'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
-import SectionHeader from '@/component/section-header'
 
-export default function Txt() {
-    const [txt_src, set_txt_src] = useState('')
-    const [dir_src, set_dir_src] = useState('')
-    const [reg, set_reg] = useState('')
+export default function Git() {
     return (
-        <div className={s.Txt}>
-            <SectionHeader>从文本导入</SectionHeader>
+        <div className={s.Git}>
+            <SectionHeader>从git仓库导入</SectionHeader>
+            <Form />
+            <Step />
+        </div>
+    )
+}
+
+function Form() {
+    const [git_src, set_git_src] = useState('')
+    const [dir_src, set_dir_src] = useState('')
+    const git_src_use = git_src.replace(/\s/g, '')
+    return (
+        <div className={s.Form}>
             <div className={s.line}>
-                <ThemeLabel>选择txt文件,字符编码utf-8: {txt_src}</ThemeLabel>
-                <DefaultButton
-                    onClick={async () => {
-                        const re = await select_file()
-                        set_txt_src(re)
+                <ThemeLabel>远程仓库地址</ThemeLabel>
+                <TextField
+                    value={git_src}
+                    onChange={(_, ns) => {
+                        ns = ns || ''
+                        set_git_src(ns)
                     }}
-                >
-                    选择要导入的文本
-                </DefaultButton>
+                ></TextField>
             </div>
             <div className={s.line}>
                 <ThemeLabel>选择一个空文件夹: {dir_src}</ThemeLabel>
@@ -43,33 +51,19 @@ export default function Txt() {
                 </DefaultButton>
             </div>
             <div className={s.line}>
-                <ThemeLabel>章节分割正则, 如果不填写, 则使用: ^\s*第.+章\s</ThemeLabel>
-                <TextField
-                    className={s.input}
-                    value={reg}
-                    onChange={(_, ss) => {
-                        const ns = ss || ''
-                        set_reg(ns)
-                    }}
-                ></TextField>
-            </div>
-            <div className={s.mar}>
                 <ThemeButton
-                    disabled={!dir_src || !txt_src}
+                    disabled={!dir_src || !git_src_use}
                     onClick={() => {
-                        ipc().send('import_txt', txt_src, dir_src, reg)
+                        ipc().send('import_git', git_src_use, dir_src)
                     }}
                 >
                     开始导入
                 </ThemeButton>
             </div>
-
-            <Step />
         </div>
     )
 }
 
-/** 解析步骤 */
 function Step() {
     const [arr, set_arr] = useReducer<(arr: string[], nw: string) => string[]>((arr, nw) => [...arr, nw], [])
     useEffect(() => {
@@ -83,9 +77,9 @@ function Step() {
             }
         }
 
-        ipc().on('import_txt_step', lin)
+        ipc().on('import_git_step', lin)
         return () => {
-            ipc().removeListener('import_txt_step', lin)
+            ipc().removeListener('import_git_step', lin)
         }
     }, [])
     return (
