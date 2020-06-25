@@ -1,0 +1,28 @@
+.Import {
+    height: 200px;
+    .section {
+        margin: 0 -10px;
+        box-sizing: border-box;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+        background-color: var(--CLRl6);
+        color: var(--CLRt2);
+    }
+}
+
+.Txt {
+    .line {
+        margin: 10px;
+    }
+    .Step {
+        margin: 0 10px;
+        font-size: 16px;
+    }
+    .input {
+        width: 400px;
+    }
+    .mar {
+        margin: 0 10px;
+    }
+}

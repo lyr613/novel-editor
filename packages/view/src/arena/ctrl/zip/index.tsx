@@ -9,35 +9,35 @@ import Exprt from './export'
 
 /** 归档 */
 export default function Zip() {
-	const w = useObservable(() => witch$, 'import')
-	return (
-		<div className={s.Zip}>
-			<Bar />
-			{w === 'import' && <Import></Import>}
-			{w === 'export' && <Exprt />}
-		</div>
-	)
+    const w = useObservable(() => witch$, 'import')
+    return (
+        <div className={s.Zip}>
+            <Bar />
+            {w === 'import' && <Import></Import>}
+            {w === 'export' && <Exprt />}
+        </div>
+    )
 }
 function Bar() {
-	return (
-		<div className={s.Bar}>
-			<ThemeButton
-				add_class={[s.btn]}
-				onClick={() => {
-					witch$.next('import')
-				}}
-			>
-				{' '}
-				导入
-			</ThemeButton>
-			<ThemeButton
-				onClick={() => {
-					witch$.next('export')
-				}}
-			>
-				{' '}
-				导出
-			</ThemeButton>
-		</div>
-	)
+    return (
+        <div className={s.Bar}>
+            <ThemeButton
+                add_class={[s.btn]}
+                onClick={() => {
+                    witch$.next('import')
+                }}
+            >
+                {' '}
+                导入
+            </ThemeButton>
+            <ThemeButton
+                onClick={() => {
+                    witch$.next('export')
+                }}
+            >
+                {' '}
+                导出
+            </ThemeButton>
+        </div>
+    )
 }
