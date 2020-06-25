@@ -81,7 +81,7 @@ function OneBook(p: { book: book }) {
                         {book.src}
                     </span>
                 </div>
-                <Remote src={book.src} />
+                {book.git && <Remote src={book.src} />}
                 <div
                     className={s.line}
                     style={{
