@@ -4,9 +4,11 @@ import { next_router, routers } from '@/function/router'
 import { useObservable } from 'rxjs-hooks'
 import { book_use$ } from '@/source'
 import { useLocation } from 'react-router-dom'
+import { editer_setting$ } from '@/subject'
 
 export function Menu() {
     const book = useObservable(() => book_use$)
+    const editer_set = useObservable(() => editer_setting$)
 
     return (
         <div className={s.Menu}>
@@ -45,9 +47,11 @@ export function Menu() {
                 <Item path="map" disable={!book}>
                     地图
                 </Item>
-                <Item path="git" disable={!book}>
-                    仓库
-                </Item>
+                {editer_set?.git && (
+                    <Item path="git" disable={!book}>
+                        仓库
+                    </Item>
+                )}
                 <li className={s.line} />
                 <Item path="option">设置</Item>
                 <Item path="zip">归档</Item>

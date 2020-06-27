@@ -11,7 +11,7 @@ export function watch_node() {
             e.reply('node-text-find', text)
             e.returnValue = text
         } catch (error) {
-            const re = '加载失败, ctrl(command) + r重试'
+            const re = '加载失败, alt(command) + r重试'
             e.reply('node-text-find', re)
             e.returnValue = re
         }

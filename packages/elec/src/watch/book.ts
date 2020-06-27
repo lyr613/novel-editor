@@ -1,7 +1,7 @@
 import { ipcMain, dialog } from 'electron'
 import path from 'path'
 import fs from 'fs'
-import { reply, id32 } from './util'
+import { reply, id32, check_did_install_git } from './util'
 import { get_chapters } from '@/func/fs'
 
 export function watch_book() {
@@ -46,6 +46,7 @@ export function watch_book() {
  */
 function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
     try {
+        const has_git = check_did_install_git()
         const re: book[] = srcs.map((src) => {
             try {
                 return {
@@ -53,7 +54,7 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
                     name: path.basename(src),
                     src,
                     cover: find_cover(src),
-                    git: check_git(src),
+                    git: has_git ? check_git(src) : false,
                 }
             } catch (error) {
                 return {

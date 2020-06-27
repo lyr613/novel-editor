@@ -62,6 +62,8 @@ function NewOne() {
 /** 一本 */
 function OneBook(p: { book: book }) {
     const { book } = p
+    const editer_sett = useObservable(() => editer_setting$)
+
     return (
         <div className={s.book} key={book.id}>
             <div className={s.left}>
@@ -165,17 +167,19 @@ function OneBook(p: { book: book }) {
                     >
                         地图
                     </DefaultButton>
-                    <DefaultButton
-                        onClick={() => {
-                            book_use_id$.next(book.id)
-                            next_router('git')
-                        }}
-                        style={{
-                            marginRight: '10px',
-                        }}
-                    >
-                        仓库
-                    </DefaultButton>
+                    {editer_sett?.git && (
+                        <DefaultButton
+                            onClick={() => {
+                                book_use_id$.next(book.id)
+                                next_router('git')
+                            }}
+                            style={{
+                                marginRight: '10px',
+                            }}
+                        >
+                            仓库
+                        </DefaultButton>
+                    )}
                     <DefaultButton
                         onDoubleClick={() => {
                             const p = editer_setting$.value

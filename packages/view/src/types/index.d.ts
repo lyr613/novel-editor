@@ -18,4 +18,5 @@ declare global {
     type npc = Setting.npc
     type incident = Setting.incident
     type outline = Setting.outline
+    type setting = Setting.setting
 }

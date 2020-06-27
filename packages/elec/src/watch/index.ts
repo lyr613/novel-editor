@@ -8,6 +8,7 @@ import { watch_fs_common } from './fs-common'
 import { watch_zip } from './zip'
 import { watch_book_common } from './book-common'
 import { watch_git } from './git'
+import { watch_editer } from './about-editer'
 
 export function set_watch(win: Electron.BrowserWindow) {
     watch_book()
@@ -19,5 +20,6 @@ export function set_watch(win: Electron.BrowserWindow) {
     watch_zip()
     watch_book_common()
     watch_git()
+    watch_editer()
     watch_hotkey(win)
 }

@@ -66,4 +66,38 @@ declare namespace Setting {
         /** 相关事件 id[] */
         incident_ids: string[]
     }
+    /** 编辑器设置 */
+    interface setting {
+        /** 通用 */
+        common: {
+            /** 主题 */
+            theme: 'word' | 'excel' | 'ppt' | 'onenote' | 'gray' | 'dark'
+        }
+        /** 书架页 */
+        shelf: {
+            /** 书目列表 */
+            book_list: string[]
+        }
+        /** 编辑页 */
+        editer: {
+            /** 大纲模块宽高, 其他模块联动更改 */
+            outline_layout: wh
+            /** 编辑窗口宽高 */
+            editer_layout: wh
+            /** 编辑窗口偏移 */
+            editer_transform: wh
+        }
+        /** 敏感词 */
+        sensitive?: string[]
+        font?: {
+            size: number
+            family: string
+        }
+        git: boolean
+    }
+}
+
+interface wh {
+    width: number
+    height: number
 }
