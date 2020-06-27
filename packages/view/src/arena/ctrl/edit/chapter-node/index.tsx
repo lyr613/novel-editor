@@ -257,6 +257,7 @@ function Node(p: nd) {
                         const arr = chapter_list$.value
                         fs_write('json', [get_cur_book_src(), 'chapter.json'], arr)
                     }
+                    find_chapter_list_auto()
                 }}
                 style={{ marginLeft: 'auto' }}
             ></Icon>
