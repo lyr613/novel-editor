@@ -14,6 +14,7 @@ import ThemeLabel from '@/component/theme-label'
 /** 书架 */
 export default function Shelf() {
     useEffect(() => {
+        book_use_id$.next('')
         setTimeout(() => {
             load_books_auto()
         }, 50)

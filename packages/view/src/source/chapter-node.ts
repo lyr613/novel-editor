@@ -24,6 +24,7 @@ export const find_chapter_list$ = book_use$.pipe(
 )
 /** 方便的更新章节列表, 执行即可 */
 export function find_chapter_list_auto() {
+    chapter_list$.next([])
     find_chapter_list$.subscribe((li) => {
         chapter_list$.next(li)
     })

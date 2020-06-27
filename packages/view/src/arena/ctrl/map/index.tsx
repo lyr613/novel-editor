@@ -13,6 +13,7 @@ import { map_list_find$, map_list$ } from './subj'
 /** 地图 */
 export default function Mapp() {
     useEffect(() => {
+        map_list$.next([])
         const t = setTimeout(() => {
             if (get_cur_book_src()) {
                 map_list_find$.next()
