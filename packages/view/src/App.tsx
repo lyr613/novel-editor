@@ -19,7 +19,7 @@ const App: React.FC = () => {
     useEffect(() => {
         // 加载编辑器设置
         setTimeout(() => {
-            const re = ipc().sendSync('editer_load_setting')
+            const re: setting = ipc().sendSync('editer_load_setting')
             editer_setting$.next(re)
             // console.log(re)
         }, 20)
@@ -35,3 +35,16 @@ const App: React.FC = () => {
 }
 
 export default App
+
+// setTimeout(() => {
+//     const t = `
+//     ::-webkit-scrollbar {
+//         width: 0px!important;
+//         height: 0px!important;
+//         background-color: rgba(255, 255, 255, 0.253);
+//     }
+//     `
+//     const dm = document.createElement('style')
+//     dm.innerHTML = t
+//     document.head.appendChild(dm)
+// }, 2000)
