@@ -35,6 +35,8 @@ export function load_books_auto() {
             map(find_book),
         )
         .subscribe((li) => {
+            console.log('书列表:', li)
+
             book_list$.next(li)
         })
 }

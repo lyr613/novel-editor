@@ -1,4 +1,4 @@
-import { ipcMain, dialog } from 'electron'
+import { ipcMain, shell, dialog } from 'electron'
 import path from 'path'
 import fs from 'fs'
 import { reply, id32, check_did_install_git } from './util'
@@ -11,6 +11,8 @@ export function watch_book() {
     ipcMain.on('select_src', select_src)
     /** 设置书名 */
     ipcMain.on('book_set_name', book_set_name)
+    /** 设置封面 */
+    ipcMain.on('book_set_cover', book_set_cover)
     /** 搜索全文 */
     ipcMain.on('book_search_text', book_search_text)
     // 选择书目文件夹, 只返回路径, 进入章节时才会读取书目的信息
@@ -75,9 +77,14 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
         reply(e, 'load_books', [])
     }
     function find_cover(src: string) {
-        const files = fs.readdirSync(src)
-        const fi = files.find((str) => /^封面\.(png|jpg|gif)/.test(str))
-        return fi ? path.resolve(src, fi) : ''
+        try {
+            const dsrc = path.join(src, 'doc')
+            const files = fs.readdirSync(dsrc)
+            const fi = files.find((str) => /^preview\.(png|jpg|gif)/.test(str))
+            return fi ? path.join(dsrc, fi) : ''
+        } catch (error) {
+            return ''
+        }
     }
     function check_git(src: string) {
         src = path.join(src, '.git', 'config')
@@ -256,5 +263,27 @@ function book_set_name(e: Electron.IpcMainEvent, book_src: string, name: string)
         reply(e, 'book_set_name', true)
     } catch (error) {
         reply(e, 'book_set_name', false)
+    }
+}
+/** 设置封面
+ * 现在只是简单的打开文件夹, 自己放文件
+ */
+function book_set_cover(e: Electron.IpcMainEvent, book_src: string) {
+    try {
+        const src = path.join(book_src, 'doc')
+        if (!fs.existsSync(src)) {
+            fs.mkdirSync(src)
+        }
+        const tsrc = path.join(src, '如何设置封面.txt')
+        if (!fs.existsSync(tsrc)) {
+            fs.writeFileSync(
+                tsrc,
+                '将封面图片(jpg/png)重命名为 preview.jpg/png 放到此文件夹内, 之后请alt/option + r重载程序',
+            )
+        }
+        shell.showItemInFolder(tsrc)
+        reply(e, 'book_set_cover', true)
+    } catch (error) {
+        reply(e, 'book_set_cover', false)
     }
 }

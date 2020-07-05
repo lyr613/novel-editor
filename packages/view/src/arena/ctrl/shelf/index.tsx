@@ -122,7 +122,7 @@ function OneBook(p: { book: book }) {
                 </div>
                 {book.git && <Remote src={book.src} />}
                 <div
-                    className={s.line}
+                    className={s.btnline}
                     style={{
                         position: 'absolute',
                         left: 0,
@@ -232,12 +232,29 @@ function OneBook(p: { book: book }) {
                     </DefaultButton>
                 </div>
             </div>
-            <div
-                className={s.cover}
-                style={{
-                    backgroundImage: `url(${book.cover})`,
-                }}
-            ></div>
+            {/* 封面 */}
+            {book.cover ? (
+                <img
+                    className={s.cover}
+                    src={book.cover}
+                    alt=""
+                    onClick={() => {
+                        ipc().send('book_set_cover', book.src)
+                    }}
+                />
+            ) : (
+                <div
+                    className={s.nocover}
+                    style={{
+                        backgroundImage: `url(${book.cover})`,
+                    }}
+                    onClick={() => {
+                        ipc().sendSync('book_set_cover', book.src)
+                    }}
+                >
+                    点击此处打开文件夹, 将封面图片命名为 preview 放到打开的文件夹内
+                </div>
+            )}
         </div>
     )
 }

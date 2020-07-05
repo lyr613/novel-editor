@@ -32,6 +32,10 @@
                     }
                 }
             }
+            .btnline {
+                display: flex;
+                align-items: center;
+            }
             .bkname {
                 cursor: pointer;
                 &:hover {
@@ -47,6 +51,26 @@
         }
 
         .cover {
+            display: flex;
+            float: right;
+            vertical-align: top;
+            height: 160px;
+            background-color: var(--CLRl5);
+            text-align: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-size: 0;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            &:hover {
+                text-align: center;
+                font-size: 14px;
+            }
+        }
+        .nocover {
+            display: flex;
             float: right;
             vertical-align: top;
             width: 120px;
@@ -56,6 +80,14 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+            font-size: 0;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            &:hover {
+                text-align: center;
+                font-size: 14px;
+            }
         }
     }
     .Remote {
