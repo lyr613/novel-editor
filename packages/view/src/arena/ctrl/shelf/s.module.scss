@@ -32,6 +32,12 @@
                     }
                 }
             }
+            .bkname {
+                cursor: pointer;
+                &:hover {
+                    color: var(--CLRl1);
+                }
+            }
             .booksrc {
                 cursor: pointer;
                 &:hover {

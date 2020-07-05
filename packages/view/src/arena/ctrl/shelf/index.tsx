@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { DefaultButton } from 'office-ui-fabric-react'
+import { DefaultButton, TextField } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
 import { book_list$, select_dir, load_books_auto, book_use_id$ } from '@/source'
 import { ipc } from '@/const'
@@ -64,13 +64,49 @@ function NewOne() {
 function OneBook(p: { book: book }) {
     const { book } = p
     const editer_sett = useObservable(() => editer_setting$)
+    const [editing_name, set_editing_name] = useState(false)
+    const [form_name, set_form_name] = useState(book.name)
+    const from_name_use = form_name.replace(/\s/g, '')
 
     return (
         <div className={s.book} key={book.id}>
             <div className={s.left}>
                 <div className={s.line}>
                     <span className={s.label}>书名</span>
-                    <span>{book.name || '未命名'}</span>
+                    {!editing_name ? (
+                        <span
+                            className={s.bkname}
+                            onClick={() => {
+                                set_editing_name(true)
+                            }}
+                        >
+                            {book.name || '未命名'}
+                        </span>
+                    ) : (
+                        <>
+                            <TextField
+                                value={form_name}
+                                onChange={(_, ns) => {
+                                    ns = ns || ''
+                                    set_form_name(ns)
+                                }}
+                            ></TextField>
+                            <ThemeButton
+                                disabled={!from_name_use}
+                                onClick={() => {
+                                    const b = ipc().sendSync('book_set_name', book.src, from_name_use)
+                                    if (!b) {
+                                        alert('修改失败')
+                                        return
+                                    }
+                                    load_books_auto()
+                                    set_editing_name(false)
+                                }}
+                            >
+                                好
+                            </ThemeButton>
+                        </>
+                    )}
                 </div>
                 <div className={s.line}>
                     <span className={s.label}>路径</span>

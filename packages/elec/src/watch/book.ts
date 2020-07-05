@@ -9,6 +9,8 @@ export function watch_book() {
     ipcMain.on('load_books', load_books)
     /** 选择书的路径 */
     ipcMain.on('select_src', select_src)
+    /** 设置书名 */
+    ipcMain.on('book_set_name', book_set_name)
     /** 搜索全文 */
     ipcMain.on('book_search_text', book_search_text)
     // 选择书目文件夹, 只返回路径, 进入章节时才会读取书目的信息
@@ -49,9 +51,11 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
         const has_git = check_did_install_git()
         const re: book[] = srcs.map((src) => {
             try {
+                _safe_readme(src)
+                const opt = _parse_readme(src)
                 return {
                     id: id32(),
-                    name: path.basename(src),
+                    name: opt.name || path.basename(src),
                     src,
                     cover: find_cover(src),
                     git: has_git ? check_git(src) : false,
@@ -83,6 +87,10 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
         const txt = fs.readFileSync(src, 'utf-8')
         const has = /\[remote "origin"\]/.test(txt)
         return has
+    }
+    function find_name(src: string) {
+        _safe_readme(src)
+        return path.basename(src)
     }
 }
 
@@ -193,5 +201,60 @@ function book_search_text(e: Electron.IpcMainEvent, book_src: string, match_temp
         console.log('搜索结果,', re.length, '条')
     } catch (error) {
         console.log('搜索失败')
+    }
+}
+
+/** 保证readme文件存在 */
+function _safe_readme(src: string) {
+    const rs = path.join(src, 'readme.md')
+    if (!fs.existsSync(rs)) {
+        fs.writeFileSync(rs, '')
+    }
+}
+
+interface readme {
+    /** 书名 */
+    name: string
+    /** 封面 */
+    cover: string
+}
+/** 解析readme内容 */
+function _parse_readme(src: string): readme {
+    const re = {
+        name: '',
+        /** 封面 */
+        cover: '',
+    }
+    const rs = path.join(src, 'readme.md')
+    const lines = fs
+        .readFileSync(rs, 'utf-8')
+        .split('\n')
+        .filter((l) => !!l)
+
+    // 书名
+    const finame = lines.find((l) => /^# /.test(l))
+    if (finame) {
+        re.name = finame.replace(/[# ]/g, '')
+    }
+    return re
+}
+
+/** 设置书名 */
+function book_set_name(e: Electron.IpcMainEvent, book_src: string, name: string) {
+    try {
+        _safe_readme(book_src)
+        const rsrc = path.join(book_src, 'readme.md')
+        const arr = fs.readFileSync(rsrc, 'utf-8').split('\n')
+        const fi = arr.findIndex((l) => /^# /.test(l))
+        if (fi > -1) {
+            arr[fi] = `# ${name}`
+        } else {
+            arr.unshift(`# ${name}`)
+        }
+        const ntxt = arr.join('\n')
+        fs.writeFileSync(rsrc, ntxt)
+        reply(e, 'book_set_name', true)
+    } catch (error) {
+        reply(e, 'book_set_name', false)
     }
 }
