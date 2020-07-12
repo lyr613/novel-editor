@@ -15,7 +15,7 @@ const will_delete$ = new BehaviorSubject('')
 export default function Sensitive() {
     return (
         <>
-            <label className={s.label}>敏感词</label>
+            <label className={s.Label}>敏感词</label>
 
             <div className={s.Sensitive}>
                 <List />

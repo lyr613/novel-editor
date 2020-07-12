@@ -32,64 +32,9 @@
         opacity: 1;
     }
 }
-.Theme {
-    margin: 10px;
-    .clrblock {
-        display: inline-block;
-        vertical-align: top;
-        margin-right: 10px;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-        &:hover {
-            transform: translateY(-5px);
-        }
-    }
-}
 
 .FullScreen {
     .btn {
         margin: 10px 0 10px 10px;
-    }
-}
-
-// 敏感词
-.Sensitive {
-    .new {
-        margin: 10px;
-    }
-    .List {
-        display: flex;
-        .one {
-            margin: 0 0 0 10px;
-            cursor: pointer;
-        }
-    }
-}
-
-.Font {
-    margin: 10px;
-    .fontsize {
-        margin-bottom: 10px;
-        width: 300px;
-    }
-    .fontfamily {
-        .line {
-            width: min-content;
-            padding: 0 10px;
-            font-size: 16px;
-            white-space: nowrap;
-            cursor: pointer;
-            opacity: 0.8;
-            line-height: 30px;
-            &:hover {
-                opacity: 1;
-                background-color: rgba(255, 255, 255, 0.158);
-            }
-        }
-        .fontuse {
-            opacity: 1;
-            background-color: rgba(255, 255, 255, 0.158);
-        }
     }
 }
