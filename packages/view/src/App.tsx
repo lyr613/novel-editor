@@ -7,6 +7,7 @@ import { Menu } from './arena/menu'
 import Ctrl from './arena/ctrl'
 import { shallowCopy } from './rx/shallow-copy'
 import { ipc } from './const'
+import { overload_style_scroll } from './util/style-overload'
 
 const App: React.FC = () => {
     const eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
@@ -18,11 +19,10 @@ const App: React.FC = () => {
     }, [])
     useEffect(() => {
         // 加载编辑器设置
-        setTimeout(() => {
-            const re: setting = ipc().sendSync('editer_load_setting')
-            editer_setting$.next(re)
-            // console.log(re)
-        }, 20)
+        const re: setting = ipc().sendSync('editer_load_setting')
+        editer_setting$.next(re)
+        overload_style_scroll()
+        // console.log(re)
     }, [])
     return (
         <div id="app" className={'theme-' + theme}>
@@ -35,16 +35,3 @@ const App: React.FC = () => {
 }
 
 export default App
-
-// setTimeout(() => {
-//     const t = `
-//     ::-webkit-scrollbar {
-//         width: 0px!important;
-//         height: 0px!important;
-//         background-color: rgba(255, 255, 255, 0.253);
-//     }
-//     `
-//     const dm = document.createElement('style')
-//     dm.innerHTML = t
-//     document.head.appendChild(dm)
-// }, 2000)

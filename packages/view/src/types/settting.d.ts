@@ -72,6 +72,10 @@ declare namespace Setting {
         common: {
             /** 主题 */
             theme: 'word' | 'excel' | 'ppt' | 'onenote' | 'gray' | 'dark'
+            scroll?: {
+                width: string
+                color: string
+            }
         }
         /** 书架页 */
         shelf: {
