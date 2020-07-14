@@ -1,0 +1,12 @@
+.aline {
+    margin-left: 10px;
+    line-height: 36px;
+    font-size: 14px;
+}
+
+.link {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}

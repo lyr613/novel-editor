@@ -21,6 +21,8 @@ export function watch_fs_common() {
     ipcMain.on('fs_choose_file', fs_choose_file)
     /** 安装路径 */
     ipcMain.on('app_set_src', app_set_src)
+    /** 打开网址 */
+    ipcMain.on('websrc', websrc)
 }
 
 /**
@@ -184,4 +186,9 @@ function _compose_src(srcs: string[], type: string): string {
         srcs[la] += '.' + type
     }
     return path.join(...srcs)
+}
+
+/** 打开网址 */
+function websrc(e: Electron.IpcMainEvent, src: string) {
+    shell.openExternal(src)
 }
