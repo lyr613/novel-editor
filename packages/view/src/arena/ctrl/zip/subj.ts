@@ -1,4 +1,4 @@
 import { BehaviorSubject } from 'rxjs'
 
-export type witch = 'import' | 'export'
-export const witch$ = new BehaviorSubject<witch>('import')
+export const nav_li = ['导入', '导出']
+export const witch$ = new BehaviorSubject(nav_li[0])

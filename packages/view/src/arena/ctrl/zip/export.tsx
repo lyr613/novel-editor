@@ -7,6 +7,7 @@ import { select_dir, book_list$, load_books_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
+import SectionHeader from '@/component/section-header'
 
 export default function Exprt() {
     const [dir_src, set_dir_src] = useState('')
@@ -23,7 +24,7 @@ export default function Exprt() {
 
     return (
         <div className={s.Export}>
-            <div className={s.section}>导出文本</div>
+            <SectionHeader>导出文本</SectionHeader>
             <div className={s.line}>
                 <ThemeLabel> 要导出的书</ThemeLabel>
                 <Dropdown

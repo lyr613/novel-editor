@@ -1,51 +1,63 @@
 .Zip {
-	font-size: 15px;
-	white-space: pre;
+    font-size: 15px;
+    white-space: pre;
 }
 
-.Bar {
-	margin: 10px;
-	.btn {
-		margin-right: 10px;
-	}
+.Nav {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    border-bottom: 2px solid var(--CLRl3);
+    background-color: var(--CLRl7);
+    align-items: center;
+    .item {
+        padding: 5px 10px;
+        cursor: pointer;
+        opacity: 0.5;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .use {
+        opacity: 1;
+    }
 }
-
 .Import {
-	margin: 0 10px;
-	height: 200px;
-	.section {
-		margin: 0 -10px;
-		box-sizing: border-box;
-		height: 40px;
-		line-height: 40px;
-		padding-left: 10px;
-		background-color: var(--CLRl6);
-		color: var(--CLRt2);
-	}
-	.line {
-		margin: 10px 0;
-	}
-	.Step {
-		font-size: 16px;
-	}
-	.input {
-		width: 400px;
-	}
+    margin: 0 10px;
+    height: 200px;
+    .section {
+        margin: 0 -10px;
+        box-sizing: border-box;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+        background-color: var(--CLRl6);
+        color: var(--CLRt2);
+    }
+    .line {
+        margin: 10px 0;
+    }
+    .Step {
+        font-size: 16px;
+    }
+    .input {
+        width: 400px;
+    }
 }
 
 .Export {
-	.section {
-		box-sizing: border-box;
-		height: 40px;
-		line-height: 40px;
-		padding-left: 10px;
-		background-color: var(--CLRl6);
-		color: var(--CLRt2);
-	}
-	.line {
-		margin: 10px;
-	}
-	.dropdown {
-		width: 400px;
-	}
+    .section {
+        box-sizing: border-box;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+        background-color: var(--CLRl6);
+        color: var(--CLRt2);
+    }
+    .line {
+        margin: 10px;
+    }
+    .dropdown {
+        width: 400px;
+    }
 }
