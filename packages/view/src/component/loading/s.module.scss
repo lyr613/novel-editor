@@ -1,0 +1,42 @@
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.Loading {
+    display: flex;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation-name: appear;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
+    animation-duration: 0.2s;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes ro {
+    0% {
+        transform: rotate(70deg);
+    }
+    100% {
+        transform: rotate(430deg);
+    }
+}
+
+.icon {
+    font-size: 60px;
+    color: var(--CLRl1);
+    animation: ro 1s linear;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}

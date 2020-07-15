@@ -8,6 +8,7 @@ import Ctrl from './arena/ctrl'
 import { shallowCopy } from './rx/shallow-copy'
 import { ipc } from './const'
 import { overload_style_scroll } from './util/style-overload'
+import Loading from './component/loading'
 
 const App: React.FC = () => {
     const eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
@@ -26,6 +27,7 @@ const App: React.FC = () => {
     }, [])
     return (
         <div id="app" className={'theme-' + theme}>
+            <Loading></Loading>
             <HashRouter>
                 <Menu></Menu>
                 <Ctrl></Ctrl>

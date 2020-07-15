@@ -138,6 +138,7 @@ function load_book(src: string) {
 /** 搜索全文 */
 function book_search_text(e: Electron.IpcMainEvent, book_src: string, match_temp: string) {
     if (!book_src || !match_temp || !fs.existsSync(book_src)) {
+        reply(e, 'book_search_text', [])
         return
     }
     console.log('开始搜索', match_temp)

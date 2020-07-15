@@ -19,6 +19,7 @@ import { useObservable } from 'rxjs-hooks'
 import ThemeLabel from '@/component/theme-label'
 import { filter, take } from 'rxjs/operators'
 import { search_text$ } from '@/subject/search'
+import { global_loading$ } from '@/component/loading/subj'
 
 /** 要搜索的文本 */
 const search_re$ = new BehaviorSubject<p_one[]>([])
@@ -79,9 +80,9 @@ function Bar() {
             <IconButton
                 icon="Search"
                 onClick={() => {
+                    global_loading$.next(true)
                     search_text$.next(ipt)
                     navigator.clipboard.writeText(ipt)
-
                     ipc().send('book_search_text', get_cur_book_src(), ipt)
                 }}
             ></IconButton>
@@ -151,6 +152,7 @@ function Result() {
         function func(_: any, re: any[]) {
             console.log('搜索结果', re)
             search_re$.next(re)
+            global_loading$.next(false)
         }
         ipc().on('book_search_text', func)
         return () => {
