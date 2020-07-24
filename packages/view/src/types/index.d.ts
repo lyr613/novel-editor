@@ -1,11 +1,10 @@
-declare type int = number
-declare type float = number
-
 import 'electron'
 import './book'
 import './settting'
 
 declare global {
+    type int = number
+    type float = number
     interface Param {
         [k: string]: any
     }

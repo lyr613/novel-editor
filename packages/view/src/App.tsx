@@ -9,6 +9,7 @@ import { shallowCopy } from './rx/shallow-copy'
 import { ipc } from './const'
 import { overload_style_scroll } from './util/style-overload'
 import Loading from './component/loading'
+import Modal from './arena/modal'
 
 const App: React.FC = () => {
     const eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
@@ -32,6 +33,7 @@ const App: React.FC = () => {
                 <Menu></Menu>
                 <Ctrl></Ctrl>
             </HashRouter>
+            <Modal />
         </div>
     )
 }

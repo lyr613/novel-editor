@@ -17,7 +17,7 @@ export default function List() {
     const [one_w, set_one_w] = useState(0)
     /** npc列表 */
     const list = useObservable(() => filterd_list$, [])
-    const npc_focu = useObservable(() => npc_use$)
+    const use = useObservable(() => npc_use$)
     const refbox = useRef<null | HTMLDivElement>(null)
     useEffect(() => {
         const dom = refbox.current
@@ -62,7 +62,7 @@ export default function List() {
                         width: one_w + 'px',
                     }}
                 >
-                    <div className={[s.name, npc_focu?.id === npc.id ? s.name2 : ''].join(' ')} style={{}}>
+                    <div className={[s.name, use?.id === npc.id ? s.name2 : ''].join(' ')} style={{}}>
                         <span>
                             {npc.base.name} {gender_map(npc.base.gender)}
                         </span>

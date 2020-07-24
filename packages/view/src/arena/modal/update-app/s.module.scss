@@ -1,0 +1,41 @@
+.UpdateApp {
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+    .border {
+        width: 600px;
+        padding: 0 20px;
+    }
+    .title {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        background-color: var(--CLRl5);
+        font-size: 16px;
+    }
+    .txt {
+        overflow: auto;
+        max-height: 400px;
+        padding: 20px;
+        background-color: var(--CLRl7);
+        font-size: 16px;
+        li {
+            margin: 3px 20px;
+            list-style: disc;
+        }
+    }
+    .foo {
+        display: flex;
+        border-top: 1px solid var(--CLRl5);
+        width: 100%;
+        background-color: var(--CLRl7);
+        padding: 5px;
+    }
+}

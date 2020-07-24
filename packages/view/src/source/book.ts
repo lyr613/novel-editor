@@ -31,7 +31,7 @@ export function load_books_auto() {
     editer_setting$
         .pipe(
             take(1),
-            map((v) => v.shelf.book_list ?? []),
+            map((v) => v?.shelf.book_list ?? []),
             map(find_book),
         )
         .subscribe((li) => {

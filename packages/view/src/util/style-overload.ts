@@ -5,6 +5,9 @@ import { take } from 'rxjs/operators'
 export function overload_style_scroll() {
     editer_setting$.pipe(take(1)).subscribe((edit) => {
         //
+        if (!edit) {
+            return
+        }
         const form = edit.common.scroll ?? {
             width: '',
             color: '',

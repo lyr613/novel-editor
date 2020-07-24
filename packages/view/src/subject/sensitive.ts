@@ -11,7 +11,7 @@ export const sensitive_check_list$ = editer_setting$.pipe(
         sensitive_can_check$.pipe(
             map((can) => {
                 if (can) {
-                    return (opt.sensitive ?? []).filter(Boolean)
+                    return (opt?.sensitive ?? []).filter(Boolean)
                 }
                 return []
             }),

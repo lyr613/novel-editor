@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React from 'react'
-import ContextMenu from './context-menu'
+import UpdateApp from './update-app'
 
 /**
  * 弹出
@@ -8,7 +8,7 @@ import ContextMenu from './context-menu'
 export default function Modal() {
     return (
         <>
-            <ContextMenu></ContextMenu>
+            <UpdateApp />
         </>
     )
 }

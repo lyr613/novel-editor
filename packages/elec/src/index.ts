@@ -13,7 +13,6 @@ let main_window: BrowserWindow | null
 
 app.once('ready', () => {
     createWindow()
-    update_check(main_window!)
 })
 
 app.on('window-all-closed', function() {
@@ -28,7 +27,9 @@ function createWindow() {
     main_window = new BrowserWindow(create_option())
 
     set_watch(main_window)
+
     did_create(main_window)
+    update_check(main_window)
 
     main_window.on('closed', function() {
         main_window = null
