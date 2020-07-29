@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { incident_list$ } from '@/source'
+import { incident_li$ } from '@/source'
 import { switchMap, map } from 'rxjs/operators'
 import { date_encode } from '@/util'
 
@@ -10,7 +10,7 @@ export const filter$ = new BehaviorSubject({
 })
 
 // 过滤后的列表
-export const incident_list_filted$ = incident_list$.pipe(
+export const incident_list_filted$ = incident_li$.pipe(
     switchMap((list) =>
         filter$.pipe(
             map((fil) =>

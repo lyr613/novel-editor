@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { debounceTime, merge } from 'rxjs/operators'
-import { node_use$, chapter_list$, node_use_buffer$ } from '@/source'
+import { node_use$, chapter_li$, node_use_buffer$ } from '@/source'
 
 /** 进入禅模式 */
 export const zen$ = new BehaviorSubject(false)
@@ -15,7 +15,7 @@ export const etnext$ = new Subject()
 // 下一章聚焦直接切换, 下面的读取文本抖动处理 ----
 etnext$.pipe().subscribe(() => {
     const node_id = node_use$.value?.id
-    const cps = chapter_list$.value
+    const cps = chapter_li$.value
     if (!node_id) {
         return
     }
@@ -40,7 +40,7 @@ export const etprev$ = new Subject()
 // 上一章聚焦直接切换, 下面的读取文本抖动处理 ----
 etprev$.pipe().subscribe(() => {
     const node_id = node_use$.value?.id
-    const cps = chapter_list$.value
+    const cps = chapter_li$.value
     if (!node_id) {
         return
     }

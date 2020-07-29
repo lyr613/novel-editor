@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { DefaultButton, TextField } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import { book_list$, select_dir, load_books_auto, book_use_id$ } from '@/source'
+import { book_li$, select_dir, find_book_li_auto, book_use_id$ } from '@/source'
 import { ipc } from '@/const'
 import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
@@ -16,7 +16,7 @@ export default function Shelf() {
     useEffect(() => {
         book_use_id$.next('')
         setTimeout(() => {
-            load_books_auto()
+            find_book_li_auto()
         }, 50)
     }, [])
     return (
@@ -28,7 +28,7 @@ export default function Shelf() {
 }
 
 function BookList() {
-    const list = useObservable(() => book_list$.pipe(shallowCopy()), [])
+    const list = useObservable(() => book_li$.pipe(shallowCopy()), [])
     return (
         <div className={s.BookList}>
             {list.map((book) => (
@@ -50,7 +50,7 @@ function NewOne() {
                             p.shelf.book_list.unshift(re.src)
                         }
                         editer_setting$.next(p)
-                        load_books_auto()
+                        find_book_li_auto()
                     }
                 })
             }}
@@ -99,7 +99,7 @@ function OneBook(p: { book: book }) {
                                         alert('修改失败')
                                         return
                                     }
-                                    load_books_auto()
+                                    find_book_li_auto()
                                     set_editing_name(false)
                                 }}
                             >
@@ -222,7 +222,7 @@ function OneBook(p: { book: book }) {
                             const p = editer_setting$.value
                             p.shelf.book_list = p.shelf.book_list.filter((v) => v !== book.src)
                             editer_setting$.next(p)
-                            load_books_auto()
+                            find_book_li_auto()
                         }}
                         style={{
                             marginRight: '10px',

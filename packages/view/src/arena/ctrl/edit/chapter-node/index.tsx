@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, ActionButton } from 'office-ui-fabric-react'
 import {
-    chapter_list$,
+    chapter_li$,
     node_use$,
     chapter_use$,
     node_use_buffer$,
@@ -11,7 +11,7 @@ import {
     fs_write,
     book_use$,
     node_text_from_fs$,
-    find_chapter_list_auto,
+    find_chapter_li_auto,
     get_cur_book_src,
 } from '@/source'
 import { useObservable } from 'rxjs-hooks'
@@ -46,7 +46,7 @@ export default function ChapterNode(p: p) {
 }
 
 function Head() {
-    const cli = useObservable(() => chapter_list$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
+    const cli = useObservable(() => chapter_li$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     return (
         <div className={s.Head}>
             <span className={s.txt}>章节</span>
@@ -74,7 +74,7 @@ function Head() {
                 iconName="SyncOccurence"
                 title="刷新"
                 onClick={() => {
-                    find_chapter_list_auto()
+                    find_chapter_li_auto()
                 }}
             ></Icon>
         </div>
@@ -82,7 +82,7 @@ function Head() {
 }
 
 function Tree() {
-    const list = useObservable(() => chapter_list$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
+    const list = useObservable(() => chapter_li$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     const ref = useRef<null | HTMLDivElement>(null)
     const focu_node = useObservable(() => node_use$)
 
@@ -99,7 +99,7 @@ function Tree() {
             )
             .subscribe((node) => {
                 const nd = node!
-                const cps = chapter_list$.value
+                const cps = chapter_li$.value
                 // 累计章高度
                 let sc_scan = -24
                 let focu_chapter = null as null | chapter
@@ -128,7 +128,7 @@ function Tree() {
                 }
                 // console.log(focu_chapter, sc_scan)
 
-                chapter_list$.next(cps)
+                chapter_li$.next(cps)
                 dom.scrollTo(0, sc_scan)
 
                 // console.log(cps)
@@ -159,8 +159,8 @@ function Chapter(p: cp) {
                 onClick={() => {
                     chapter_use$.next(p.cp)
                     p.cp.expand = !p.cp.expand
-                    const arr = chapter_list$.value
-                    chapter_list$.next(arr)
+                    const arr = chapter_li$.value
+                    chapter_li$.next(arr)
                     chapter_save()
                 }}
                 onMouseEnter={() => set_mouse_in(true)}
@@ -254,10 +254,10 @@ function Node(p: nd) {
                     const fi = p.cp.children.findIndex((v) => v.id === p.nd.id)
                     if (fi > -1) {
                         p.cp.children.splice(fi, 1)
-                        const arr = chapter_list$.value
+                        const arr = chapter_li$.value
                         fs_write('json', [get_cur_book_src(), 'chapter.json'], arr)
                     }
-                    find_chapter_list_auto()
+                    find_chapter_li_auto()
                 }}
                 style={{ marginLeft: 'auto' }}
             ></Icon>

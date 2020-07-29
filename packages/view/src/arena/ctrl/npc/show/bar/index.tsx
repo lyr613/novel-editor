@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { chapter_list$, node_use$, node_use_buffer$, npc_use_id$, edit_npc_auto } from '@/source'
+import { chapter_li$, node_use$, node_use_buffer$, npc_use_id$, edit_npc_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
 import ThemeButton from '@/component/theme-button'
@@ -37,7 +37,7 @@ function TimeLine() {
                             key={appear.percentage}
                             className={s.hline}
                             onClick={() => {
-                                const cps = chapter_list$.value
+                                const cps = chapter_li$.value
                                 for (const cp of cps) {
                                     for (const node of cp.children) {
                                         // 如果查到章节, 跳到编辑页

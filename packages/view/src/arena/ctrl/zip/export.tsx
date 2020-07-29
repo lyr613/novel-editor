@@ -3,7 +3,7 @@ import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import ThemeLabel from '@/component/theme-label'
 import { DefaultButton, Dropdown } from 'office-ui-fabric-react'
-import { select_dir, book_list$, load_books_auto } from '@/source'
+import { select_dir, book_li$, find_book_li_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
@@ -12,14 +12,14 @@ import SectionHeader from '@/component/section-header'
 export default function Exprt() {
     const [dir_src, set_dir_src] = useState('')
     const [book_src, set_book_src] = useState('')
-    const books = useObservable(() => book_list$, [])
+    const books = useObservable(() => book_li$, [])
 
     const book_sel = books.map((bk) => ({
         key: bk.src,
         text: bk.name,
     }))
     useEffect(() => {
-        load_books_auto()
+        find_book_li_auto()
     }, [])
 
     return (

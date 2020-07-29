@@ -1,6 +1,6 @@
 import { Subject, of, BehaviorSubject } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
-import { npc_li$, chapter_list$, book_use$, get_cur_book_src } from '@/source'
+import { npc_li$, chapter_li$, book_use$, get_cur_book_src } from '@/source'
 import { ipc } from '@/const'
 
 /** 查询npc出现频率 */
@@ -23,7 +23,7 @@ function npc_frequency_find(): Promise<frequency[]> {
     return new Promise((suc) => {
         const book_src = get_cur_book_src()
         const npcs = npc_li$.value
-        const cps = chapter_list$.value
+        const cps = chapter_li$.value
         if (!book_src || !npcs.length || !cps.length) {
             suc([])
             return

@@ -5,8 +5,8 @@ import {
     book_use$,
     focu_node_then_edit,
     get_now_node_list,
-    chapter_list$,
-    find_chapter_list_auto,
+    chapter_li$,
+    find_chapter_li_auto,
     get_cur_book_src,
 } from '@/source'
 import { next_router } from '@/function/router'
@@ -29,7 +29,7 @@ const node_line$ = new BehaviorSubject<(node & { did_match: boolean })[]>([])
 export default function Search() {
     useEffect(() => {
         const t = setTimeout(() => {
-            find_chapter_list_auto()
+            find_chapter_li_auto()
         }, 50)
         return () => {
             clearTimeout(t)
@@ -107,7 +107,7 @@ function NodeLine() {
         if (node_line$.value.length) {
             return
         }
-        chapter_list$
+        chapter_li$
             .pipe(
                 filter((v) => !!v.length),
                 take(1),

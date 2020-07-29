@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import {
     book_use$,
-    chapter_list$,
+    chapter_li$,
     find_npc_li_auto,
     npc_map$,
     chapter_map$,
     incident_map$,
     incident_find$,
-    find_chapter_list_auto,
+    find_chapter_li_auto,
     get_cur_book_src,
 } from '@/source'
 import { next_router } from '@/function/router'
@@ -21,7 +21,7 @@ import { Icon, Label, ActionButton } from 'office-ui-fabric-react'
  * 大纲
  */
 export default function Show() {
-    const chapters = useObservable(() => chapter_list$, [])
+    const chapters = useObservable(() => chapter_li$, [])
     const outline_map = useObservable(() => outline_map$)
     const npc_map = useObservable(() => npc_map$)
     const chapter_map = useObservable(() => chapter_map$)
@@ -30,9 +30,9 @@ export default function Show() {
         setTimeout(() => {
             find_npc_li_auto()
             incident_find$.next()
-            find_chapter_list_auto()
+            find_chapter_li_auto()
             outline_find$.next()
-        }, 50)
+        }, 0)
     }, [])
     if (!get_cur_book_src()) {
         next_router('shelf')

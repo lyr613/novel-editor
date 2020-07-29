@@ -1,7 +1,7 @@
 import { ipc } from '@/const'
 
 /**
- * 读文件
+ * 读文件, json自动解析
  * @param type
  * @param srcs
  * @param inset

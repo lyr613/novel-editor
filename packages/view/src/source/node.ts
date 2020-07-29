@@ -115,7 +115,6 @@ export function find_node_text_from_fs_auto() {
 node_use$
     .pipe(
         switchMap(() => node_use_buffer$),
-        filter((bs) => !!bs.length),
         debounceTime(500),
     )
     .subscribe((buf) => {

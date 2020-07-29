@@ -6,7 +6,7 @@ import ThemeButton from '@/component/theme-button'
 import { DefaultButton, TextField } from 'office-ui-fabric-react'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
-import { id32 } from '@/function/id32'
+import { mk_uuid } from '@/function/id32'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { fs_read, book_use$, fs_write, get_cur_book_src } from '@/source'
 import { debounceTime, skip } from 'rxjs/operators'
@@ -141,7 +141,7 @@ function Systems() {
                                 fi.name = iptuse
                             } else {
                                 const new_sys: system = {
-                                    id: id32(),
+                                    id: mk_uuid(),
                                     name: iptuse,
                                     types: [],
                                 }
@@ -243,7 +243,7 @@ function Types() {
                             const fi = types.find((v) => v.id === tid)
                             if (!fi) {
                                 const opt: atype = {
-                                    id: id32(),
+                                    id: mk_uuid(),
                                     name: iptuse,
                                     cells: [],
                                 }
@@ -386,7 +386,7 @@ function Cells() {
                             const fi = cells.find((v) => v.id === cid)
                             if (!fi) {
                                 const opt: cell = {
-                                    id: id32(),
+                                    id: mk_uuid(),
                                     name: ipt_name_use,
                                     level: ipt_level,
                                     description: ipt_des,

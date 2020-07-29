@@ -1,5 +1,5 @@
 import { BehaviorSubject, Subject } from 'rxjs'
-import { id32 } from '@/function/id32'
+import { mk_uuid } from '@/function/id32'
 import { switchMap, map, throttleTime } from 'rxjs/operators'
 import { fs_read, book_use$, get_cur_book_src } from '@/source'
 
@@ -18,7 +18,7 @@ export interface pen_ {
 export function of_pen(): pen_ {
     return {
         type: 'pen',
-        id: id32(),
+        id: mk_uuid(),
         color: 'ff0000',
         points: [],
     }
@@ -35,7 +35,7 @@ export interface map_txt {
 }
 export function of_txt(): map_txt {
     return {
-        id: id32(),
+        id: mk_uuid(),
         color: 'red',
         txt: '',
         description: '',
@@ -84,7 +84,7 @@ map_list$
 
 export function of_map(): amap {
     return {
-        id: id32(),
+        id: mk_uuid(),
         name: '地图名称',
         pens: [],
         txts: [],

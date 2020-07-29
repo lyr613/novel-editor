@@ -5,9 +5,9 @@ import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dia
 import { PrimaryButton, DefaultButton, ActionButton } from 'office-ui-fabric-react/lib/Button'
 import { TextField, ChoiceGroup, IChoiceGroupOption, Dropdown, IDropdownOption } from 'office-ui-fabric-react'
 import { Icon, Slider, Label } from 'office-ui-fabric-react'
-import { chapter_list$, book_use$, of_chapter, chapter_use$, chapter_save, find_chapter_list_auto } from '@/source'
+import { chapter_li$, book_use$, chapter_of, chapter_use$, chapter_save, find_chapter_li_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
-import { id32 } from '@/function/id32'
+import { mk_uuid } from '@/function/id32'
 import { fs_write, mk_dir, fs_rename } from '@/source/fs-common'
 import { BehaviorSubject } from 'rxjs'
 import { filter, switchMap, map, take } from 'rxjs/operators'
@@ -28,7 +28,7 @@ export function EditChapter() {
     // 在某章后, id
     const [after_cid, set_after_cid] = useState('')
     /** 章列表 */
-    const cps = useObservable(() => chapter_list$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
+    const cps = useObservable(() => chapter_li$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     /** 聚焦的章 */
     const focu = useObservable(() => chapter_use$)
     /** 聚焦的书 */
@@ -63,7 +63,7 @@ export function EditChapter() {
                 map((v) => v!),
             )
             .subscribe((cp) => {
-                const li = chapter_list$.value.filter((v) => !v.hidden)
+                const li = chapter_li$.value.filter((v) => !v.hidden)
                 const i = li.findIndex((v) => v.id === cp.id)
                 if (i === 0) {
                     set_posi('first')
@@ -119,7 +119,7 @@ export function EditChapter() {
                 onChange={(_, opt) => {
                     const k = opt?.key ?? 'last'
                     if (k === 'insert') {
-                        find_chapter_list_auto()
+                        find_chapter_li_auto()
                     }
                     set_posi(k as any)
                 }}
@@ -138,10 +138,10 @@ export function EditChapter() {
                     disabled={!cp_name.length}
                     onClick={async () => {
                         // 操作章列表, 改写chapter.json文件
-                        const id = action === 'change' ? focu?.id ?? id32() : id32()
+                        const id = action === 'change' ? focu?.id ?? mk_uuid() : mk_uuid()
                         const children = action === 'change' ? focu?.children ?? [] : []
-                        const the_cp = of_chapter({ id, name: cp_name.trim(), children })
-                        const arr = chapter_list$.value.filter((v) => {
+                        const the_cp = chapter_of({ id, name: cp_name.trim(), children })
+                        const arr = chapter_li$.value.filter((v) => {
                             if (action === 'add') {
                                 return true
                             }
@@ -155,13 +155,13 @@ export function EditChapter() {
                             const ni = arr.findIndex((v) => v.id === after_cid) + 1
                             arr.splice(ni, 0, the_cp)
                         }
-                        chapter_list$.next(arr)
+                        chapter_li$.next(arr)
                         const opt_re = await chapter_save()
                         if (!opt_re) {
                             alert('修改章节配置文件失败')
                             return
                         }
-                        find_chapter_list_auto()
+                        find_chapter_li_auto()
                         mk_dir([book.src, 'chapters'])
                         console.log('修改章成功')
                         hidd_cp$.next(true)
@@ -217,7 +217,7 @@ export function DeleteChapter() {
                         focu.hidden = true
                         const opt_re = await chapter_save()
                         if (opt_re) {
-                            find_chapter_list_auto()
+                            find_chapter_li_auto()
                             console.log('删除成功')
                         } else {
                             alert('删除失败')

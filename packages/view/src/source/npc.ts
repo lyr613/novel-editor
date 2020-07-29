@@ -1,22 +1,21 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, filter, switchMap, take } from 'rxjs/operators'
 import { book_use$, get_cur_book_src } from './book'
-import { id32 } from '@/function/id32'
+import { mk_uuid } from '@/function/id32'
 import { ipc } from '@/const'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { fs_write, fs_read } from './fs-common'
 
 /** npc列表 */
 export const npc_li$ = new BehaviorSubject<npc[]>([])
-
 /** 使用npc的id */
 export const npc_use_id$ = new BehaviorSubject('')
-
 /** 使用的npc */
 export const npc_use$ = npc_li$.pipe(switchMap((li) => npc_use_id$.pipe(map((id) => li.find((v) => v.id === id)))))
-
 /** 编辑的npc */
 export const npc_edit$ = new BehaviorSubject(of_npc())
+/** npc哈希表 {id: npc} */
+export const npc_map$ = npc_li$.pipe(map(mk_npc_map))
 
 /** 自动编辑在用的npc, 如果没有就创造一个 */
 export function edit_npc_auto() {
@@ -31,9 +30,6 @@ export function edit_npc_auto() {
         })
 }
 
-/** npc哈希表 {id: npc} */
-export const npc_map$ = npc_li$.pipe(map(mk_npc_map))
-
 /** 构造npc哈希表 */
 export function mk_npc_map(npcs: npc[]) {
     const m = new Map<string, npc>()
@@ -44,7 +40,7 @@ export function mk_npc_map(npcs: npc[]) {
 }
 
 /** 查找npc */
-export const npc_li_finder$ = book_use$.pipe(
+export const find_npc_li_$ = book_use$.pipe(
     take(1),
     map((v) => v?.src),
     map((book_src): npc[] => {
@@ -53,7 +49,7 @@ export const npc_li_finder$ = book_use$.pipe(
 )
 
 export function find_npc_li_auto() {
-    npc_li_finder$.pipe(take(1)).subscribe((li) => {
+    find_npc_li_$.pipe(take(1)).subscribe((li) => {
         npc_li$.next(li)
     })
 }
@@ -63,7 +59,7 @@ export function find_npc_li_auto() {
  */
 export function of_npc(): npc {
     return {
-        id: id32(),
+        id: mk_uuid(),
         base: {
             name: '',
             gender: '0',
@@ -78,7 +74,7 @@ export function of_npc(): npc {
 }
 
 /** 保存编辑的npc */
-export function npc_edited_save() {
+export function save_npc_edited() {
     const npc_edit = npc_edit$.value
     const li = [...npc_li$.value]
     const fi = li.findIndex((v) => v.id === npc_edit.id)

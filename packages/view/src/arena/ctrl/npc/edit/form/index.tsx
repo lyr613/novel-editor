@@ -16,7 +16,7 @@ import {
 import { sty_text } from './office-style'
 import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
-import { book_use$, npc_li$, npc_map$, fs_write, npc_edit$, npc_edited_save } from '@/source'
+import { book_use$, npc_li$, npc_map$, fs_write, npc_edit$, save_npc_edited } from '@/source'
 import { electron } from '@/const'
 import { next_router } from '@/function/router'
 import DateYMD from '@/component/date'
@@ -382,7 +382,7 @@ function Confirm() {
         <ThemeButton
             onClick={() => {
                 _hand_all_npc_link()
-                const re = npc_edited_save()
+                const re = save_npc_edited()
                 if (re === true) {
                     next_router('npc')
                 } else {

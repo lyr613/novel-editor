@@ -17,14 +17,14 @@ import {
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import {
-    chapter_list$,
+    chapter_li$,
     chapter_use$,
     book_use$,
-    of_node,
+    node_of,
     fs_write,
     chapter_save,
     node_use$,
-    find_chapter_list_auto,
+    find_chapter_li_auto,
     node_buffer_add_by_id,
 } from '@/source'
 import { map } from 'rxjs/operators'
@@ -50,7 +50,7 @@ export function EditNode() {
     /** 显示编辑节弹窗 */
     const show = useObservable(() => show_node_edit$, false)
     /** 章列表 */
-    const cps = useObservable(() => chapter_list$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
+    const cps = useObservable(() => chapter_li$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     /** 聚焦的章 */
     const cp_focu = useObservable(() => chapter_use$) ?? cps[0]
     /** 聚焦的节 */
@@ -136,7 +136,7 @@ export function EditNode() {
             <Dropdown
                 options={cp_sel_opt}
                 onChange={(_, opt) => {
-                    const arr = chapter_list$.value
+                    const arr = chapter_li$.value
                     const id = opt?.key
                     const nf = arr.find((v) => v.id === id)
                     if (nf) {
@@ -166,12 +166,12 @@ export function EditNode() {
                     onClick={async () => {
                         let the_node: null | node = null
                         if (action === 'add') {
-                            the_node = of_node()
+                            the_node = node_of()
                             await fs_write('txt', [book.src, 'chapters', the_node.id], '')
                         } else {
                             // 删掉原来的
                             the_node = node_use!
-                            const cp = chapter_list$.value.find((v) => v.id === the_node?.chapter_id)
+                            const cp = chapter_li$.value.find((v) => v.id === the_node?.chapter_id)
                             if (cp) {
                                 cp.children = cp.children.filter((v) => v.id !== the_node?.id)
                             }
@@ -188,11 +188,11 @@ export function EditNode() {
                             cp_focu.children.splice(i + 1, 0, the_node)
                         }
                         // cp_focu不一定在list里,所以要替换
-                        const cfi = chapter_list$.value.findIndex((v) => v.id === cp_focu.id)
-                        chapter_list$.value.splice(cfi, 1, cp_focu)
+                        const cfi = chapter_li$.value.findIndex((v) => v.id === cp_focu.id)
+                        chapter_li$.value.splice(cfi, 1, cp_focu)
 
-                        await chapter_save()
-                        find_chapter_list_auto()
+                        chapter_save()
+                        find_chapter_li_auto()
                         show_node_edit$.next(false)
                         node_use$.next(the_node)
                         node_buffer_add_by_id(the_node.id)

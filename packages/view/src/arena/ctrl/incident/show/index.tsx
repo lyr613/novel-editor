@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, ActionButton, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { incident_focu$, of_incident, incident_find$, incident_list$ } from '@/source/incident'
+import { incident_use$, of_incident, incident_find$, incident_li$ } from '@/source/incident'
 import { useObservable } from 'rxjs-hooks'
 import { npc_map$, find_npc_li_auto, book_use$, get_now_node_list, fs_write, get_cur_book_src } from '@/source'
 import { incident_list_filted$, filter$ } from './subj'
@@ -49,10 +49,10 @@ interface line_incidents {
 /** 节奏线索 */
 function TimeLine() {
     const [show, set_show] = useState<line_incidents[][]>([])
-    const focu = useObservable(() => incident_focu$)
+    const focu = useObservable(() => incident_use$)
     useEffect(() => {
         // 这里加个延时, 先加载底下的列表
-        const ob = incident_list$.pipe(shallowCopy(), debounceTime(200)).subscribe((li) => {
+        const ob = incident_li$.pipe(shallowCopy(), debounceTime(200)).subscribe((li) => {
             if (!li.length) {
                 set_show([])
                 return
@@ -115,7 +115,7 @@ function TimeLine() {
                             key={one.incident.id}
                             className={[s.hline, focu?.id === one.incident.id ? s.foculine : ''].join(' ')}
                             onClick={() => {
-                                incident_focu$.next(one.incident)
+                                incident_use$.next(one.incident)
                             }}
                             onDoubleClick={() => {
                                 view_focu$.next(one.incident.id)
@@ -148,7 +148,7 @@ function Action() {
         <div className={s.Action}>
             <ThemeButton
                 onClick={() => {
-                    incident_focu$.next(of_incident())
+                    incident_use$.next(of_incident())
                     next_router('incident', 'edit')
                 }}
             >
@@ -173,7 +173,7 @@ function Action() {
 /** 列表部分 */
 function List() {
     const list = useObservable(() => incident_list_filted$, [])
-    const focu = useObservable(() => incident_focu$)
+    const focu = useObservable(() => incident_use$)
     const refbox = useRef<null | HTMLDivElement>(null)
     // 更新视图用: 比如统计完字数
     useObservable(() => update_list_view$)
@@ -213,7 +213,7 @@ function List() {
                     onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                        incident_focu$.next(incident)
+                        incident_use$.next(incident)
                     }}
                 >
                     <div className={[s.title, focu?.id === incident.id ? s.titlefocu : ''].join(' ')}>
@@ -229,7 +229,7 @@ function List() {
                             onClick={(e) => {
                                 e.stopPropagation()
                                 e.preventDefault()
-                                incident_focu$.next(incident)
+                                incident_use$.next(incident)
                                 next_router('incident', 'edit')
                             }}
                         ></IconButton>
@@ -237,9 +237,9 @@ function List() {
                             icon="Delete"
                             add_class={[s.icondel]}
                             onDoubleClick={() => {
-                                const arr = incident_list$.value
+                                const arr = incident_li$.value
                                 const narr = arr.filter((v) => v.id !== incident.id)
-                                incident_list$.next(narr)
+                                incident_li$.next(narr)
                                 fs_write('json', [get_cur_book_src(), 'incident.json'], narr)
                             }}
                         ></IconButton>

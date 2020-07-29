@@ -4,7 +4,7 @@ import s from './s.module.scss'
 import {
     book_use$,
     find_npc_li_auto,
-    find_chapter_list_auto,
+    find_chapter_li_auto,
     load_prev_buffer,
     node_use_buffer$,
     book_use_id$,
@@ -45,14 +45,14 @@ export default function Edit() {
     useEffect(() => {
         const a = setTimeout(() => {
             find_npc_li_auto()
-            find_chapter_list_auto()
+            find_chapter_li_auto()
             table_list_find$.next()
             if (!node_use_buffer$.value.length) {
                 setTimeout(() => {
                     load_prev_buffer()
                 }, 100)
             }
-        }, 50)
+        }, 0)
         return () => {
             clearTimeout(a)
         }
