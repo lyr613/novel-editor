@@ -8,9 +8,9 @@ import {
     npc_map$,
     chapter_map$,
     incident_map$,
-    incident_find$,
     find_chapter_li_auto,
     get_cur_book_src,
+    find_incident_li_auto,
 } from '@/source'
 import { next_router } from '@/function/router'
 import { useObservable } from 'rxjs-hooks'
@@ -29,8 +29,8 @@ export default function Show() {
     useEffect(() => {
         setTimeout(() => {
             find_npc_li_auto()
-            incident_find$.next()
             find_chapter_li_auto()
+            find_incident_li_auto()
             outline_find$.next()
         }, 0)
     }, [])

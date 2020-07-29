@@ -4,7 +4,7 @@ import s from './s.module.scss'
 import { TextField, PrimaryButton, Icon } from 'office-ui-fabric-react'
 import DateYMD from '@/component/date'
 import { useObservable } from 'rxjs-hooks'
-import { incident_use$, incident_edit_end$, incident_edit_re$, incident_li$ } from '@/source/incident'
+import { incident_edit$, save_incident_edited, find_incident_li_auto } from '@/source/incident'
 import NpcSelect from '@/component/npc'
 import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
@@ -12,20 +12,9 @@ import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { shallowCopy } from '@/rx/shallow-copy'
 import IconButton from '@/component/icon-button'
-import { chapter_li$, fs_write, book_use$, focu_node_then_edit, get_cur_book_src } from '@/source'
+import { chapter_li$, focu_node_then_edit } from '@/source'
 
 export default function Form() {
-    useEffect(() => {
-        // 提交结果
-        const sub_re = incident_edit_re$.subscribe((b) => {
-            if (b) {
-                next_router('incident')
-            } else {
-                alert('提交失败')
-            }
-        })
-        return () => sub_re.unsubscribe()
-    }, [])
     return (
         <>
             <Text />
@@ -39,7 +28,7 @@ export default function Form() {
 
 /** 标题和描述 */
 function Text() {
-    const incident = useObservable(() => incident_use$.pipe(shallowCopy()))
+    const incident = useObservable(() => incident_edit$.pipe(shallowCopy()))
 
     if (!incident) {
         return null
@@ -57,7 +46,7 @@ function Text() {
                     value={incident.label}
                     onChange={(_, ss) => {
                         incident.label = ss || ''
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                     required
                     autoComplete="off"
@@ -67,7 +56,7 @@ function Text() {
                     value={incident.text}
                     onChange={(_, ss) => {
                         incident.text = ss || ''
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                     required
                     multiline
@@ -85,7 +74,7 @@ function Text() {
                     onChange={(_, ns) => {
                         ns = (ns || '').replace(/[^0-9]/g, '')
                         incident.word.preset = Number(ns)
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                 ></TextField>
             </div>
@@ -101,7 +90,7 @@ function Links() {
     const [ipt_name, set_ipt_name] = useState('')
     // 正在设置开始章节
     const [be_start, set_be_start] = useState(true)
-    const incident = useObservable(() => incident_use$.pipe(shallowCopy()))
+    const incident = useObservable(() => incident_edit$.pipe(shallowCopy()))
 
     if (!incident) {
         return null
@@ -122,7 +111,7 @@ function Links() {
                         key={n}
                         onClick={() => {
                             incident.link_line.index = n
-                            incident_use$.next(incident)
+                            incident_edit$.next(incident)
                         }}
                         add_class={[s.event_line, incident.link_line.index === n ? s.hold : '']}
                     >
@@ -190,7 +179,7 @@ function Links() {
                                 } else {
                                     incident.link_line.end_node_id = nd.id
                                 }
-                                incident_use$.next(incident)
+                                incident_edit$.next(incident)
                                 set_can_show_ipt(false)
                                 set_ipt_name('')
                             }}
@@ -231,7 +220,7 @@ function _link_name_map(n: number) {
 }
 /** 相关角色 */
 function Npcs() {
-    const incident = useObservable(() => incident_use$.pipe(shallowCopy()))
+    const incident = useObservable(() => incident_edit$.pipe(shallowCopy()))
     if (!incident) {
         return null
     }
@@ -244,11 +233,11 @@ function Npcs() {
                     did_ids={incident.npc_ids}
                     on_reduce={(npc) => {
                         incident.npc_ids = incident.npc_ids.filter((id) => id !== npc.id)
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                     on_plus={(npc) => {
                         incident.npc_ids.push(npc.id)
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                 ></NpcSelect>
             </div>
@@ -258,7 +247,7 @@ function Npcs() {
 
 /** 日期 */
 function DateSE() {
-    const incident = useObservable(() => incident_use$.pipe(shallowCopy()))
+    const incident = useObservable(() => incident_edit$.pipe(shallowCopy()))
     if (!incident) {
         return null
     }
@@ -273,15 +262,15 @@ function DateSE() {
                     value3={incident.life[2]}
                     onChange1={(str) => {
                         incident.life[0] = str
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                     onChange2={(str) => {
                         incident.life[1] = str
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                     onChange3={(str) => {
                         incident.life[2] = str
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                 ></DateYMD>
                 <span className={s.split}>-</span>
@@ -292,15 +281,15 @@ function DateSE() {
                     value3={incident.life[5]}
                     onChange1={(str) => {
                         incident.life[3] = str
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                     onChange2={(str) => {
                         incident.life[4] = str
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                     onChange3={(str) => {
                         incident.life[5] = str
-                        incident_use$.next(incident)
+                        incident_edit$.next(incident)
                     }}
                 ></DateYMD>
             </div>
@@ -313,22 +302,9 @@ function Confirm() {
         <div className={s.Confirm}>
             <ThemeButton
                 onClick={() => {
-                    incident_edit_end$.next()
-                    const ins = incident_li$.value
-                    const nin = incident_use$.value
-                    const book_src = get_cur_book_src()
-                    if (!nin || !book_src) {
-                        alert('意外的丢失了本次编辑信息, 重载app试试')
-                        return
-                    }
-                    const fi = ins.findIndex((v) => v.id === nin.id)
-                    if (fi === -1) {
-                        ins.push(nin)
-                    } else {
-                        ins[fi] = nin
-                    }
-                    incident_li$.next(ins)
-                    fs_write('json', [book_src, 'incident.json'], ins)
+                    save_incident_edited()
+                    find_incident_li_auto()
+                    next_router('incident')
                 }}
             >
                 好

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, ActionButton, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { incident_use$, of_incident, incident_find$, incident_li$ } from '@/source/incident'
+import { incident_use$, of_incident, incident_li$, incident_use_id$, incident_edit$ } from '@/source/incident'
 import { useObservable } from 'rxjs-hooks'
 import { npc_map$, find_npc_li_auto, book_use$, get_now_node_list, fs_write, get_cur_book_src } from '@/source'
 import { incident_list_filted$, filter$ } from './subj'
@@ -115,7 +115,7 @@ function TimeLine() {
                             key={one.incident.id}
                             className={[s.hline, focu?.id === one.incident.id ? s.foculine : ''].join(' ')}
                             onClick={() => {
-                                incident_use$.next(one.incident)
+                                incident_use_id$.next(one.incident.id)
                             }}
                             onDoubleClick={() => {
                                 view_focu$.next(one.incident.id)
@@ -148,7 +148,7 @@ function Action() {
         <div className={s.Action}>
             <ThemeButton
                 onClick={() => {
-                    incident_use$.next(of_incident())
+                    incident_use_id$.next('')
                     next_router('incident', 'edit')
                 }}
             >
@@ -213,7 +213,7 @@ function List() {
                     onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                        incident_use$.next(incident)
+                        incident_use_id$.next(incident.id)
                     }}
                 >
                     <div className={[s.title, focu?.id === incident.id ? s.titlefocu : ''].join(' ')}>
@@ -229,7 +229,7 @@ function List() {
                             onClick={(e) => {
                                 e.stopPropagation()
                                 e.preventDefault()
-                                incident_use$.next(incident)
+                                incident_use_id$.next(incident.id)
                                 next_router('incident', 'edit')
                             }}
                         ></IconButton>

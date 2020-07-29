@@ -1,42 +1,47 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { switchMap, take, filter, map } from 'rxjs/operators'
-import { book_use$, get_cur_book_src } from './book'
-import { ipc } from '@/const'
+import { get_cur_book_src } from './book'
 import { mk_uuid } from '@/function/id32'
+import { shallowCopy } from '@/rx/shallow-copy'
+import { fs_read, fs_write } from './fs-common'
 
 /** 事件列表 */
 export const incident_li$ = new BehaviorSubject<incident[]>([])
-
-export const incident_use$ = new BehaviorSubject<incident | null>(null)
-/** 查找事件列表 */
-export const incident_find$ = new Subject()
-
-export const incident_map$ = incident_li$.pipe(
-    map((li) => {
-        const m = new Map<string, incident>()
-        li.forEach((ot) => {
-            m.set(ot.id, ot)
-        })
-        return m
-    }),
+export const incident_use_id$ = new BehaviorSubject('')
+export const incident_use$ = incident_li$.pipe(
+    switchMap((li) => incident_use_id$.pipe(map((id) => li.find((v) => v.id === id)))),
 )
+export const incident_edit$ = new BehaviorSubject(of_incident())
+export const incident_map$ = incident_li$.pipe(map(mk_incident_map))
 
-incident_find$
-    .pipe(
-        map(() => get_cur_book_src()),
-        filter((v) => !!v),
-        switchMap((src) => {
-            return incident_find_ip(src)
-        }),
-    )
-    .subscribe((li) => {
-        incident_li$.next(li)
+export function mk_incident_map(li: incident[]) {
+    const m = new Map<string, incident>()
+    li.forEach((ot) => {
+        m.set(ot.id, ot)
     })
-function incident_find_ip(book_src: string) {
-    return new Promise<incident[]>((res) => {
-        const li = ipc().sendSync('incident-find', book_src)
-        res(li)
-    })
+    return m
+}
+
+export function edit_incident_auto() {
+    incident_use$
+        .pipe(
+            take(1),
+            shallowCopy(),
+            map((v) => v ?? of_incident()),
+        )
+        .subscribe((npc) => {
+            incident_edit$.next(npc)
+        })
+}
+export function find_incident_li(book_src: string) {
+    return fs_read<incident[]>('json', [book_src, 'incident']) || []
+}
+
+export function find_incident_li_auto() {
+    incident_li$.next([])
+    const bs = get_cur_book_src()
+    const is = find_incident_li(bs)
+    incident_li$.next(is)
 }
 
 /** 创造空事件 */
@@ -61,22 +66,20 @@ export function of_incident(part?: Object) {
     return re
 }
 
-/** 事件编辑完成 */
-export const incident_edit_end$ = new Subject()
+export function save_incident_edited() {
+    const edited = incident_edit$.value
+    const li = [...incident_li$.value]
+    const fi = li.findIndex((v) => v.id === edited.id)
 
-/** 事件提交结果 */
-export const incident_edit_re$ = incident_edit_end$.pipe(
-    switchMap(() => incident_use$),
-    filter((v) => !!v),
-    take(1),
-    switchMap((incident) => {
-        return incident_edit_ipc(get_cur_book_src(), incident!)
-    }),
-)
+    if (fi === -1) {
+        li.push(edited)
+    } else {
+        li.splice(fi, 1, edited)
+    }
+    return save_incident_li(li)
+}
 
-function incident_edit_ipc(book_src: string, incident: incident) {
-    return new Promise<boolean>((res) => {
-        const re = ipc().sendSync('incident-edit', book_src, incident)
-        res(re)
-    })
+function save_incident_li(li: incident[]) {
+    const bs = get_cur_book_src()
+    return fs_write('json', [bs, 'incident'], li)
 }

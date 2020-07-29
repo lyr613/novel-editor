@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
 import { Label, ActionButton, TextField } from 'office-ui-fabric-react'
-import { incident_li$, incident_find$ } from '@/source/incident'
+import { incident_li$, find_incident_li_auto } from '@/source/incident'
 
 interface p {
     label: string
@@ -26,7 +26,9 @@ export default function IncidentSelect(p: p) {
         return true
     })
     useEffect(() => {
-        incident_find$.next()
+        setTimeout(() => {
+            find_incident_li_auto()
+        }, 0)
     }, [])
     return (
         <div className={s.IncidentSelect}>

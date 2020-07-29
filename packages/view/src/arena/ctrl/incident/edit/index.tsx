@@ -4,29 +4,36 @@ import s from './s.module.scss'
 import { DefaultButton } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
 import Form from './form'
+import { edit_incident_auto, incident_use_id$, incident_edit$ } from '@/source'
 
 export default function Edit() {
-	return (
-		<>
-			<Back />
-			<Form />
-		</>
-	)
+    useEffect(() => {
+        edit_incident_auto()
+        return () => {
+            incident_use_id$.next(incident_edit$.value.id)
+        }
+    }, [])
+    return (
+        <>
+            <Back />
+            <Form />
+        </>
+    )
 }
 
 function Back() {
-	return (
-		<DefaultButton
-			onClick={() => {
-				next_router('incident')
-			}}
-			styles={{
-				root: {
-					margin: '10px 10px 0',
-				},
-			}}
-		>
-			返回
-		</DefaultButton>
-	)
+    return (
+        <DefaultButton
+            onClick={() => {
+                next_router('incident')
+            }}
+            styles={{
+                root: {
+                    margin: '10px 10px 0',
+                },
+            }}
+        >
+            返回
+        </DefaultButton>
+    )
 }
