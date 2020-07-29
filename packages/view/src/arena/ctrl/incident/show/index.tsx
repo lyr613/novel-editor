@@ -3,9 +3,16 @@ import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, ActionButton, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { incident_use$, of_incident, incident_li$, incident_use_id$, incident_edit$ } from '@/source/incident'
+import { incident_use$, incident_li$, incident_use_id$, find_incident_li_auto } from '@/source/incident'
 import { useObservable } from 'rxjs-hooks'
-import { npc_map$, find_npc_li_auto, book_use$, get_now_node_list, fs_write, get_cur_book_src } from '@/source'
+import {
+    npc_map$,
+    find_npc_li_auto,
+    get_now_node_list,
+    fs_write,
+    get_cur_book_src,
+    find_chapter_li_auto,
+} from '@/source'
 import { incident_list_filted$, filter$ } from './subj'
 import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -16,7 +23,13 @@ import { debounceTime } from 'rxjs/operators'
 
 /** 事件展示 */
 export default function Show() {
-    useEffect(() => {}, [])
+    useEffect(() => {
+        setTimeout(() => {
+            find_chapter_li_auto()
+            find_incident_li_auto()
+            find_npc_li_auto()
+        }, 0)
+    }, [])
     return (
         <div className={s.Show}>
             <TimeLine />

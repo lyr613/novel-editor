@@ -303,7 +303,6 @@ function Confirm() {
             <ThemeButton
                 onClick={() => {
                     save_incident_edited()
-                    find_incident_li_auto()
                     next_router('incident')
                 }}
             >

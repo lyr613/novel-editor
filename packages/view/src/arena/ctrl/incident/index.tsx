@@ -10,14 +10,6 @@ import Edit from './edit'
 export default function Incident() {
     const { path } = useRouteMatch()
 
-    useEffect(() => {
-        setTimeout(() => {
-            find_chapter_li_auto()
-            find_incident_li_auto()
-            find_npc_li_auto()
-        }, 0)
-    }, [])
-
     if (!get_cur_book_src()) {
         next_router('shelf')
         return null
