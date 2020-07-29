@@ -2,22 +2,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, ActionButton } from 'office-ui-fabric-react'
-import {
-    chapter_li$,
-    node_use$,
-    chapter_use$,
-    node_use_buffer$,
-    chapter_save,
-    fs_write,
-    book_use$,
-    node_text_from_fs$,
-    find_chapter_li_auto,
-    get_cur_book_src,
-} from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, filter, debounceTime } from 'rxjs/operators'
 import { EditChapter, DeleteChapter, action_cp$, hidd_cp$, show_del_cp$ } from './edit-cp'
 import { EditNode, show_node_edit$, action_nd$ } from './edit-node'
+import { chapter_li$, find_chapter_li_auto, chapter_use$, chapter_save } from '@/source/chapter-node'
+import { node_use$, node_use_buffer$, node_text_from_fs$ } from '@/source/node'
+import { fs_write } from '@/source/fs-common'
+import { get_cur_book_src } from '@/source/book'
 
 interface p {
     w: number

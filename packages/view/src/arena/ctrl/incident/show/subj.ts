@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { incident_li$ } from '@/source'
+import { incident_li$ } from '@/source/incident'
 import { switchMap, map } from 'rxjs/operators'
 import { date_encode } from '@/util'
 

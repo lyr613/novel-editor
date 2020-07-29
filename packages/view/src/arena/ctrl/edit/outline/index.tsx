@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
-import { outline_find$, chapter_use$, outline_map$ } from '@/source'
 import { show_format } from '@/function/text'
+import { chapter_use$ } from '@/source/chapter-node'
+import { outline_map$, outline_find$ } from '@/source/outline'
 
 interface p {
     w: number

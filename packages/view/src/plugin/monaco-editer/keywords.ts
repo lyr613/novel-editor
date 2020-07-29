@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor'
-import { npc_li$ } from '@/source'
+import { npc_li$ } from '@/source/npc'
 import { merge, take } from 'rxjs/operators'
 import { sensitive_check_list$ } from '@/subject/sensitive'
 import { table_list$ } from '@/source/table'

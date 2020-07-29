@@ -3,16 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, Slider, Label } from 'office-ui-fabric-react'
 import * as monaco from 'monaco-editor'
-import {
-    node_use$,
-    node_text_from_fs$,
-    node_use_buffer$,
-    node_text_from_editer$,
-    node_id_text_map$,
-    book_use$,
-    find_node_text_from_fs_auto,
-    get_cur_book_src,
-} from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { map, switchMap, merge, debounceTime } from 'rxjs/operators'
 import { Screen$, key$ } from '@/subscribe'
@@ -26,6 +16,15 @@ import CtrlBar from './ctrl-bar'
 import { search_text$ } from '@/subject/search'
 import { default_editer_option } from '@/plugin/monaco-editer/option'
 import { monaco_option_use$ } from '@/subject/monaco'
+import {
+    node_use_buffer$,
+    node_use$,
+    node_text_from_editer$,
+    node_id_text_map$,
+    find_node_text_from_fs_auto,
+    node_text_from_fs$,
+} from '@/source/node'
+import { get_cur_book_src } from '@/source/book'
 
 interface p {
     w: number

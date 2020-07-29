@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
-import { chapter_li$, node_use$, node_use_buffer$, npc_use_id$, edit_npc_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
 import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { npc_frequency_find$ } from './subj'
+import { npc_use_id$, edit_npc_auto } from '@/source/npc'
+import { chapter_li$ } from '@/source/chapter-node'
+import { node_use$, node_use_buffer$ } from '@/source/node'
 
 /**
  * 控制栏

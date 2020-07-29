@@ -4,9 +4,9 @@ import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { ipc } from '@/const'
-import { get_cur_book_src } from '@/source'
 import { TextField } from 'office-ui-fabric-react'
 import ThemeButton from '@/component/theme-button'
+import { get_cur_book_src } from '@/source/book'
 
 /** 本地仓库的操作 */
 export default function Local() {

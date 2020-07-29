@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
-import { get_cur_book_src } from '@/source'
+import { get_cur_book_src } from '@/source/book'
 import { git_init_status$ } from './subj'
 
 /** 没有初始化过 */

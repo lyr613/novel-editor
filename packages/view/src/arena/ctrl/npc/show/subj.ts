@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { npc_li$ } from '@/source'
+import { npc_li$ } from '@/source/npc'
 import { switchMap, map, tap, debounceTime } from 'rxjs/operators'
 import { shallowCopy } from '@/rx/shallow-copy'
 

@@ -1,15 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import s from './s.module.scss'
-import {
-    book_use$,
-    find_npc_li_auto,
-    find_chapter_li_auto,
-    load_prev_buffer,
-    node_use_buffer$,
-    book_use_id$,
-    get_cur_book_src,
-} from '@/source'
 import { next_router } from '@/function/router'
 import ChapterNode from './chapter-node'
 import Outline from './outline'
@@ -21,6 +12,10 @@ import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { table_list_find$ } from '@/source/table'
 import { editer_setting$ } from '@/subject'
+import { find_npc_li_auto } from '@/source/npc'
+import { find_chapter_li_auto } from '@/source/chapter-node'
+import { node_use_buffer$, load_prev_buffer } from '@/source/node'
+import { get_cur_book_src } from '@/source/book'
 
 /** 编辑文本页 */
 export default function Edit() {

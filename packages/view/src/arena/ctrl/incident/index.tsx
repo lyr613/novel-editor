@@ -1,10 +1,10 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
-import { find_npc_li_auto, find_chapter_li_auto, get_cur_book_src, find_incident_li_auto } from '@/source'
 import { next_router } from '@/function/router'
 import Show from './show'
 import Edit from './edit'
+import { get_cur_book_src } from '@/source/book'
 
 /** 事件 */
 export default function Incident() {

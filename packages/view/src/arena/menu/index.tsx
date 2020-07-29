@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { next_router, routers } from '@/function/router'
 import { useObservable } from 'rxjs-hooks'
-import { book_use$ } from '@/source'
+import { book_use$ } from '@/source/book'
 import { useLocation } from 'react-router-dom'
 import { editer_setting$ } from '@/subject'
 

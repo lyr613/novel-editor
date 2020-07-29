@@ -1,7 +1,8 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { mk_uuid } from '@/function/id32'
 import { switchMap, map, throttleTime } from 'rxjs/operators'
-import { fs_read, book_use$, get_cur_book_src } from '@/source'
+import { get_cur_book_src } from '@/source/book'
+import { fs_read } from '@/source/fs-common'
 
 /** 点的位置, 千分比整数 */
 export interface point_ {

@@ -5,11 +5,13 @@ import { TextField, DefaultButton, PrimaryButton, ActionButton, Label } from 'of
 import { useObservable } from 'rxjs-hooks'
 import { outline_focu$, outline_map$ } from '@/source/outline'
 import { map, take, filter } from 'rxjs/operators'
-import { book_use$, npc_li$, chapter_map$, fs_write, get_cur_book_src } from '@/source'
 import { next_router } from '@/function/router'
 import IncidentSelect from '@/component/incident'
 import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
+import { chapter_map$ } from '@/source/chapter-node'
+import { fs_write } from '@/source/fs-common'
+import { get_cur_book_src } from '@/source/book'
 
 export default function Form() {
     return (

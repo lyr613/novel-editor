@@ -5,12 +5,13 @@ import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dia
 import { PrimaryButton, DefaultButton, ActionButton } from 'office-ui-fabric-react/lib/Button'
 import { TextField, ChoiceGroup, IChoiceGroupOption, Dropdown, IDropdownOption } from 'office-ui-fabric-react'
 import { Icon, Slider, Label } from 'office-ui-fabric-react'
-import { chapter_li$, book_use$, chapter_of, chapter_use$, chapter_save, find_chapter_li_auto } from '@/source'
 import { useObservable } from 'rxjs-hooks'
 import { mk_uuid } from '@/function/id32'
 import { fs_write, mk_dir, fs_rename } from '@/source/fs-common'
 import { BehaviorSubject } from 'rxjs'
 import { filter, switchMap, map, take } from 'rxjs/operators'
+import { chapter_li$, chapter_use$, find_chapter_li_auto, chapter_of, chapter_save } from '@/source/chapter-node'
+import { book_use$ } from '@/source/book'
 
 // 编辑和删除章的弹窗
 
@@ -30,7 +31,7 @@ export function EditChapter() {
     /** 章列表 */
     const cps = useObservable(() => chapter_li$.pipe(map((li) => li.filter((v) => !v.hidden))), [])
     /** 聚焦的章 */
-    const focu = useObservable(() => chapter_use$)
+    const chapter_use = useObservable(() => chapter_use$)
     /** 聚焦的书 */
     const book = useObservable(() => book_use$)
     /** 操作 添加或删除 */
@@ -45,7 +46,7 @@ export function EditChapter() {
     ]
     /** 章下拉选项 */
     const cp_opts: IDropdownOption[] = cps
-        .filter((v) => v.id !== focu?.id)
+        .filter((v) => v.id !== chapter_use?.id)
         .map((v) => {
             return {
                 key: v.id,
@@ -138,14 +139,14 @@ export function EditChapter() {
                     disabled={!cp_name.length}
                     onClick={async () => {
                         // 操作章列表, 改写chapter.json文件
-                        const id = action === 'change' ? focu?.id ?? mk_uuid() : mk_uuid()
-                        const children = action === 'change' ? focu?.children ?? [] : []
+                        const id = action === 'change' ? chapter_use?.id ?? mk_uuid() : mk_uuid()
+                        const children = action === 'change' ? chapter_use?.children ?? [] : []
                         const the_cp = chapter_of({ id, name: cp_name.trim(), children })
                         const arr = chapter_li$.value.filter((v) => {
                             if (action === 'add') {
                                 return true
                             }
-                            return v.id !== focu?.id
+                            return v.id !== chapter_use?.id
                         })
                         if (posi === 'last') {
                             arr.push(the_cp)

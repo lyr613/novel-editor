@@ -1,10 +1,11 @@
 import React from 'react'
 import { IColumn, DefaultButton, ActionButton } from 'office-ui-fabric-react'
-import { npc_li$, book_use$, find_npc_li_auto, npc_use_id$, get_cur_book_src } from '@/source'
 import { next_router } from '@/function/router'
 import { ReplaySubject } from 'rxjs'
 import { gender_decode } from '@/util'
 import { electron } from '@/const'
+import { npc_use_id$, npc_li$, find_npc_li_auto } from '@/source/npc'
+import { get_cur_book_src } from '@/source/book'
 const ipc = electron().ipcRenderer
 
 export interface npc_show {

@@ -6,7 +6,8 @@ import { useObservable } from 'rxjs-hooks'
 import { map_focu$, be_editing$, map_list$, map_focu_id$ } from '../subj'
 import { shallowCopy } from '@/rx/shallow-copy'
 import ThemeLabel from '@/component/theme-label'
-import { fs_write, book_use$, get_cur_book_src } from '@/source'
+import { get_cur_book_src } from '@/source/book'
+import { fs_write } from '@/source/fs-common'
 
 /** 右侧上面 工具选择 */
 export default function Bar() {

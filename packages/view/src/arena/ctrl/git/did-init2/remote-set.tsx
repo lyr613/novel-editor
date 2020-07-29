@@ -5,10 +5,10 @@ import SectionHeader from '@/component/section-header'
 import { TextField } from 'office-ui-fabric-react'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
-import { get_cur_book_src } from '@/source'
 import { git_remote_status$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
 import ThemeLabel from '@/component/theme-label'
+import { get_cur_book_src } from '@/source/book'
 
 /** 远程仓库设置 */
 export default function RemoteSet() {

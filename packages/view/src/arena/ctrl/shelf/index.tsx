@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { DefaultButton, TextField } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import { book_li$, select_dir, find_book_li_auto, book_use_id$ } from '@/source'
 import { ipc } from '@/const'
 import { next_router } from '@/function/router'
 import ThemeButton from '@/component/theme-button'
 import { editer_setting$ } from '@/subject'
 import { shallowCopy } from '@/rx/shallow-copy'
 import ThemeLabel from '@/component/theme-label'
+import { book_use_id$, find_book_li_auto, book_li$ } from '@/source/book'
+import { select_dir } from '@/source/fs-common'
 
 /** 书架 */
 export default function Shelf() {

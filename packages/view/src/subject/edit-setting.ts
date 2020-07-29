@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { fs_read, fs_write } from '@/source'
+import { fs_read, fs_write } from '@/source/fs-common'
 import { debounceTime, skip } from 'rxjs/operators'
 import { ipc } from '@/const'
 

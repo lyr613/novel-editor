@@ -4,10 +4,10 @@ import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
 import { git_remote_status$ } from '../subj'
 import { ipc } from '@/const'
-import { get_cur_book_src } from '@/source'
 import Local from './local'
 import RemoteSet from './remote-set'
 import Remote from './remote'
+import { get_cur_book_src } from '@/source/book'
 
 /** 已经初始化, 检查是否有远端仓库 */
 export default function DidInit2() {

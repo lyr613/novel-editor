@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Show from './show'
 import { Route, useRouteMatch } from 'react-router-dom'
 import Edit from './edit'
-import { book_use$, get_cur_book_src } from '@/source'
+import { get_cur_book_src } from '@/source/book'
 import { next_router } from '@/function/router'
 
 /** 书本设定

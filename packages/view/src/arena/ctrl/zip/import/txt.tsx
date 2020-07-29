@@ -2,12 +2,12 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import { DefaultButton, TextField } from 'office-ui-fabric-react'
-import { select_dir, select_file } from '@/source'
 import ThemeLabel from '@/component/theme-label'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import SectionHeader from '@/component/section-header'
+import { select_file, select_dir } from '@/source/fs-common'
 
 export default function Txt() {
     const [txt_src, set_txt_src] = useState('')

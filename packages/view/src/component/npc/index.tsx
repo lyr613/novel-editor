@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
-import { npc_li$, find_npc_li_auto } from '@/source'
 import { Label, ActionButton, TextField } from 'office-ui-fabric-react'
+import { npc_li$, find_npc_li_auto } from '@/source/npc'
 
 interface p {
     label: string

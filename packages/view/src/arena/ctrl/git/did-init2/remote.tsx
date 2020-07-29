@@ -6,7 +6,7 @@ import { useObservable } from 'rxjs-hooks'
 import { git_remote_status$ } from '../subj'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
-import { get_cur_book_src } from '@/source'
+import { get_cur_book_src } from '@/source/book'
 import ThemeLabel from '@/component/theme-label'
 
 /** 远程仓库的操作 */

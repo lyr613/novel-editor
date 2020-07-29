@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor'
-import { npc_li$ } from '@/source'
+import { npc_li$ } from '@/source/npc'
 import { table_list$ } from '@/source/table'
 
 /** 片段提示 */

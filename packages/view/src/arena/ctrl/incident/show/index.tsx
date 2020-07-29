@@ -5,14 +5,6 @@ import { Icon, ActionButton, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
 import { incident_use$, incident_li$, incident_use_id$, find_incident_li_auto } from '@/source/incident'
 import { useObservable } from 'rxjs-hooks'
-import {
-    npc_map$,
-    find_npc_li_auto,
-    get_now_node_list,
-    fs_write,
-    get_cur_book_src,
-    find_chapter_li_auto,
-} from '@/source'
 import { incident_list_filted$, filter$ } from './subj'
 import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -20,6 +12,10 @@ import { ipc } from '@/const'
 import IconButton from '@/component/icon-button'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
+import { find_chapter_li_auto, get_now_node_list } from '@/source/chapter-node'
+import { find_npc_li_auto, npc_map$ } from '@/source/npc'
+import { get_cur_book_src } from '@/source/book'
+import { fs_write } from '@/source/fs-common'
 
 /** 事件展示 */
 export default function Show() {

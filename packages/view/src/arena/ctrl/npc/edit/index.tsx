@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { DefaultButton } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
 import Form from './form'
-import { npc_use_id$, edit_npc_auto, npc_edit$ } from '@/source'
+import { edit_npc_auto, npc_use_id$, npc_edit$ } from '@/source/npc'
 
 /**
  * 编辑页

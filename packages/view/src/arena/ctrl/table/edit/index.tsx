@@ -8,12 +8,13 @@ import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { mk_uuid } from '@/function/id32'
 import { shallowCopy } from '@/rx/shallow-copy'
-import { fs_read, book_use$, fs_write, get_cur_book_src } from '@/source'
 import { debounceTime, skip } from 'rxjs/operators'
 import IconButton from '@/component/icon-button'
 import { table_list$ } from '@/source/table'
 import { search_text$ } from '@/subject/search'
 import { next_router } from '@/function/router'
+import { get_cur_book_src } from '@/source/book'
+import { fs_read, fs_write } from '@/source/fs-common'
 
 interface cell {
     id: string

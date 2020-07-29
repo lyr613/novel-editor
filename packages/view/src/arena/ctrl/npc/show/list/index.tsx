@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
-import { npc_li$, node_use$, npc_use_id$, npc_use$, npc_li_save, find_npc_li_auto } from '@/source'
 import { date_decode, format_date } from '@/util'
 import { fromEvent } from 'rxjs'
 import { Screen$ } from '@/subscribe'
@@ -11,6 +10,7 @@ import { next_router } from '@/function/router'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { filterd_list$ } from '../subj'
 import { show_format } from '@/function/text'
+import { npc_use$, npc_use_id$, npc_li$, npc_li_save, find_npc_li_auto } from '@/source/npc'
 
 export default function List() {
     // 一个npc的宽度

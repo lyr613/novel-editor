@@ -1,7 +1,9 @@
 import { Subject, of, BehaviorSubject } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
-import { npc_li$, chapter_li$, book_use$, get_cur_book_src } from '@/source'
 import { ipc } from '@/const'
+import { get_cur_book_src } from '@/source/book'
+import { npc_li$ } from '@/source/npc'
+import { chapter_li$ } from '@/source/chapter-node'
 
 /** 查询npc出现频率 */
 export const npc_frequency_find$ = new BehaviorSubject(1).pipe(

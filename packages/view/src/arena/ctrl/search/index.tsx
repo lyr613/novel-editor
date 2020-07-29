@@ -1,14 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import {
-    book_use$,
-    focu_node_then_edit,
-    get_now_node_list,
-    chapter_li$,
-    find_chapter_li_auto,
-    get_cur_book_src,
-} from '@/source'
 import { next_router } from '@/function/router'
 import { TextField } from 'office-ui-fabric-react'
 import IconButton from '@/component/icon-button'
@@ -20,6 +12,9 @@ import ThemeLabel from '@/component/theme-label'
 import { filter, take } from 'rxjs/operators'
 import { search_text$ } from '@/subject/search'
 import { global_loading$ } from '@/component/loading/subj'
+import { find_chapter_li_auto, chapter_li$, get_now_node_list } from '@/source/chapter-node'
+import { get_cur_book_src } from '@/source/book'
+import { focu_node_then_edit } from '@/source/node'
 
 /** 要搜索的文本 */
 const search_re$ = new BehaviorSubject<p_one[]>([])

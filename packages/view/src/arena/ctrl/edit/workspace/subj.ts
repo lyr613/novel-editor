@@ -1,6 +1,7 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { debounceTime, merge } from 'rxjs/operators'
-import { node_use$, chapter_li$, node_use_buffer$ } from '@/source'
+import { node_use$, node_use_buffer$ } from '@/source/node'
+import { chapter_li$ } from '@/source/chapter-node'
 
 /** 进入禅模式 */
 export const zen$ = new BehaviorSubject(false)

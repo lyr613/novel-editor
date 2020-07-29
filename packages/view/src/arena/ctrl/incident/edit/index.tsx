@@ -4,7 +4,7 @@ import s from './s.module.scss'
 import { DefaultButton } from 'office-ui-fabric-react'
 import { next_router } from '@/function/router'
 import Form from './form'
-import { edit_incident_auto, incident_use_id$, incident_edit$ } from '@/source'
+import { edit_incident_auto, incident_use_id$, incident_edit$ } from '@/source/incident'
 
 export default function Edit() {
     useEffect(() => {

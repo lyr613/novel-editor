@@ -1,11 +1,11 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
-import { npc_li$, mk_npc_map, npc_use$, npc_use_id$ } from '@/source'
 import G6 from '@antv/g6'
 import ThemeButton from '@/component/theme-button'
 import { next_router } from '@/function/router'
 import { switchMap, map } from 'rxjs/operators'
+import { npc_use_id$, npc_li$, npc_use$, mk_npc_map } from '@/source/npc'
 
 /** 关系图 */
 export default function LinkGraph() {

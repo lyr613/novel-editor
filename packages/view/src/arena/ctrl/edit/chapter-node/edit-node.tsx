@@ -16,18 +16,11 @@ import {
 } from 'office-ui-fabric-react'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
-import {
-    chapter_li$,
-    chapter_use$,
-    book_use$,
-    node_of,
-    fs_write,
-    chapter_save,
-    node_use$,
-    find_chapter_li_auto,
-    node_buffer_add_by_id,
-} from '@/source'
 import { map } from 'rxjs/operators'
+import { book_use$ } from '@/source/book'
+import { chapter_li$, chapter_use$, node_of, chapter_save, find_chapter_li_auto } from '@/source/chapter-node'
+import { node_use$, node_buffer_add_by_id } from '@/source/node'
+import { fs_write } from '@/source/fs-common'
 
 // 编辑和删除节的弹窗
 

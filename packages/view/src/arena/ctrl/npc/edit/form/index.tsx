@@ -16,7 +16,6 @@ import {
 import { sty_text } from './office-style'
 import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
-import { book_use$, npc_li$, npc_map$, fs_write, npc_edit$, save_npc_edited } from '@/source'
 import { electron } from '@/const'
 import { next_router } from '@/function/router'
 import DateYMD from '@/component/date'
@@ -25,6 +24,7 @@ import { shallowCopy } from '@/rx/shallow-copy'
 import ThemeLabel from '@/component/theme-label'
 import { get_ran_name } from './util-name'
 import IconButton from '@/component/icon-button'
+import { npc_edit$, npc_li$, npc_map$, save_npc_edited } from '@/source/npc'
 
 export default function NpcForm() {
     return (

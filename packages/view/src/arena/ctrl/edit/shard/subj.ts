@@ -1,5 +1,5 @@
 import { map, merge } from 'rxjs/operators'
-import { node_text_from_editer$, node_text_from_fs$ } from '@/source'
+import { node_text_from_editer$, node_text_from_fs$ } from '@/source/node'
 
 /** 记录字数 */
 export const word_count$ = node_text_from_editer$.pipe(

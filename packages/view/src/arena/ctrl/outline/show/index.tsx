@@ -1,21 +1,14 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import {
-    book_use$,
-    chapter_li$,
-    find_npc_li_auto,
-    npc_map$,
-    chapter_map$,
-    incident_map$,
-    find_chapter_li_auto,
-    get_cur_book_src,
-    find_incident_li_auto,
-} from '@/source'
 import { next_router } from '@/function/router'
 import { useObservable } from 'rxjs-hooks'
-import { outline_find$, outline_focu$, outline_map$, of_outline } from '@/source'
 import { Icon, Label, ActionButton } from 'office-ui-fabric-react'
+import { chapter_li$, chapter_map$, find_chapter_li_auto } from '@/source/chapter-node'
+import { npc_map$, find_npc_li_auto } from '@/source/npc'
+import { incident_map$, find_incident_li_auto } from '@/source/incident'
+import { get_cur_book_src } from '@/source/book'
+import { outline_map$, outline_find$, of_outline, outline_focu$ } from '@/source/outline'
 
 /**
  * 大纲

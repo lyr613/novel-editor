@@ -12,7 +12,8 @@ import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { shallowCopy } from '@/rx/shallow-copy'
 import IconButton from '@/component/icon-button'
-import { chapter_li$, focu_node_then_edit } from '@/source'
+import { focu_node_then_edit } from '@/source/node'
+import { chapter_li$ } from '@/source/chapter-node'
 
 export default function Form() {
     return (
