@@ -2,11 +2,11 @@ import * as monaco from 'monaco-editor'
 import { npc_li$ } from '@/source/npc'
 import { merge, take } from 'rxjs/operators'
 import { sensitive_check_list$ } from '@/subject/sensitive'
-import { table_list$ } from '@/source/table'
+import { table_system_li$ } from '@/source/table'
 
 /** 设置关键字 */
 export function auto_keyword() {
-    npc_li$.pipe(merge(table_list$), merge(sensitive_check_list$)).subscribe(() => {
+    npc_li$.pipe(merge(table_system_li$), merge(sensitive_check_list$)).subscribe(() => {
         const root: any[] = [
             // [npc_reg, 'npc'],
             // [sensitive_reg, 'sensitive'],
@@ -65,7 +65,7 @@ function get_npc_names() {
 
 /** 表格设置 */
 function get_table_reg() {
-    const tables = table_list$.value
+    const tables = table_system_li$.value
     const arr: string[] = []
     tables.forEach((tb) => {
         tb.types.forEach((tp) => {

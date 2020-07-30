@@ -10,12 +10,13 @@ import { Screen$ } from '@/subscribe'
 import DragLine from '@/component/drag-line'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
-import { table_list_find$ } from '@/source/table'
+import { find_table_li_auto } from '@/source/table'
 import { editer_setting$ } from '@/subject'
 import { find_npc_li_auto } from '@/source/npc'
 import { find_chapter_li_auto } from '@/source/chapter-node'
 import { node_use_buffer$, load_prev_buffer } from '@/source/node'
 import { get_cur_book_src } from '@/source/book'
+import { filter, take, debounceTime } from 'rxjs/operators'
 
 /** 编辑文本页 */
 export default function Edit() {
@@ -41,16 +42,24 @@ export default function Edit() {
         const a = setTimeout(() => {
             find_npc_li_auto()
             find_chapter_li_auto()
-            table_list_find$.next()
-            if (!node_use_buffer$.value.length) {
-                setTimeout(() => {
-                    load_prev_buffer()
-                }, 100)
-            }
-        }, 0)
+            find_table_li_auto()
+        }, 50)
         return () => {
             clearTimeout(a)
         }
+    }, [])
+    // 自动加载上次编辑的节列表
+    useEffect(() => {
+        const ob = node_use_buffer$
+            .pipe(
+                take(1),
+                filter((li) => !li.length),
+                debounceTime(100),
+            )
+            .subscribe(() => {
+                load_prev_buffer()
+            })
+        return () => ob.unsubscribe()
     }, [])
 
     if (!get_cur_book_src()) {

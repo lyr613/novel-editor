@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor'
 import { npc_li$ } from '@/source/npc'
-import { table_list$ } from '@/source/table'
+import { table_system_li$ } from '@/source/table'
 /** 悬浮提示 */
 export function hover_provider() {
     monaco.languages.registerHoverProvider('book', {
@@ -69,7 +69,7 @@ function get_npc_extends() {
 }
 
 function get_table_extends() {
-    const arr = table_list$.value
+    const arr = table_system_li$.value
     const re_map = new Map<string, string>()
     const re_arr: string[] = []
     arr.forEach((tb) => {

@@ -2,19 +2,34 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import ThemeLabel from '@/component/theme-label'
-import ThemeButton from '@/component/theme-button'
 import { DefaultButton, TextField } from 'office-ui-fabric-react'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, timer, of } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
-import { mk_uuid } from '@/function/id32'
 import { shallowCopy } from '@/rx/shallow-copy'
-import { debounceTime, skip } from 'rxjs/operators'
+import { debounceTime, skip, switchMap, filter, map } from 'rxjs/operators'
 import IconButton from '@/component/icon-button'
-import { table_list$ } from '@/source/table'
+import {
+    table_system_li$,
+    find_table_li_auto,
+    table_system_edit$,
+    save_table_edited,
+    table_system_use_id$,
+    of_table_system,
+    edit_table_system_use,
+    table_type_use_id$,
+    table_system_use$,
+    table_type_use$,
+    of_table_type,
+    table_type_li$,
+    get_cur_table_edit,
+    table_cell_li$,
+    table_cell_use_id$,
+    of_table_cell,
+    table_cell_use$,
+    save_table_li,
+} from '@/source/table'
 import { search_text$ } from '@/subject/search'
 import { next_router } from '@/function/router'
-import { get_cur_book_src } from '@/source/book'
-import { fs_read, fs_write } from '@/source/fs-common'
 
 interface cell {
     id: string
@@ -22,37 +37,20 @@ interface cell {
     name: string
     description: string
 }
-interface atype {
-    id: string
-    name: string
-    cells: cell[]
-}
-interface system {
-    id: string
-    name: string
-    types: atype[]
-}
-
-const system_list$ = table_list$
-const sys_id$ = new BehaviorSubject('')
-const type_id$ = new BehaviorSubject('')
-const cell_id$ = new BehaviorSubject('')
 
 export default function Edit() {
     useEffect(() => {
         // 读写文件
-        system_list$.next([])
-        if (!get_cur_book_src()) {
-            return
-        }
-        const txt = fs_read<null | system[]>('json', [get_cur_book_src(), 'data-settings.json'])
-        if (txt) {
-            system_list$.next(txt)
-        }
-        const ob = system_list$.pipe(debounceTime(2000), skip(1)).subscribe((li) => {
-            fs_write('json', [get_cur_book_src(), 'data-settings.json'], li)
+        const obread = timer(50).subscribe(() => {
+            find_table_li_auto()
         })
-        return () => ob.unsubscribe()
+        const obsave = table_system_edit$.pipe(skip(1), debounceTime(2000)).subscribe(() => {
+            save_table_edited()
+        })
+        return () => {
+            obread.unsubscribe()
+            obsave.unsubscribe()
+        }
     }, [])
     return (
         <div className={s.Edit}>
@@ -66,19 +64,20 @@ export default function Edit() {
 
 /** 体系 */
 function Systems() {
-    const systems = useObservable(() => system_list$.pipe(shallowCopy()), [])
-    const sid = useObservable(() => sys_id$, '')
+    const systems = useObservable(() => table_system_li$.pipe(shallowCopy()), [])
+    const sid = useObservable(() => table_system_use_id$, '')
     const [can_show_input, set_can_show_input] = useState(false)
     const [ipt, set_ipt] = useState('')
+    const edit = useObservable(() => table_system_edit$, of_table_system())
     useEffect(() => {
         // 尝试自动聚焦第一个
-        setTimeout(() => {
-            const systems = system_list$.value
-            if (systems.length) {
-                const id = systems[0].id
-                sys_id$.next(id)
+        const ob = table_system_li$.pipe(filter((li) => !!li.length)).subscribe((li) => {
+            if (!table_system_use_id$.value) {
+                table_system_use_id$.next(li[0].id)
+                edit_table_system_use()
             }
-        }, 100)
+        })
+        return () => ob.unsubscribe()
     }, [])
     return (
         <section className={s.Systems}>
@@ -88,7 +87,8 @@ function Systems() {
                     icon="Add"
                     add_class={[s.iconbtn]}
                     onClick={() => {
-                        sys_id$.next('')
+                        table_system_use_id$.next('')
+                        edit_table_system_use()
                         set_can_show_input(true)
                     }}
                 ></IconButton>
@@ -96,6 +96,8 @@ function Systems() {
                     icon="Edit"
                     add_class={[s.iconbtn]}
                     onClick={() => {
+                        edit_table_system_use()
+                        set_ipt(edit.name)
                         set_can_show_input(true)
                     }}
                 ></IconButton>
@@ -103,9 +105,9 @@ function Systems() {
                     icon="Delete"
                     add_class={[s.iconbtn]}
                     onDoubleClick={() => {
-                        const new_syss = systems.filter((v) => v.id !== sid)
-                        system_list$.next(new_syss)
-                        sys_id$.next('')
+                        const nli = systems.filter((v) => v.id !== sid)
+                        save_table_li(nli)
+                        find_table_li_auto()
                     }}
                 ></IconButton>
             </div>
@@ -115,7 +117,8 @@ function Systems() {
                         key={sys.id}
                         add_class={[s.one, sys.id === sid ? s.hold : '']}
                         onClick={() => {
-                            sys_id$.next(sys.id)
+                            table_system_use_id$.next(sys.id)
+                            edit_table_system_use()
                         }}
                     >
                         {sys.name}{' '}
@@ -137,20 +140,11 @@ function Systems() {
                         disabled={!ipt.trim()}
                         onClick={() => {
                             const iptuse = ipt.trim()
-                            const fi = systems.find((v) => v.id === sid)
-                            if (fi) {
-                                fi.name = iptuse
-                            } else {
-                                const new_sys: system = {
-                                    id: mk_uuid(),
-                                    name: iptuse,
-                                    types: [],
-                                }
-                                systems.push(new_sys)
-                            }
-                            system_list$.next(systems)
+                            edit.name = iptuse
+                            save_table_edited()
                             set_can_show_input(false)
                             set_ipt('')
+                            find_table_li_auto()
                         }}
                     >
                         好
@@ -163,13 +157,13 @@ function Systems() {
 
 /** 种类 */
 function Types() {
-    const systems = useObservable(() => system_list$.pipe(shallowCopy()), [])
-    const sid = useObservable(() => sys_id$, '')
-    const types = systems.find((v) => v.id === sid)?.types ?? []
-    const tid = useObservable(() => type_id$, '')
+    const types = useObservable(() => table_type_li$, [])
+    const sid = useObservable(() => table_system_use_id$, '')
+    const tid = useObservable(() => table_type_use_id$, '')
     const [can_show_input, set_can_show_input] = useState(false)
     const [ipt, set_ipt] = useState('')
     const iptuse = ipt.trim()
+    const [how_edit, next_how_edit] = useState<'add' | 'edit'>('add')
     function reset() {
         set_ipt('')
         set_can_show_input(false)
@@ -177,6 +171,18 @@ function Types() {
     useEffect(() => {
         reset()
     }, [types])
+    useEffect(() => {
+        const ob = table_system_use$.pipe().subscribe((v) => {
+            const ts = v?.types ?? []
+            const id = ts[0]?.id ?? ''
+            const old_type_id = table_type_use_id$.value
+
+            if (ts.length && !ts.find((v) => v.id === old_type_id)) {
+                table_type_use_id$.next(id)
+            }
+        })
+        return () => ob.unsubscribe()
+    }, [])
     return (
         <section className={s.Types}>
             <header className={s.header}>类别</header>
@@ -185,7 +191,7 @@ function Types() {
                     icon="Add"
                     add_class={[s.iconbtn]}
                     onClick={() => {
-                        type_id$.next('')
+                        next_how_edit('add')
                         set_can_show_input(true)
                     }}
                 ></IconButton>
@@ -193,6 +199,9 @@ function Types() {
                     icon="Edit"
                     add_class={[s.iconbtn]}
                     onClick={() => {
+                        next_how_edit('edit')
+                        const es = get_cur_table_edit()
+                        set_ipt(es.type?.name ?? '')
                         set_can_show_input(true)
                     }}
                 ></IconButton>
@@ -201,11 +210,10 @@ function Types() {
                     icon="Delete"
                     add_class={[s.iconbtn]}
                     onDoubleClick={() => {
-                        const fi = types.findIndex((v) => v.id === tid)
-                        if (fi !== -1) {
-                            types.splice(fi, 1)
-                        }
-                        system_list$.next(systems)
+                        const es = get_cur_table_edit()
+                        es.system.types = types.filter((v) => v.id !== tid)
+                        save_table_edited()
+                        find_table_li_auto()
                     }}
                 ></IconButton>
             </div>
@@ -215,7 +223,7 @@ function Types() {
                         key={type.id}
                         add_class={[s.one, type.id === tid ? s.hold : '']}
                         onClick={() => {
-                            type_id$.next(type.id)
+                            table_type_use_id$.next(type.id)
                         }}
                     >
                         {type.name}
@@ -236,25 +244,18 @@ function Types() {
                     <DefaultButton
                         disabled={!iptuse}
                         onClick={() => {
-                            const fisys = systems.find((v) => v.id === sid)
-                            if (!fisys) {
-                                alert('先选择一个大系统')
-                                return
-                            }
-                            const fi = types.find((v) => v.id === tid)
-                            if (!fi) {
-                                const opt: atype = {
-                                    id: mk_uuid(),
-                                    name: iptuse,
-                                    cells: [],
-                                }
-                                types.push(opt)
+                            const es = get_cur_table_edit()
+                            if (how_edit === 'add') {
+                                const a = of_table_type()
+                                a.name = iptuse
+                                es.system.types.push(a)
                             } else {
-                                fi.name = iptuse
+                                es.type!.name = iptuse
                             }
-                            system_list$.next(systems)
+                            save_table_edited()
                             set_can_show_input(false)
                             set_ipt('')
+                            find_table_li_auto()
                         }}
                     >
                         好
@@ -267,13 +268,10 @@ function Types() {
 
 /** 一项 */
 function Cells() {
-    const systems = useObservable(() => system_list$.pipe(shallowCopy()), [])
-    const sid = useObservable(() => sys_id$, '')
-    const types = systems.find((v) => v.id === sid)?.types ?? []
-    const tid = useObservable(() => type_id$, '')
-    const cells = types.find((v) => v.id === tid)?.cells ?? []
-    const cid = useObservable(() => cell_id$, '')
+    const cid = useObservable(() => table_cell_use_id$, '')
+    const cells = useObservable(() => table_cell_li$, [])
     const [can_show_input, set_can_show_input] = useState(false)
+    const [how_edit, next_how_edit] = useState<'add' | 'edit'>('add')
     const [ipt_level, set_ipt_level] = useState(0)
     const [ipt_name, set_ipt_name] = useState('')
     const ipt_name_use = ipt_name.trim()
@@ -283,11 +281,24 @@ function Cells() {
         set_ipt_des('')
         set_ipt_level(0)
         set_ipt_name('')
-        set_can_show_input(false)
     }
     useEffect(() => {
-        reset()
-    }, [types, cells])
+        const ob = table_type_use$.subscribe((v) => {
+            if (!table_cell_use_id$.value) {
+                table_cell_use_id$.next((v?.cells ?? [])[0]?.id ?? '')
+            }
+        })
+        return () => ob.unsubscribe()
+    }, [])
+    useEffect(() => {
+        const ob = table_cell_use$.pipe().subscribe((v) => {
+            set_ipt_des(v?.description ?? '')
+            set_ipt_level(v?.level ?? 0)
+            set_ipt_name(v?.name ?? '')
+        })
+        return () => ob.unsubscribe()
+    }, [])
+
     return (
         <section className={s.Cells}>
             <header className={s.header}>项</header>
@@ -296,9 +307,8 @@ function Cells() {
                     icon="Add"
                     add_class={[s.iconbtn]}
                     onClick={() => {
-                        cell_id$.next('')
-                        set_ipt_level(0)
-                        set_ipt_name('')
+                        reset()
+                        next_how_edit('add')
                         set_can_show_input(true)
                     }}
                 ></IconButton>
@@ -309,9 +319,11 @@ function Cells() {
                     onClick={() => {
                         const cell = cells.find((v) => v.id === cid)
                         if (cell) {
-                            set_ipt_level(cell.level)
-                            set_ipt_name(cell.name)
-                            set_ipt_des(cell.description)
+                            next_how_edit('edit')
+                            const es = get_cur_table_edit()
+                            set_ipt_level(es.cell?.level ?? 0)
+                            set_ipt_name(es.cell?.name ?? '')
+                            set_ipt_des(es.cell?.description ?? '')
                             set_can_show_input(true)
                         }
                     }}
@@ -321,11 +333,13 @@ function Cells() {
                     icon="Delete"
                     add_class={[s.iconbtn]}
                     onDoubleClick={() => {
-                        const fi = cells.findIndex((v) => v.id === cid)
-                        if (fi !== -1) {
-                            cells.splice(fi, 1)
+                        const es = get_cur_table_edit()
+                        if (!es.type) {
+                            return
                         }
-                        system_list$.next(systems)
+                        es.type.cells = cells.filter((v) => v.id !== cid)
+                        save_table_edited()
+                        find_table_li_auto()
                         set_can_show_input(false)
                     }}
                 ></IconButton>
@@ -336,7 +350,7 @@ function Cells() {
                         key={cell.level}
                         add_class={[s.one, cell.id === cid ? s.hold : '']}
                         onClick={() => {
-                            cell_id$.next(cell.id)
+                            table_cell_use_id$.next(cell.id)
                         }}
                     >
                         {cell.level} - {cell.name}
@@ -359,7 +373,7 @@ function Cells() {
                         className={s.ipt}
                         value={ipt_name}
                         onChange={(_, ns) => {
-                            const str = (ns || '').replace(/\s/g, '')
+                            const str = ns || ''
                             set_ipt_name(str)
                         }}
                     ></TextField>
@@ -378,37 +392,38 @@ function Cells() {
                     <DefaultButton
                         disabled={!ipt_name_use}
                         onClick={() => {
-                            const fisys = systems.find((v) => v.id === sid)
-                            const fits = types.find((v) => v.id === tid)
-                            if (!fisys || !fits) {
+                            const es = get_cur_table_edit()
+                            const type = es.type
+                            if (!type) {
                                 alert('先选择系统和类别')
                                 return
                             }
-                            const fi = cells.find((v) => v.id === cid)
-                            if (!fi) {
-                                const opt: cell = {
-                                    id: mk_uuid(),
-                                    name: ipt_name_use,
-                                    level: ipt_level,
-                                    description: ipt_des,
-                                }
-                                if (cells.find((v) => v.level === ipt_level)) {
-                                    alert('本类别已经有此级别了')
+                            if (how_edit === 'add') {
+                                const a = of_table_cell()
+                                a.name = ipt_name_use
+                                a.level = ipt_level
+                                a.description = ipt_des
+                                if (type.cells.find((v) => v.level === ipt_level)) {
+                                    alert('本类别已经有此等级了')
                                     return
                                 }
-                                fits.cells.push(opt)
+                                type.cells.push(a)
                             } else {
-                                fi.level = ipt_level
-                                fi.name = ipt_name_use
-                                fi.description = ipt_des
+                                const ce = es.cell!
+                                if (type.cells.find((v) => v.level === ipt_level && v.id !== ce.id)) {
+                                    alert('本类别已经有此等级了')
+                                    return
+                                }
+                                ce.name = ipt_name_use
+                                ce.description = ipt_des
+                                ce.level = ipt_level
                             }
-                            fits.cells.sort((a, b) => b.level - a.level)
+                            es.type?.cells.sort((a, b) => b.level - a.level)
 
-                            system_list$.next(systems)
+                            reset()
+                            save_table_edited()
+                            find_table_li_auto()
                             set_can_show_input(false)
-                            set_ipt_level(0)
-                            set_ipt_name('')
-                            set_ipt_des('')
                         }}
                     >
                         好
@@ -421,10 +436,8 @@ function Cells() {
 
 /** 预览 */
 function Preview() {
-    const systems = useObservable(() => system_list$.pipe(shallowCopy()), [])
-    const sid = useObservable(() => sys_id$, '')
-    const cid = useObservable(() => cell_id$, '')
-    const types = systems.find((v) => v.id === sid)?.types ?? []
+    const cid = useObservable(() => table_cell_use_id$, '')
+    const types = useObservable(() => table_system_use$.pipe(map((v) => v?.types ?? [])), [])
     const arr: (cell | undefined | number)[][] = []
     types.forEach((tp, x) => {
         const cells = tp.cells
@@ -443,7 +456,7 @@ function Preview() {
     arr.sort((a, b) => {
         return (b as any)[0] - (a as any)[0]
     })
-    const head_line = ['级别', ...types.map((v) => v.name)]
+    const head_line = ['等级\\类别', ...types.map((v) => v.name)]
 
     return (
         <section className={s.Preview}>
@@ -476,9 +489,9 @@ function Preview() {
                                         key={`${y}-${x}`}
                                         onClick={() => {
                                             if (cell?.id) {
-                                                cell_id$.next(cell.id)
+                                                table_cell_use_id$.next(cell.id)
                                                 const tid = types[x - 1].id
-                                                type_id$.next(tid)
+                                                table_type_use_id$.next(tid)
                                             }
                                         }}
                                         onDoubleClick={() => {

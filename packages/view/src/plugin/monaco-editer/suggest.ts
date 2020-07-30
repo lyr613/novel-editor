@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor'
 import { npc_li$ } from '@/source/npc'
-import { table_list$ } from '@/source/table'
+import { table_system_li$ } from '@/source/table'
 
 /** 片段提示 */
 export function completion_item_provider() {
@@ -45,7 +45,7 @@ function get_seggest(
     }
     if (flag === '~') {
         const re: monaco.languages.CompletionItem[] = []
-        const arr = table_list$.value
+        const arr = table_system_li$.value
         arr.forEach((tb) => {
             tb.types.forEach((tp) => {
                 tp.cells.forEach((cl) => {
