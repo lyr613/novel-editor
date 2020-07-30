@@ -50,11 +50,3 @@ export function of_book(part?: Param | book): book {
     Object.assign(re, part)
     return re
 }
-
-// 0----0
-// 切换书时, 改app标题
-book_use$.subscribe((bk) => {
-    if (bk?.name) {
-        document.title = bk.name
-    }
-})

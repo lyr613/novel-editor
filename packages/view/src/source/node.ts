@@ -72,26 +72,8 @@ const node_id_text_map_default = new Map<
 >()
 /** 从编辑器传来的 node_id: text的映射表, 用于保存 */
 export const node_id_text_map$ = new BehaviorSubject(node_id_text_map_default)
-/** 自动保存 */
-node_id_text_map$.pipe(debounceTime(2000)).subscribe((m) => {
-    m.forEach((v, k) => {
-        try {
-            fs_write('txt', [v.book_src, 'chapters', v.node_id + '.txt'], v.text)
-            m.delete(k)
-        } catch (error) {
-            alert(`保存章节${v.node_name}失败`)
-        }
-    })
-})
 
 // ----
-
-// 当切换书时, 清空buffer和text
-book_use$.pipe(debounceTime(10)).subscribe(() => {
-    node_use_buffer$.next([])
-    node_text_from_fs$.next('')
-    node_use$.next(null)
-})
 
 const node_text_from_fs_finder$ = node_use$.pipe(
     filter((v) => !!v),
@@ -110,26 +92,6 @@ export function find_node_text_from_fs_auto() {
         node_text_from_fs$.next(text)
     })
 }
-
-/** 更新buffer时, 储存到硬盘以便下次直接打开 */
-node_use$
-    .pipe(
-        switchMap(() => node_use_buffer$),
-        debounceTime(500),
-    )
-    .subscribe((buf) => {
-        const booksrc = get_cur_book_src()
-        if (!booksrc) {
-            return
-        }
-        const ids = buf.map((v) => v.id)
-        const use_id = node_use$.value?.id ?? ''
-        const dto = {
-            ids,
-            use_id,
-        }
-        fs_write('json', [booksrc, 'prev-edit'], dto)
-    })
 
 /** 编辑页使用此方法, 加载上一次的编辑, 如果已经有buffer, 则不加载 */
 export function load_prev_buffer() {

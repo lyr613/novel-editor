@@ -10,21 +10,26 @@ import { ipc } from './const'
 import { overload_style_scroll } from './util/style-overload'
 import Loading from './component/loading'
 import Modal from './arena/modal'
+import { auto_link_observable } from './source/auto-link'
 
 const App: React.FC = () => {
     const eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
     const theme = eset?.common.theme ?? 'word'
+    // 热键
     useEffect(() => {
-        // 热键
         const ob = key$.subscribe(hand_hot_key)
         return () => ob.unsubscribe()
     }, [])
+    // 加载编辑器设置
     useEffect(() => {
-        // 加载编辑器设置
         const re: setting = ipc().sendSync('editer_load_setting')
         editer_setting$.next(re)
         overload_style_scroll()
         // console.log(re)
+    }, [])
+    // 自动订阅的集中管理, 不需要退订
+    useEffect(() => {
+        auto_link_observable()
     }, [])
     return (
         <div id="app" className={'theme-' + theme}>
