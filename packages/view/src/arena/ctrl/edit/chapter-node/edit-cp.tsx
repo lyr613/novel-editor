@@ -10,7 +10,7 @@ import { mk_uuid } from '@/function/id32'
 import { fs_write, mk_dir, fs_rename } from '@/source/fs-common'
 import { BehaviorSubject } from 'rxjs'
 import { filter, switchMap, map, take } from 'rxjs/operators'
-import { chapter_li$, chapter_use$, find_chapter_li_auto, chapter_of, chapter_save } from '@/source/chapter-node'
+import { chapter_li$, chapter_use$, find_chapter_li_auto, chapter_of, save_chapter_li } from '@/source/chapter-node'
 import { book_use$ } from '@/source/book'
 
 // 编辑和删除章的弹窗
@@ -157,7 +157,7 @@ export function EditChapter() {
                             arr.splice(ni, 0, the_cp)
                         }
                         chapter_li$.next(arr)
-                        const opt_re = await chapter_save()
+                        const opt_re = save_chapter_li()
                         if (!opt_re) {
                             alert('修改章节配置文件失败')
                             return
@@ -216,7 +216,7 @@ export function DeleteChapter() {
                     onClick={async () => {
                         show_del_cp$.next(false)
                         focu.hidden = true
-                        const opt_re = await chapter_save()
+                        const opt_re = save_chapter_li()
                         if (opt_re) {
                             find_chapter_li_auto()
                             console.log('删除成功')

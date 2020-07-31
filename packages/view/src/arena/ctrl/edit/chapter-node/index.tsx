@@ -6,10 +6,11 @@ import { useObservable } from 'rxjs-hooks'
 import { map, filter, debounceTime } from 'rxjs/operators'
 import { EditChapter, DeleteChapter, action_cp$, hidd_cp$, show_del_cp$ } from './edit-cp'
 import { EditNode, show_node_edit$, action_nd$ } from './edit-node'
-import { chapter_li$, find_chapter_li_auto, chapter_use$, chapter_save } from '@/source/chapter-node'
+import { chapter_li$, find_chapter_li_auto, chapter_use$, save_chapter_li } from '@/source/chapter-node'
 import { node_use$, node_use_buffer$, node_text_from_fs$ } from '@/source/node'
 import { fs_write } from '@/source/fs-common'
 import { get_cur_book_src } from '@/source/book'
+import { editing_chapter$ } from '../subj'
 
 interface p {
     w: number
@@ -42,6 +43,14 @@ function Head() {
     return (
         <div className={s.Head}>
             <span className={s.txt}>章节</span>
+            <Icon
+                className={s.icon}
+                iconName="Settings"
+                title="编辑章节"
+                onClick={() => {
+                    editing_chapter$.next(true)
+                }}
+            ></Icon>
             <Icon
                 className={s.icon}
                 iconName="FabricNewFolder"
@@ -153,7 +162,7 @@ function Chapter(p: cp) {
                     p.cp.expand = !p.cp.expand
                     const arr = chapter_li$.value
                     chapter_li$.next(arr)
-                    chapter_save()
+                    save_chapter_li()
                 }}
                 onMouseEnter={() => set_mouse_in(true)}
                 onMouseLeave={() => set_mouse_in(false)}

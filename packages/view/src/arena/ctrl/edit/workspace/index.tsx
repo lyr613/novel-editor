@@ -51,7 +51,7 @@ export default function Workspace(p: p) {
     )
 }
 
-/** 活动节, 最多5个 */
+/** 活动节, 最多8个 */
 function Head() {
     const li = useObservable(() => node_use_buffer$, [])
     const focu = useObservable(() => node_use$)
@@ -72,7 +72,7 @@ function Head() {
                     <Icon
                         iconName="Cancel"
                         className={s.icon}
-                        onClick={(e) => {
+                        onDoubleClick={(e) => {
                             e.stopPropagation()
                             const i = node_use_buffer$.value.findIndex((v) => v.id === nd.id)
                             const arr = node_use_buffer$.value.filter((v) => v.id !== nd.id)

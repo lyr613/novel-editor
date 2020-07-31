@@ -18,7 +18,7 @@ import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
 import { book_use$ } from '@/source/book'
-import { chapter_li$, chapter_use$, node_of, chapter_save, find_chapter_li_auto } from '@/source/chapter-node'
+import { chapter_li$, chapter_use$, node_of, save_chapter_li, find_chapter_li_auto } from '@/source/chapter-node'
 import { node_use$, node_buffer_add_by_id } from '@/source/node'
 import { fs_write } from '@/source/fs-common'
 
@@ -160,7 +160,7 @@ export function EditNode() {
                         let the_node: null | node = null
                         if (action === 'add') {
                             the_node = node_of()
-                            await fs_write('txt', [book.src, 'chapters', the_node.id], '')
+                            fs_write('txt', [book.src, 'chapters', the_node.id], '')
                         } else {
                             // 删掉原来的
                             the_node = node_use!
@@ -184,7 +184,7 @@ export function EditNode() {
                         const cfi = chapter_li$.value.findIndex((v) => v.id === cp_focu.id)
                         chapter_li$.value.splice(cfi, 1, cp_focu)
 
-                        chapter_save()
+                        save_chapter_li()
                         find_chapter_li_auto()
                         show_node_edit$.next(false)
                         node_use$.next(the_node)

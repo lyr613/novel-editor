@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { debounceTime, merge } from 'rxjs/operators'
-import { node_use$, node_use_buffer$ } from '@/source/node'
+import { node_use$, node_buffer_add_by_id } from '@/source/node'
 import { chapter_li$ } from '@/source/chapter-node'
 
 /** 进入禅模式 */
@@ -58,17 +58,12 @@ etprev$.pipe().subscribe(() => {
         node_use$.next(nextnode)
     }
 })
-// 抖动读取文本
+// 抖动处理node_buffer
 etprev$.pipe(merge(etnext$), debounceTime(300)).subscribe(() => {
     const node = node_use$.value
     if (!node) {
         return
     }
-
-    const arr = node_use_buffer$.value
-    if (!arr.find((v) => v.id === node.id)) {
-        arr.push(node)
-    }
-    node_use_buffer$.next([...arr].slice(-5))
+    node_buffer_add_by_id(node.id)
 })
 // ----

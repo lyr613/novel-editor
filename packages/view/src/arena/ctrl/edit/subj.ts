@@ -8,3 +8,6 @@ export const editer$ = new BehaviorSubject<null | monaco.editor.IStandaloneCodeE
 
 /** 搜索出的敏感词 */
 export const sensitive_searched_list$ = new BehaviorSubject<monaco.editor.FindMatch[]>([])
+
+/** 在编辑章节页 */
+export const editing_chapter$ = new BehaviorSubject(false)

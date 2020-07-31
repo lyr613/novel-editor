@@ -18,6 +18,8 @@ import { node_use_buffer$, load_prev_buffer, node_use$, node_text_from_fs$ } fro
 import { get_cur_book_src } from '@/source/book'
 import { filter, take, debounceTime, switchMap } from 'rxjs/operators'
 import { fs_write } from '@/source/fs-common'
+import SetChapterNode from './set-chapter-node'
+import { editing_chapter$ } from './subj'
 
 /** 编辑文本页 */
 export default function Edit() {
@@ -72,6 +74,7 @@ export default function Edit() {
             node_use_buffer$.next([])
             node_use$.next(null)
             node_text_from_fs$.next('')
+            editing_chapter$.next(false)
         }
     }, [])
 
@@ -92,13 +95,17 @@ interface inset {
 }
 function Inset(p: inset) {
     const Eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
+    const editing_chapter = useObservable(() => editing_chapter$)
+
     if (!Eset) {
         return null
     }
     const lens = Eset.editer.outline_layout
     // const t = 10
 
-    return (
+    return editing_chapter ? (
+        <SetChapterNode w={p.w} h={p.h} />
+    ) : (
         <>
             <ChapterNode w={lens.width} h={p.h - lens.height} />
             <Outline w={lens.width} h={lens.height} />

@@ -33,8 +33,9 @@ declare namespace Book {
         name: string
         /** 所在章id */
         chapter_id: string
-        /** 删除 */
+        /** 隐藏 */
         hidden: boolean
+        will_delete?: boolean
         word_count?: number
     }
     /** 大纲(读取) */

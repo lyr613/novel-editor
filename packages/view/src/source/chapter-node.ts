@@ -31,7 +31,7 @@ export const chapter_map$ = chapter_li$.pipe(
 )
 
 /** 储存章节列表 */
-export function chapter_save() {
+export function save_chapter_li() {
     const arr = chapter_li$.value
     return fs_write('json', [get_cur_book_src(), 'chapter'], arr)
 }
