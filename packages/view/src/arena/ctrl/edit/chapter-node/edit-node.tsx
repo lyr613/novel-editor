@@ -118,6 +118,7 @@ export function EditNode() {
             onDismiss={() => show_node_edit$.next(false)}
         >
             <TextField
+                autoFocus
                 label="节名"
                 value={name}
                 onChange={(_, ns) => {

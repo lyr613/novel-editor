@@ -106,6 +106,7 @@ export function EditChapter() {
             }}
         >
             <TextField
+                autoFocus
                 label="章名"
                 value={cp_name}
                 onChange={(_, ns) => {
