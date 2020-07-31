@@ -14,9 +14,10 @@ import { find_table_li_auto } from '@/source/table'
 import { editer_setting$ } from '@/subject'
 import { find_npc_li_auto } from '@/source/npc'
 import { find_chapter_li_auto } from '@/source/chapter-node'
-import { node_use_buffer$, load_prev_buffer } from '@/source/node'
+import { node_use_buffer$, load_prev_buffer, node_use$, node_text_from_fs$ } from '@/source/node'
 import { get_cur_book_src } from '@/source/book'
-import { filter, take, debounceTime } from 'rxjs/operators'
+import { filter, take, debounceTime, switchMap } from 'rxjs/operators'
+import { fs_write } from '@/source/fs-common'
 
 /** 编辑文本页 */
 export default function Edit() {
@@ -24,8 +25,8 @@ export default function Edit() {
     const [w, set_w] = useState(0)
     const [h, set_h] = useState(0)
 
+    // 计算各模块的宽高
     useEffect(() => {
-        // 计算各模块的宽高
         const dom = box_ref.current
         if (!dom) {
             return
@@ -43,23 +44,35 @@ export default function Edit() {
             find_npc_li_auto()
             find_chapter_li_auto()
             find_table_li_auto()
+            load_prev_buffer()
         }, 50)
         return () => {
             clearTimeout(a)
         }
     }, [])
-    // 自动加载上次编辑的节列表
+    // 自动保存编辑的节列表
     useEffect(() => {
-        const ob = node_use_buffer$
+        const ob = node_use$
             .pipe(
-                take(1),
-                filter((li) => !li.length),
-                debounceTime(100),
+                switchMap(() => node_use_buffer$),
+                debounceTime(1000),
             )
-            .subscribe(() => {
-                load_prev_buffer()
+            .subscribe((li) => {
+                const bs = get_cur_book_src()
+                const ids = li.map((v) => v.id)
+                const use_id = node_use$.value?.id ?? ''
+                const dto = {
+                    ids,
+                    use_id,
+                }
+                fs_write('json', [bs, 'prev-edit'], dto)
             })
-        return () => ob.unsubscribe()
+        return () => {
+            ob.unsubscribe()
+            node_use_buffer$.next([])
+            node_use$.next(null)
+            node_text_from_fs$.next('')
+        }
     }, [])
 
     if (!get_cur_book_src()) {
