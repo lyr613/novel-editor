@@ -1,4 +1,5 @@
-export const system = get_sys()
+/** 用户系统 */
+export const SYSTEM = get_sys()
 
 function get_sys() {
     const agent = navigator.userAgent.toLowerCase()

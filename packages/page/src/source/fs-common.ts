@@ -1,4 +1,4 @@
-import { ipc } from '@/const'
+import { ipc } from '@/util/electron-help'
 
 /**
  * 读文件, json自动解析

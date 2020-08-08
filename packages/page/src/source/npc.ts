@@ -1,10 +1,9 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { map, filter, switchMap, take } from 'rxjs/operators'
 import { book_use$, get_cur_book_src } from './book'
-import { mk_uuid } from '@/function/id32'
-import { ipc } from '@/const'
-import { shallowCopy } from '@/rx/shallow-copy'
+import { mk_uuid } from '@/util/id32'
 import { fs_write, fs_read } from './fs-common'
+import { shallowCopy } from '@/util/rx-shallow-copy'
 
 /** npc列表 */
 export const npc_li$ = new BehaviorSubject<npc[]>([])

@@ -1,5 +1,5 @@
 /** 防止网页打开没有electron */
-export function electron(): Electron.CommonInterface {
+function electron(): Electron.CommonInterface {
     if (window.electron) {
         return window.electron
     }

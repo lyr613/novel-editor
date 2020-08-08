@@ -1,5 +1,4 @@
 import { Subject, BehaviorSubject, ReplaySubject, of } from 'rxjs'
-import { ipc, ENV } from '@/const'
 import { switchMap, map, filter, take } from 'rxjs/operators'
 import { book_use$, get_cur_book_src } from './book'
 import { fs_read } from './fs-common'

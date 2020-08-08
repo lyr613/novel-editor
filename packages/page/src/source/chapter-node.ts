@@ -1,8 +1,7 @@
 import { BehaviorSubject, Subject, of } from 'rxjs'
-import { electron, ENV, ipc } from '@/const'
 import { debounceTime, tap, switchMap, map, catchError, filter, take } from 'rxjs/operators'
 import { book_use$, get_cur_book_src } from './book'
-import { mk_uuid } from '@/function/id32'
+import { mk_uuid } from '@/util/id32'
 import { fs_write, fs_read } from './fs-common'
 /** 章节列表 */
 export const chapter_li$ = new BehaviorSubject<chapter[]>([])

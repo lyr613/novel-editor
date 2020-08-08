@@ -1,10 +1,9 @@
 import { Subject, BehaviorSubject, timer, of, ReplaySubject, interval } from 'rxjs'
 import { map, filter, switchMap, tap, take, debounceTime, skip } from 'rxjs/operators'
-import { ipc, ENV } from '@/const'
 import { book_use$, get_cur_book_src } from './book'
 import { fs_write, fs_read } from './fs-common'
 import { get_now_node_list } from './chapter-node'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router'
 
 /** 聚焦的节 */
 export const node_use$ = new BehaviorSubject<null | node>(null)

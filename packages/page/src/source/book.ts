@@ -1,9 +1,9 @@
 import { BehaviorSubject, Subject, of } from 'rxjs'
 import { map, switchMap, take } from 'rxjs/operators'
-import { ipc } from '@/const'
+import { ipc } from '@/util/electron-help'
 import { editer_setting$ } from '@/subject'
-import { mk_uuid } from '@/function/id32'
-import { curry_of_some } from '@/util/of-some'
+import { mk_uuid } from '@/util/id32'
+import { curry_of_some } from '@/function/of-some'
 
 /** 书目列表 */
 export const book_li$ = new BehaviorSubject<book_dto[]>([])

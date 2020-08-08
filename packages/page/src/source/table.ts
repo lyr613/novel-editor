@@ -2,7 +2,7 @@ import { BehaviorSubject, Subject } from 'rxjs'
 import { fs_read, fs_write } from './fs-common'
 import { book_use$, get_cur_book_src } from './book'
 import { switchMap, map, take } from 'rxjs/operators'
-import { mk_uuid } from '@/function/id32'
+import { mk_uuid } from '@/util/id32'
 
 // table
 

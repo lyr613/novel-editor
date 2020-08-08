@@ -1,8 +1,8 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { switchMap, take, filter, map } from 'rxjs/operators'
 import { get_cur_book_src } from './book'
-import { mk_uuid } from '@/function/id32'
-import { shallowCopy } from '@/rx/shallow-copy'
+import { mk_uuid } from '@/util/id32'
+import { shallowCopy } from '@/util/rx-shallow-copy'
 import { fs_read, fs_write } from './fs-common'
 
 /** 事件列表 */
