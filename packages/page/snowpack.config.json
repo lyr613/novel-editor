@@ -7,5 +7,5 @@
     "alias": {
         "@": "./src"
     },
-    "install": ["preact", "preact/hooks"]
+    "install": []
 }

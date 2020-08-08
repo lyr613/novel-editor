@@ -11,6 +11,10 @@
         /* more strict checking for errors that per-file transpilers like `esbuild` would crash */
         "isolatedModules": true,
         "paths": { "*": ["web_modules/.types/*"], "@/*": ["src/*"] }
+        // "skipLibCheck": true,
+        // "esModuleInterop": true,
+        // "allowSyntheticDefaultImports": true
+
         // Feel free to add/edit new config options below:
         // ...
     }

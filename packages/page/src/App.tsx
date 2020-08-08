@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Menu } from './arena/menu'
 import { HashRouter } from 'react-router-dom'
 
 function App() {
     const theme = 'word'
     return (
-        <div id="app" className={'theme-' + theme}>
+        <div
+            id="app"
+            className={'theme-' + theme}
+            style={{
+                fontSize: '50px',
+            }}
+        >
+            23456
             <HashRouter>
-                <Menu />
+                {/* <Menu /> */}
+                {/* <Menu /> */}
             </HashRouter>
         </div>
     )

@@ -5,8 +5,8 @@ import { useObservable } from 'rxjs-hooks'
 import { book_use$ } from '@/source/book'
 import { useLocation } from 'react-router-dom'
 import { editer_setting$ } from '@/subject'
-import * as ap from 'aphrodite/no-important'
-const css = ap.css
+import { css } from 'aphrodite'
+// const css = ap.css
 import { global_style as gs, style_creater as sc } from '@/style/global'
 
 export function Menu() {

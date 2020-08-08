@@ -5,6 +5,7 @@
         "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
         "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
     },
+    "homepage": "",
     "name": "front",
     "version": "0.0.1",
     "dependencies": {
