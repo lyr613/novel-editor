@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Menu } from './arena/menu'
 import { HashRouter } from 'react-router-dom'
+import Main from './arena/main'
 
 function App() {
     const theme = 'word'
@@ -14,7 +15,7 @@ function App() {
         >
             <HashRouter>
                 <Menu />
-                {/* <Menu /> */}
+                <Main />
             </HashRouter>
         </div>
     )

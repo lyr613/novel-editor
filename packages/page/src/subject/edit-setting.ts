@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs'
 import { fs_read, fs_write } from '@/source/fs-common'
 import { debounceTime, skip } from 'rxjs/operators'
-import { ipc } from '@/const'
+import { ipc } from '@/util/electron-help'
 
 /** 编辑器设置 */
 export const editer_setting$ = new BehaviorSubject(default_set())
