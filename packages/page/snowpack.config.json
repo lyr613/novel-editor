@@ -3,5 +3,9 @@
     "plugins": [],
     "devOptions": {
         "port": 7098
-    }
+    },
+    "alias": {
+        "@": "./src"
+    },
+    "install": ["preact", "preact/hooks"]
 }

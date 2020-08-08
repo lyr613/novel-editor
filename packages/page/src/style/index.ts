@@ -1,6 +1,8 @@
 import './reset.css'
 import './common.css'
 import './style.css'
-import { initializeIcons } from '@uifabric/icons'
+// import { initializeIcons } from '@uifabric/icons'
 
-initializeIcons()
+// console.log(initializeIcons)
+
+// initializeIcons('https://spoprod-a.akamaihd.net/files/fabric/assets/icons')
