@@ -6,33 +6,21 @@ import { book_use$ } from '@/source/book'
 import { useLocation } from 'react-router-dom'
 import { editer_setting$ } from '@/subject'
 import { css } from 'aphrodite'
-// const css = ap.css
 import { global_style as gs, style_creater as sc } from '@/style/global'
 
 export function Menu() {
-    // const book = useObservable(() => book_use$)
-    // const editer_set = useObservable(() => editer_setting$)
-    const book = 1
-    const editer_set = { git: false }
+    const book = useObservable(() => book_use$)
+    const editer_set = useObservable(() => editer_setting$)
     return (
-        <div className={css(s.root, sc.wh('60px', '100vh'))}>
-            <div className={css(gs.flex, gs.flwc, gs.flhc, sc.wh('100%', '60px'), sc.fts(16))}></div>
+        <div className={css(s.root, sc.wh('60px', '100vh'), gs.overhidd)}>
+            <Item path="shelf">{routers.shelf}</Item>
+            <SplitLine />
 
-            <ul className={css(s.list)}>
-                <li
-                    className={css(s.wline, sc.wh(undefined, 2), sc.mar(5, 0))}
-                    style={{
-                        marginTop: 0,
-                    }}
-                />
-                <Item path="shelf">{routers.shelf}</Item>
-                {/* <Item path="chapter" disable={!book}>
-					{routers.chapter}
-				</Item> */}
+            <ul className={css(s.box, gs.overhidd)}>
                 <Item path="edit" disable={!book}>
                     {routers.edit}
                 </Item>
-                <li className={css(s.wline, sc.wh(undefined, 2), sc.mar(5, 0))} />
+
                 <Item path="search" disable={!book}>
                     搜索
                 </Item>
@@ -59,7 +47,9 @@ export function Menu() {
                 <Item path="statistics" disable={!book}>
                     统计
                 </Item>
-                <li className={css(s.wline, sc.wh(undefined, 2), sc.mar(5, 0))} />
+
+                <SplitLine />
+
                 <Item path="option">设置</Item>
                 <Item path="zip">归档</Item>
                 <Item path="help">{routers.help}</Item>
@@ -77,7 +67,14 @@ interface item {
 function Item(p: item) {
     const { pathname } = useLocation()
     const now_path = pathname.split(/[\\/]/)[1]
-    const cls = css(s.item, p.disable ? s.item_disable : s.item_able, now_path === p.path ? undefined : undefined)
+    const cls = css(
+        sc.wh(60, 60),
+        gs.flwc,
+        gs.flhc,
+        sc.fts(16),
+        p.disable ? s.item_disable : s.item_able,
+        now_path === p.path ? undefined : undefined,
+    )
     return (
         <li
             className={cls}
@@ -91,4 +88,9 @@ function Item(p: item) {
             {p.children}
         </li>
     )
+}
+
+/** 分割线 */
+function SplitLine() {
+    return <div className={css(s.wline, sc.wh(undefined, 2))}></div>
 }

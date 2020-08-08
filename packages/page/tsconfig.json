@@ -11,7 +11,7 @@
         /* more strict checking for errors that per-file transpilers like `esbuild` would crash */
         "isolatedModules": true,
         "paths": { "*": ["web_modules/.types/*"], "@/*": ["src/*"] },
-        "types": ["../types"]
+        "types": ["../types", "node"]
 
         // "skipLibCheck": true,
         // "esModuleInterop": true,

@@ -11,6 +11,8 @@ interface global_style {
     flsb: object
     /** 依靠绝对定位居中, 需要父元素设置position */
     posabcenter: object
+    /** overflow: hidden */
+    overhidd: object
 }
 
 /** 复用样式 */
@@ -35,6 +37,9 @@ export const global_style: global_style = StyleSheet.create<global_style>({
         left: '50%',
         top: '50%',
         transform: 'translate(-50%,-50%)',
+    },
+    overhidd: {
+        overflow: 'hidden',
     },
 })
 
@@ -121,7 +126,7 @@ export const style_creater = {
         width = width === undefined ? '' : _default_px(width)
         height = height === undefined ? '' : _default_px(height)
         const arr = [width, height]
-        const key = 'wh' + arr.join('-')
+        const key = 'wh' + arr.join('-').replace(/%/g, '')
         const m = StyleSheet.create({
             [key]: {
                 width,

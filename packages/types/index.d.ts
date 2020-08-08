@@ -6,7 +6,7 @@ declare global {
     interface Param {
         [k: string]: any
     }
-    interface book {
+    interface book_dto {
         id: string
         /** 书名 */
         name: string

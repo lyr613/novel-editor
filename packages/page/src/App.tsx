@@ -12,9 +12,8 @@ function App() {
                 fontSize: '50px',
             }}
         >
-            23456
             <HashRouter>
-                {/* <Menu /> */}
+                <Menu />
                 {/* <Menu /> */}
             </HashRouter>
         </div>

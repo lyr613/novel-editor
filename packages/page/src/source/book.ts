@@ -3,9 +3,10 @@ import { map, switchMap, take } from 'rxjs/operators'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import { mk_uuid } from '@/function/id32'
+import { curry_of_some } from '@/util/of-some'
 
 /** 书目列表 */
-export const book_li$ = new BehaviorSubject<book[]>([])
+export const book_li$ = new BehaviorSubject<book_dto[]>([])
 export const book_use_id$ = new BehaviorSubject('')
 /** 聚焦的书目 */
 export const book_use$ = book_li$.pipe(switchMap((li) => book_use_id$.pipe(map((id) => li.find((v) => v.id === id)))))
@@ -19,7 +20,7 @@ export function get_cur_book_src() {
     return re
 }
 
-function find_book_li(srcs: string[]): book[] {
+function find_book_li(srcs: string[]): book_dto[] {
     const re = ipc().sendSync('load_books', srcs) || []
     return re
 }
@@ -38,15 +39,15 @@ export function find_book_li_auto() {
         })
 }
 
-/** 创建一本新书 */
-export function of_book(part?: Param | book): book {
-    const re: book = {
+function default_book(): book_dto {
+    return {
         id: mk_uuid(),
         name: '',
         src: '',
         cover: '',
         git: false,
     }
-    Object.assign(re, part)
-    return re
 }
+
+/** 创建一本新书 */
+export const of_book = curry_of_some(default_book())
