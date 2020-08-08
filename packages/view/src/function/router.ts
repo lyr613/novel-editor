@@ -17,6 +17,7 @@ export const routers = {
     map: '地图',
     option: '设置',
     zip: '归档',
+    statistics: '统计',
 }
 
 export type routers = keyof typeof routers

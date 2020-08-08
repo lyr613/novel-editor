@@ -52,6 +52,9 @@ export function Menu() {
                         仓库
                     </Item>
                 )}
+                <Item path="statistics" disable={!book}>
+                    统计
+                </Item>
                 <li className={s.line} />
                 <Item path="option">设置</Item>
                 <Item path="zip">归档</Item>

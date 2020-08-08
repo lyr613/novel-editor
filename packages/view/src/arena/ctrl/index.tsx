@@ -16,26 +16,36 @@ import Mapp from './map'
 import Git from './git'
 import { next_router } from '@/function/router'
 import { load_monaco } from '@/plugin/monaco-editer'
+import Statistics from './statistics'
 
 export default function MainCtrl() {
     useEffect(() => {
-        next_router('shelf')
         load_monaco()
     }, [])
     return (
         <div className={s.Stage}>
-            <Route exact path="/shelf" component={Shelf}></Route>
-            <Route exact path="/edit" component={Edit}></Route>
-            <Route exact path="/help" component={Help}></Route>
-            <Route path="/npc" component={Npc}></Route>
-            <Route path="/search" component={Search}></Route>
-            <Route path="/table" component={Table}></Route>
-            <Route path="/map" component={Mapp}></Route>
-            <Route path="/git" component={Git}></Route>
-            <Route path="/incident" component={Incident}></Route>
-            <Route path="/outline" component={Outline}></Route>
-            <Route path="/option" component={Option}></Route>
-            <Route path="/zip" component={Zipp}></Route>
+            <Switch>
+                <Route path="/shelf" component={Shelf} />
+                <Route path="/edit" component={Edit} />
+                <Route path="/help" component={Help} />
+                <Route path="/npc" component={Npc} />
+                <Route path="/search" component={Search} />
+                <Route path="/table" component={Table} />
+                <Route path="/map" component={Mapp} />
+                <Route path="/git" component={Git} />
+                <Route path="/incident" component={Incident} />
+                <Route path="/outline" component={Outline} />
+                <Route path="/option" component={Option} />
+                <Route path="/zip" component={Zipp} />
+                <Route path="/statistics" component={Statistics} />
+                <Route component={Empty} />
+            </Switch>
         </div>
     )
+}
+
+function Empty() {
+    next_router('shelf')
+
+    return null
 }

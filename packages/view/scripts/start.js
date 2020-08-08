@@ -26,7 +26,7 @@ const paths = require('../config/paths')
 const configFactory = require('../config/webpack.config')
 const createDevServerConfig = require('../config/webpackDevServer.config')
 
-const useYarn = fs.existsSync(paths.yarnLockFile)
+const useYarn = true
 const isInteractive = process.stdout.isTTY
 
 // Warn and crash if required files are missing
@@ -65,7 +65,7 @@ checkBrowsers(paths.appPath, isInteractive)
         const config = configFactory('development')
         const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
         const appName = require(paths.appPackageJson).name
-        const useTypeScript = fs.existsSync(paths.appTsConfig)
+        const useTypeScript = true
         const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true'
         const urls = prepareUrls(protocol, HOST, port, paths.publicUrlOrPath.slice(0, -1))
         const devSocket = {
