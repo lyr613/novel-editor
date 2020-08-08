@@ -10,7 +10,9 @@
         "baseUrl": "./",
         /* more strict checking for errors that per-file transpilers like `esbuild` would crash */
         "isolatedModules": true,
-        "paths": { "*": ["web_modules/.types/*"], "@/*": ["src/*"] }
+        "paths": { "*": ["web_modules/.types/*"], "@/*": ["src/*"] },
+        "types": ["../types"]
+
         // "skipLibCheck": true,
         // "esModuleInterop": true,
         // "allowSyntheticDefaultImports": true
