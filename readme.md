@@ -1,4 +1,4 @@
-# 小说编辑器
+# 小说编辑器 snowpack 试验
 
 ![预览图-书架](./doc/preview1.png)
 ![预览图-编辑](./doc/preview2.png)
