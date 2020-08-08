@@ -3,7 +3,6 @@
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-const resolve = require('resolve')
 const PnpWebpackPlugin = require('pnp-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
@@ -14,7 +13,6 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
 // const ManifestPlugin = require('webpack-manifest-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
@@ -22,8 +20,6 @@ const paths = require('./paths')
 const modules = require('./modules')
 const getClientEnvironment = require('./env')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
-const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin')
-const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 const postcssNormalize = require('postcss-normalize')
@@ -126,11 +122,7 @@ module.exports = function(webpackEnv) {
         mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
         // Stop compilation early in production
         bail: isEnvProduction,
-        devtool: isEnvProduction
-            ? shouldUseSourceMap
-                ? 'source-map'
-                : false
-            : isEnvDevelopment && 'cheap-module-source-map',
+        devtool: isEnvProduction ? (shouldUseSourceMap ? 'source-map' : false) : false && 'cheap-module-source-map',
         // These are the "entry points" to our application.
         // This means they will be the "root" imports that are included in JS bundle.
         entry: [
@@ -314,22 +306,22 @@ module.exports = function(webpackEnv) {
 
                 // First, run the linter.
                 // It's important to do this before Babel processes the JS.
-                // {
-                //     test: /\.(js|mjs|jsx|ts|tsx)$/,
-                //     enforce: 'pre',
-                //     use: [
-                //         {
-                //             options: {
-                //                 cache: false,
-                //                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
-                //                 eslintPath: require.resolve('eslint'),
-                //                 resolvePluginsRelativeTo: __dirname,
-                //             },
-                //             loader: require.resolve('eslint-loader'),
-                //         },
-                //     ],
-                //     include: paths.appSrc,
-                // },
+                {
+                    test: /\.(js|mjs|jsx|ts|tsx)$/,
+                    enforce: 'pre',
+                    use: [
+                        {
+                            options: {
+                                cache: false,
+                                formatter: require.resolve('react-dev-utils/eslintFormatter'),
+                                eslintPath: require.resolve('eslint'),
+                                resolvePluginsRelativeTo: __dirname,
+                            },
+                            loader: require.resolve('eslint-loader'),
+                        },
+                    ],
+                    include: paths.appSrc,
+                },
                 {
                     // "oneOf" will traverse all following loaders until one will
                     // match the requirements. When no loader matches it will fall
@@ -378,26 +370,22 @@ module.exports = function(webpackEnv) {
                         },
                         // Process any JS outside of the app with Babel.
                         // Unlike the application JS, we only compile the standard ES features.
-                        {
-                            test: /\.(js|mjs)$/,
-                            exclude: /@babel(?:\/|\\{1,2})runtime/,
-                            loader: require.resolve('babel-loader'),
-                            options: {
-                                babelrc: false,
-                                configFile: false,
-                                compact: false,
-                                presets: [[require.resolve('babel-preset-react-app/dependencies'), { helpers: true }]],
-                                cacheDirectory: true,
-                                // See #6846 for context on why cacheCompression is disabled
-                                cacheCompression: false,
+                        // {
+                        //     test: /\.(js|mjs)$/,
+                        //     exclude: /@babel(?:\/|\\{1,2})runtime/,
+                        //     loader: require.resolve('babel-loader'),
+                        //     options: {
+                        //         babelrc: false,
+                        //         configFile: false,
+                        //         compact: false,
+                        //         presets: [[require.resolve('babel-preset-react-app/dependencies'), { helpers: true }]],
+                        //         cacheDirectory: true,
+                        //         cacheCompression: false,
 
-                                // Babel sourcemaps are needed for debugging into node_modules
-                                // code.  Without the options below, debuggers like VSCode
-                                // show incorrect code and set breakpoints on the wrong lines.
-                                sourceMaps: shouldUseSourceMap,
-                                inputSourceMap: shouldUseSourceMap,
-                            },
-                        },
+                        //         sourceMaps: shouldUseSourceMap,
+                        //         inputSourceMap: shouldUseSourceMap,
+                        //     },
+                        // },
                         // "postcss" loader applies autoprefixer to our CSS.
                         // "css" loader resolves paths in CSS and adds assets as dependencies.
                         // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -582,45 +570,28 @@ module.exports = function(webpackEnv) {
             new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
             // Generate a service worker script that will precache, and keep up to date,
             // the HTML & assets that are part of the webpack build.
-            isEnvProduction &&
-                new WorkboxWebpackPlugin.GenerateSW({
-                    clientsClaim: true,
-                    exclude: [/\.map$/, /asset-manifest\.json$/],
-                    importWorkboxFrom: 'cdn',
-                    navigateFallback: paths.publicUrlOrPath + 'index.html',
-                    navigateFallbackBlacklist: [
-                        // Exclude URLs starting with /_, as they're likely an API call
-                        new RegExp('^/_'),
-                        // Exclude any URLs whose last part seems to be a file extension
-                        // as they're likely a resource and not a SPA route.
-                        // URLs containing a "?" character won't be blacklisted as they're likely
-                        // a route with query params (e.g. auth callbacks).
-                        new RegExp('/[^/?]+\\.[^/]+$'),
-                    ],
-                }),
             // TypeScript type checking
-            useTypeScript &&
-                new ForkTsCheckerWebpackPlugin({
-                    typescript: resolve.sync('typescript', {
-                        basedir: paths.appNodeModules,
-                    }),
-                    async: isEnvDevelopment,
-                    useTypescriptIncrementalApi: true,
-                    checkSyntacticErrors: true,
-                    resolveModuleNameModule: process.versions.pnp ? `${__dirname}/pnpTs.js` : undefined,
-                    resolveTypeReferenceDirectiveModule: process.versions.pnp ? `${__dirname}/pnpTs.js` : undefined,
-                    tsconfig: paths.appTsConfig,
-                    reportFiles: [
-                        '**',
-                        '!**/__tests__/**',
-                        '!**/?(*.)(spec|test).*',
-                        '!**/src/setupProxy.*',
-                        '!**/src/setupTests.*',
-                    ],
-                    silent: true,
-                    // The formatter is invoked directly in WebpackDevServerUtils during development
-                    formatter: isEnvProduction ? typescriptFormatter : undefined,
-                }),
+            // useTypeScript &&
+            //     new ForkTsCheckerWebpackPlugin({
+            //         typescript: resolve.sync('typescript', {
+            //             basedir: paths.appNodeModules,
+            //         }),
+            //         async: isEnvDevelopment,
+            //         useTypescriptIncrementalApi: true,
+            //         checkSyntacticErrors: true,
+            //         resolveModuleNameModule: process.versions.pnp ? `${__dirname}/pnpTs.js` : undefined,
+            //         resolveTypeReferenceDirectiveModule: process.versions.pnp ? `${__dirname}/pnpTs.js` : undefined,
+            //         tsconfig: paths.appTsConfig,
+            //         reportFiles: [
+            //             '**',
+            //             '!**/__tests__/**',
+            //             '!**/?(*.)(spec|test).*',
+            //             '!**/src/setupProxy.*',
+            //             '!**/src/setupTests.*',
+            //         ],
+            //         silent: true,
+            //         formatter: isEnvProduction ? typescriptFormatter : undefined,
+            //     }),
             new MonacoWebpackPlugin({
                 languages: [],
             }),
