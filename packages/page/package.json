@@ -8,8 +8,15 @@
     "name": "front",
     "version": "0.0.1",
     "dependencies": {
+        "aphrodite": "^2.4.0",
+        "echarts": "^4.8.0",
+        "monaco-editor": "^0.20.0",
+        "office-ui-fabric-react": "^7.126.2",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "react-router-dom": "^5.2.0",
+        "rxjs": "^6.6.2",
+        "rxjs-hooks": "^0.6.2"
     },
     "devDependencies": {
         "@snowpack/app-scripts-react": "^1.8.4",
