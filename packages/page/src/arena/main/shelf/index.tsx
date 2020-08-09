@@ -285,7 +285,7 @@ function Remote(book: book_dto) {
             if (src !== book.src) {
                 return
             }
-            console.log('拉取', b)
+            console.log('拉取远程仓库', b)
             if (b) {
                 set_label('已拉取到本地')
             } else {
@@ -298,7 +298,7 @@ function Remote(book: book_dto) {
         }
     }, [])
     return (
-        <div className={css(sc.mar('auto', 0, 10), sc.fts(16))}>
+        <div className={css(gs.flex, sc.mar('auto', 0, 10), sc.fts(16))}>
             <ThemeLabel
                 onClick={() => {
                     if (!can_pull) {
