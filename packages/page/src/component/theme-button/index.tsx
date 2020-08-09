@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import { PrimaryButton, IButtonProps } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import { theme_colors, editer_setting$ } from '@/subject'
+import { editer_setting$ } from '@/subject/edit-setting'
+import { theme_colors } from '@/subject/theme'
 
 interface p {
     add_class?: string[]

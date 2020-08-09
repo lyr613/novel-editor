@@ -10,6 +10,12 @@ interface style {
     BookBox: object
     /** 书 */
     OneBook: object
+    /** 封面 */
+    cover: object
+    /** 没有封面时的占位 */
+    nocover: object
+    /** 悬浮时高亮一下背景 */
+    hoverbg: object
 }
 
 export const style: style = StyleSheet.create<style>({
@@ -21,5 +27,33 @@ export const style: style = StyleSheet.create<style>({
     },
     NewOne: {},
     BookBox: {},
-    OneBook: {},
+    OneBook: {
+        position: 'relative',
+        boxSizing: 'border-box',
+        height: '160px',
+        flexDirection: 'column',
+        backgroundColor: STYLECOLOR.l6,
+    },
+    cover: {
+        position: 'absolute',
+        right: '5px',
+        top: '5px',
+        height: 'calc(100% - 10px)',
+    },
+    nocover: {
+        position: 'absolute',
+        right: '5px',
+        top: '5px',
+        boxSizing: 'border-box',
+        width: '120px',
+        height: 'calc(100% - 10px)',
+        padding: '10px',
+        backgroundColor: STYLECOLOR.l5,
+        fontSize: '14px',
+    },
+    hoverbg: {
+        ':hover': {
+            backgroundColor: STYLECOLOR.l7,
+        },
+    },
 })

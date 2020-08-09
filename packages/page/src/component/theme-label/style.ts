@@ -8,7 +8,6 @@ interface style {
 
 export const style: style = StyleSheet.create<style>({
     root: {
-        fontSize: 0,
         color: STYLECOLOR.t8,
         ':hover': {
             color: STYLECOLOR.l1,

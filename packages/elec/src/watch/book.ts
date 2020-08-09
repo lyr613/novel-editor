@@ -51,7 +51,7 @@ export function watch_book() {
 function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
     try {
         const has_git = check_did_install_git()
-        const re: book[] = srcs.map((src) => {
+        const re: book_dto[] = srcs.map((src) => {
             try {
                 _safe_readme(src)
                 const opt = _parse_readme(src)

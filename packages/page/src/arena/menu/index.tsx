@@ -4,7 +4,7 @@ import { useObservable } from 'rxjs-hooks'
 import { style as s } from './style'
 import { next_router, routers } from '@/router'
 import { book_use$ } from '@/source/book'
-import { editer_setting$ } from '@/subject'
+import { editer_setting$ } from '@/subject/edit-setting'
 import { css } from 'aphrodite'
 import { global_style as gs, style_creater as sc } from '@/style/global'
 
@@ -12,7 +12,7 @@ export function Menu() {
     const book = useObservable(() => book_use$)
     const editer_set = useObservable(() => editer_setting$)
     return (
-        <div className={css(s.root, sc.wh('60px', '100vh'), gs.overhidd)}>
+        <div id="menu" className={css(s.root, sc.wh('60px', '100vh'), gs.overhidd)}>
             <Item path="shelf">{routers.shelf}</Item>
             <SplitLine />
 

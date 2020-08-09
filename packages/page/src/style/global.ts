@@ -13,6 +13,8 @@ interface global_style {
     posabcenter: object
     /** overflow: hidden */
     overhidd: object
+    /** 鼠标悬浮手型 */
+    cur: object
 }
 
 /** 复用样式 */
@@ -40,6 +42,9 @@ export const global_style: global_style = StyleSheet.create<global_style>({
     },
     overhidd: {
         overflow: 'hidden',
+    },
+    cur: {
+        cursor: 'pointer',
     },
 })
 
