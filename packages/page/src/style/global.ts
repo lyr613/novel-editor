@@ -67,7 +67,7 @@ export const style_creater = {
         }
         left = _default_px(left)
         const arr = [top, right, bottom, left]
-        const key = 'mar' + arr.join('')
+        const key = 'mar' + arr.map((v) => v.replace(/[^a-z0-9A-Z]/g, '')).join('')
         const m = StyleSheet.create({
             [key]: {
                 margin: arr.join(' '),
@@ -91,7 +91,7 @@ export const style_creater = {
         }
         left = _default_px(left)
         const arr = [top, right, bottom, left]
-        const key = 'padd' + arr.join('')
+        const key = 'padd' + arr.map((v) => v.replace(/[^a-z0-9A-Z]/g, '')).join('')
         const m = StyleSheet.create({
             [key]: {
                 padding: arr.join(' '),
@@ -113,7 +113,7 @@ export const style_creater = {
         bottom = bottom === undefined ? '' : _default_px(bottom)
         right = right === undefined ? '' : _default_px(right)
         const arr = [position, top, left, bottom, right]
-        const key = 'pos' + arr.join('-')
+        const key = 'pos' + arr.map((v) => v.replace(/[^a-z0-9A-Z]/g, '')).join('-')
         const m = StyleSheet.create({
             [key]: {
                 position,
@@ -131,7 +131,7 @@ export const style_creater = {
         width = width === undefined ? '' : _default_px(width)
         height = height === undefined ? '' : _default_px(height)
         const arr = [width, height]
-        const key = 'wh' + arr.join('-').replace(/%/g, '')
+        const key = 'wh' + arr.map((v) => v.replace(/[^a-z0-9A-Z]/g, '')).join('-')
         const m = StyleSheet.create({
             [key]: {
                 width,

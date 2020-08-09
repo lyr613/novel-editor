@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useObservable } from 'rxjs-hooks'
 import { style as s } from './style'
-import { next_router, routers } from '@/router'
+import { next_router, ROUTERL1, router_l1 } from '@/router'
 import { book_use$ } from '@/source/book'
 import { editer_setting$ } from '@/subject/edit-setting'
 import { css } from 'aphrodite'
@@ -13,22 +13,22 @@ export function Menu() {
     const editer_set = useObservable(() => editer_setting$)
     return (
         <div id="menu" className={css(s.root, sc.wh('60px', '100vh'), gs.overhidd)}>
-            <Item path="shelf">{routers.shelf}</Item>
+            <Item path="shelf">{ROUTERL1.shelf}</Item>
             <SplitLine />
 
             <ul className={css(s.box, gs.overhidd)}>
                 <Item path="edit" disable={!book}>
-                    {routers.edit}
+                    {ROUTERL1.edit}
                 </Item>
 
                 <Item path="search" disable={!book}>
                     搜索
                 </Item>
                 <Item path="outline" disable={!book}>
-                    {routers.outline}
+                    {ROUTERL1.outline}
                 </Item>
                 <Item path="incident" disable={!book}>
-                    {routers.incident}
+                    {ROUTERL1.incident}
                 </Item>
                 <Item path="npc" disable={!book}>
                     角色
@@ -52,7 +52,7 @@ export function Menu() {
 
                 <Item path="option">设置</Item>
                 <Item path="zip">归档</Item>
-                <Item path="help">{routers.help}</Item>
+                <Item path="help">{ROUTERL1.help}</Item>
                 {/* <Item path="setting">设置</Item> */}
             </ul>
         </div>
@@ -62,7 +62,7 @@ export function Menu() {
 interface item {
     children: string
     disable?: boolean
-    path: routers
+    path: router_l1
 }
 function Item(p: item) {
     const { pathname } = useLocation()

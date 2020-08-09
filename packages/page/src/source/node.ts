@@ -6,13 +6,13 @@ import { get_now_node_list } from './chapter-node'
 import { next_router } from '@/router'
 
 /** 聚焦的节 */
-export const node_use$ = new BehaviorSubject<null | node>(null)
+export const node_use$ = new BehaviorSubject<null | node_dto>(null)
 
 /** 编辑页顶部的节标签 */
-export const node_use_buffer$ = new BehaviorSubject<node[]>([])
+export const node_use_buffer$ = new BehaviorSubject<node_dto[]>([])
 
 /** 根据id向编辑页buffer添加一个 */
-export function node_buffer_add_by_id(id: string, node_list?: node[]) {
+export function node_buffer_add_by_id(id: string, node_list?: node_dto[]) {
     const arr = node_list || get_now_node_list()
     const fi = arr.find((v) => v.id === id)
     if (!fi) {
@@ -25,7 +25,7 @@ export function node_buffer_add_by_id(id: string, node_list?: node[]) {
     }
 }
 /** 根据id列表向编辑页buffer添加多个 */
-export function node_buffer_add_by_ids(ids: string[], node_list?: node[]) {
+export function node_buffer_add_by_ids(ids: string[], node_list?: node_dto[]) {
     const arr = node_list || get_now_node_list()
     const nmap = new Map<string, boolean>()
     ids.forEach((id) => {
