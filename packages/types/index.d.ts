@@ -18,13 +18,13 @@ declare global {
         git: boolean
     }
     /** 章 */
-    interface chapter {
+    interface chapter_dto {
         /** 32位uuid */
         id: string
         /** 名字 */
         name: string
         /** 节[] */
-        children: node[]
+        children: node_dto[]
         /** 删除 */
         hidden: boolean
         /** 展开 */
@@ -32,34 +32,29 @@ declare global {
     }
 
     /** 节 */
-    interface node {
+    interface node_dto {
         /** 32位uuid */
         id: string
         /** 名字 */
         name: string
         /** 所在章id */
-        chapter_id: string
+        // chapter_id: string
         /** 隐藏 */
         hidden: boolean
-        will_delete?: boolean
-        word_count?: number
+        // will_delete?: boolean
+        // word_count?: number
     }
-    /** 大纲(读取) */
-    interface outline {
-        text: string
-        /** 相关npc id[] */
-        npcs?: string[]
-    }
-    /** 大纲(展示) */
-    interface outline_show {
+    /** 大纲 */
+    interface outline_dto {
+        /** 和章一样的id */
         chapter_id: string
         text: string
-        npcs: npc[]
-        /** 章名 */
-        title: string
+        /** 相关npc id[] */
+        npc_ids: string[]
+        incident_ids: string[]
     }
     /** 角色 */
-    interface npc {
+    interface npc_dto {
         /** 32 uuid */
         id: string
         base: {
@@ -91,7 +86,7 @@ declare global {
         }
     }
     /** 事件 */
-    interface incident {
+    interface incident_dto {
         /** 32 uuid */
         id: string
         label: string
@@ -117,16 +112,8 @@ declare global {
             real: number
         }
     }
-    /** 大纲(读存) */
-    interface outline {
-        /** 取自章id */
-        id: string
-        text: string
-        /** 相关事件 id[] */
-        incident_ids: string[]
-    }
     /** 编辑器设置 */
-    interface setting {
+    interface setting_dto {
         /** 通用 */
         common: {
             /** 主题 */
