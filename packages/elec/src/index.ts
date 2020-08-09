@@ -5,7 +5,6 @@ import { update_check } from './update'
 
 console.log(process.env.NODE_ENV)
 
-/** 控制台中文乱码 */
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 /** 主窗口 */

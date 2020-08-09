@@ -3,6 +3,7 @@
     "author": "秋无衣",
     "description": "小说编辑器",
     "main": "build/index.js",
+    "name": "electron-part",
     "scripts": {
         "watch": " npx webpack --mode development --watch ",
         "build": " npx webpack --mode production ",
