@@ -7,7 +7,7 @@ import { ipc } from '@/util/electron-help'
 export const editer_setting$ = new BehaviorSubject(default_set())
 
 /** 默认 */
-function default_set(): setting {
+function default_set(): setting_dto {
     return {
         common: {
             theme: 'word',

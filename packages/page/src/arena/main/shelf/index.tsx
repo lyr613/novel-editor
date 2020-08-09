@@ -65,7 +65,7 @@ function BookBox() {
 }
 
 /** 一本 */
-function OneBook(p: { book: book_dto; editer_sett: setting | null }) {
+function OneBook(p: { book: book_dto; editer_sett: setting_dto | null }) {
     const { book, editer_sett } = p
 
     return (

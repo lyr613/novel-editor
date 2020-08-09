@@ -2,8 +2,7 @@
     "scripts": {
         "start": " snowpack dev",
         "build": "snowpack build",
-        "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-        "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
+        "postbuild": "node ./scripts/after-build.js"
     },
     "homepage": "",
     "name": "front",
