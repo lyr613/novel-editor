@@ -25,7 +25,7 @@ function editer_load_setting(e: Electron.IpcMainEvent) {
         }
 
         const txt = fs.readFileSync(file_src, 'utf-8')
-        const jsn: setting = JSON.parse(txt)
+        const jsn: setting_dto = JSON.parse(txt)
 
         jsn.git = check_did_install_git()
 

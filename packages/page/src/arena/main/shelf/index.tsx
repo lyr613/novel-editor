@@ -72,7 +72,7 @@ function OneBook(p: { book: book_dto; editer_sett: setting_dto | null }) {
         <div className={css(s.OneBook, gs.overhidd, sc.mar(10), sc.padd(10), gs.flex)}>
             {NamePart(book)}
             {SrcPart(book)}
-            {book.git && <Remote src={book.src} />}
+            {book.git && Remote(book)}
             {BtnPart(book, editer_sett?.git === true)}
             {CoverPart(book)}
         </div>
@@ -275,15 +275,14 @@ function CoverPart(book: book_dto) {
 }
 
 /** 有远程仓库时, 显示此方便更新 */
-function Remote(p: { src: string }) {
-    const { src } = p
+function Remote(book: book_dto) {
     const [label, set_label] = useState('检查到远程仓库, 点此拉取更新到本地')
     const [can_pull, set_can_pull] = useState(true)
     useEffect(() => {
         function pull(_: any, re: any) {
             const b = re.be_suc
             const src = re.src
-            if (src !== p.src) {
+            if (src !== book.src) {
                 return
             }
             console.log('拉取', b)
@@ -305,7 +304,7 @@ function Remote(p: { src: string }) {
                     if (!can_pull) {
                         return
                     }
-                    ipc().send('git_pull', src)
+                    ipc().send('git_pull', book.src)
                     set_label('拉取中...')
                     set_can_pull(false)
                 }}
