@@ -4,7 +4,6 @@ import { ipc } from '@/util/electron-help'
 import { editer_setting$ } from '@/subject/edit-setting'
 import { mk_uuid } from '@/util/id32'
 import { curry_of_some } from '@/function/of-some'
-import { StroageBook } from '@/storage/books'
 
 /** 书目列表 */
 export const book_li$ = new BehaviorSubject<book_dto[]>([])
@@ -21,7 +20,7 @@ export function get_cur_book_src() {
     return re
 }
 
-function find_book_li(srcs: string[]): book_dto[] {
+export function find_book_li_by_src(srcs: string[]): book_dto[] {
     const re = ipc().sendSync('load_books', srcs) || []
     return re
 }
@@ -29,7 +28,7 @@ function find_book_li(srcs: string[]): book_dto[] {
 /** 更新书目列表的简单方法, 调用即更新 */
 export function find_book_li_auto() {
     book_li$.next([])
-    const nli = find_book_li(StroageBook.find())
+    const nli = find_book_li_by_src(editer_setting$.value.shelf.book_list)
     book_li$.next(nli)
 }
 

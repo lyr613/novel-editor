@@ -1,9 +1,11 @@
 // 一些自动订阅, 先集中管理
 
 import { book_use$, get_cur_book_src } from './book'
-import { debounceTime, switchMap } from 'rxjs/operators'
+import { debounceTime, switchMap, skip } from 'rxjs/operators'
 import { node_use_buffer$, node_text_from_fs$, node_use$, node_id_text_map$ } from './node'
 import { fs_write } from './fs-common'
+import { editer_setting$ } from '@/subject/edit-setting'
+import { ipc } from '@/util/electron-help'
 
 export function auto_link_observable() {
     // 切换书时, 改app标题
@@ -22,5 +24,9 @@ export function auto_link_observable() {
                 alert(`保存章节${v.node_name}失败`)
             }
         })
+    })
+    /** 保存编辑器设置 */
+    editer_setting$.pipe(skip(1), debounceTime(2000)).subscribe((obj) => {
+        fs_write('json', [ipc().sendSync('app_set_src'), 'settings.json'], obj)
     })
 }

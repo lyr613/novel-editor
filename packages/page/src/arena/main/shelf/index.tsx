@@ -9,11 +9,11 @@ import ThemeLabel from '@/component/theme-label'
 import ThemeButton from '@/component/theme-button'
 import { editer_setting$ } from '@/subject/edit-setting'
 import { shallowCopy } from '@/util/rx-shallow-copy'
-import { book_use_id$, find_book_li_auto, book_li$ } from '@/source/book'
+import { book_use_id$, find_book_li_auto, book_li$, find_book_li_by_src } from '@/source/book'
 import { select_dir } from '@/source/fs-common'
 import { css } from 'aphrodite'
 import { global_style as gs, style_creater as sc } from '@/style/global'
-import { StroageBook } from '@/storage/books'
+import { map, debounceTime } from 'rxjs/operators'
 
 /** 书架 */
 export default function Shelf() {
@@ -39,7 +39,12 @@ function NewOne() {
             onClick={() => {
                 select_dir().then((re) => {
                     if (re.src) {
-                        StroageBook.add(re.src)
+                        const v = editer_setting$.value
+                        const arr = v.shelf.book_list
+                        if (!arr.find((ss) => ss === re.src)) {
+                            arr.push(re.src)
+                        }
+                        editer_setting$.next(v)
                         find_book_li_auto()
                     }
                 })
@@ -52,7 +57,16 @@ function NewOne() {
 
 /** 列表 */
 function BookBox() {
-    const list = useObservable(() => book_li$.pipe(shallowCopy()), [])
+    const list = useObservable(
+        () =>
+            editer_setting$.pipe(
+                shallowCopy(),
+                debounceTime(50),
+                map((v) => v.shelf.book_list),
+                map(find_book_li_by_src),
+            ),
+        [],
+    )
     const editer_sett = useObservable(() => editer_setting$)
 
     return (
@@ -239,7 +253,6 @@ function BtnPart(book: book_dto, with_git: boolean) {
                     const p = editer_setting$.value
                     p.shelf.book_list = p.shelf.book_list.filter((v) => v !== book.src)
                     editer_setting$.next(p)
-                    find_book_li_auto()
                 }}
                 style={{
                     marginRight: '10px',
