@@ -1,6 +1,22 @@
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+
 module.exports = {
     extends: '@snowpack/app-scripts-react',
-    plugins: [],
+    plugins: [
+        [
+            '@snowpack/plugin-webpack',
+            {
+                extendConfig: (config) => {
+                    config.plugins.push(
+                        new MonacoWebpackPlugin({
+                            languages: [],
+                        }),
+                    )
+                    return config
+                },
+            },
+        ],
+    ],
     devOptions: {
         port: 7098,
     },
