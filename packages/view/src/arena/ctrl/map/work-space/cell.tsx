@@ -134,7 +134,7 @@ function Texts() {
             >
                 链接
             </div>
-            {can_show_list ? list.map((tt) => <OneTxt key={tt.id} v={tt}></OneTxt>) : <HaveMore />}}
+            {can_show_list ? list.map((tt) => <OneTxt key={tt.id} v={tt}></OneTxt>) : <HaveMore />}
         </div>
     )
 }
