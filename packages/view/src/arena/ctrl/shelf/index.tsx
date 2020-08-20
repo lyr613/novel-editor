@@ -283,6 +283,7 @@ function Remote(p: { src: string }) {
         return () => {
             ipc().removeListener('git_pull', pull)
         }
+        // eslint-disable-next-line
     }, [])
     return (
         <div className={s.Remote}>
