@@ -488,7 +488,10 @@ module.exports = function(webpackEnv) {
             ],
         },
         plugins: [
-            new BundleAnalyzerPlugin(),
+            // new BundleAnalyzerPlugin(),
+            new webpack.DllReferencePlugin({
+                manifest: require(path.join(__dirname, '..', 'dll-build', 'dll.manifest.json')),
+            }),
             // Generates an `index.html` file with the <script> injected.
             new HtmlWebpackPlugin(
                 Object.assign(

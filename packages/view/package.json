@@ -81,6 +81,7 @@
         "workbox-webpack-plugin": "4.3.1"
     },
     "scripts": {
+        "setup-dll": "npx webpack --config ./config/webpack_dll.js",
         "start": "node scripts/start.js",
         "build": "node scripts/build.js",
         "test": "node scripts/test.js"
@@ -160,5 +161,8 @@
             "react-app"
         ]
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "webpack-bundle-analyzer": "^3.8.0",
+        "webpack-cli": "^3.3.12"
+    }
 }
