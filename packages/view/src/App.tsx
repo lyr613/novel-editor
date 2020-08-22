@@ -23,7 +23,9 @@ const App: React.FC = () => {
     // 加载编辑器设置
     useEffect(() => {
         const re: setting = ipc().sendSync('editer_load_setting')
-        editer_setting$.next(re)
+        if (re) {
+            editer_setting$.next(re)
+        }
         overload_style_scroll()
         // console.log(re)
     }, [])
