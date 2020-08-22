@@ -4,7 +4,6 @@ const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 const resolve = require('resolve')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const PnpWebpackPlugin = require('pnp-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
@@ -516,7 +515,6 @@ module.exports = function(webpackEnv) {
                         : undefined,
                 ),
             ),
-            isEnvDevelopment && new ReactRefreshWebpackPlugin(),
 
             // Inlines the webpack runtime script. This script is too small to warrant
             // a network request.
