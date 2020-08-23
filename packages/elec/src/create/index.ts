@@ -1,12 +1,12 @@
 import path from 'path'
 import url from 'url'
-import Electron, { globalShortcut, MenuItem, Menu, dialog } from 'electron'
+import Electron, { globalShortcut, MenuItem, Menu, dialog, screen } from 'electron'
 import { ENV } from '@/const'
 
 export function create_option(): Electron.BrowserWindowConstructorOptions {
     return {
-        width: 960,
-        height: 600,
+        width: screen.getPrimaryDisplay().workAreaSize.width,
+        height: screen.getPrimaryDisplay().workAreaSize.height,
         // fullscreen: true,
         autoHideMenuBar: true,
 
@@ -19,6 +19,7 @@ export function create_option(): Electron.BrowserWindowConstructorOptions {
             // devTools: true,
             devTools: process.env.NODE_ENV === 'development',
         },
+        frame: false,
     }
 }
 
@@ -27,7 +28,7 @@ export function create_option(): Electron.BrowserWindowConstructorOptions {
  * 窗口最大化, 设置菜单, 加载页面
  */
 export function did_create(win: Electron.BrowserWindow) {
-    win.maximize()
+    // win.maximize()
     set_menu(win)
     load_page(win)
 }

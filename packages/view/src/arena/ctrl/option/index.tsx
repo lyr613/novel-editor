@@ -10,7 +10,7 @@ import ThemeLabel from '@/component/theme-label'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { option_use$, option_li } from './subj'
-import FullScreen from './ui/full-screen'
+import WindowSize from './ui/full-screen'
 import Theme from './ui/theme'
 import Font from './edit/font'
 import Scroll from './ui/scroll'
@@ -22,7 +22,7 @@ export default function Option() {
     return (
         <div className={s.Option}>
             <Nav />
-            {use === option_li[0] && <FullScreen />}
+            {use === option_li[0] && <WindowSize />}
             {use === option_li[0] && <Theme />}
             {use === option_li[0] && <Scroll />}
             {use === option_li[1] && <Sensitive />}
