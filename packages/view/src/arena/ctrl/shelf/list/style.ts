@@ -7,6 +7,8 @@ interface style {
     txtline: object
     /** 封面 */
     img: object
+    /** 书名和路径行悬浮高亮 */
+    hover_highlight: object
 }
 
 export const style: style = StyleSheet.create<style>({
@@ -23,5 +25,10 @@ export const style: style = StyleSheet.create<style>({
     },
     img: {
         // backgroundColor:
+    },
+    hover_highlight: {
+        ':hover': {
+            color: 'var(--CLRl1)',
+        },
     },
 })

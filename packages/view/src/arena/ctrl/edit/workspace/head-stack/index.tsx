@@ -12,7 +12,7 @@ export default function HeadStack() {
     const use = useObservable(() => node_use$)
 
     return (
-        <ul className={css(s.box, gs.flex, sc.wh('100%', 30))}>
+        <ul className={css(s.box, gs.flex, sc.wh('100%', 30), sc.bgclrl(6))}>
             {li.map((one) => (
                 <li
                     className={css(

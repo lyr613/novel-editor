@@ -49,7 +49,7 @@ function NameLine(book: book) {
             <span className={css(sc.padd(0, 10, 0, 0))}>书名: </span>
             {!editing_name ? (
                 <div
-                    className={css(sc.wh(undefined, '100%'), gs.flhc, gs.pointer)}
+                    className={css(s.hover_highlight, sc.wh(undefined, '100%'), gs.flhc, gs.pointer)}
                     onClick={() => {
                         next_ipted_name(book.name)
                         next_editing_name(true)
@@ -102,7 +102,7 @@ function SrcLine(book: book) {
             <span className={css(sc.padd(0, 10, 0, 0))}>路径: </span>
 
             <div
-                className={css(sc.wh(undefined, '100%'), gs.flhc, gs.pointer)}
+                className={css(s.hover_highlight, sc.wh(undefined, '100%'), gs.flhc, gs.pointer)}
                 onClick={() => {
                     ipc().send('fs_show', [book.src])
                 }}
