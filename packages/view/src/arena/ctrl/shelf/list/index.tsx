@@ -289,6 +289,7 @@ function ButtonBox(book: book, editer_set: setting | null) {
 function Img(book: book) {
     return (
         <div
+            className={css(gs.hoverfocu)}
             onClick={() => {
                 ipc().sendSync('book_set_cover', book.src)
             }}
@@ -300,14 +301,7 @@ function Img(book: book) {
                     alt=""
                 />
             ) : (
-                <div
-                    className={css(
-                        sc.pos('absolute', 0, undefined, undefined, 0),
-                        sc.wh(120, '100%'),
-                        sc.bgclrl(5),
-                        gs.hoverfocu,
-                    )}
-                >
+                <div className={css(sc.pos('absolute', 0, undefined, undefined, 0), sc.wh(120, '100%'), sc.bgclrl(5))}>
                     <span className={css(sc.pos('absolute', '10px', '5%'), sc.wh('90%'), sc.fts(14))}>
                         点击此处打开文件夹, 将封面图片命名为 preview 放到打开的文件夹内
                     </span>
