@@ -19,7 +19,7 @@ export function create_option(): Electron.BrowserWindowConstructorOptions {
             // devTools: true,
             devTools: process.env.NODE_ENV === 'development',
         },
-        frame: false,
+        frame: process.platform === 'darwin',
     }
 }
 

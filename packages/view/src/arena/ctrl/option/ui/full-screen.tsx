@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import ThemeButton from '@/component/theme-button'
-import { ipc, electron } from '@/const'
+import { ipc, electron, system } from '@/const'
 import { DefaultButton } from 'office-ui-fabric-react'
 
 /** 窗口尺寸 */
@@ -44,22 +44,26 @@ export default function WindowSize() {
                     >
                         全屏
                     </ThemeButton>
-                    <DefaultButton
-                        className={s.btn}
-                        onClick={() => {
-                            ipc().send('ui_window_size', 1)
-                        }}
-                    >
-                        最大化
-                    </DefaultButton>
-                    <DefaultButton
-                        className={s.btn}
-                        onClick={() => {
-                            ipc().send('ui_window_size', 900, 600)
-                        }}
-                    >
-                        900*600
-                    </DefaultButton>
+                    {system === 'win' && (
+                        <>
+                            <DefaultButton
+                                className={s.btn}
+                                onClick={() => {
+                                    ipc().send('ui_window_size', 1)
+                                }}
+                            >
+                                最大化
+                            </DefaultButton>
+                            <DefaultButton
+                                className={s.btn}
+                                onClick={() => {
+                                    ipc().send('ui_window_size', 900, 600)
+                                }}
+                            >
+                                900*600
+                            </DefaultButton>
+                        </>
+                    )}
                 </div>
             )}
         </>
