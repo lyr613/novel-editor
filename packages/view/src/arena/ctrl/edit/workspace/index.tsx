@@ -25,6 +25,7 @@ import {
     node_text_from_fs$,
 } from '@/source/node'
 import { get_cur_book_src } from '@/source/book'
+import HeadStack from './head-stack'
 
 interface p {
     w: number
@@ -42,6 +43,7 @@ export default function Workspace(p: p) {
                 height: p.h + 'px',
             }}
         >
+            <HeadStack />
             <Head />
             <div className={zencls}>
                 <CtrlBar />
