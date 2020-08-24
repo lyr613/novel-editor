@@ -8,7 +8,6 @@ import { map, switchMap, merge, debounceTime } from 'rxjs/operators'
 import { Screen$, key$ } from '@/subscribe'
 import { editer$ } from '../subj'
 import { editer_setting$ } from '@/subject'
-import useScroll from '@/hook/scroll-hock'
 import { zen$, etbottom$, ettop$, etnext$, etprev$ } from './subj'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { check_words$ } from './util'
@@ -17,7 +16,6 @@ import { search_text$ } from '@/subject/search'
 import { default_editer_option } from '@/plugin/monaco-editer/option'
 import { monaco_option_use$ } from '@/subject/monaco'
 import {
-    node_use_buffer$,
     node_use$,
     node_text_from_editer$,
     node_id_text_map$,
@@ -44,50 +42,11 @@ export default function Workspace(p: p) {
             }}
         >
             <HeadStack />
-            <Head />
             <div className={zencls}>
                 <CtrlBar />
                 <Write />
             </div>
         </div>
-    )
-}
-
-/** 活动节, 最多8个 */
-function Head() {
-    const li = useObservable(() => node_use_buffer$, [])
-    const focu = useObservable(() => node_use$)
-
-    const ref_box = useRef<null | HTMLUListElement>(null)
-    useScroll(ref_box, 'w')
-    return (
-        <ul className={[s.Head, 'no-scroll'].join(' ')} ref={ref_box}>
-            {li.map((nd) => (
-                <li
-                    className={[s.one, focu?.id === nd.id ? s.focu : ''].join(' ')}
-                    key={nd.id}
-                    onClick={() => {
-                        node_use$.next(nd)
-                    }}
-                >
-                    <span className={s.name}>{nd.name}</span>
-                    <Icon
-                        iconName="Cancel"
-                        className={s.icon}
-                        onDoubleClick={(e) => {
-                            e.stopPropagation()
-                            const i = node_use_buffer$.value.findIndex((v) => v.id === nd.id)
-                            const arr = node_use_buffer$.value.filter((v) => v.id !== nd.id)
-                            node_use_buffer$.next(arr)
-                            if (nd.id === focu?.id) {
-                                const ni = Math.max(0, i - 1)
-                                node_use$.next(arr[ni] || null)
-                            }
-                        }}
-                    ></Icon>
-                </li>
-            ))}
-        </ul>
     )
 }
 
