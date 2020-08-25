@@ -9,6 +9,9 @@ import { zen$, size$, etbottom$, ettop$ } from './subj'
 import { monaco_option_use$, monaco_position$ } from '@/subject/monaco'
 import { useEffect } from 'react'
 import { sensitive_editor_resover$, sensitive_can_check$ } from '@/subject/sensitive'
+import { mk_npc_reg } from '@/source/npc/method'
+import { npc_li$, npc_use_id$ } from '@/source/npc'
+import { next_router } from '@/router/router'
 
 export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
     useEffect(() => {
@@ -21,6 +24,9 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
 
         editor.onKeyUp((e) => {
             on_key_up(editor, e)
+        })
+        editor.onMouseDown((e) => {
+            on_mouse_down(editor, e)
         })
 
         // 切换节时
@@ -111,4 +117,31 @@ function on_key_up(editor: monaco.editor.IStandaloneCodeEditor, event: monaco.IK
     }
     // 推入敏感词检查
     sensitive_editor_resover$.next(editor)
+}
+
+function on_mouse_down(editor: monaco.editor.IStandaloneCodeEditor, event: monaco.editor.IEditorMouseEvent) {
+    const model = editor.getModel()
+    const pos = event.target.position
+    const ne = event.event
+
+    if (!pos || !model || !ne.ctrlKey) {
+        return
+    }
+    const str = model.getWordAtPosition(pos)
+    if (!str) {
+        return
+    }
+    // 先查找角色
+    const npc_reg = mk_npc_reg()
+    const npc_m = str.word.match(npc_reg)
+    if (npc_m) {
+        const f = npc_m[0]
+        const npc_f = npc_li$.value.find((v) => v.base.name === f)
+        if (!npc_f) {
+            return
+        }
+        next_router('npc', 'edit')
+        npc_use_id$.next(npc_f.id)
+        return
+    }
 }
