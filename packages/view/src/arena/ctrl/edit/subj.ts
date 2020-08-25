@@ -8,14 +8,6 @@ import { node_use$ } from '@/source/node/base'
 import { map, merge } from 'rxjs/operators'
 import { node_text_saver$, node_text_from_fs$ } from '@/source/node/txt'
 
-/**
- * 编辑器
- */
-export const editer$ = new BehaviorSubject<null | monaco.editor.IStandaloneCodeEditor>(null)
-
-/** 搜索出的敏感词 */
-export const sensitive_searched_list$ = new BehaviorSubject<monaco.editor.FindMatch[]>([])
-
 /** 在编辑章节页 */
 export const editing_chapter$ = new BehaviorSubject(false)
 

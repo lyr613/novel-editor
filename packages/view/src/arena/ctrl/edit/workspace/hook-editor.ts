@@ -1,17 +1,14 @@
 import { default_editer_option } from '@/plugin/monaco-editer/option'
 import * as monaco from 'monaco-editor'
-import { editer$ } from '../subj'
 import { node_use$ } from '@/source/node/base'
 import { get_cur_book_src } from '@/source/book'
-import { check_words$ } from './util'
 import { node_text_saver$, node_text_from_fs$ } from '@/source/node/txt'
 import { editer_setting$ } from '@/subject'
-import { merge } from 'rxjs/operators'
-import { Screen$ } from '@/subscribe'
-import { debounceTime } from 'rxjs/operators'
+import { debounceTime, filter } from 'rxjs/operators'
 import { zen$, size$, etbottom$, ettop$ } from './subj'
-import { monaco_option_use$ } from '@/subject/monaco'
+import { monaco_option_use$, monaco_position$ } from '@/subject/monaco'
 import { useEffect } from 'react'
+import { sensitive_editor_resover$, sensitive_can_check$ } from '@/subject/sensitive'
 
 export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
     useEffect(() => {
@@ -21,11 +18,11 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
         }
         const options = default_editer_option()
         const editor = monaco.editor.create(dom, options)
-        editer$.next(editor)
 
         editor.onKeyUp((e) => {
             on_key_up(editor, e)
         })
+
         // 切换节时
         const ob_change_node = node_use$.subscribe(() => {
             editor.revealLine(0) // 滚动到第一行
@@ -53,7 +50,6 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
         // 文本, 加一个延迟是为了缩放后, 切到别的页面切回来不闪一下
         const ob_txt = node_text_from_fs$.pipe(debounceTime(50)).subscribe((t) => {
             editor.setValue(t)
-            check_words$.next(editor)
         })
         // 编辑器向下一屏
         const ob_scroll_bottom = etbottom$.subscribe(() => {
@@ -67,8 +63,16 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
             const ly = editor.getLayoutInfo().height
             editor.setScrollTop(t - ly + 20)
         })
+        // 从别处传来的位置
+        const ob_pos = monaco_position$.subscribe((pos) => {
+            editor.setPosition(pos)
+            editor.revealPositionInCenter(pos)
+        })
+        // 推入敏感词检查
+        const ob_check = sensitive_can_check$.pipe(filter(Boolean), debounceTime(500)).subscribe(() => {
+            sensitive_editor_resover$.next(editor)
+        })
         return () => {
-            // 自动保存
             editor.dispose()
             ob_txt.unsubscribe()
             ob_size.unsubscribe()
@@ -77,6 +81,8 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
             ob_scroll_bottom.unsubscribe()
             ob_scroll_top.unsubscribe()
             ob_opt.unsubscribe()
+            ob_pos.unsubscribe()
+            ob_check.unsubscribe()
         }
     }, [ref])
 }
@@ -86,7 +92,6 @@ function on_key_up(editor: monaco.editor.IStandaloneCodeEditor, event: monaco.IK
     const node = node_use$.value
     const book_src = get_cur_book_src()
     if (node) {
-        check_words$.next(editor) // 检查敏感词
         if (book_src) {
             // 存储保存需要的资料
             node_text_saver$.next({
@@ -100,4 +105,6 @@ function on_key_up(editor: monaco.editor.IStandaloneCodeEditor, event: monaco.IK
         // alert('当前没有选中节, 无法保存编辑内容')
         editor.setValue('当前没有选中节, 无法保存编辑内容')
     }
+    // 推入敏感词检查
+    sensitive_editor_resover$.next(editor)
 }
