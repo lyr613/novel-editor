@@ -53,20 +53,24 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
         })
         // 编辑器向下一屏
         const ob_scroll_bottom = etbottom$.subscribe(() => {
+            const lineh = editor.getRawOptions().lineHeight || 26
             const t = editor.getScrollTop()
-            const ly = editor.getLayoutInfo().height
-            editor.setScrollTop(t + ly - 20)
+            const h = editor.getLayoutInfo().height
+            const next_h = ((((t + h) / lineh) | 0) - 1) * lineh
+            editor.setScrollTop(next_h)
         })
         // 编辑器向上一屏
         const ob_scroll_top = ettop$.subscribe(() => {
+            const lineh = editor.getRawOptions().lineHeight || 26
             const t = editor.getScrollTop()
-            const ly = editor.getLayoutInfo().height
-            editor.setScrollTop(t - ly + 20)
+            const h = editor.getLayoutInfo().height
+            const next_h = ((((t - h) / lineh) | 0) + 1) * lineh
+            editor.setScrollTop(next_h)
         })
         // 从别处传来的位置
         const ob_pos = monaco_position$.subscribe((pos) => {
             editor.setPosition(pos)
-            editor.revealPositionInCenter(pos)
+            editor.revealPositionInCenter(pos, 0)
         })
         // 推入敏感词检查
         const ob_check = sensitive_can_check$.pipe(filter(Boolean), debounceTime(500)).subscribe(() => {
