@@ -22,39 +22,6 @@ export function focu_node_then_edit(id: string) {
     }
 }
 
-/** 节点内容, 因为monaco-editer不好受控, 所以这里不储存值, 只在查找时负责传递 */
-export const node_text_from_fs$ = new BehaviorSubject<string>('')
-/** 从编辑器传来的文本 */
-export const node_text_from_editer$ = new BehaviorSubject('')
-
-// ---- 自动保存部分 ----
-const node_id_text_map_default = new Map<
-    string,
-    { book_src: string; text: string; node_id: string; node_name: string }
->()
-/** 从编辑器传来的 node_id: text的映射表, 用于保存 */
-export const node_id_text_map$ = new BehaviorSubject(node_id_text_map_default)
-
-// ----
-
-const node_text_from_fs_finder$ = node_use$.pipe(
-    filter((v) => !!v),
-    map((node) => {
-        const booksrc = get_cur_book_src()
-        if (booksrc) {
-            return fs_read('txt', [booksrc, 'chapters', node!.id]) || ''
-        }
-        return ''
-    }),
-)
-
-/** 方便的读取节的文本, 执行即可 */
-export function find_node_text_from_fs_auto() {
-    node_text_from_fs_finder$.pipe(take(1)).subscribe((text) => {
-        node_text_from_fs$.next(text)
-    })
-}
-
 /** 编辑页使用此方法, 加载上一次的编辑, 如果已经有buffer, 则不加载 */
 export function load_prev_buffer() {
     const booksrc = get_cur_book_src()

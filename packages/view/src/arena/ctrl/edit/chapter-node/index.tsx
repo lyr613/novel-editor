@@ -7,7 +7,7 @@ import { map, filter, debounceTime } from 'rxjs/operators'
 import { EditChapter, DeleteChapter, action_cp$, hidd_cp$, show_del_cp$ } from './edit-cp'
 import { EditNode, show_node_edit$, action_nd$ } from './edit-node'
 import { chapter_li$, find_chapter_li_auto, chapter_use$, save_chapter_li } from '@/source/chapter-node'
-import { node_use$, node_text_from_fs$ } from '@/source/node'
+import { node_use$ } from '@/source/node'
 import { fs_write } from '@/source/fs-common'
 import { get_cur_book_src } from '@/source/book'
 import { editing_chapter$ } from '../subj'
@@ -247,7 +247,6 @@ function Node(p: nd) {
                     e.preventDefault()
                     if (node_use$.value?.id === p.nd.id) {
                         node_use$.next(null)
-                        node_text_from_fs$.next('')
                     }
                     const fi = p.cp.children.findIndex((v) => v.id === p.nd.id)
                     if (fi > -1) {

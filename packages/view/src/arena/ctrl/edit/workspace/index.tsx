@@ -15,15 +15,10 @@ import CtrlBar from './ctrl-bar'
 import { search_text$ } from '@/subject/search'
 import { default_editer_option } from '@/plugin/monaco-editer/option'
 import { monaco_option_use$ } from '@/subject/monaco'
-import {
-    node_use$,
-    node_text_from_editer$,
-    node_id_text_map$,
-    find_node_text_from_fs_auto,
-    node_text_from_fs$,
-} from '@/source/node'
+import { node_use$ } from '@/source/node'
 import { get_cur_book_src } from '@/source/book'
 import HeadStack from './head-stack'
+import { node_text_saver$, node_text_from_fs$ } from '@/source/node/txt'
 
 interface p {
     w: number
@@ -71,21 +66,18 @@ function Write() {
 
         editer.onKeyUp(() => {
             const t = editer.getValue()
-            node_text_from_editer$.next(t)
             const node = node_use$.value
             const book_src = get_cur_book_src()
             if (node) {
                 check_words$.next(editer) // 检查敏感词
                 if (book_src) {
                     // 存储保存需要的资料
-                    const m = node_id_text_map$.value
-                    m.set(node.id, {
+                    node_text_saver$.next({
                         book_src: book_src,
                         node_id: node.id,
                         text: t,
                         node_name: node.name,
                     })
-                    node_id_text_map$.next(m)
                 }
             } else {
                 // alert('当前没有选中节, 无法保存编辑内容')
@@ -95,7 +87,6 @@ function Write() {
         // 切换节时
         const ob_change_node = node_use$.subscribe(() => {
             editer.revealLine(0) // 滚动到第一行
-            find_node_text_from_fs_auto() // 更新文本内容
         })
         // 自动大小
         const ob = editer_setting$

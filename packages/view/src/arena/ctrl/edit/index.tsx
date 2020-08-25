@@ -14,7 +14,7 @@ import { find_table_li_auto } from '@/source/table'
 import { editer_setting$ } from '@/subject'
 import { find_npc_li_auto } from '@/source/npc'
 import { find_chapter_li_auto } from '@/source/chapter-node'
-import { load_prev_buffer, node_use$, node_text_from_fs$ } from '@/source/node'
+import { load_prev_buffer, node_use$ } from '@/source/node'
 import { get_cur_book_src } from '@/source/book'
 import { filter, take, debounceTime, switchMap } from 'rxjs/operators'
 import { fs_write } from '@/source/fs-common'
@@ -73,7 +73,6 @@ export default function Edit() {
             ob.unsubscribe()
             node_edit_id_stack$.next([])
             node_use$.next(null)
-            node_text_from_fs$.next('')
             editing_chapter$.next(false)
         }
     }, [])
