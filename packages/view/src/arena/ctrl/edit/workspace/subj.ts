@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { debounceTime, merge } from 'rxjs/operators'
-import { node_use$ } from '@/source/node'
+import { node_use$ } from '@/source/node/base'
 import { chapter_li$ } from '@/source/chapter-node'
 import { push_node_edit_id_stack } from '@/source/node/stack'
 

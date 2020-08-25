@@ -1,5 +1,9 @@
 import { chapter_li$ } from '../chapter-node'
 import { map } from 'rxjs/operators'
+import { BehaviorSubject } from 'rxjs'
+
+/** 聚焦的节 */
+export const node_use$ = new BehaviorSubject<null | node>(null)
 
 /** 节map, id: 节 */
 export const node_map$ = chapter_li$.pipe(

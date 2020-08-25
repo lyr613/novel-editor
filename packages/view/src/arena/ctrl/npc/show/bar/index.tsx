@@ -10,7 +10,7 @@ import { shallowCopy } from '@/rx/shallow-copy'
 import { npc_frequency_find$ } from './subj'
 import { npc_use_id$, edit_npc_auto } from '@/source/npc'
 import { chapter_li$ } from '@/source/chapter-node'
-import { node_use$ } from '@/source/node'
+import { node_use$ } from '@/source/node/base'
 import { push_node_edit_id_stack } from '@/source/node/stack'
 
 /**

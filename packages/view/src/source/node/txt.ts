@@ -1,5 +1,5 @@
 import { BehaviorSubject, Subject } from 'rxjs'
-import { node_use$ } from '../node'
+import { node_use$ } from './base'
 import { switchMap, map, debounceTime } from 'rxjs/operators'
 import { book_use$ } from '../book'
 import { fs_read, fs_write } from '../fs-common'

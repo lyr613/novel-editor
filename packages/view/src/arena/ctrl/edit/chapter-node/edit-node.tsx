@@ -19,7 +19,7 @@ import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
 import { book_use$ } from '@/source/book'
 import { chapter_li$, chapter_use$, node_of, save_chapter_li, find_chapter_li_auto } from '@/source/chapter-node'
-import { node_use$ } from '@/source/node'
+import { node_use$ } from '@/source/node/base'
 import { fs_write } from '@/source/fs-common'
 import { push_node_edit_id_stack } from '@/source/node/stack'
 

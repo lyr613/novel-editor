@@ -3,7 +3,7 @@ import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from '@/style/global'
 import { style as s } from './style'
 import { useObservable } from 'rxjs-hooks'
-import { node_use$ } from '@/source/node'
+import { node_use$ } from '@/source/node/base'
 import { Icon } from 'office-ui-fabric-react'
 import {
     node_edit_stack$,
