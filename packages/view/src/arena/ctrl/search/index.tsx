@@ -14,7 +14,7 @@ import { search_text$ } from '@/subject/search'
 import { global_loading$ } from '@/component/loading/subj'
 import { find_chapter_li_auto, chapter_li$, get_now_node_list } from '@/source/chapter-node'
 import { get_cur_book_src } from '@/source/book'
-import { focu_node_then_edit } from '@/source/node'
+import { use_node_then_edit } from '@/source/node/method'
 
 /** 要搜索的文本 */
 const search_re$ = new BehaviorSubject<p_one[]>([])
@@ -130,7 +130,7 @@ function NodeLine() {
                         title={nd.name}
                         className={[s.node, nd.did_match ? s.nodehigh : ''].join(' ')}
                         onClick={() => {
-                            focu_node_then_edit(nd.id)
+                            use_node_then_edit(nd.id)
                         }}
                     ></div>
                 ))}
@@ -198,7 +198,7 @@ function One(p: p_one) {
                             icon="Edit"
                             add_class={[s.edit]}
                             onClick={() => {
-                                focu_node_then_edit(mch.node.id)
+                                use_node_then_edit(mch.node.id)
                             }}
                         ></IconButton>
                     </div>

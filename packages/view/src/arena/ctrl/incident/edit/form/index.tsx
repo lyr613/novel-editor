@@ -12,7 +12,7 @@ import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { shallowCopy } from '@/rx/shallow-copy'
 import IconButton from '@/component/icon-button'
-import { focu_node_then_edit } from '@/source/node'
+import { use_node_then_edit } from '@/source/node/method'
 import { chapter_li$ } from '@/source/chapter-node'
 
 export default function Form() {
@@ -125,7 +125,7 @@ function Links() {
                 <ThemeLabel
                     onClick={() => {
                         const id = incident.link_line.start_node_id
-                        focu_node_then_edit(id)
+                        use_node_then_edit(id)
                     }}
                     add_class={[s.can_click]}
                 >
@@ -145,7 +145,7 @@ function Links() {
                 <ThemeLabel
                     onClick={() => {
                         const id = incident.link_line.end_node_id
-                        focu_node_then_edit(id)
+                        use_node_then_edit(id)
                     }}
                     add_class={[s.can_click]}
                 >
