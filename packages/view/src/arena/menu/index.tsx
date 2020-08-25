@@ -1,42 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import s from './s.module.scss'
-import { next_router, routers } from '@/function/router'
-import { useObservable } from 'rxjs-hooks'
-import { book_use$ } from '@/source/book'
 import { useLocation } from 'react-router-dom'
-import { editer_setting$ } from '@/subject'
+import { useObservable } from 'rxjs-hooks'
+import { style as s } from './style'
+import { next_router, ROUTERL1, router_l1 } from '@/router'
+import { book_use$ } from '@/source/book'
+import { editer_setting$ } from '@/subject/edit-setting'
+import { css } from 'aphrodite'
+import { global_style as gs, style_creater as sc } from '@/style/global'
 
 export function Menu() {
     const book = useObservable(() => book_use$)
     const editer_set = useObservable(() => editer_setting$)
-
     return (
-        <div className={s.Menu}>
-            <div className={s.switch}></div>
+        <div id="menu" className={css(s.root, sc.wh('60px', '100vh'), gs.overhidd)}>
+            <Item path="shelf">{ROUTERL1.shelf}</Item>
+            <SplitLine />
 
-            <ul className={s.list}>
-                <li
-                    className={s.line}
-                    style={{
-                        marginTop: 0,
-                    }}
-                />
-                <Item path="shelf">{routers.shelf}</Item>
-                {/* <Item path="chapter" disable={!book}>
-					{routers.chapter}
-				</Item> */}
+            <ul className={css(s.box, gs.overhidd)}>
                 <Item path="edit" disable={!book}>
-                    {routers.edit}
+                    {ROUTERL1.edit}
                 </Item>
-                <li className={s.line} />
+
                 <Item path="search" disable={!book}>
                     搜索
                 </Item>
                 <Item path="outline" disable={!book}>
-                    {routers.outline}
+                    {ROUTERL1.outline}
                 </Item>
                 <Item path="incident" disable={!book}>
-                    {routers.incident}
+                    {ROUTERL1.incident}
                 </Item>
                 <Item path="npc" disable={!book}>
                     角色
@@ -55,10 +47,12 @@ export function Menu() {
                 <Item path="statistics" disable={!book}>
                     统计
                 </Item>
-                <li className={s.line} />
+
+                <SplitLine />
+
                 <Item path="option">设置</Item>
                 <Item path="zip">归档</Item>
-                <Item path="help">{routers.help}</Item>
+                <Item path="help">{ROUTERL1.help}</Item>
                 {/* <Item path="setting">设置</Item> */}
             </ul>
         </div>
@@ -68,14 +62,22 @@ export function Menu() {
 interface item {
     children: string
     disable?: boolean
-    path: routers
+    path: router_l1
 }
 function Item(p: item) {
     const { pathname } = useLocation()
     const now_path = pathname.split(/[\\/]/)[1]
+    const cls = css(
+        sc.wh(60, 60),
+        gs.flwc,
+        gs.flhc,
+        sc.fts(16),
+        p.disable ? s.item_disable : s.item_able,
+        now_path === p.path ? undefined : undefined,
+    )
     return (
         <li
-            className={[s.item, p.disable ? s.disable : s.able, now_path === p.path ? s.highlight : ''].join(' ')}
+            className={cls}
             onClick={() => {
                 if (p.disable) {
                     return
@@ -86,4 +88,9 @@ function Item(p: item) {
             {p.children}
         </li>
     )
+}
+
+/** 分割线 */
+function SplitLine() {
+    return <div className={css(s.wline, sc.wh(undefined, 2))}></div>
 }

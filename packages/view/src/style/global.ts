@@ -15,6 +15,8 @@ interface global_style {
     pointer: object
     /** 鼠标悬浮手型并高亮 */
     hoverfocu: object
+    /** overflow */
+    overhidd: object
 }
 
 /** 复用样式 */
@@ -49,6 +51,9 @@ export const global_style: global_style = StyleSheet.create<global_style>({
         ':hover': {
             opacity: 1,
         },
+    },
+    overhidd: {
+        overflow: 'hidden',
     },
 })
 
