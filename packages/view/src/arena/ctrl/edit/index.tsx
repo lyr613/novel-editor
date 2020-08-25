@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import s from './s.module.scss'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import ChapterNode from './chapter-node'
 import Outline from './outline'
 import Workspace from './workspace'

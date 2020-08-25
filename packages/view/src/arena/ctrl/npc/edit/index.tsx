@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import { DefaultButton } from 'office-ui-fabric-react'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import Form from './form'
 import { edit_npc_auto, npc_use_id$, npc_edit$ } from '@/source/npc'
 

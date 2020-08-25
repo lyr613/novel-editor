@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import { TextField } from 'office-ui-fabric-react'
 import IconButton from '@/component/icon-button'
 import { Subject, BehaviorSubject } from 'rxjs'

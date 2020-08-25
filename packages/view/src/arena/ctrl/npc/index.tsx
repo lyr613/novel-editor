@@ -5,7 +5,7 @@ import { Route, useRouteMatch } from 'react-router-dom'
 
 import EditUser from './edit'
 import Show from './show'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import LinkGraph from './link-graph'
 
 /** 角色 */

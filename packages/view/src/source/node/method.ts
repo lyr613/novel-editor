@@ -1,7 +1,7 @@
 import { chapter_li$ } from '../chapter-node'
 import { push_node_edit_id_stack } from './stack'
 import { node_use$ } from './base'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 
 /** 获取当前的节列表 */
 export function get_cur_node_list() {

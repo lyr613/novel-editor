@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import { useObservable } from 'rxjs-hooks'
 import { Icon, Label, ActionButton } from 'office-ui-fabric-react'
 import { chapter_li$, chapter_map$, find_chapter_li_auto } from '@/source/chapter-node'

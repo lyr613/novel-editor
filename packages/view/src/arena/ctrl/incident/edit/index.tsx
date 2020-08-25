@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { DefaultButton } from 'office-ui-fabric-react'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import Form from './form'
 import { edit_incident_auto, incident_use_id$, incident_edit$ } from '@/source/incident'
 

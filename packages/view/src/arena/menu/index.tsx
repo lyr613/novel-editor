@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useObservable } from 'rxjs-hooks'
 import { style as s } from './style'
-import { next_router, ROUTERL1, router_l1 } from '@/router'
+import { ROUTERL1, router_l1 } from '@/router'
 import { book_use$ } from '@/source/book'
 import { editer_setting$ } from '@/subject/edit-setting'
 import { css } from 'aphrodite'
 import { global_style as gs, style_creater as sc } from '@/style/global'
+import { next_router } from '@/router/router'
 
 export function Menu() {
     const book = useObservable(() => book_use$)
@@ -73,7 +74,7 @@ function Item(p: item) {
         gs.flhc,
         sc.fts(16),
         p.disable ? s.item_disable : s.item_able,
-        now_path === p.path ? undefined : undefined,
+        now_path === p.path ? s.item_use : undefined,
     )
     return (
         <li

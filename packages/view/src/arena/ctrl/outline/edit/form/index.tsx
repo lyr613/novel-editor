@@ -5,7 +5,7 @@ import { TextField, DefaultButton, PrimaryButton, ActionButton, Label } from 'of
 import { useObservable } from 'rxjs-hooks'
 import { outline_focu$, outline_map$ } from '@/source/outline'
 import { map, take, filter } from 'rxjs/operators'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import IncidentSelect from '@/component/incident'
 import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'

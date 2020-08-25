@@ -3,7 +3,7 @@ import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from '@/style/global'
 import { style as s } from './style'
 import { get_cur_book_src } from '@/source/book'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import echarts from 'echarts'
 
 /** 统计 */

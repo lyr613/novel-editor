@@ -1,5 +1,4 @@
 import { StyleSheet } from 'aphrodite'
-import { STYLECOLOR } from '@/style/enum'
 
 interface style {
     /** 组件顶层 */
@@ -18,9 +17,9 @@ interface style {
 export const style: style = StyleSheet.create<style>({
     root: {
         flexShrink: 0,
-        backgroundColor: STYLECOLOR.l5,
         color: 'white',
         fontSize: 0,
+        backgroundColor: 'var(--CLRl5)',
     },
     box: {
         height: 'calc(100vh - 60px)',
@@ -34,17 +33,17 @@ export const style: style = StyleSheet.create<style>({
     },
     item: {},
     item_able: {
-        color: STYLECOLOR.t1,
+        color: 'var(--CLRt1)',
         transition: 'all 0.3s linear',
         cursor: 'pointer',
         ':hover': {
-            backgroundColor: STYLECOLOR.l3,
+            backgroundColor: 'var(--CLRl3)',
         },
     },
     item_disable: {
-        color: STYLECOLOR.t3,
+        color: 'gray',
     },
     item_use: {
-        backgroundColor: STYLECOLOR.l3,
+        backgroundColor: 'var(--CLRl3)',
     },
 })

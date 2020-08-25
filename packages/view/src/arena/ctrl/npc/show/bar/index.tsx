@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
 import ThemeButton from '@/component/theme-button'

@@ -9,7 +9,7 @@ import { TextField, Icon, DefaultButton } from 'office-ui-fabric-react'
 import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const/electron-help'
 import ThemeLabel from '@/component/theme-label'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import { editer_setting$ } from '@/subject/edit-setting'
 
 /** List */

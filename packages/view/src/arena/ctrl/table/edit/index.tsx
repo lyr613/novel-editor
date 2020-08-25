@@ -29,7 +29,7 @@ import {
     save_table_li,
 } from '@/source/table'
 import { search_text$ } from '@/subject/search'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 
 interface cell {
     id: string

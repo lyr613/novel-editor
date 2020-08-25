@@ -14,7 +14,7 @@ import Table from './table'
 import Search from './search'
 import Mapp from './map'
 import Git from './git'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import { load_monaco } from '@/plugin/monaco-editer'
 import Statistics from './statistics'
 

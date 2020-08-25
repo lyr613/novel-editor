@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { Icon, ActionButton, TextField } from 'office-ui-fabric-react'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import { incident_use$, incident_li$, incident_use_id$, find_incident_li_auto } from '@/source/incident'
 import { useObservable } from 'rxjs-hooks'
 import { incident_list_filted$, filter$ } from './subj'

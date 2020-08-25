@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
-import { next_router } from '@/function/router'
+import { next_router } from '@/router/router'
 import Show from './show'
 import Edit from './edit'
 import { get_cur_book_src } from '@/source/book'
