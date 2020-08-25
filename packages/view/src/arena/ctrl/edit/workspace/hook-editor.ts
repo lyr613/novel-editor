@@ -140,8 +140,8 @@ function on_mouse_down(editor: monaco.editor.IStandaloneCodeEditor, event: monac
         if (!npc_f) {
             return
         }
-        next_router('npc', 'edit')
         npc_use_id$.next(npc_f.id)
+        next_router('npc', 'edit')
         return
     }
 }
