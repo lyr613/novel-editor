@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
+import { map, switchMap, take } from 'rxjs/operators'
 import { node_map$ } from './base'
 
 /** 编辑页最近的节导航 id */
@@ -25,4 +25,11 @@ export function remove_node_edit_id_stack(ids: string[]) {
     const old = node_edit_id_stack$.value
     const news = old.filter((v) => !ids.includes(v))
     node_edit_id_stack$.next(news)
+}
+
+/** 获取当前节导航列表的节 */
+export function get_cur_node_stack() {
+    let re: node[] = []
+    node_edit_stack$.pipe(take(1)).subscribe((li) => (re = li))
+    return re
 }

@@ -1,7 +1,8 @@
 import { BehaviorSubject, Subject } from 'rxjs'
 import { debounceTime, merge } from 'rxjs/operators'
-import { node_use$, node_buffer_add_by_id } from '@/source/node'
+import { node_use$ } from '@/source/node'
 import { chapter_li$ } from '@/source/chapter-node'
+import { push_node_edit_id_stack } from '@/source/node/stack'
 
 /** 进入禅模式 */
 export const zen$ = new BehaviorSubject(false)
@@ -64,6 +65,6 @@ etprev$.pipe(merge(etnext$), debounceTime(300)).subscribe(() => {
     if (!node) {
         return
     }
-    node_buffer_add_by_id(node.id)
+    push_node_edit_id_stack([node.id])
 })
 // ----

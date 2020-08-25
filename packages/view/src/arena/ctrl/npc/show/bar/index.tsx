@@ -10,7 +10,8 @@ import { shallowCopy } from '@/rx/shallow-copy'
 import { npc_frequency_find$ } from './subj'
 import { npc_use_id$, edit_npc_auto } from '@/source/npc'
 import { chapter_li$ } from '@/source/chapter-node'
-import { node_use$, node_use_buffer$ } from '@/source/node'
+import { node_use$ } from '@/source/node'
+import { push_node_edit_id_stack } from '@/source/node/stack'
 
 /**
  * 控制栏
@@ -45,11 +46,7 @@ function TimeLine() {
                                         // 如果查到章节, 跳到编辑页
                                         if (node.id === appear.node_id) {
                                             node_use$.next(node)
-                                            const new_buffer = [...node_use_buffer$.value]
-                                            if (!new_buffer.find((v) => v.id === appear.node_id)) {
-                                                new_buffer.push(node)
-                                            }
-                                            node_use_buffer$.next(new_buffer)
+                                            push_node_edit_id_stack([node.id])
                                             next_router('edit')
                                             break
                                         }

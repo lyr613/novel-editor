@@ -19,8 +19,9 @@ import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
 import { book_use$ } from '@/source/book'
 import { chapter_li$, chapter_use$, node_of, save_chapter_li, find_chapter_li_auto } from '@/source/chapter-node'
-import { node_use$, node_buffer_add_by_id } from '@/source/node'
+import { node_use$ } from '@/source/node'
 import { fs_write } from '@/source/fs-common'
+import { push_node_edit_id_stack } from '@/source/node/stack'
 
 // 编辑和删除节的弹窗
 
@@ -189,7 +190,7 @@ export function EditNode() {
                         find_chapter_li_auto()
                         show_node_edit$.next(false)
                         node_use$.next(the_node)
-                        node_buffer_add_by_id(the_node.id)
+                        push_node_edit_id_stack([the_node.id])
                     }}
                 >
                     好

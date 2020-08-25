@@ -14,12 +14,13 @@ import { find_table_li_auto } from '@/source/table'
 import { editer_setting$ } from '@/subject'
 import { find_npc_li_auto } from '@/source/npc'
 import { find_chapter_li_auto } from '@/source/chapter-node'
-import { node_use_buffer$, load_prev_buffer, node_use$, node_text_from_fs$ } from '@/source/node'
+import { load_prev_buffer, node_use$, node_text_from_fs$ } from '@/source/node'
 import { get_cur_book_src } from '@/source/book'
 import { filter, take, debounceTime, switchMap } from 'rxjs/operators'
 import { fs_write } from '@/source/fs-common'
 import SetChapterNode from './set-chapter-node'
 import { editing_chapter$ } from './subj'
+import { node_edit_id_stack$ } from '@/source/node/stack'
 
 /** 编辑文本页 */
 export default function Edit() {
@@ -56,12 +57,11 @@ export default function Edit() {
     useEffect(() => {
         const ob = node_use$
             .pipe(
-                switchMap(() => node_use_buffer$),
+                switchMap(() => node_edit_id_stack$),
                 debounceTime(1000),
             )
-            .subscribe((li) => {
+            .subscribe((ids) => {
                 const bs = get_cur_book_src()
-                const ids = li.map((v) => v.id)
                 const use_id = node_use$.value?.id ?? ''
                 const dto = {
                     ids,
@@ -71,7 +71,7 @@ export default function Edit() {
             })
         return () => {
             ob.unsubscribe()
-            node_use_buffer$.next([])
+            node_edit_id_stack$.next([])
             node_use$.next(null)
             node_text_from_fs$.next('')
             editing_chapter$.next(false)

@@ -5,48 +5,10 @@ import { book_use$, get_cur_book_src } from './book'
 import { fs_write, fs_read } from './fs-common'
 import { get_now_node_list } from './chapter-node'
 import { next_router } from '@/function/router'
+import { push_node_edit_id_stack } from './node/stack'
 
 /** 聚焦的节 */
 export const node_use$ = new BehaviorSubject<null | node>(null)
-
-/** 编辑页顶部的节标签 */
-export const node_use_buffer$ = new BehaviorSubject<node[]>([])
-
-/** 根据id向编辑页buffer添加一个 */
-export function node_buffer_add_by_id(id: string, node_list?: node[]) {
-    const arr = node_list || get_now_node_list()
-    const fi = arr.find((v) => v.id === id)
-    if (!fi) {
-        return
-    }
-    const buffer = node_use_buffer$.value
-    if (!buffer.find((v) => v.id === id)) {
-        const arr = [...buffer, fi].slice(-8)
-        node_use_buffer$.next(arr)
-    }
-}
-/** 根据id列表向编辑页buffer添加多个 */
-export function node_buffer_add_by_ids(ids: string[], node_list?: node[]) {
-    const arr = node_list || get_now_node_list()
-    const nmap = new Map<string, boolean>()
-    ids.forEach((id) => {
-        nmap.set(id, true)
-    })
-    const fis = arr.filter((v) => nmap.get(v.id))
-    if (!fis.length) {
-        return
-    }
-    const next_buffer = [...node_use_buffer$.value]
-    fis.forEach((node) => {
-        if (!next_buffer.find((v) => v.id === node.id)) {
-            next_buffer.push(node)
-            if (next_buffer.length > 8) {
-                next_buffer.shift()
-            }
-        }
-    })
-    node_use_buffer$.next(next_buffer)
-}
 
 /** 选中一个节, 并跳到编辑页开始编辑 */
 export function focu_node_then_edit(id: string) {
@@ -54,7 +16,7 @@ export function focu_node_then_edit(id: string) {
     const fi = nodes.find((v) => v.id === id)
 
     if (fi) {
-        node_buffer_add_by_id(id, nodes)
+        push_node_edit_id_stack([id])
         node_use$.next(fi)
         next_router('edit')
     }
@@ -110,8 +72,7 @@ export function load_prev_buffer() {
     if (!dto) {
         return
     }
-
-    node_buffer_add_by_ids(dto.ids)
+    push_node_edit_id_stack(dto.ids)
 
     const nodeall = get_now_node_list()
     const fiuse = nodeall.find((v) => v.id === dto.use_id)

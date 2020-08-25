@@ -2,7 +2,7 @@
 
 import { book_use$, get_cur_book_src } from './book'
 import { debounceTime, switchMap } from 'rxjs/operators'
-import { node_use_buffer$, node_text_from_fs$, node_use$, node_id_text_map$ } from './node'
+import { node_id_text_map$ } from './node'
 import { fs_write } from './fs-common'
 
 export function auto_link_observable() {

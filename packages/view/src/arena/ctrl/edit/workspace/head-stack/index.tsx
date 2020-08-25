@@ -3,12 +3,18 @@ import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from '@/style/global'
 import { style as s } from './style'
 import { useObservable } from 'rxjs-hooks'
-import { node_use_buffer$, node_use$ } from '@/source/node'
+import { node_use$ } from '@/source/node'
 import { Icon } from 'office-ui-fabric-react'
+import {
+    node_edit_stack$,
+    node_edit_id_stack$,
+    remove_node_edit_id_stack,
+    get_cur_node_stack,
+} from '@/source/node/stack'
 
 /** HeadStack */
 export default function HeadStack() {
-    const li = useObservable(() => node_use_buffer$, [])
+    const li = useObservable(() => node_edit_stack$, [])
     const use = useObservable(() => node_use$)
 
     return (
@@ -35,10 +41,11 @@ export default function HeadStack() {
                         iconName="Cancel"
                         onDoubleClick={(e) => {
                             e.stopPropagation()
-                            const i = node_use_buffer$.value.findIndex((v) => v.id === one.id)
-                            const arr = node_use_buffer$.value.filter((v) => v.id !== one.id)
-                            node_use_buffer$.next(arr)
-                            if (one.id === use?.id) {
+                            const it_id = one.id
+                            const i = node_edit_id_stack$.value.findIndex((v) => v === it_id)
+                            remove_node_edit_id_stack([it_id])
+                            if (it_id === use?.id) {
+                                const arr = get_cur_node_stack()
                                 const ni = Math.max(0, i - 1)
                                 node_use$.next(arr[ni] || null)
                             }
