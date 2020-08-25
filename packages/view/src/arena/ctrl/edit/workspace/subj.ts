@@ -1,8 +1,11 @@
 import { BehaviorSubject, Subject } from 'rxjs'
-import { debounceTime, merge } from 'rxjs/operators'
+import { debounceTime, merge, switchMap, map } from 'rxjs/operators'
 import { node_use$ } from '@/source/node/base'
 import { chapter_li$ } from '@/source/chapter-node'
 import { push_node_edit_id_stack } from '@/source/node/stack'
+import { editer_setting$ } from '@/subject'
+import { Screen$ } from '@/subscribe'
+import { editor } from 'monaco-editor'
 
 /** 进入禅模式 */
 export const zen$ = new BehaviorSubject(false)
@@ -68,3 +71,22 @@ etprev$.pipe(merge(etnext$), debounceTime(300)).subscribe(() => {
     push_node_edit_id_stack([node.id])
 })
 // ----
+
+export const size$ = zen$.pipe(
+    debounceTime(200),
+    switchMap((zen) =>
+        Screen$.pipe(
+            debounceTime(200),
+            switchMap(() =>
+                editer_setting$.pipe(
+                    map((eset) => {
+                        return {
+                            eset,
+                            zen,
+                        }
+                    }),
+                ),
+            ),
+        ),
+    ),
+)
