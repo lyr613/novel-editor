@@ -83,7 +83,7 @@ function AddOne() {
                 <TextField
                     value={word}
                     onChange={(_, ns) => {
-                        const nss = (ns || '').trimStart()
+                        const nss = ns || ''
                         set_word(nss)
                     }}
                 ></TextField>
@@ -117,7 +117,7 @@ function AddOne() {
 }
 
 function _add_words(ws: string) {
-    const words = ws.split(/\s+/)
+    const words = ws.split(/\s+/).filter(Boolean)
     const opt = editer_setting$.value
     const arr = opt.sensitive ?? []
     opt.sensitive = arr
