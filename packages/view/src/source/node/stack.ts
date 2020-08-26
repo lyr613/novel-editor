@@ -17,7 +17,7 @@ export function push_node_edit_id_stack(ids: string[]) {
     ids.forEach((id) => {
         mids.add(id)
     })
-    const news = Array.from(mids)
+    const news = Array.from(mids).slice(-10)
     node_edit_id_stack$.next(news)
 }
 /** 向编辑页最近的节导航删除一些id */
