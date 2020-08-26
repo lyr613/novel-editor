@@ -1,6 +1,7 @@
 import 'electron'
 import './book'
 import './settting'
+import './monaco'
 
 declare global {
     type int = number
@@ -10,6 +11,7 @@ declare global {
     }
     interface Window {
         electron: Electron.CommonInterface
+        monaco: monaco
     }
     type book = Book.book
     type chapter = Book.chapter
@@ -19,3 +21,5 @@ declare global {
     type outline = Setting.outline
     type setting = Setting.setting
 }
+
+interface monaco extends monamo {}

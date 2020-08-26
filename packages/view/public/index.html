@@ -22,6 +22,7 @@
     -->
         <title>小说编辑器</title>
         <script src="./dll.js"></script>
+        <link rel="stylesheet" href="./monaco/editor/editor.main.css" />
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -36,4 +37,16 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     --></body>
+    <script src="./vs/loader.js"></script>
+    <script>
+        require.config({
+            path: {
+                vs: './vs',
+            },
+        })
+
+        require(['vs/editor/editor.main'], function() {
+            window.set_did_monaco_load()
+        })
+    </script>
 </html>

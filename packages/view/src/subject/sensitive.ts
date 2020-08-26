@@ -1,7 +1,6 @@
 import { BehaviorSubject, from, Subject, of } from 'rxjs'
 import { switchMap, map, throttleTime, debounceTime, tap } from 'rxjs/operators'
 import { editer_setting$ } from './edit-setting'
-import * as monaco from 'monaco-editor'
 
 /** 是否检查敏感词 */
 export const sensitive_can_check$ = new BehaviorSubject(true)

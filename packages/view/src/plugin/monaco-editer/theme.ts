@@ -1,4 +1,3 @@
-import * as monaco from 'monaco-editor'
 import { theme_colors } from '@/subject/theme'
 
 export function set_theme() {

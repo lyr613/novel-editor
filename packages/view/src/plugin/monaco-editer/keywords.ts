@@ -1,4 +1,3 @@
-import * as monaco from 'monaco-editor'
 import { npc_li$ } from '@/source/npc'
 import { merge, take } from 'rxjs/operators'
 import { sensitive_check_list$ } from '@/subject/sensitive'
@@ -6,6 +5,7 @@ import { table_system_li$ } from '@/source/table'
 
 /** 设置关键字 */
 export function auto_keyword() {
+    const monaco = window.monaco
     npc_li$.pipe(merge(table_system_li$), merge(sensitive_check_list$)).subscribe(() => {
         const root: any[] = [
             // [npc_reg, 'npc'],

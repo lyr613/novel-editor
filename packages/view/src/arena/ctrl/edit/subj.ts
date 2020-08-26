@@ -1,5 +1,4 @@
 import { BehaviorSubject } from 'rxjs'
-import * as monaco from 'monaco-editor'
 import { get_cur_book_src } from '@/source/book'
 import { fs_read } from '@/source/fs-common'
 import { push_node_edit_id_stack } from '@/source/node/stack'

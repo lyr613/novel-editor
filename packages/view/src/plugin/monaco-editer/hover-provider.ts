@@ -1,8 +1,9 @@
-import * as monaco from 'monaco-editor'
 import { npc_li$ } from '@/source/npc'
 import { table_system_li$ } from '@/source/table'
+
 /** 悬浮提示 */
 export function hover_provider() {
+    const monaco = window.monaco
     monaco.languages.registerHoverProvider('book', {
         provideHover: (model, pos, token) => {
             const npcs = npc_li$.value || []

@@ -15,12 +15,15 @@ import Search from './search'
 import Mapp from './map'
 import Git from './git'
 import { next_router } from '@/router/router'
-import { load_monaco } from '@/plugin/monaco-editer'
+import { load_monaco, did_monaco_load$ } from '@/plugin/monaco-editer'
 import Statistics from './statistics'
+import { take, filter } from 'rxjs/operators'
 
 export default function MainCtrl() {
     useEffect(() => {
-        load_monaco()
+        did_monaco_load$.pipe(filter(Boolean), take(1)).subscribe(() => {
+            load_monaco()
+        })
     }, [])
     return (
         <div className={s.Stage}>

@@ -1,4 +1,3 @@
-import * as monaco from 'monaco-editor'
 import { npc_li$ } from '@/source/npc'
 import { table_system_li$ } from '@/source/table'
 

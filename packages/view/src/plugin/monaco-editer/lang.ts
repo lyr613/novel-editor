@@ -1,5 +1,3 @@
-import * as monaco from 'monaco-editor'
-
 // 这个文件没用了
 
 /* eslint-disable no-useless-escape */

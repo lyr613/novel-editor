@@ -3,7 +3,6 @@ import { default_editer_option } from '@/plugin/monaco-editer/option'
 import { switchMap, map } from 'rxjs/operators'
 import { editer_setting$ } from './edit-setting'
 import { shallowCopy } from '@/rx/shallow-copy'
-import * as monaco from 'monaco-editor'
 
 // 一般来说, 更新此配置需要monaco调用render重新渲染
 

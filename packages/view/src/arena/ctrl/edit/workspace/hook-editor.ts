@@ -1,5 +1,4 @@
 import { default_editer_option } from '@/plugin/monaco-editer/option'
-import * as monaco from 'monaco-editor'
 import { node_use$ } from '@/source/node/base'
 import { get_cur_book_src } from '@/source/book'
 import { node_text_saver$, node_text_from_fs$ } from '@/source/node/txt'

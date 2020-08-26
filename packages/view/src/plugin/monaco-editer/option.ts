@@ -1,5 +1,3 @@
-import * as monaco from 'monaco-editor'
-
 export function default_editer_option(): monaco.editor.IStandaloneEditorConstructionOptions {
     const opt: monaco.editor.IStandaloneEditorConstructionOptions = {
         value: '',
