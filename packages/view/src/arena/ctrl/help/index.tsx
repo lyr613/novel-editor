@@ -1,8 +1,9 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
-import s from './s.module.scss'
-import SectionHeader from '@/component/section-header'
 import { help_li, help_use$ } from './subj'
+import { style as s } from './style'
+import { global_style as gs, style_creater as sc } from '@/style/global'
+import { css } from 'aphrodite/no-important'
 import ThemeLabel from '@/component/theme-label'
 import { useObservable } from 'rxjs-hooks'
 import Father from './about/father'
@@ -11,14 +12,16 @@ import Hotkey from './action/hotkey'
 import Incident from './incident'
 import Table from './table'
 import Git from './git'
+import Becareful from './about/becareful'
 
 /** 帮助 */
 export default function Help() {
     const use = useObservable(() => help_use$)
 
     return (
-        <div className={s.Help}>
+        <div>
             <Nav />
+            {use === help_li[0] && <Becareful />}
             {use === help_li[0] && <Father />}
             {use === help_li[0] && <Next />}
             {use === help_li[1] && <Hotkey />}
@@ -37,11 +40,11 @@ function Nav() {
         }
     }, [])
     return (
-        <div className={s.Nav}>
+        <div className={css(s.nav, gs.flhc, sc.wh('100%', 40), sc.bgclrl(7))}>
             {help_li.map((v) => (
                 <ThemeLabel
                     key={v}
-                    add_class={[s.item, use === v ? s.use : '']}
+                    add_class={[css(s.nav_item, sc.padd(5, 10), use === v ? s.nav_item_use : undefined)]}
                     onClick={() => {
                         help_use$.next(v)
                     }}
