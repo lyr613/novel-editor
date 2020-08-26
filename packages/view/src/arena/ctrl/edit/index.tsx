@@ -6,7 +6,7 @@ import ChapterNode from './chapter-node'
 import Outline from './outline'
 import Workspace from './workspace'
 import Shard from './shard'
-import { Screen$ } from '@/subscribe'
+import { screen_wh$ } from '@/subscribe/screen'
 import DragLine from '@/component/drag-line'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -35,7 +35,7 @@ export default function Edit() {
             return
         }
 
-        const ob = Screen$.pipe().subscribe(() => {
+        const ob = screen_wh$.pipe().subscribe(() => {
             set_w(dom.clientWidth)
             set_h(dom.clientHeight)
         })

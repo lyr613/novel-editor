@@ -12,7 +12,7 @@ interface key {
     shift: boolean
 }
 /** 监听键盘按键 */
-export const key$: Observable<key> = fromEvent(window, 'keydown').pipe(
+export const key_down$: Observable<key> = fromEvent(window, 'keydown').pipe(
     map((ee) => {
         const e = ee as KeyboardEvent
         // 不可阻止, 无法打英文了

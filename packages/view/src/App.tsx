@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { key$, hand_hot_key } from './subscribe'
+import { key_down$, hand_hot_key } from './subscribe/hot-key'
 import { HashRouter } from 'react-router-dom'
 import { useObservable } from 'rxjs-hooks'
 import { editer_setting$ } from './subject'
@@ -17,7 +17,7 @@ const App: React.FC = () => {
     const theme = eset?.common.theme ?? 'word'
     // 热键
     useEffect(() => {
-        const ob = key$.subscribe(hand_hot_key)
+        const ob = key_down$.subscribe(hand_hot_key)
         return () => ob.unsubscribe()
     }, [])
     // 加载编辑器设置

@@ -4,7 +4,7 @@ import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
 import { date_decode, format_date } from '@/util'
 import { fromEvent } from 'rxjs'
-import { Screen$ } from '@/subscribe'
+import { screen_wh$ } from '@/subscribe/screen'
 import { Icon } from 'office-ui-fabric-react'
 import { next_router } from '@/router/router'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -25,7 +25,7 @@ export default function List() {
             return
         }
         // 计算一个npc的宽度
-        const ob_w = Screen$.subscribe(() => {
+        const ob_w = screen_wh$.subscribe(() => {
             const W = dom.clientWidth - 10
             let w = W
             let i = 1

@@ -4,7 +4,7 @@ import { node_use$ } from '@/source/node/base'
 import { chapter_li$ } from '@/source/chapter-node'
 import { push_node_edit_id_stack } from '@/source/node/stack'
 import { editer_setting$ } from '@/subject'
-import { Screen$ } from '@/subscribe'
+import { screen_wh$ } from '@/subscribe/screen'
 import { editor } from 'monaco-editor'
 
 /** 进入禅模式 */
@@ -75,8 +75,7 @@ etprev$.pipe(merge(etnext$), debounceTime(300)).subscribe(() => {
 export const size$ = zen$.pipe(
     debounceTime(200),
     switchMap((zen) =>
-        Screen$.pipe(
-            debounceTime(200),
+        screen_wh$.pipe(
             switchMap(() =>
                 editer_setting$.pipe(
                     map((eset) => {

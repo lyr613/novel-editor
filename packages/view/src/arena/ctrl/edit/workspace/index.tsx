@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
-import { key$ } from '@/subscribe'
+import { key_down$ } from '@/subscribe/hot-key'
 import { editer_setting$ } from '@/subject'
 import { zen$, etbottom$, ettop$, etnext$, etprev$, size$ } from './subj'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -68,7 +68,7 @@ function Write() {
 
     useEffect(() => {
         // 快捷键, 滚动
-        const ob_key = key$.subscribe((k) => {
+        const ob_key = key_down$.subscribe((k) => {
             if (!(k.alt && !k.ctrl && !k.shift)) {
                 return
             }
