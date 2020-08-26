@@ -15,6 +15,7 @@ import { global_loading$ } from '@/component/loading/subj'
 import { find_chapter_li_auto, chapter_li$, get_now_node_list } from '@/source/chapter-node'
 import { get_cur_book_src } from '@/source/book'
 import { use_node_then_edit } from '@/source/node/method'
+import { search_2_edit$ } from '@/subject/go-to'
 
 /** 要搜索的文本 */
 const search_re$ = new BehaviorSubject<p_one[]>([])
@@ -198,6 +199,7 @@ function One(p: p_one) {
                             icon="Edit"
                             add_class={[s.edit]}
                             onClick={() => {
+                                search_2_edit$.next(true)
                                 use_node_then_edit(mch.node.id)
                             }}
                         ></IconButton>

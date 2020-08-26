@@ -9,3 +9,6 @@ import { BehaviorSubject } from 'rxjs'
 
 /** 通过ctrl点击人物跳到npc的编辑页 */
 export const edit_2_npc$ = new BehaviorSubject(false)
+
+/** 搜索页快速跳到编辑页 */
+export const search_2_edit$ = new BehaviorSubject(false)

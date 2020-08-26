@@ -4,7 +4,7 @@ import { node_use$ } from '@/source/node/base'
 import { get_cur_book_src } from '@/source/book'
 import { node_text_saver$, node_text_from_fs$ } from '@/source/node/txt'
 import { editer_setting$ } from '@/subject'
-import { debounceTime, filter } from 'rxjs/operators'
+import { debounceTime, filter, take, tap, switchMap } from 'rxjs/operators'
 import { zen$, size$, etbottom$, ettop$ } from './subj'
 import { monaco_option_use$, monaco_position$ } from '@/subject/monaco'
 import { useEffect } from 'react'
@@ -12,7 +12,8 @@ import { sensitive_editor_resover$, sensitive_can_check$ } from '@/subject/sensi
 import { mk_npc_reg } from '@/source/npc/method'
 import { npc_li$, npc_use_id$ } from '@/source/npc'
 import { next_router } from '@/router/router'
-import { edit_2_npc$ } from '@/subject/go-to'
+import { edit_2_npc$, search_2_edit$ } from '@/subject/go-to'
+import { search_text$ } from '@/subject/search'
 
 export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
     useEffect(() => {
@@ -22,6 +23,7 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
         }
         const options = default_editer_option()
         const editor = monaco.editor.create(dom, options)
+        editor.focus()
 
         editor.onKeyUp((e) => {
             on_key_up(editor, e)
@@ -76,6 +78,9 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
         })
         // 从别处传来的位置
         const ob_pos = monaco_position$.subscribe((pos) => {
+            const range = new monaco.Range(pos.lineNumber, pos.column, pos.lineNumber, pos.column)
+            editor.setSelection(range)
+            editor.focus()
             editor.setPosition(pos)
             editor.revealPositionInCenter(pos, 0)
         })
@@ -83,6 +88,34 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
         const ob_check = sensitive_can_check$.pipe(filter(Boolean), debounceTime(500)).subscribe(() => {
             sensitive_editor_resover$.next(editor)
         })
+        // 从搜索页跳转来的, 自动搜索
+        const ob_search = search_2_edit$
+            .pipe(
+                take(1),
+                filter(Boolean),
+                tap(() => {
+                    search_2_edit$.next(false)
+                }),
+                switchMap(() => search_text$),
+                debounceTime(200),
+                take(1),
+            )
+            .subscribe((txt) => {
+                const m = editor.getModel()
+                if (!m) {
+                    return
+                }
+
+                const fs = m.findMatches(txt, false, false, true, null, true)
+                if (fs.length) {
+                    const f = fs[0]
+                    const range = f.range
+                    const p = range.getStartPosition()
+                    editor.setSelection(range)
+                    editor.setPosition(p)
+                    editor.revealPosition(p)
+                }
+            })
         return () => {
             editor.dispose()
             ob_txt.unsubscribe()
@@ -94,6 +127,7 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
             ob_opt.unsubscribe()
             ob_pos.unsubscribe()
             ob_check.unsubscribe()
+            ob_search.unsubscribe()
         }
     }, [ref])
 }
@@ -143,9 +177,6 @@ function on_mouse_down(editor: monaco.editor.IStandaloneCodeEditor, event: monac
         }
         npc_use_id$.next(npc_f.id)
         edit_2_npc$.next(true)
-        setTimeout(() => {
-            edit_2_npc$.next(false)
-        }, 1500)
         next_router('npc', 'edit')
         return
     }

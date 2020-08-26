@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { css } from 'aphrodite/no-important'
-import { global_style as gs, style_creater as sc } from '@/style/global'
 import { style as s } from './style'
 import { DefaultButton } from 'office-ui-fabric-react'
 import { next_router } from '@/router/router'
 import { edit_2_npc$ } from '@/subject/go-to'
-import { take } from 'rxjs/operators'
+import { take, tap } from 'rxjs/operators'
 import { useObservable } from 'rxjs-hooks'
 
 /** Back */
 export default function Back() {
-    const from_edit = useObservable(() => edit_2_npc$.pipe(take(1)))
+    const from_edit = useObservable(() =>
+        edit_2_npc$.pipe(
+            take(1),
+            tap(() => {
+                edit_2_npc$.next(false)
+            }),
+        ),
+    )
     return (
         <div className={css(s.root)}>
             <DefaultButton
