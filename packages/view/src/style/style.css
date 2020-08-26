@@ -1,4 +1,5 @@
 .theme-word {
+    --CLRsc: #00205038;
     --CLRl1: #002050;
     --CLRl2: #124078;
     --CLRl3: #2b579a;
@@ -12,6 +13,7 @@
 }
 
 .theme-excel {
+    --CLRsc: #004b1c33;
     --CLRl1: #004b1c;
     --CLRl2: #0e5c2f;
     --CLRl3: #217346;
@@ -24,6 +26,7 @@
     --CLRt2: black;
 }
 .theme-ppt {
+    --CLRsc: #74091233;
     --CLRl1: #740912;
     --CLRl2: #a92b1a;
     --CLRl3: #b7472a;
@@ -36,6 +39,7 @@
     --CLRt2: black;
 }
 .theme-onenote {
+    --CLRsc: #4c0f6c33;
     --CLRl1: #4c0f6c;
     --CLRl2: #5c1384;
     --CLRl3: #7719aa;
@@ -48,6 +52,7 @@
     --CLRt2: black;
 }
 .theme-gray {
+    --CLRsc: #201f1e33;
     --CLRl1: #201f1e;
     --CLRl2: #252423;
     --CLRl3: #323130;
@@ -61,6 +66,7 @@
 }
 
 .theme-dark {
+    --CLRsc: #edebe933;
     --CLRl1: #edebe9;
     --CLRl2: #c8c6c4;
     --CLRl3: #a19f9d;

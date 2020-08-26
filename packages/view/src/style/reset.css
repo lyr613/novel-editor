@@ -39,7 +39,5 @@ h2 {
 }
 ::-webkit-scrollbar-thumb {
     /* border-radius: 0.3vw; */
-    background-color: rgb(255, 255, 255);
-    background-color: rgb(148, 148, 148);
-    background-color: var(--CLRl1);
+    background-color: var(--CLRsc);
 }
