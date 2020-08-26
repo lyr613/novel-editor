@@ -39,7 +39,7 @@ export default function HeadStack() {
                     <Icon
                         className={css(sc.wh(18), sc.padd(0, 0, 0, 5), sc.fts(use?.id === one.id ? 12 : 'inherit'))}
                         iconName="Cancel"
-                        onDoubleClick={(e) => {
+                        onClick={(e) => {
                             e.stopPropagation()
                             const it_id = one.id
                             const i = node_edit_id_stack$.value.findIndex((v) => v === it_id)
