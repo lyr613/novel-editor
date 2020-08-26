@@ -12,6 +12,7 @@ import { sensitive_editor_resover$, sensitive_can_check$ } from '@/subject/sensi
 import { mk_npc_reg } from '@/source/npc/method'
 import { npc_li$, npc_use_id$ } from '@/source/npc'
 import { next_router } from '@/router/router'
+import { edit_2_npc$ } from '@/subject/go-to'
 
 export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
     useEffect(() => {
@@ -141,6 +142,10 @@ function on_mouse_down(editor: monaco.editor.IStandaloneCodeEditor, event: monac
             return
         }
         npc_use_id$.next(npc_f.id)
+        edit_2_npc$.next(true)
+        setTimeout(() => {
+            edit_2_npc$.next(false)
+        }, 1500)
         next_router('npc', 'edit')
         return
     }

@@ -4,6 +4,7 @@ import { DefaultButton } from 'office-ui-fabric-react'
 import { next_router } from '@/router/router'
 import Form from './form'
 import { edit_npc_auto, npc_use_id$, npc_edit$ } from '@/source/npc'
+import Back from './back'
 
 /**
  * 编辑页
@@ -20,22 +21,5 @@ export default function EditUser() {
             <Back />
             <Form></Form>
         </>
-    )
-}
-
-function Back() {
-    return (
-        <DefaultButton
-            onClick={() => {
-                next_router('npc')
-            }}
-            styles={{
-                root: {
-                    margin: '10px ',
-                },
-            }}
-        >
-            返回
-        </DefaultButton>
     )
 }
