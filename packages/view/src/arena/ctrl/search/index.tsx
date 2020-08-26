@@ -9,7 +9,7 @@ import SectionHeader from '@/component/section-header'
 import { ipc } from '@/const'
 import { useObservable } from 'rxjs-hooks'
 import ThemeLabel from '@/component/theme-label'
-import { filter, take } from 'rxjs/operators'
+import { filter, take, debounceTime } from 'rxjs/operators'
 import { search_text$ } from '@/subject/search'
 import { global_loading$ } from '@/component/loading/subj'
 import { find_chapter_li_auto, chapter_li$, get_now_node_list } from '@/source/chapter-node'
@@ -46,6 +46,17 @@ export default function Search() {
 
 /** 顶部搜索栏 */
 function Bar() {
+    // 一段时间不输入, 自动搜索
+    useEffect(() => {
+        const ob = search_text$.pipe(debounceTime(1500)).subscribe((t) => {
+            //
+            navigator.clipboard.writeText(t)
+            ipc().send('book_search_text', get_cur_book_src(), t)
+        })
+        return () => {
+            ob.unsubscribe()
+        }
+    }, [])
     // const [ipt, set_ipt] = useState('')
     const ipt = useObservable(() => search_text$, '')
     useEffect(() => {
@@ -66,6 +77,7 @@ function Bar() {
                 onKeyPress={(e) => {
                     e.persist()
                     if (e.charCode === 13) {
+                        global_loading$.next(true)
                         search_text$.next(ipt)
                         navigator.clipboard.writeText(ipt)
                         ipc().send('book_search_text', get_cur_book_src(), ipt)
@@ -176,7 +188,7 @@ interface p_one {
 function One(p: p_one) {
     const [can_show_node, set_can_show_node] = useState(true)
     return (
-        <div className={s.One}>
+        <div className={s.One} title="双击整个此节点, 也可跳到编辑页">
             <SectionHeader
                 add_class={[s.head]}
                 onClick={() => {
@@ -191,6 +203,10 @@ function One(p: p_one) {
                     className={s.node}
                     style={{
                         display: can_show_node ? 'block' : 'none',
+                    }}
+                    onDoubleClick={() => {
+                        search_2_edit$.next(true)
+                        use_node_then_edit(mch.node.id)
                     }}
                 >
                     <div className={s.name}>
