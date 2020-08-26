@@ -38,6 +38,10 @@ export function load_prev_buffer() {
     }
     push_node_edit_id_stack(dto.ids)
 
+    if (node_use$.value) {
+        return
+    }
+
     const nodeall = get_now_node_list()
     const fiuse = nodeall.find((v) => v.id === dto.use_id)
     if (fiuse) {
