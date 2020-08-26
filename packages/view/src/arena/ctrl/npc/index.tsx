@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import { get_cur_book_src } from '@/source/book'
-import { Route, useRouteMatch } from 'react-router-dom'
+import { Route, useRouteMatch, Switch } from 'react-router-dom'
 
 import EditUser from './edit'
 import Show from './show'
@@ -18,10 +18,10 @@ export default function Npc() {
     }
 
     return (
-        <>
+        <Switch>
             <Route path={path + '/edit'} component={EditUser}></Route>
             <Route path={path + '/link-graph'} component={LinkGraph}></Route>
             <Route exact path={path} component={Show}></Route>
-        </>
+        </Switch>
     )
 }
