@@ -1,17 +1,17 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { TextField, DefaultButton, PrimaryButton, ActionButton, Label } from 'office-ui-fabric-react'
+import { TextField } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
 import { outline_focu$, outline_map$ } from '@/source/outline'
 import { map, take, filter } from 'rxjs/operators'
 import { next_router } from '@/router/router'
 import IncidentSelect from '@/component/incident'
-import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { chapter_map$ } from '@/source/chapter-node'
 import { fs_write } from '@/source/fs-common'
 import { get_cur_book_src } from '@/source/book'
+import QvButton from '@/component/ui/button'
 
 export default function Form() {
     return (
@@ -79,7 +79,8 @@ function Base() {
  */
 function Confirm() {
     return (
-        <ThemeButton
+        <QvButton
+            withTheme
             onClick={() => {
                 const ot = outline_focu$.value!
                 const mp = outline_map$.value
@@ -96,6 +97,6 @@ function Confirm() {
             }}
         >
             好
-        </ThemeButton>
+        </QvButton>
     )
 }

@@ -4,11 +4,11 @@ import s from './s.module.scss'
 import ThemeLabel from '@/component/theme-label'
 import { DefaultButton, Dropdown } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import SectionHeader from '@/component/section-header'
 import { book_li$, find_book_li_auto } from '@/source/book'
 import { select_dir } from '@/source/fs-common'
+import QvButton from '@/component/ui/button'
 
 export default function Exprt() {
     const [dir_src, set_dir_src] = useState('')
@@ -49,13 +49,14 @@ export default function Exprt() {
                 </DefaultButton>
             </div>
             <div className={s.line}>
-                <ThemeButton
+                <QvButton
+                    withTheme
                     onClick={() => {
                         ipc().send('export_txt', book_src, dir_src)
                     }}
                 >
                     开始导出
-                </ThemeButton>
+                </QvButton>
 
                 <Step />
             </div>

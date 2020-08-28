@@ -27,7 +27,7 @@ export default function QvButton(p: p) {
             ? {
                   backgroundColor: clrs[theme][4],
                   border: `1px solid ${clrs[theme][4]}`,
-                  color: 'var(--CLRt1)',
+                  color: 'white',
                   ':hover': {
                       backgroundColor: clrs[theme][3],
                       borderColor: clrs[theme][3],
@@ -36,10 +36,12 @@ export default function QvButton(p: p) {
             : {},
         disabled: p.disabled
             ? {
+                  borderColor: '#eeeeee',
                   backgroundColor: '#eeeeee',
                   color: 'gray',
                   cursor: 'unset',
                   ':hover': {
+                      borderColor: '#eeeeee',
                       backgroundColor: '#eeeeee',
                       color: 'gray',
                   },

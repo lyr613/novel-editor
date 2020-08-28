@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { ipc } from '@/const'
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react'
-import ThemeButton from '@/component/theme-button'
+import QvButton from '@/component/ui/button'
 
 /** 更新app弹窗 */
 export default function UpdateApp() {
@@ -31,25 +30,24 @@ export default function UpdateApp() {
                     }}
                 ></div>
                 <div className={s.foo}>
-                    <ThemeButton
+                    <QvButton
+                        withTheme
                         onClick={() => {
                             ipc().send('update-app')
                         }}
-                        styles={{
-                            root: {
-                                marginRight: '20px',
-                            },
+                        style={{
+                            marginRight: '20px',
                         }}
                     >
                         在浏览器查看
-                    </ThemeButton>
-                    <DefaultButton
+                    </QvButton>
+                    <QvButton
                         onClick={() => {
                             next_html('')
                         }}
                     >
                         忽略
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             </div>
         </div>

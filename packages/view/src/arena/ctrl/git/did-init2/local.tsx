@@ -5,8 +5,8 @@ import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { ipc } from '@/const'
 import { TextField } from 'office-ui-fabric-react'
-import ThemeButton from '@/component/theme-button'
 import { get_cur_book_src } from '@/source/book'
+import QvButton from '@/component/ui/button'
 
 /** 本地仓库的操作 */
 export default function Local() {
@@ -58,7 +58,8 @@ function SaveLocal() {
                         }}
                     ></TextField>
 
-                    <ThemeButton
+                    <QvButton
+                        withTheme
                         disabled={!need_save}
                         onClick={() => {
                             const b = ipc().sendSync('git_local_save', get_cur_book_src(), git_msg.trim())
@@ -72,7 +73,7 @@ function SaveLocal() {
                         }}
                     >
                         储存更改
-                    </ThemeButton>
+                    </QvButton>
                 </>
             )}
         </div>

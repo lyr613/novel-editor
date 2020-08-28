@@ -3,11 +3,11 @@ import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import { DefaultButton, TextField } from 'office-ui-fabric-react'
 import ThemeLabel from '@/component/theme-label'
-import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import SectionHeader from '@/component/section-header'
 import { select_file, select_dir } from '@/source/fs-common'
+import QvButton from '@/component/ui/button'
 
 export default function Txt() {
     const [txt_src, set_txt_src] = useState('')
@@ -54,14 +54,14 @@ export default function Txt() {
                 ></TextField>
             </div>
             <div className={s.mar}>
-                <ThemeButton
+                <QvButton
                     disabled={!dir_src || !txt_src}
                     onClick={() => {
                         ipc().send('import_txt', txt_src, dir_src, reg)
                     }}
                 >
                     开始导入
-                </ThemeButton>
+                </QvButton>
             </div>
 
             <Step />

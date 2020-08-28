@@ -4,10 +4,10 @@ import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { TextField, DefaultButton } from 'office-ui-fabric-react'
-import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import { select_dir } from '@/source/fs-common'
+import QvButton from '@/component/ui/button'
 
 export default function Git() {
     return (
@@ -51,14 +51,15 @@ function Form() {
                 </DefaultButton>
             </div>
             <div className={s.line}>
-                <ThemeButton
+                <QvButton
+                    withTheme
                     disabled={!dir_src || !git_src_use}
                     onClick={() => {
                         ipc().send('import_git', git_src_use, dir_src)
                     }}
                 >
                     开始导入
-                </ThemeButton>
+                </QvButton>
             </div>
         </div>
     )

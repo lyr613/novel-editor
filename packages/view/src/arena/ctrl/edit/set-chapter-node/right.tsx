@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeButton from '@/component/theme-button'
 import { useObservable } from 'rxjs-hooks'
 import { chapter_li$, save_chapter_li, find_chapter_li_auto } from '@/source/chapter-node'
 import { IDropdownOption, Dropdown, IChoiceGroupOption, ChoiceGroup, DefaultButton } from 'office-ui-fabric-react'
@@ -10,6 +9,7 @@ import { Subject } from 'rxjs'
 import { debounceTime, filter, switchMap, map, take, tap } from 'rxjs/operators'
 import { sel_id_map$, sel_node1$, sel_node2$ } from './subj'
 import { editing_chapter$ } from '../subj'
+import QvButton from '@/component/ui/button'
 
 export default function Right() {
     return (
@@ -126,14 +126,15 @@ function Move() {
                 }}
             ></ChoiceGroup>
             <div className={s.split}></div>
-            <ThemeButton
+            <QvButton
+                withTheme
                 onClick={() => {
                     ms$.next([sel_cp, sel_pos])
                 }}
                 disabled={!seld || !sel_cp}
             >
                 移动
-            </ThemeButton>
+            </QvButton>
         </div>
     )
 }

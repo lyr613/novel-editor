@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeButton from '@/component/theme-button'
 import { useObservable } from 'rxjs-hooks'
 import { witch$, nav_li } from './subj'
 import Import from './import'
@@ -40,28 +39,6 @@ function Nav() {
                     {v}
                 </ThemeLabel>
             ))}
-        </div>
-    )
-}
-
-function Bar() {
-    return (
-        <div className={s.Bar}>
-            <ThemeButton
-                add_class={[s.btn]}
-                onClick={() => {
-                    witch$.next('import')
-                }}
-            >
-                导入
-            </ThemeButton>
-            <ThemeButton
-                onClick={() => {
-                    witch$.next('export')
-                }}
-            >
-                导出
-            </ThemeButton>
         </div>
     )
 }

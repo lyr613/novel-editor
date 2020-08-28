@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
 import { TextField } from 'office-ui-fabric-react'
-import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import { git_remote_status$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
 import ThemeLabel from '@/component/theme-label'
 import { get_cur_book_src } from '@/source/book'
+import QvButton from '@/component/ui/button'
 
 /** 远程仓库设置 */
 export default function RemoteSet() {
@@ -43,7 +43,8 @@ function Form() {
                 }}
             ></TextField>
             {status === 1 && (
-                <ThemeButton
+                <QvButton
+                    withTheme
                     onClick={() => {
                         const b = ipc().sendSync('git_set_remote', get_cur_book_src(), remote.trim(), 'add')
                         console.log('添加远程仓库', b)
@@ -56,10 +57,11 @@ function Form() {
                     }}
                 >
                     添加
-                </ThemeButton>
+                </QvButton>
             )}
             {status === 2 && (
-                <ThemeButton
+                <QvButton
+                    withTheme
                     onClick={() => {
                         const b = ipc().sendSync('git_set_remote', get_cur_book_src(), remote.trim(), 'update')
                         console.log('修改远程仓库', b)
@@ -71,7 +73,7 @@ function Form() {
                     }}
                 >
                     修改
-                </ThemeButton>
+                </QvButton>
             )}
         </div>
     )

@@ -1,19 +1,19 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { TextField, PrimaryButton, Icon } from 'office-ui-fabric-react'
+import { TextField, Icon } from 'office-ui-fabric-react'
 import DateYMD from '@/component/date'
 import { useObservable } from 'rxjs-hooks'
-import { incident_edit$, save_incident_edited, find_incident_li_auto } from '@/source/incident'
+import { incident_edit$, save_incident_edited } from '@/source/incident'
 import NpcSelect from '@/component/npc'
 import { next_router } from '@/router/router'
-import ThemeButton from '@/component/theme-button'
 import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
 import { shallowCopy } from '@/rx/shallow-copy'
 import IconButton from '@/component/icon-button'
 import { use_node_then_edit } from '@/source/node/method'
 import { chapter_li$ } from '@/source/chapter-node'
+import QvButton from '@/component/ui/button'
 
 export default function Form() {
     return (
@@ -301,14 +301,15 @@ function DateSE() {
 function Confirm() {
     return (
         <div className={s.Confirm}>
-            <ThemeButton
+            <QvButton
+                withTheme
                 onClick={() => {
                     save_incident_edited()
                     next_router('incident')
                 }}
             >
                 好
-            </ThemeButton>
+            </QvButton>
         </div>
     )
 }

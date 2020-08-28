@@ -1,17 +1,17 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { PrimaryButton, Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
+import { Dropdown, Slider as SliderSlider, TextField } from 'office-ui-fabric-react'
 import { next_router } from '@/router/router'
 import { useObservable } from 'rxjs-hooks'
 import { filter$ } from '../subj'
-import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { npc_frequency_find$ } from './subj'
 import { npc_use_id$, edit_npc_auto } from '@/source/npc'
 import { chapter_li$ } from '@/source/chapter-node'
 import { node_use$ } from '@/source/node/base'
 import { push_node_edit_id_stack } from '@/source/node/stack'
+import QvButton from '@/component/ui/button'
 
 /**
  * 控制栏
@@ -70,7 +70,8 @@ function Action() {
     }
     return (
         <div className={s.Action}>
-            <ThemeButton
+            <QvButton
+                withTheme
                 onClick={() => {
                     npc_use_id$.next('')
                     edit_npc_auto()
@@ -78,15 +79,18 @@ function Action() {
                 }}
             >
                 新角色
-            </ThemeButton>
-            <ThemeButton
+            </QvButton>
+            <QvButton
+                withTheme
                 onClick={() => {
                     next_router('npc', 'link-graph')
                 }}
-                add_class={[s.btn]}
+                style={{
+                    margin: '0 10px',
+                }}
             >
                 关系图
-            </ThemeButton>
+            </QvButton>
             <TextField
                 placeholder="搜索"
                 value={fil.name}
