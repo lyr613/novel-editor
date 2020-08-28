@@ -4,7 +4,7 @@ export function set_theme() {
     const names = Object.keys(theme_colors)
 
     names.forEach((name) => {
-        const colors = theme_colors[name]
+        const colors = theme_colors[name as 'word']
         monaco.editor.defineTheme(name, {
             base: 'vs',
             inherit: true,

@@ -5,12 +5,12 @@ import { style as s } from './style'
 import { useObservable } from 'rxjs-hooks'
 import { book_li$, find_book_li_auto, book_use_id$ } from '@/source/book'
 import { shallowCopy } from '@/rx/shallow-copy'
-import { TextField, Icon, DefaultButton } from 'office-ui-fabric-react'
-import ThemeButton from '@/component/theme-button'
+import { TextField, Icon } from 'office-ui-fabric-react'
 import { ipc } from '@/const/electron-help'
 import ThemeLabel from '@/component/theme-label'
 import { next_router } from '@/router/router'
 import { editer_setting$ } from '@/subject/edit-setting'
+import QvButton from '@/component/ui/button'
 
 /** List */
 export default function List() {
@@ -75,7 +75,8 @@ function NameLine(book: book) {
                             next_ipted_name(ns)
                         }}
                     ></TextField>
-                    <ThemeButton
+                    <QvButton
+                        withTheme
                         disabled={!name_use}
                         onClick={() => {
                             const b = ipc().sendSync('book_set_name', book.src, name_use)
@@ -88,7 +89,7 @@ function NameLine(book: book) {
                         }}
                     >
                         好
-                    </ThemeButton>
+                    </QvButton>
                 </>
             )}
         </div>
@@ -178,18 +179,19 @@ function Remote(book: book) {
 function ButtonBox(book: book, editer_set: setting | null) {
     return (
         <div className={css(sc.padd(10))}>
-            <ThemeButton
+            <QvButton
                 onClick={() => {
                     book_use_id$.next(book.id)
                     next_router('edit')
                 }}
+                withTheme
                 style={{
                     margin: '0 10px 10px 0',
                 }}
             >
                 编写
-            </ThemeButton>
-            <DefaultButton
+            </QvButton>
+            <QvButton
                 onClick={() => {
                     book_use_id$.next(book.id)
                     next_router('search')
@@ -199,8 +201,8 @@ function ButtonBox(book: book, editer_set: setting | null) {
                 }}
             >
                 搜索
-            </DefaultButton>
-            <DefaultButton
+            </QvButton>
+            <QvButton
                 onClick={() => {
                     book_use_id$.next(book.id)
                     next_router('outline')
@@ -210,8 +212,8 @@ function ButtonBox(book: book, editer_set: setting | null) {
                 }}
             >
                 大纲
-            </DefaultButton>
-            <DefaultButton
+            </QvButton>
+            <QvButton
                 onClick={() => {
                     book_use_id$.next(book.id)
                     next_router('incident')
@@ -221,8 +223,8 @@ function ButtonBox(book: book, editer_set: setting | null) {
                 }}
             >
                 事件
-            </DefaultButton>
-            <DefaultButton
+            </QvButton>
+            <QvButton
                 onClick={() => {
                     book_use_id$.next(book.id)
                     next_router('npc')
@@ -232,8 +234,8 @@ function ButtonBox(book: book, editer_set: setting | null) {
                 }}
             >
                 角色
-            </DefaultButton>
-            <DefaultButton
+            </QvButton>
+            <QvButton
                 onClick={() => {
                     book_use_id$.next(book.id)
                     next_router('table')
@@ -243,8 +245,8 @@ function ButtonBox(book: book, editer_set: setting | null) {
                 }}
             >
                 表格
-            </DefaultButton>
-            <DefaultButton
+            </QvButton>
+            <QvButton
                 onClick={() => {
                     book_use_id$.next(book.id)
                     next_router('map')
@@ -254,9 +256,9 @@ function ButtonBox(book: book, editer_set: setting | null) {
                 }}
             >
                 地图
-            </DefaultButton>
+            </QvButton>
             {editer_set?.git && (
-                <DefaultButton
+                <QvButton
                     onClick={() => {
                         book_use_id$.next(book.id)
                         next_router('git')
@@ -266,9 +268,9 @@ function ButtonBox(book: book, editer_set: setting | null) {
                     }}
                 >
                     仓库
-                </DefaultButton>
+                </QvButton>
             )}
-            <DefaultButton
+            <QvButton
                 onDoubleClick={() => {
                     const p = editer_setting$.value
                     p.shelf.book_list = p.shelf.book_list.filter((v) => v !== book.src)
@@ -280,7 +282,7 @@ function ButtonBox(book: book, editer_set: setting | null) {
                 }}
             >
                 隐藏
-            </DefaultButton>
+            </QvButton>
         </div>
     )
 }

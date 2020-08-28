@@ -7,7 +7,7 @@ type theme = 'word' | 'excel' | 'ppt' | 'onenote' | 'gray' | 'dark'
  * 8 普通文本
  * 9 keyword
  */
-export const theme_colors: { [k: string]: string[] } = {
+export const theme_colors: { [k in theme]: string[] } = {
     word: [
         '#002050',
         '#124078',
