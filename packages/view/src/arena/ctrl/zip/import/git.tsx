@@ -3,7 +3,7 @@ import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
 import ThemeLabel from '@/component/theme-label'
-import { TextField, DefaultButton } from 'office-ui-fabric-react'
+import { TextField } from 'office-ui-fabric-react'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import { select_dir } from '@/source/fs-common'
@@ -37,7 +37,7 @@ function Form() {
             </div>
             <div className={s.line}>
                 <ThemeLabel>选择一个空文件夹: {dir_src}</ThemeLabel>
-                <DefaultButton
+                <QvButton
                     onClick={async () => {
                         const re = await select_dir()
                         if (!re.empty) {
@@ -48,7 +48,7 @@ function Form() {
                     }}
                 >
                     选择存放位置
-                </DefaultButton>
+                </QvButton>
             </div>
             <div className={s.line}>
                 <QvButton

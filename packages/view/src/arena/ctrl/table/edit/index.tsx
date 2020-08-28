@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import ThemeLabel from '@/component/theme-label'
-import { DefaultButton, TextField } from 'office-ui-fabric-react'
+import { TextField } from 'office-ui-fabric-react'
 import { BehaviorSubject, timer, of } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -30,6 +30,7 @@ import {
 } from '@/source/table'
 import { search_text$ } from '@/subject/search'
 import { next_router } from '@/router/router'
+import QvButton from '@/component/ui/button'
 
 interface cell {
     id: string
@@ -136,7 +137,7 @@ function Systems() {
                             set_ipt(str)
                         }}
                     ></TextField>
-                    <DefaultButton
+                    <QvButton
                         disabled={!ipt.trim()}
                         onClick={() => {
                             const iptuse = ipt.trim()
@@ -148,7 +149,7 @@ function Systems() {
                         }}
                     >
                         好
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             )}
         </section>
@@ -241,7 +242,7 @@ function Types() {
                             set_ipt(str)
                         }}
                     ></TextField>
-                    <DefaultButton
+                    <QvButton
                         disabled={!iptuse}
                         onClick={() => {
                             const es = get_cur_table_edit()
@@ -259,7 +260,7 @@ function Types() {
                         }}
                     >
                         好
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             )}
         </section>
@@ -389,7 +390,7 @@ function Cells() {
                         resizable={false}
                         autoAdjustHeight={true}
                     ></TextField>
-                    <DefaultButton
+                    <QvButton
                         disabled={!ipt_name_use}
                         onClick={() => {
                             const es = get_cur_table_edit()
@@ -427,7 +428,7 @@ function Cells() {
                         }}
                     >
                         好
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             )}
         </section>

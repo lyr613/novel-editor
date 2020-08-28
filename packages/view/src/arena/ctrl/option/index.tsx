@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { DefaultButton, TextField } from 'office-ui-fabric-react'
+import { TextField } from 'office-ui-fabric-react'
 import { theme_colors, editer_setting$ } from '@/subject'
 import Sensitive from './edit/sensitive'
 import { ipc } from '@/const'

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import ThemeLabel from '@/component/theme-label'
-import { DefaultButton, Dropdown } from 'office-ui-fabric-react'
+import { Dropdown } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
 import { ipc } from '@/const'
 import SectionHeader from '@/component/section-header'
@@ -39,14 +39,14 @@ export default function Exprt() {
             </div>
             <div className={s.line}>
                 <ThemeLabel>选择一个文件夹: {dir_src}</ThemeLabel>
-                <DefaultButton
+                <QvButton
                     onClick={async () => {
                         const re = await select_dir()
                         set_dir_src(re.src)
                     }}
                 >
                     选择存放位置
-                </DefaultButton>
+                </QvButton>
             </div>
             <div className={s.line}>
                 <QvButton

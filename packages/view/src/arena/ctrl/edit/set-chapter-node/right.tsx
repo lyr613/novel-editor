@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
 import { chapter_li$, save_chapter_li, find_chapter_li_auto } from '@/source/chapter-node'
-import { IDropdownOption, Dropdown, IChoiceGroupOption, ChoiceGroup, DefaultButton } from 'office-ui-fabric-react'
-import { url } from 'inspector'
+import { IDropdownOption, Dropdown, IChoiceGroupOption, ChoiceGroup } from 'office-ui-fabric-react'
 import { Subject } from 'rxjs'
 import { debounceTime, filter, switchMap, map, take, tap } from 'rxjs/operators'
 import { sel_id_map$, sel_node1$, sel_node2$ } from './subj'
@@ -144,7 +143,7 @@ function Del() {
 
     return (
         <div className={s.Del}>
-            <DefaultButton
+            <QvButton
                 disabled={!seld}
                 onDoubleClick={() => {
                     chapter_li$
@@ -170,7 +169,7 @@ function Del() {
                 }}
             >
                 删除
-            </DefaultButton>
+            </QvButton>
         </div>
     )
 }
@@ -179,7 +178,7 @@ function Esc() {
     return (
         <div className={s.Esc}>
             <div className={s.split}></div>
-            <DefaultButton onClick={() => editing_chapter$.next(false)}>退出编辑</DefaultButton>
+            <QvButton onClick={() => editing_chapter$.next(false)}>退出编辑</QvButton>
         </div>
     )
 }

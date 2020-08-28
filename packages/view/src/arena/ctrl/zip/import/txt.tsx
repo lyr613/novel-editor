@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
-import { DefaultButton, TextField } from 'office-ui-fabric-react'
+import { TextField } from 'office-ui-fabric-react'
 import ThemeLabel from '@/component/theme-label'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
@@ -18,18 +18,18 @@ export default function Txt() {
             <SectionHeader>从文本导入</SectionHeader>
             <div className={s.line}>
                 <ThemeLabel>选择txt文件,字符编码utf-8: {txt_src}</ThemeLabel>
-                <DefaultButton
+                <QvButton
                     onClick={async () => {
                         const re = await select_file()
                         set_txt_src(re)
                     }}
                 >
                     选择要导入的文本
-                </DefaultButton>
+                </QvButton>
             </div>
             <div className={s.line}>
                 <ThemeLabel>选择一个空文件夹: {dir_src}</ThemeLabel>
-                <DefaultButton
+                <QvButton
                     onClick={async () => {
                         const re = await select_dir()
                         if (!re.empty) {
@@ -40,7 +40,7 @@ export default function Txt() {
                     }}
                 >
                     选择存放位置
-                </DefaultButton>
+                </QvButton>
             </div>
             <div className={s.line}>
                 <ThemeLabel>章节分割正则, 如果不填写, 则使用: ^\s*第.+章\s</ThemeLabel>
