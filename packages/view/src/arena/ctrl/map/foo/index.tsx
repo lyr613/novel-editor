@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { Toggle, TextField, SearchBox } from 'office-ui-fabric-react'
+import { Toggle, TextField } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
 import {
     be_editing$,

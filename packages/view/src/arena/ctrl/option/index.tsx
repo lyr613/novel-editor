@@ -1,13 +1,9 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { TextField } from 'office-ui-fabric-react'
-import { theme_colors, editer_setting$ } from '@/subject'
 import Sensitive from './edit/sensitive'
-import { ipc } from '@/const'
 import ThemeLabel from '@/component/theme-label'
 import { useObservable } from 'rxjs-hooks'
-import { shallowCopy } from '@/rx/shallow-copy'
 import { option_use$, option_li } from './subj'
 import WindowSize from './ui/full-screen'
 import Theme from './ui/theme'
