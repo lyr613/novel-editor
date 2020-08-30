@@ -6,9 +6,9 @@ import { TextField } from 'office-ui-fabric-react'
 import { ipc } from '@/const'
 import { git_remote_status$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
-import ThemeLabel from '@/component/theme-label'
 import { get_cur_book_src } from '@/source/book'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 /** 远程仓库设置 */
 export default function RemoteSet() {
@@ -27,7 +27,7 @@ function Form() {
     const [remote, set_remote] = useState('')
     return (
         <div className={s.Form}>
-            <ThemeLabel>{label}</ThemeLabel>
+            <QvLabel>{label}</QvLabel>
             <TextField
                 value={remote}
                 onChange={(_, ns) => {

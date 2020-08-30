@@ -7,10 +7,10 @@ import { book_li$, find_book_li_auto, book_use_id$ } from '@/source/book'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { TextField, Icon } from 'office-ui-fabric-react'
 import { ipc } from '@/const/electron-help'
-import ThemeLabel from '@/component/theme-label'
 import { next_router } from '@/router/router'
 import { editer_setting$ } from '@/subject/edit-setting'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 /** List */
 export default function List() {
@@ -153,7 +153,8 @@ function Remote(book: book) {
     }
     return (
         <div className={css(sc.wh(undefined, bh), sc.padd(0, 0, 0, 10), gs.flhc)}>
-            <ThemeLabel
+            <QvLabel
+                disabled={!can_pull}
                 onClick={() => {
                     if (!can_pull) {
                         return
@@ -162,15 +163,9 @@ function Remote(book: book) {
                     next_label('拉取中...')
                     next_can_pull(false)
                 }}
-                disabled={!can_pull}
-                styles={{
-                    root: {
-                        cursor: can_pull ? 'pointer' : '',
-                    },
-                }}
             >
                 {label}
-            </ThemeLabel>
+            </QvLabel>
         </div>
     )
 }
