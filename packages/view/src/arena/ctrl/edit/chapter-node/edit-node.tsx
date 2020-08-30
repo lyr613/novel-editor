@@ -5,7 +5,6 @@ import {
     Dialog,
     DialogType,
     DialogFooter,
-    Label,
     Dropdown,
     IDropdownOption,
     TextField,
@@ -21,6 +20,7 @@ import { node_use$ } from '@/source/node/base'
 import { fs_write } from '@/source/fs-common'
 import { push_node_edit_id_stack } from '@/source/node/stack'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 // 编辑和删除节的弹窗
 
@@ -126,7 +126,7 @@ export function EditNode() {
                     set_name(ss)
                 }}
             ></TextField>
-            <Label>所在章</Label>
+            <QvLabel>所在章</QvLabel>
             <Dropdown
                 options={cp_sel_opt}
                 onChange={(_, opt) => {
@@ -138,7 +138,7 @@ export function EditNode() {
                     }
                 }}
             ></Dropdown>
-            <Label>位置</Label>
+            <QvLabel>位置</QvLabel>
             <ChoiceGroup
                 options={posi_opt}
                 selectedKey={posi}

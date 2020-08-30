@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog'
 import { TextField, ChoiceGroup, IChoiceGroupOption, Dropdown, IDropdownOption } from 'office-ui-fabric-react'
-import { Icon, Slider, Label } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
 import { mk_uuid } from '@/function/id32'
 import { fs_write, mk_dir, fs_rename } from '@/source/fs-common'
@@ -12,6 +11,7 @@ import { filter, switchMap, map, take } from 'rxjs/operators'
 import { chapter_li$, chapter_use$, find_chapter_li_auto, chapter_of, save_chapter_li } from '@/source/chapter-node'
 import { book_use$ } from '@/source/book'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 // 编辑和删除章的弹窗
 
@@ -114,7 +114,7 @@ export function EditChapter() {
                 }}
             ></TextField>
             {}
-            <Label>位置</Label>
+            <QvLabel>位置</QvLabel>
             <ChoiceGroup
                 options={options}
                 selectedKey={posi}
