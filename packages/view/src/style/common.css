@@ -13,25 +13,25 @@
 
 @font-face {
     font-family: syhei1;
-    src: url(./SourceHanSansCN-ExtraLight.otf);
+    src: url(./fonts/SourceHanSansCN-ExtraLight.otf);
 }
 @font-face {
     font-family: syhei2;
-    src: url(./SourceHanSansCN-Light.otf);
+    src: url(./fonts/SourceHanSansCN-Light.otf);
 }
 @font-face {
     font-family: syhei4;
-    src: url(./SourceHanSansCN-Regular.otf);
+    src: url(./fonts/SourceHanSansCN-Regular.otf);
 }
 @font-face {
     font-family: syhei3;
-    src: url(./SourceHanSansCN-Normal.otf);
+    src: url(./fonts/SourceHanSansCN-Normal.otf);
 }
 @font-face {
     font-family: syhei5;
-    src: url(./SourceHanSansCN-Bold.otf);
+    src: url(./fonts/SourceHanSansCN-Bold.otf);
 }
 @font-face {
     font-family: syhei6;
-    src: url(./SourceHanSansCN-Heavy.otf);
+    src: url(./fonts/SourceHanSansCN-Heavy.otf);
 }
