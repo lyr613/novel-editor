@@ -20,7 +20,7 @@ export default function QvButton(p: p) {
     const eset = useObservable(() => editer_setting$)
     const theme = eset?.common.theme ?? 'word'
     const clrs = theme_colors
-
+    // 这里由于弹窗还不再#app内,暂时不能提取样式
     const add_style = StyleSheet.create({
         root: p.style ?? {},
         theme: p.withTheme

@@ -18,3 +18,26 @@ export const style: style = StyleSheet.create<style>({
     },
     theme: {},
 })
+
+export const preset_style = {
+    theme: {
+        backgroundColor: `var(--CLRl4)`,
+        border: `1px solid var(--CLRl3)`,
+        color: 'white',
+        ':hover': {
+            backgroundColor: `var(--CLRl3)`,
+            borderColor: `var(--CLRl2)`,
+        },
+    },
+    disabled: {
+        borderColor: '#eeeeee',
+        backgroundColor: '#eeeeee',
+        color: 'gray',
+        cursor: 'unset',
+        ':hover': {
+            borderColor: '#eeeeee',
+            backgroundColor: '#eeeeee',
+            color: 'gray',
+        },
+    },
+}
