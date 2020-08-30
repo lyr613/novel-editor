@@ -6,8 +6,8 @@ import { useObservable } from 'rxjs-hooks'
 import { git_remote_status$ } from '../subj'
 import { ipc } from '@/const'
 import { get_cur_book_src } from '@/source/book'
-import ThemeLabel from '@/component/theme-label'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 /** 远程仓库的操作 */
 export default function Remote() {
@@ -57,7 +57,7 @@ function Action() {
     }, [])
     return (
         <div className={s.Action}>
-            <ThemeLabel>{push_msg}</ThemeLabel>
+            <QvLabel>{push_msg}</QvLabel>
             <QvButton
                 withTheme
                 onClick={() => {
@@ -72,7 +72,7 @@ function Action() {
 
             <div className={s.split}></div>
 
-            <ThemeLabel>{pull_msg}</ThemeLabel>
+            <QvLabel>{pull_msg}</QvLabel>
             <QvButton
                 withTheme
                 onClick={() => {

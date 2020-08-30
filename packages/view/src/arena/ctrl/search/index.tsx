@@ -8,7 +8,6 @@ import { Subject, BehaviorSubject } from 'rxjs'
 import SectionHeader from '@/component/section-header'
 import { ipc } from '@/const'
 import { useObservable } from 'rxjs-hooks'
-import ThemeLabel from '@/component/theme-label'
 import { filter, take, debounceTime } from 'rxjs/operators'
 import { search_text$ } from '@/subject/search'
 import { global_loading$ } from '@/component/loading/subj'
@@ -16,6 +15,7 @@ import { find_chapter_li_auto, chapter_li$, get_now_node_list } from '@/source/c
 import { get_cur_book_src } from '@/source/book'
 import { use_node_then_edit } from '@/source/node/method'
 import { search_2_edit$ } from '@/subject/go-to'
+import QvLabel from '@/component/ui/label'
 
 /** 要搜索的文本 */
 const search_re$ = new BehaviorSubject<p_one[]>([])
@@ -170,7 +170,7 @@ function Result() {
     return (
         <div className={s.Result}>
             {!re.length || re[0].matchs.length === 0 ? (
-                <ThemeLabel add_class={[s.nore]}>没有搜索结果</ThemeLabel>
+                <QvLabel add_class={[s.nore]}>没有搜索结果</QvLabel>
             ) : (
                 re.map((v) => <One key={v.chapter.id} {...v} />)
             )}

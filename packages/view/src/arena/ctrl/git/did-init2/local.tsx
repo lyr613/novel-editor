@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
-import ThemeLabel from '@/component/theme-label'
 import { ipc } from '@/const'
 import { TextField } from 'office-ui-fabric-react'
 import { get_cur_book_src } from '@/source/book'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 /** 本地仓库的操作 */
 export default function Local() {
@@ -40,7 +40,7 @@ function SaveLocal() {
     }, [])
     return (
         <div className={s.SaveLocal}>
-            <ThemeLabel>{label}</ThemeLabel>
+            <QvLabel>{label}</QvLabel>
             {need_save && (
                 <>
                     <TextField

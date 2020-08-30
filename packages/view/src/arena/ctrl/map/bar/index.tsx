@@ -5,9 +5,9 @@ import { TextField, Toggle } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
 import { map_focu$, be_editing$, map_list$, map_focu_id$ } from '../subj'
 import { shallowCopy } from '@/rx/shallow-copy'
-import ThemeLabel from '@/component/theme-label'
 import { get_cur_book_src } from '@/source/book'
 import { fs_write } from '@/source/fs-common'
+import QvLabel from '@/component/ui/label'
 
 /** 右侧上面 工具选择 */
 export default function Bar() {
@@ -15,7 +15,7 @@ export default function Bar() {
     const be_editing = useObservable(() => be_editing$, false)
     return (
         <div className={s.Bar}>
-            <ThemeLabel
+            <QvLabel
                 onClick={() => {
                     const bks = get_cur_book_src()
                     const arr = map_list$.value
@@ -25,10 +25,12 @@ export default function Bar() {
                     fs_write('json', [bks, 'map.json'], map_list$.value)
                     map_list$.next([...arr])
                 }}
-                add_class={[s.label]}
+                style={{
+                    margin: '0 10px',
+                }}
             >
                 保存
-            </ThemeLabel>
+            </QvLabel>
             <div className={s.hline}></div>
 
             <Toggle

@@ -9,11 +9,11 @@ import { electron } from '@/const'
 import { next_router } from '@/router/router'
 import DateYMD from '@/component/date'
 import { shallowCopy } from '@/rx/shallow-copy'
-import ThemeLabel from '@/component/theme-label'
 import { get_ran_name } from './util-name'
 import IconButton from '@/component/icon-button'
 import { npc_edit$, npc_li$, npc_map$, save_npc_edited } from '@/source/npc'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 export default function NpcForm() {
     return (
@@ -48,15 +48,17 @@ function Base() {
                         }}
                         autoComplete="off"
                     ></TextField>
-                    <ThemeLabel
-                        add_class={[s.namelabel]}
+                    <QvLabel
                         onClick={() => {
                             base.name = get_ran_name()
                             npc_edit$.next(npc)
                         }}
+                        style={{
+                            marginLeft: '10px',
+                        }}
                     >
                         随机
-                    </ThemeLabel>
+                    </QvLabel>
                 </li>
                 <li className={s.flexrow}>
                     <Dropdown

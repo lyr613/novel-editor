@@ -13,8 +13,8 @@ import {
     map_list$,
     map_foo_color$,
 } from '../subj'
-import ThemeLabel from '@/component/theme-label'
 import { shallowCopy } from '@/rx/shallow-copy'
+import QvLabel from '@/component/ui/label'
 
 /** 工具设置 */
 export default function Foo() {
@@ -106,19 +106,18 @@ export default function Foo() {
                             },
                         }}
                     ></TextField>
-                    <ThemeLabel
+                    <QvLabel
                         onClick={() => {
                             be_selecting$.next(!be_selecting$.value)
                         }}
                         add_class={['canclk', s.btn]}
-                        title="点击后从左侧列表选择链接到的地图"
                     >
-                        链接地图: {link_map?.name ?? '未选择'}
-                    </ThemeLabel>
+                        {'链接地图: ' + link_map?.name ?? '未选择'}
+                    </QvLabel>
 
                     <div className={s.hline}></div>
 
-                    <ThemeLabel
+                    <QvLabel
                         onClick={() => {
                             const fo = map_focu$.value
                             if (!fo) {
@@ -132,7 +131,7 @@ export default function Foo() {
                         add_class={['canclk', s.btn]}
                     >
                         好
-                    </ThemeLabel>
+                    </QvLabel>
                 </>
             )}
             <div className={s.hline}></div>

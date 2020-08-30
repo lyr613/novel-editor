@@ -2,12 +2,12 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import { TextField } from 'office-ui-fabric-react'
-import ThemeLabel from '@/component/theme-label'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import SectionHeader from '@/component/section-header'
 import { select_file, select_dir } from '@/source/fs-common'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 export default function Txt() {
     const [txt_src, set_txt_src] = useState('')
@@ -17,7 +17,7 @@ export default function Txt() {
         <div className={s.Txt}>
             <SectionHeader>从文本导入</SectionHeader>
             <div className={s.line}>
-                <ThemeLabel>选择txt文件,字符编码utf-8: {txt_src}</ThemeLabel>
+                <QvLabel>{'选择txt文件,字符编码utf-8: ' + txt_src}</QvLabel>
                 <QvButton
                     onClick={async () => {
                         const re = await select_file()
@@ -28,7 +28,7 @@ export default function Txt() {
                 </QvButton>
             </div>
             <div className={s.line}>
-                <ThemeLabel>选择一个空文件夹: {dir_src}</ThemeLabel>
+                <QvLabel>{'选择一个空文件夹: ' + dir_src}</QvLabel>
                 <QvButton
                     onClick={async () => {
                         const re = await select_dir()
@@ -43,7 +43,7 @@ export default function Txt() {
                 </QvButton>
             </div>
             <div className={s.line}>
-                <ThemeLabel>章节分割正则, 如果不填写, 则使用: ^\s*第.+章\s</ThemeLabel>
+                <QvLabel>章节分割正则, 如果不填写, 则使用: ^\s*第.+章\s</QvLabel>
                 <TextField
                     className={s.input}
                     value={reg}
@@ -91,7 +91,7 @@ function Step() {
     return (
         <div className={s.Step}>
             {arr.map((st, i) => (
-                <ThemeLabel key={i}>{st}</ThemeLabel>
+                <QvLabel key={i}>{st}</QvLabel>
             ))}
         </div>
     )

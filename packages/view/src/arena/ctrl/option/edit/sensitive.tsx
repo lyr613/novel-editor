@@ -1,13 +1,13 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeLabel from '@/component/theme-label'
 import { Dialog, DialogType, TextField, DialogFooter } from 'office-ui-fabric-react'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { editer_setting$ } from '@/subject'
 import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 const will_delete$ = new BehaviorSubject('')
 
@@ -36,15 +36,17 @@ function List() {
     return (
         <div className={s.List}>
             {list.map((word) => (
-                <ThemeLabel
+                <QvLabel
                     key={word}
-                    add_class={[s.one]}
                     onClick={() => {
                         will_delete$.next(word)
                     }}
+                    style={{
+                        margin: '0 0 10px 10px',
+                    }}
                 >
                     {word}
-                </ThemeLabel>
+                </QvLabel>
             ))}
         </div>
     )

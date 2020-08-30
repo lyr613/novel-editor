@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react'
-import ThemeLabel from '@/component/theme-label'
 import { next_router } from '@/router/router'
+import QvLabel from '@/component/ui/label'
 
 const drop_opts: IDropdownOption[] = [
     {
@@ -20,13 +20,13 @@ export default function Show() {
         <div className={s.Show}>
             <div className={s.bar}>
                 <Dropdown className={s.drop} options={drop_opts}></Dropdown>
-                <ThemeLabel
+                <QvLabel
                     onClick={() => {
                         next_router('table', 'edit')
                     }}
                 >
                     类型管理
-                </ThemeLabel>
+                </QvLabel>
             </div>
             <Table />
         </div>

@@ -5,7 +5,7 @@ import { useObservable } from 'rxjs-hooks'
 import { witch$, nav_li } from './subj'
 import Import from './import'
 import Exprt from './export'
-import ThemeLabel from '@/component/theme-label'
+import QvLabel from '@/component/ui/label'
 
 /** 归档 */
 export default function Zip() {
@@ -29,7 +29,7 @@ function Nav() {
     return (
         <div className={s.Nav}>
             {nav_li.map((v) => (
-                <ThemeLabel
+                <QvLabel
                     key={v}
                     add_class={[s.item, use === v ? s.use : '']}
                     onClick={() => {
@@ -37,7 +37,7 @@ function Nav() {
                     }}
                 >
                     {v}
-                </ThemeLabel>
+                </QvLabel>
             ))}
         </div>
     )
