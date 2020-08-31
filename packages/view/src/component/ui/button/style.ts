@@ -11,7 +11,7 @@ export const style: style = StyleSheet.create<style>({
         outline: '0 solid red',
         minWidth: '80px',
         border: '1px solid gray',
-        fontFamily: 'syhei4',
+        fontFamily: 'syhei3',
         ':hover': {
             backgroundColor: '#dddddd',
         },

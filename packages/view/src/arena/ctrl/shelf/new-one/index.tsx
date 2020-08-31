@@ -6,6 +6,7 @@ import { select_dir } from '@/source/fs-common'
 import { editer_setting$ } from '@/subject/edit-setting'
 import { find_book_li_auto } from '@/source/book'
 import QvButton from '@/component/ui/button'
+import QvDialog from '@/component/ui/dialog'
 
 /** NewOne */
 export default function NewOne() {
