@@ -6,7 +6,6 @@ import { next_router } from '@/router/router'
 import { incident_use$, incident_li$, incident_use_id$, find_incident_li_auto } from '@/source/incident'
 import { useObservable } from 'rxjs-hooks'
 import { incident_list_filted$, filter$ } from './subj'
-import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { ipc } from '@/const'
 import IconButton from '@/component/icon-button'
@@ -16,6 +15,7 @@ import { find_chapter_li_auto, get_now_node_list } from '@/source/chapter-node'
 import { find_npc_li_auto, npc_map$ } from '@/source/npc'
 import { get_cur_book_src } from '@/source/book'
 import { fs_write } from '@/source/fs-common'
+import QvButton from '@/component/ui/button'
 
 /** 事件展示 */
 export default function Show() {
@@ -155,14 +155,15 @@ function Action() {
     }
     return (
         <div className={s.Action}>
-            <ThemeButton
+            <QvButton
+                withTheme
                 onClick={() => {
                     incident_use_id$.next('')
                     next_router('incident', 'edit')
                 }}
             >
                 新事件
-            </ThemeButton>
+            </QvButton>
             <TextField
                 placeholder="搜索"
                 value={fil.label}

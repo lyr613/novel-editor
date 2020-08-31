@@ -1,9 +1,8 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeButton from '@/component/theme-button'
-import { ipc, electron, system } from '@/const'
-import { DefaultButton } from 'office-ui-fabric-react'
+import { ipc, system } from '@/const'
+import QvButton from '@/component/ui/button'
 
 /** 窗口尺寸 */
 export default function WindowSize() {
@@ -25,43 +24,52 @@ export default function WindowSize() {
             <label className={s.Label}>窗口</label>
             {be_full_screen ? (
                 <div className={s.FullScreen}>
-                    <DefaultButton
-                        className={s.btn}
+                    <QvButton
                         onClick={() => {
                             ipc().send('ui_window_full_status', false)
                         }}
+                        style={{
+                            margin: '10px',
+                        }}
                     >
                         退出全屏
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             ) : (
                 <div className={s.FullScreen}>
-                    <ThemeButton
-                        add_class={[s.btn]}
+                    <QvButton
+                        withTheme
                         onClick={() => {
                             ipc().send('ui_window_full_status', true)
                         }}
+                        style={{
+                            margin: '10px',
+                        }}
                     >
                         全屏
-                    </ThemeButton>
+                    </QvButton>
                     {system === 'win' && (
                         <>
-                            <DefaultButton
-                                className={s.btn}
+                            <QvButton
+                                style={{
+                                    marginLeft: '10px',
+                                }}
                                 onClick={() => {
                                     ipc().send('ui_window_size', 1)
                                 }}
                             >
                                 最大化
-                            </DefaultButton>
-                            <DefaultButton
-                                className={s.btn}
+                            </QvButton>
+                            <QvButton
+                                style={{
+                                    marginLeft: '10px',
+                                }}
                                 onClick={() => {
                                     ipc().send('ui_window_size', 900, 600)
                                 }}
                             >
                                 900*600
-                            </DefaultButton>
+                            </QvButton>
                         </>
                     )}
                 </div>

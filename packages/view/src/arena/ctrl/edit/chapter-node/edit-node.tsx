@@ -5,14 +5,11 @@ import {
     Dialog,
     DialogType,
     DialogFooter,
-    PrimaryButton,
-    Label,
     Dropdown,
     IDropdownOption,
     TextField,
     IChoiceGroupOption,
     ChoiceGroup,
-    DefaultButton,
 } from 'office-ui-fabric-react'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
@@ -22,6 +19,8 @@ import { chapter_li$, chapter_use$, node_of, save_chapter_li, find_chapter_li_au
 import { node_use$ } from '@/source/node/base'
 import { fs_write } from '@/source/fs-common'
 import { push_node_edit_id_stack } from '@/source/node/stack'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 // 编辑和删除节的弹窗
 
@@ -127,7 +126,7 @@ export function EditNode() {
                     set_name(ss)
                 }}
             ></TextField>
-            <Label>所在章</Label>
+            <QvLabel>所在章</QvLabel>
             <Dropdown
                 options={cp_sel_opt}
                 onChange={(_, opt) => {
@@ -139,7 +138,7 @@ export function EditNode() {
                     }
                 }}
             ></Dropdown>
-            <Label>位置</Label>
+            <QvLabel>位置</QvLabel>
             <ChoiceGroup
                 options={posi_opt}
                 selectedKey={posi}
@@ -156,7 +155,8 @@ export function EditNode() {
                 }}
             ></Dropdown>
             <DialogFooter>
-                <PrimaryButton
+                <QvButton
+                    withTheme
                     disabled={!name.trim().length}
                     onClick={async () => {
                         let the_node: null | node = null
@@ -194,14 +194,14 @@ export function EditNode() {
                     }}
                 >
                     好
-                </PrimaryButton>
-                <DefaultButton
+                </QvButton>
+                <QvButton
                     onClick={() => {
                         show_node_edit$.next(false)
                     }}
                 >
                     取消
-                </DefaultButton>
+                </QvButton>
             </DialogFooter>
         </Dialog>
     )

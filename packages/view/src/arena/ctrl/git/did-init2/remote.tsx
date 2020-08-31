@@ -4,10 +4,10 @@ import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
 import { useObservable } from 'rxjs-hooks'
 import { git_remote_status$ } from '../subj'
-import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import { get_cur_book_src } from '@/source/book'
-import ThemeLabel from '@/component/theme-label'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 /** 远程仓库的操作 */
 export default function Remote() {
@@ -57,8 +57,9 @@ function Action() {
     }, [])
     return (
         <div className={s.Action}>
-            <ThemeLabel>{push_msg}</ThemeLabel>
-            <ThemeButton
+            <QvLabel>{push_msg}</QvLabel>
+            <QvButton
+                withTheme
                 onClick={() => {
                     ipc().send('git_push', get_cur_book_src())
                     set_can_push(false)
@@ -67,12 +68,13 @@ function Action() {
                 disabled={!can_push}
             >
                 推到云端
-            </ThemeButton>
+            </QvButton>
 
             <div className={s.split}></div>
 
-            <ThemeLabel>{pull_msg}</ThemeLabel>
-            <ThemeButton
+            <QvLabel>{pull_msg}</QvLabel>
+            <QvButton
+                withTheme
                 onClick={() => {
                     ipc().send('git_pull', get_cur_book_src())
                     set_can_pull(false)
@@ -81,7 +83,7 @@ function Action() {
                 disabled={!can_pull}
             >
                 拉到本地
-            </ThemeButton>
+            </QvButton>
         </div>
     )
 }

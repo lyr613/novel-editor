@@ -4,8 +4,8 @@ import s from './s.module.scss'
 import { useObservable } from 'rxjs-hooks'
 import { editer_setting$ } from '@/subject'
 import { shallowCopy } from '@/rx/shallow-copy'
-import ThemeLabel from '@/component/theme-label'
 import { TextField } from 'office-ui-fabric-react'
+import QvLabel from '@/component/ui/label'
 
 const familys = Array.from({ length: 6 }, (_, i) => `syhei${i + 1}`)
 export default function Font() {
@@ -49,7 +49,7 @@ export default function Font() {
                         }}
                     ></TextField>
                 </div>
-                <ThemeLabel>字重</ThemeLabel>
+                <QvLabel>字重</QvLabel>
                 <div className={s.fontfamily}>
                     {familys.map((fm) => (
                         <div

@@ -4,7 +4,6 @@ import { help_li, help_use$ } from './subj'
 import { style as s } from './style'
 import { global_style as gs, style_creater as sc } from '@/style/global'
 import { css } from 'aphrodite/no-important'
-import ThemeLabel from '@/component/theme-label'
 import { useObservable } from 'rxjs-hooks'
 import Father from './about/father'
 import Next from './about/next'
@@ -13,6 +12,7 @@ import Incident from './incident'
 import Table from './table'
 import Git from './git'
 import Becareful from './about/becareful'
+import QvLabel from '@/component/ui/label'
 
 /** 帮助 */
 export default function Help() {
@@ -42,7 +42,7 @@ function Nav() {
     return (
         <div className={css(s.nav, gs.flhc, sc.wh('100%', 40), sc.bgclrl(7))}>
             {help_li.map((v) => (
-                <ThemeLabel
+                <QvLabel
                     key={v}
                     add_class={[css(s.nav_item, sc.padd(5, 10), use === v ? s.nav_item_use : undefined)]}
                     onClick={() => {
@@ -50,7 +50,7 @@ function Nav() {
                     }}
                 >
                     {v}
-                </ThemeLabel>
+                </QvLabel>
             ))}
         </div>
     )

@@ -1,8 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeLabel from '@/component/theme-label'
-import { DefaultButton, TextField } from 'office-ui-fabric-react'
+import { TextField } from 'office-ui-fabric-react'
 import { BehaviorSubject, timer, of } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
@@ -30,6 +29,8 @@ import {
 } from '@/source/table'
 import { search_text$ } from '@/subject/search'
 import { next_router } from '@/router/router'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 interface cell {
     id: string
@@ -113,7 +114,7 @@ function Systems() {
             </div>
             <div className={s.labelbox}>
                 {systems.map((sys) => (
-                    <ThemeLabel
+                    <QvLabel
                         key={sys.id}
                         add_class={[s.one, sys.id === sid ? s.hold : '']}
                         onClick={() => {
@@ -121,8 +122,8 @@ function Systems() {
                             edit_table_system_use()
                         }}
                     >
-                        {sys.name}{' '}
-                    </ThemeLabel>
+                        {sys.name + ' '}
+                    </QvLabel>
                 ))}
             </div>
             {can_show_input && (
@@ -136,7 +137,7 @@ function Systems() {
                             set_ipt(str)
                         }}
                     ></TextField>
-                    <DefaultButton
+                    <QvButton
                         disabled={!ipt.trim()}
                         onClick={() => {
                             const iptuse = ipt.trim()
@@ -148,7 +149,7 @@ function Systems() {
                         }}
                     >
                         好
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             )}
         </section>
@@ -219,7 +220,7 @@ function Types() {
             </div>
             <div className={s.labelbox}>
                 {types.map((type) => (
-                    <ThemeLabel
+                    <QvLabel
                         key={type.id}
                         add_class={[s.one, type.id === tid ? s.hold : '']}
                         onClick={() => {
@@ -227,7 +228,7 @@ function Types() {
                         }}
                     >
                         {type.name}
-                    </ThemeLabel>
+                    </QvLabel>
                 ))}
             </div>
             {can_show_input && sid && (
@@ -241,7 +242,7 @@ function Types() {
                             set_ipt(str)
                         }}
                     ></TextField>
-                    <DefaultButton
+                    <QvButton
                         disabled={!iptuse}
                         onClick={() => {
                             const es = get_cur_table_edit()
@@ -259,7 +260,7 @@ function Types() {
                         }}
                     >
                         好
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             )}
         </section>
@@ -346,15 +347,15 @@ function Cells() {
             </div>
             <div className={s.labelbox}>
                 {cells.map((cell) => (
-                    <ThemeLabel
+                    <QvLabel
                         key={cell.level}
                         add_class={[s.one, cell.id === cid ? s.hold : '']}
                         onClick={() => {
                             table_cell_use_id$.next(cell.id)
                         }}
                     >
-                        {cell.level} - {cell.name}
-                    </ThemeLabel>
+                        {cell.level + ' - ' + cell.name}
+                    </QvLabel>
                 ))}
             </div>
             {can_show_input && (
@@ -389,7 +390,7 @@ function Cells() {
                         resizable={false}
                         autoAdjustHeight={true}
                     ></TextField>
-                    <DefaultButton
+                    <QvButton
                         disabled={!ipt_name_use}
                         onClick={() => {
                             const es = get_cur_table_edit()
@@ -427,7 +428,7 @@ function Cells() {
                         }}
                     >
                         好
-                    </DefaultButton>
+                    </QvButton>
                 </div>
             )}
         </section>

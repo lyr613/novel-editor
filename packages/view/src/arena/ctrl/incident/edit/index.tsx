@@ -1,10 +1,10 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { DefaultButton } from 'office-ui-fabric-react'
 import { next_router } from '@/router/router'
 import Form from './form'
 import { edit_incident_auto, incident_use_id$, incident_edit$ } from '@/source/incident'
+import QvButton from '@/component/ui/button'
 
 export default function Edit() {
     useEffect(() => {
@@ -23,17 +23,15 @@ export default function Edit() {
 
 function Back() {
     return (
-        <DefaultButton
+        <QvButton
             onClick={() => {
                 next_router('incident')
             }}
-            styles={{
-                root: {
-                    margin: '10px 10px 0',
-                },
+            style={{
+                margin: '10px 10px 0',
             }}
         >
             返回
-        </DefaultButton>
+        </QvButton>
     )
 }

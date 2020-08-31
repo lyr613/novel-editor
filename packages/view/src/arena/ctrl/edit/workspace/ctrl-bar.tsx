@@ -5,11 +5,11 @@ import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { editer_setting$ } from '@/subject'
 import { Slider } from 'office-ui-fabric-react'
-import ThemeLabel from '@/component/theme-label'
 import { zen$ } from './subj'
 import { sensitive_can_check$ } from '@/subject/sensitive'
 import { monaco_option$ } from '@/subject/monaco'
 import { ipc } from '@/const'
+import QvLabel from '@/component/ui/label'
 
 /** 控制栏 */
 export default function CtrlBar() {
@@ -144,50 +144,44 @@ function Model() {
     const opt = useObservable(() => monaco_option$.pipe(shallowCopy()))
     return (
         <div className={s.Model}>
-            <ThemeLabel
-                add_class={[s.zen]}
+            <QvLabel
                 onClick={() => {
                     if (!zen) {
                         ipc().send('key-full-screen', true)
                     }
                     zen$.next(!zen$.value)
                 }}
-                styles={{
-                    root: {
-                        opacity: zen ? 1 : 0.6,
-                    },
+                style={{
+                    marginLeft: '10px',
+                    opacity: zen ? 1 : 0.6,
                 }}
             >
                 禅
-            </ThemeLabel>
-            <ThemeLabel
-                add_class={[s.zen]}
+            </QvLabel>
+            <QvLabel
                 onClick={() => {
                     sensitive_can_check$.next(!sensitive_can_check$.value)
                 }}
-                styles={{
-                    root: {
-                        opacity: sensitive_can_check ? 1 : 0.6,
-                    },
+                style={{
+                    marginLeft: '10px',
+                    opacity: sensitive_can_check ? 1 : 0.6,
                 }}
             >
                 敏感词
-            </ThemeLabel>
-            <ThemeLabel
-                add_class={[s.zen]}
+            </QvLabel>
+            <QvLabel
                 onClick={() => {
                     const opt = monaco_option$.value
                     opt.minimap!.enabled = !opt.minimap?.enabled
                     monaco_option$.next(opt)
                 }}
-                styles={{
-                    root: {
-                        opacity: opt?.minimap?.enabled ? 1 : 0.6,
-                    },
+                style={{
+                    marginLeft: '10px',
+                    opacity: opt?.minimap?.enabled ? 1 : 0.6,
                 }}
             >
                 缩略图
-            </ThemeLabel>
+            </QvLabel>
         </div>
     )
 }

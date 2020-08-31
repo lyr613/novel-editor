@@ -2,12 +2,12 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
 import SectionHeader from '@/component/section-header'
-import ThemeLabel from '@/component/theme-label'
-import { TextField, DefaultButton } from 'office-ui-fabric-react'
-import ThemeButton from '@/component/theme-button'
+import { TextField } from 'office-ui-fabric-react'
 import { ipc } from '@/const'
 import { editer_setting$ } from '@/subject'
 import { select_dir } from '@/source/fs-common'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 export default function Git() {
     return (
@@ -26,7 +26,7 @@ function Form() {
     return (
         <div className={s.Form}>
             <div className={s.line}>
-                <ThemeLabel>远程仓库地址</ThemeLabel>
+                <QvLabel>远程仓库地址</QvLabel>
                 <TextField
                     value={git_src}
                     onChange={(_, ns) => {
@@ -36,8 +36,8 @@ function Form() {
                 ></TextField>
             </div>
             <div className={s.line}>
-                <ThemeLabel>选择一个空文件夹: {dir_src}</ThemeLabel>
-                <DefaultButton
+                <QvLabel>{'选择一个空文件夹: ' + dir_src}</QvLabel>
+                <QvButton
                     onClick={async () => {
                         const re = await select_dir()
                         if (!re.empty) {
@@ -48,17 +48,18 @@ function Form() {
                     }}
                 >
                     选择存放位置
-                </DefaultButton>
+                </QvButton>
             </div>
             <div className={s.line}>
-                <ThemeButton
+                <QvButton
+                    withTheme
                     disabled={!dir_src || !git_src_use}
                     onClick={() => {
                         ipc().send('import_git', git_src_use, dir_src)
                     }}
                 >
                     开始导入
-                </ThemeButton>
+                </QvButton>
             </div>
         </div>
     )
@@ -85,7 +86,7 @@ function Step() {
     return (
         <div className={s.Step}>
             {arr.map((st, i) => (
-                <ThemeLabel key={i}>{st}</ThemeLabel>
+                <QvLabel key={i}>{st}</QvLabel>
             ))}
         </div>
     )

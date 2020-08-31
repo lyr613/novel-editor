@@ -1,12 +1,11 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeButton from '@/component/theme-button'
 import { useObservable } from 'rxjs-hooks'
 import { witch$, nav_li } from './subj'
 import Import from './import'
 import Exprt from './export'
-import ThemeLabel from '@/component/theme-label'
+import QvLabel from '@/component/ui/label'
 
 /** 归档 */
 export default function Zip() {
@@ -30,7 +29,7 @@ function Nav() {
     return (
         <div className={s.Nav}>
             {nav_li.map((v) => (
-                <ThemeLabel
+                <QvLabel
                     key={v}
                     add_class={[s.item, use === v ? s.use : '']}
                     onClick={() => {
@@ -38,30 +37,8 @@ function Nav() {
                     }}
                 >
                     {v}
-                </ThemeLabel>
+                </QvLabel>
             ))}
-        </div>
-    )
-}
-
-function Bar() {
-    return (
-        <div className={s.Bar}>
-            <ThemeButton
-                add_class={[s.btn]}
-                onClick={() => {
-                    witch$.next('import')
-                }}
-            >
-                导入
-            </ThemeButton>
-            <ThemeButton
-                onClick={() => {
-                    witch$.next('export')
-                }}
-            >
-                导出
-            </ThemeButton>
         </div>
     )
 }

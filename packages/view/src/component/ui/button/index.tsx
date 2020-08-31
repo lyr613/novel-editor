@@ -20,14 +20,14 @@ export default function QvButton(p: p) {
     const eset = useObservable(() => editer_setting$)
     const theme = eset?.common.theme ?? 'word'
     const clrs = theme_colors
-
+    // 这里由于弹窗还不再#app内,暂时不能提取样式
     const add_style = StyleSheet.create({
         root: p.style ?? {},
         theme: p.withTheme
             ? {
                   backgroundColor: clrs[theme][4],
                   border: `1px solid ${clrs[theme][4]}`,
-                  color: 'var(--CLRt1)',
+                  color: 'white',
                   ':hover': {
                       backgroundColor: clrs[theme][3],
                       borderColor: clrs[theme][3],
@@ -36,10 +36,12 @@ export default function QvButton(p: p) {
             : {},
         disabled: p.disabled
             ? {
+                  borderColor: '#eeeeee',
                   backgroundColor: '#eeeeee',
                   color: 'gray',
                   cursor: 'unset',
                   ':hover': {
+                      borderColor: '#eeeeee',
                       backgroundColor: '#eeeeee',
                       color: 'gray',
                   },

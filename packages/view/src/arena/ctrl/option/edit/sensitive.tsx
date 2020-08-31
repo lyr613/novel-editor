@@ -1,13 +1,13 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeLabel from '@/component/theme-label'
-import ThemeButton from '@/component/theme-button'
-import { Dialog, DialogType, TextField, DialogFooter, DefaultButton, Label } from 'office-ui-fabric-react'
+import { Dialog, DialogType, TextField, DialogFooter } from 'office-ui-fabric-react'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { shallowCopy } from '@/rx/shallow-copy'
 import { editer_setting$ } from '@/subject'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 const will_delete$ = new BehaviorSubject('')
 
@@ -36,15 +36,17 @@ function List() {
     return (
         <div className={s.List}>
             {list.map((word) => (
-                <ThemeLabel
+                <QvLabel
                     key={word}
-                    add_class={[s.one]}
                     onClick={() => {
                         will_delete$.next(word)
                     }}
+                    style={{
+                        margin: '0 0 10px 10px',
+                    }}
                 >
                     {word}
-                </ThemeLabel>
+                </QvLabel>
             ))}
         </div>
     )
@@ -56,14 +58,17 @@ function AddOne() {
 
     return (
         <>
-            <ThemeButton
-                className={s.new}
+            <QvButton
+                withTheme
                 onClick={() => {
                     set_show(true)
                 }}
+                style={{
+                    margin: '10px',
+                }}
             >
                 添加
-            </ThemeButton>
+            </QvButton>
             <Dialog
                 hidden={!show}
                 onDismiss={() => {
@@ -88,28 +93,24 @@ function AddOne() {
                     }}
                 ></TextField>
                 <DialogFooter>
-                    <ThemeButton
+                    <QvButton
+                        withTheme
                         disabled={!word.length}
                         onClick={() => {
-                            // const list = sensitive_list$.value
-                            // if (!list.includes(word)) {
-                            // 	list.push(word)
-                            // 	sensitive_list$.next(list)
-                            // }
                             _add_words(word)
                             set_show(false)
                             set_word('')
                         }}
                     >
                         好
-                    </ThemeButton>
-                    <DefaultButton
+                    </QvButton>
+                    <QvButton
                         onClick={() => {
                             set_show(false)
                         }}
                     >
                         取消
-                    </DefaultButton>
+                    </QvButton>
                 </DialogFooter>
             </Dialog>
         </>
@@ -162,7 +163,8 @@ function DeleteOne() {
             }}
         >
             <DialogFooter>
-                <ThemeButton
+                <QvButton
+                    withTheme
                     onClick={() => {
                         const opt = editer_setting$.value
                         opt.sensitive = (opt.sensitive ?? []).filter((v) => v !== word)
@@ -172,14 +174,14 @@ function DeleteOne() {
                     }}
                 >
                     好
-                </ThemeButton>
-                <DefaultButton
+                </QvButton>
+                <QvButton
                     onClick={() => {
                         will_delete$.next('')
                     }}
                 >
                     取消
-                </DefaultButton>
+                </QvButton>
             </DialogFooter>
         </Dialog>
     )

@@ -1,10 +1,10 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import { get_cur_book_src } from '@/source/book'
 import { git_init_status$ } from './subj'
+import QvButton from '@/component/ui/button'
 
 /** 没有初始化过 */
 export default function NoHas1() {
@@ -12,7 +12,8 @@ export default function NoHas1() {
     return (
         <div className={s.NoHas1}>
             <div className={s.label}>没有创建仓库</div>
-            <ThemeButton
+            <QvButton
+                withTheme
                 onClick={() => {
                     const b: boolean = ipc().sendSync('git_init', get_cur_book_src())
                     if (b) {
@@ -25,7 +26,7 @@ export default function NoHas1() {
                 }}
             >
                 创建
-            </ThemeButton>
+            </QvButton>
             <div className={s.msg}>{msg}</div>
         </div>
     )

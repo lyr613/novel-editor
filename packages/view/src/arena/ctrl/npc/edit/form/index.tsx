@@ -1,30 +1,19 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import {
-    TextField,
-    MaskedTextField,
-    PrimaryButton,
-    Dropdown,
-    Label,
-    Icon,
-    Dialog,
-    DialogType,
-    DialogFooter,
-    DefaultButton,
-} from 'office-ui-fabric-react'
+import { TextField, Dropdown, Label, Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react'
 import { sty_text } from './office-style'
 import { useObservable } from 'rxjs-hooks'
 import { map } from 'rxjs/operators'
 import { electron } from '@/const'
 import { next_router } from '@/router/router'
 import DateYMD from '@/component/date'
-import ThemeButton from '@/component/theme-button'
 import { shallowCopy } from '@/rx/shallow-copy'
-import ThemeLabel from '@/component/theme-label'
 import { get_ran_name } from './util-name'
 import IconButton from '@/component/icon-button'
 import { npc_edit$, npc_li$, npc_map$, save_npc_edited } from '@/source/npc'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 export default function NpcForm() {
     return (
@@ -59,15 +48,17 @@ function Base() {
                         }}
                         autoComplete="off"
                     ></TextField>
-                    <ThemeLabel
-                        add_class={[s.namelabel]}
+                    <QvLabel
                         onClick={() => {
                             base.name = get_ran_name()
                             npc_edit$.next(npc)
                         }}
+                        style={{
+                            marginLeft: '10px',
+                        }}
                     >
                         随机
-                    </ThemeLabel>
+                    </QvLabel>
                 </li>
                 <li className={s.flexrow}>
                     <Dropdown
@@ -354,7 +345,8 @@ function Uneed() {
                     }}
                 ></TextField>
                 <DialogFooter>
-                    <PrimaryButton
+                    <QvButton
+                        withTheme
                         disabled={!form_link_id}
                         onClick={() => {
                             npc.uneed.links = npc.uneed.links.filter((v) => v.npc_id !== form_link_id)
@@ -369,8 +361,8 @@ function Uneed() {
                         }}
                     >
                         好
-                    </PrimaryButton>
-                    <DefaultButton onClick={close_dialog} text="取消" />
+                    </QvButton>
+                    <QvButton onClick={close_dialog}>取消</QvButton>
                 </DialogFooter>
             </Dialog>
         </section>
@@ -379,7 +371,8 @@ function Uneed() {
 
 function Confirm() {
     return (
-        <ThemeButton
+        <QvButton
+            withTheme
             onClick={() => {
                 _hand_all_npc_link()
                 const re = save_npc_edited()
@@ -394,7 +387,7 @@ function Confirm() {
             }}
         >
             好
-        </ThemeButton>
+        </QvButton>
     )
 }
 

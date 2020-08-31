@@ -1,14 +1,14 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useReducer } from 'react'
 import s from './s.module.scss'
-import ThemeLabel from '@/component/theme-label'
-import { DefaultButton, Dropdown } from 'office-ui-fabric-react'
+import { Dropdown } from 'office-ui-fabric-react'
 import { useObservable } from 'rxjs-hooks'
-import ThemeButton from '@/component/theme-button'
 import { ipc } from '@/const'
 import SectionHeader from '@/component/section-header'
 import { book_li$, find_book_li_auto } from '@/source/book'
 import { select_dir } from '@/source/fs-common'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 export default function Exprt() {
     const [dir_src, set_dir_src] = useState('')
@@ -27,7 +27,7 @@ export default function Exprt() {
         <div className={s.Export}>
             <SectionHeader>导出文本</SectionHeader>
             <div className={s.line}>
-                <ThemeLabel> 要导出的书</ThemeLabel>
+                <QvLabel> 要导出的书</QvLabel>
                 <Dropdown
                     options={book_sel}
                     className={s.dropdown}
@@ -38,24 +38,25 @@ export default function Exprt() {
                 ></Dropdown>
             </div>
             <div className={s.line}>
-                <ThemeLabel>选择一个文件夹: {dir_src}</ThemeLabel>
-                <DefaultButton
+                <QvLabel>{'选择一个文件夹: ' + dir_src}</QvLabel>
+                <QvButton
                     onClick={async () => {
                         const re = await select_dir()
                         set_dir_src(re.src)
                     }}
                 >
                     选择存放位置
-                </DefaultButton>
+                </QvButton>
             </div>
             <div className={s.line}>
-                <ThemeButton
+                <QvButton
+                    withTheme
                     onClick={() => {
                         ipc().send('export_txt', book_src, dir_src)
                     }}
                 >
                     开始导出
-                </ThemeButton>
+                </QvButton>
 
                 <Step />
             </div>
@@ -79,7 +80,7 @@ function Step() {
     return (
         <div className={s.Step}>
             {arr.map((st, i) => (
-                <ThemeLabel key={i}>{st}</ThemeLabel>
+                <QvLabel key={i}>{st}</QvLabel>
             ))}
         </div>
     )

@@ -1,19 +1,19 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import { TextField, PrimaryButton, Icon } from 'office-ui-fabric-react'
+import { TextField, Icon } from 'office-ui-fabric-react'
 import DateYMD from '@/component/date'
 import { useObservable } from 'rxjs-hooks'
-import { incident_edit$, save_incident_edited, find_incident_li_auto } from '@/source/incident'
+import { incident_edit$, save_incident_edited } from '@/source/incident'
 import NpcSelect from '@/component/npc'
 import { next_router } from '@/router/router'
-import ThemeButton from '@/component/theme-button'
 import SectionHeader from '@/component/section-header'
-import ThemeLabel from '@/component/theme-label'
 import { shallowCopy } from '@/rx/shallow-copy'
 import IconButton from '@/component/icon-button'
 import { use_node_then_edit } from '@/source/node/method'
 import { chapter_li$ } from '@/source/chapter-node'
+import QvButton from '@/component/ui/button'
+import QvLabel from '@/component/ui/label'
 
 export default function Form() {
     return (
@@ -108,7 +108,7 @@ function Links() {
             <div className={s.aline}>
                 <span className={s.name}>所属线索: </span>
                 {link_nums.map((n) => (
-                    <ThemeLabel
+                    <QvLabel
                         key={n}
                         onClick={() => {
                             incident.link_line.index = n
@@ -117,12 +117,12 @@ function Links() {
                         add_class={[s.event_line, incident.link_line.index === n ? s.hold : '']}
                     >
                         {_link_name_map(n)}
-                    </ThemeLabel>
+                    </QvLabel>
                 ))}
             </div>
             <div className={s.aline}>
                 <span className={s.name}>开始章节: </span>
-                <ThemeLabel
+                <QvLabel
                     onClick={() => {
                         const id = incident.link_line.start_node_id
                         use_node_then_edit(id)
@@ -130,7 +130,7 @@ function Links() {
                     add_class={[s.can_click]}
                 >
                     {start_name}
-                </ThemeLabel>
+                </QvLabel>
                 <IconButton
                     icon="Settings"
                     add_class={[s.icon]}
@@ -142,7 +142,7 @@ function Links() {
             </div>
             <div className={s.aline}>
                 <span className={s.name}>结束章节: </span>
-                <ThemeLabel
+                <QvLabel
                     onClick={() => {
                         const id = incident.link_line.end_node_id
                         use_node_then_edit(id)
@@ -150,7 +150,7 @@ function Links() {
                     add_class={[s.can_click]}
                 >
                     {end_name}
-                </ThemeLabel>
+                </QvLabel>
                 <IconButton
                     icon="Settings"
                     add_class={[s.icon]}
@@ -171,7 +171,7 @@ function Links() {
                         }}
                     ></TextField>
                     {node_show.map((nd) => (
-                        <ThemeLabel
+                        <QvLabel
                             key={nd.id}
                             add_class={[s.wait_set]}
                             onClick={() => {
@@ -186,7 +186,7 @@ function Links() {
                             }}
                         >
                             {nd.name}
-                        </ThemeLabel>
+                        </QvLabel>
                     ))}
                 </div>
             )}
@@ -301,14 +301,15 @@ function DateSE() {
 function Confirm() {
     return (
         <div className={s.Confirm}>
-            <ThemeButton
+            <QvButton
+                withTheme
                 onClick={() => {
                     save_incident_edited()
                     next_router('incident')
                 }}
             >
                 好
-            </ThemeButton>
+            </QvButton>
         </div>
     )
 }
