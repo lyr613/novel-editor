@@ -3,6 +3,7 @@ import path from 'path'
 import fs from 'fs'
 import { reply } from './util'
 import { ENV } from '@/const'
+import prettier from 'prettier'
 
 export function watch_fs_common() {
     // 读取文件内容
@@ -58,6 +59,12 @@ function fs_write(e: Electron.IpcMainEvent, type: 'txt' | 'json', srcs: string[]
     try {
         _check_type(['txt', 'json'], type)
         const src = _compose_src(srcs, type)
+        if (/json$/.test(src)) {
+            inset = prettier.format(inset, {
+                tabWidth: 4,
+                parser: 'json',
+            })
+        }
         fs.writeFileSync(src, inset)
         reply(e, 'fs_write', true)
     } catch (error) {
