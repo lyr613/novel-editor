@@ -31,6 +31,9 @@ const cfg = {
     },
     target: 'electron-main',
     module: {
+        unknownContextCritical: false,
+        exprContextCritical: false,
+        noParse: /prettier\/parser-typescript/,
         rules: [
             {
                 oneOf: [
