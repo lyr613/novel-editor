@@ -10,7 +10,7 @@
 
 [秋无衣-bilibili](https://space.bilibili.com/37384331)
 
-## 开发
+## 工作区说明
 
 使用 yarn workspace, view 为显示内容, elec 为 electron 服务
 
@@ -23,6 +23,7 @@
 
 -   typescript
 -   rxjs
+-   monaco-editor
 
 #### 安装依赖
 
@@ -33,10 +34,11 @@ yarn add some -W
 // package内与普通yarn命令一致
 ```
 
-#### 启动
+#### 开发启动
 
 ```
 // page部分
+第一次 view 先执行 setup-dll 命令
 // 见page下package.json start
 ```
 
