@@ -5,6 +5,7 @@ build-final/
 build-page/
 
 yarn.lock
+yarn-error.log
 .vscode
 
 publish.js
