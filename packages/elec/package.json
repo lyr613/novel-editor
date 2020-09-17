@@ -17,8 +17,8 @@
         "cross-env": "^7.0.2",
         "directory-named-webpack-plugin": "4.0.1",
         "electron": "9.1.0",
-        "electron-builder": "^21.2.0",
-        "electron-updater": "^4.2.0",
+        "electron-builder": "22.8.0",
+        "electron-updater": "^4.3.4",
         "file-loader": "^6.0.0",
         "ts-loader": "^6.2.1",
         "webpack": "^4.41.5",
@@ -41,7 +41,10 @@
             "./process/**"
         ],
         "mac": {
-            "target": "dmg"
+            "target": [
+                "dmg",
+                "zip"
+            ]
         },
         "dmg": {
             "contents": [

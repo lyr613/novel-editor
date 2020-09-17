@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import { create_option, did_create } from '@/create'
 import { set_watch } from './watch'
-import { update_check } from './update'
+import { update_check } from './update/index'
 import { create_main_window } from './util/main-window'
 
 console.log(process.env.NODE_ENV)
