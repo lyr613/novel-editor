@@ -7,7 +7,7 @@ type env = 'web' | 'electron'
 export const ENV = get_env()
 
 function get_env() {
-    if ((electron().CommandLine as any) === 'web') {
+    if ((electron() as any).CommandLine === 'web') {
         return 'web'
     }
     return 'electron'

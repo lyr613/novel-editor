@@ -31,6 +31,9 @@ export function did_create(win: Electron.BrowserWindow) {
     // win.maximize()
     set_menu(win)
     load_page(win)
+    if (process.env.NODE_ENV === 'development') {
+        win.webContents.openDevTools()
+    }
 }
 
 /**

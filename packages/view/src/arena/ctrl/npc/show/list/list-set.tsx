@@ -3,10 +3,9 @@ import { IColumn, ActionButton } from 'office-ui-fabric-react'
 import { next_router } from '@/router/router'
 import { ReplaySubject } from 'rxjs'
 import { gender_decode } from '@/util'
-import { electron } from '@/const'
+import { electron, ipc } from '@/const'
 import { npc_use_id$, npc_li$, find_npc_li_auto } from '@/source/npc'
 import { get_cur_book_src } from '@/source/book'
-const ipc = electron().ipcRenderer
 
 export interface npc_show {
     id: string
@@ -90,7 +89,7 @@ export function how_render(item: npc_show, index?: number, column?: IColumn) {
                             const list = npc_li$.value
                             const npc = list.find((v) => v.id === item.id) || null
                             if (npc) {
-                                const re = ipc.sendSync('npc-del', get_cur_book_src(), npc, true)
+                                const re = ipc().sendSync('npc-del', get_cur_book_src(), npc, true)
                                 if (re === true) {
                                     find_npc_li_auto()
                                 }
