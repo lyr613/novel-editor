@@ -5,5 +5,5 @@ import { style as s } from './style'
 
 /** Link */
 export default function Link() {
-    return <div className={css(s.root)}>关系图设置</div>
+    return <div className={css(s.root)}>关系图设置 添加时, 检查已经有此两人的连接</div>
 }
