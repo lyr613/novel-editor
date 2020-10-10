@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import s from './s.module.scss'
-import Bar from './bar'
 import ListLike from './list'
 import { find_npc_li_auto } from '@/source/npc'
 import { find_chapter_li_auto } from '@/source/chapter-node'
@@ -16,7 +15,6 @@ export default function Show() {
     }, [])
     return (
         <div className={s.Show}>
-            <Bar></Bar>
             <ListLike></ListLike>
         </div>
     )

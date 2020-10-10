@@ -16,7 +16,7 @@ export default function EditUser() {
     }, [])
     return (
         <>
-            <Back />
+            {/* <Back /> */}
             <Form></Form>
         </>
     )

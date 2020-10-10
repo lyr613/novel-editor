@@ -1,7 +1,8 @@
 .LinkGraph {
     position: relative;
+    overflow: hidden;
     box-sizing: border-box;
-    height: 100vh;
+    flex-grow: 1;
     padding: 10px;
     .bar {
         position: absolute;

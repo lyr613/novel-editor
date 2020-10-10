@@ -97,7 +97,7 @@ export default function LinkGraph() {
     }, [])
     return (
         <div className={s.LinkGraph}>
-            <div className={s.bar}>
+            {/* <div className={s.bar}>
                 <QvButton
                     withTheme
                     onClick={() => {
@@ -106,7 +106,7 @@ export default function LinkGraph() {
                 >
                     返回
                 </QvButton>
-            </div>
+            </div> */}
             <div className={s.graph} ref={ref}></div>
         </div>
     )

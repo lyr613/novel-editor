@@ -8,7 +8,7 @@ import { screen_wh$ } from '@/subscribe/screen'
 import { Icon } from 'office-ui-fabric-react'
 import { next_router } from '@/router/router'
 import { shallowCopy } from '@/rx/shallow-copy'
-import { filterd_list$ } from '../subj'
+import { npc_did_filter_li$ } from '../../public/filter'
 import { show_format } from '@/function/text'
 import { npc_use$, npc_use_id$, npc_li$, npc_li_save, find_npc_li_auto } from '@/source/npc'
 
@@ -16,7 +16,7 @@ export default function List() {
     // 一个npc的宽度
     const [one_w, set_one_w] = useState(0)
     /** npc列表 */
-    const list = useObservable(() => filterd_list$, [])
+    const list = useObservable(() => npc_did_filter_li$, [])
     const use = useObservable(() => npc_use$)
     const refbox = useRef<null | HTMLDivElement>(null)
     useEffect(() => {

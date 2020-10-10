@@ -3,6 +3,7 @@ import { npc_li$ } from '@/source/npc'
 import { switchMap, map, tap, debounceTime } from 'rxjs/operators'
 import { shallowCopy } from '@/rx/shallow-copy'
 
+/** 搜索条件 */
 export const filter$ = new BehaviorSubject(create_filter())
 
 export function create_filter() {
@@ -12,7 +13,8 @@ export function create_filter() {
     }
 }
 
-export const filterd_list$ = npc_li$.pipe(
+/** 过滤后的npc列表 */
+export const npc_did_filter_li$ = npc_li$.pipe(
     switchMap((list) =>
         filter$.pipe(
             debounceTime(200),
