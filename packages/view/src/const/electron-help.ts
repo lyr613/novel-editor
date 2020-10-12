@@ -1,7 +1,7 @@
 /** 防止网页打开没有electron */
 export function electron(): Electron.IpcRenderer {
     if (window.electron) {
-        console.log(window.electron)
+        // console.log(window.electron)
 
         return window.electron.ipcRenderer
     }

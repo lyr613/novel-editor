@@ -11,6 +11,7 @@ import { overload_style_scroll } from './util/style-overload'
 import Loading from './component/loading'
 import Modal from './arena/modal'
 import { auto_link_observable } from './source/auto-link'
+import { __dev_auto } from './dev-auto'
 
 const App: React.FC = () => {
     const eset = useObservable(() => editer_setting$.pipe(shallowCopy()))
@@ -32,6 +33,7 @@ const App: React.FC = () => {
     // 自动订阅的集中管理, 不需要退订
     useEffect(() => {
         auto_link_observable()
+        __dev_auto()
     }, [])
     return (
         <div id="app" className={'theme-' + theme}>
