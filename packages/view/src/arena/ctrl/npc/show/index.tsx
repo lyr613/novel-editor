@@ -7,11 +7,9 @@ import { find_chapter_li_auto } from '@/source/chapter-node'
 
 export default function Show() {
     useEffect(() => {
-        setTimeout(() => {
-            // 不可以写到总的index, 编辑回来自动重查
-            find_npc_li_auto()
-            find_chapter_li_auto()
-        }, 0)
+        // 不可以写到总的index, 编辑回来自动重查
+        find_npc_li_auto()
+        find_chapter_li_auto()
     }, [])
     return (
         <div className={s.Show}>

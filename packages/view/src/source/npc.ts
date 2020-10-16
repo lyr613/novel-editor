@@ -48,6 +48,7 @@ export const find_npc_li_$ = book_use$.pipe(
     }),
 )
 
+/** 自动装载npc列表 */
 export function find_npc_li_auto() {
     find_npc_li_$.pipe(take(1)).subscribe((li) => {
         npc_li$.next(li)
