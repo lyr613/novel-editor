@@ -8,6 +8,7 @@ import WindowSize from './ui/full-screen'
 import Theme from './ui/theme'
 import Font from './edit/font'
 import Scroll from './ui/scroll'
+import TableSize from './edit/table-size'
 import QvLabel from '@/component/ui/label'
 
 /** 设置 */
@@ -22,6 +23,7 @@ export default function Option() {
             {use === option_li[0] && <Scroll />}
             {use === option_li[1] && <Sensitive />}
             {use === option_li[1] && <Font />}
+            {use === option_li[1] && <TableSize />}
         </div>
     )
 }

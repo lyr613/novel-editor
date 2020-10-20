@@ -132,6 +132,26 @@ export function useEditor(ref: React.MutableRefObject<HTMLDivElement | null>) {
 }
 
 function on_key_up(editor: monaco.editor.IStandaloneCodeEditor, event: monaco.IKeyboardEvent) {
+    // 回车时, 自动添加段首空格
+    console.log(event.code, 'event.code')
+
+    if (event.code === 'Enter' && event.altKey) {
+        const editerset = editer_setting$.value.table_size ?? 0
+        if (!editerset) {
+            return
+        }
+        const prefix = Array(editerset)
+            .fill(' ')
+            .join('')
+        const t = editor.getValue()
+        const t1 = t
+            .replace(/^\s*/, prefix)
+            .replace(/\n+\s*\n+/g, '\n\n')
+            .replace(/\n[ ]*/g, '\n' + prefix)
+            .trimEnd()
+        editor.setValue(t1)
+        editor.focus()
+    }
     const t = editor.getValue()
     const node = node_use$.value
     const book_src = get_cur_book_src()

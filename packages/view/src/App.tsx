@@ -33,7 +33,7 @@ const App: React.FC = () => {
     // 自动订阅的集中管理, 不需要退订
     useEffect(() => {
         auto_link_observable()
-        __dev_auto()
+        // __dev_auto()
     }, [])
     return (
         <div id="app" className={'theme-' + theme}>

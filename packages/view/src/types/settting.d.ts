@@ -95,9 +95,14 @@ declare namespace Setting {
         sensitive?: string[]
         font?: {
             size: number
+            /** 固定字体 syhei1-6 */
             family: string
+            /** 自定义字体 */
+            self?: string
         }
         git: boolean
+        /** 段首宽度(每个段落自动以设定数量的空格起始) */
+        table_size?: number
     }
 }
 

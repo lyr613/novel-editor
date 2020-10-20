@@ -22,7 +22,7 @@ export default function Font() {
                         label="字号"
                         value={(opt?.font?.size ?? 16) + ''}
                         onChange={(_, ns) => {
-                            console.log(ns)
+                            // console.log(ns)
                             const nn = Number(ns) || 0
                             if (opt.font) {
                                 opt.font.size = nn
@@ -49,7 +49,7 @@ export default function Font() {
                         }}
                     ></TextField>
                 </div>
-                <QvLabel>字重</QvLabel>
+                <QvLabel>预置字体</QvLabel>
                 <div className={s.fontfamily}>
                     {familys.map((fm) => (
                         <div
@@ -61,10 +61,12 @@ export default function Font() {
                             onClick={() => {
                                 if (opt.font) {
                                     opt.font.family = fm
+                                    opt.font.self = ''
                                 } else {
                                     opt.font = {
-                                        size: 16,
+                                        size: 18,
                                         family: fm,
+                                        self: '',
                                     }
                                 }
                                 editer_setting$.next(opt)
@@ -73,6 +75,25 @@ export default function Font() {
                             使用这个字体
                         </div>
                     ))}
+                </div>
+                <QvLabel>自定义字体</QvLabel>
+                <div className={s.fontsize}>
+                    <TextField
+                        value={opt.font?.self ?? ''}
+                        onChange={(_, ns) => {
+                            const next = ns
+                            if (opt.font) {
+                                opt.font.self = next
+                            } else {
+                                opt.font = {
+                                    size: 18,
+                                    family: 'syhei2',
+                                    self: next,
+                                }
+                            }
+                            editer_setting$.next(opt)
+                        }}
+                    />
                 </div>
             </div>
         </>
