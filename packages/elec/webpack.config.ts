@@ -17,7 +17,7 @@ const cfg = {
         // vender: ['font-list'],
     },
     resolve: {
-        extensions: ['.ts', '.js', '.yml', '.xml', '.json', '.vbs', '.*'],
+        extensions: ['.ts', '.js', '.json'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
         },
@@ -33,7 +33,7 @@ const cfg = {
     module: {
         unknownContextCritical: false,
         exprContextCritical: false,
-        noParse: /prettier\/parser-typescript/,
+        noParse: /(prettier\/parser-typescript)|(typescript-etw)/,
         rules: [
             {
                 oneOf: [
