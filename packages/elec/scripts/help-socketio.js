@@ -2,6 +2,7 @@
 // Cannot find module 'socket.io-client/dist/socket.io.js'
 // 路径问题
 // 替换__dirname为固定路径, 打印发现无法获取
+// "socket.io": "^2.3.0"
 
 const fs = require('fs')
 const path = require('path')
