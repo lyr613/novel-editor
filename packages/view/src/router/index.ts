@@ -14,6 +14,7 @@ export const ROUTERL1 = {
     option: '设置',
     zip: '归档',
     statistics: '统计',
+    connect_phone: '连接手机',
 }
 export const ROUTERL2 = {
     edit: {

@@ -54,6 +54,7 @@ export function Menu() {
                 <Item path="option">设置</Item>
                 <Item path="zip">归档</Item>
                 <Item path="help">{ROUTERL1.help}</Item>
+                <Item path="connect_phone">连手机</Item>
                 {/* <Item path="setting">设置</Item> */}
             </ul>
         </div>

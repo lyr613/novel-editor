@@ -18,6 +18,7 @@ import { next_router } from '@/router/router'
 import { load_monaco, did_monaco_load$ } from '@/plugin/monaco-editer'
 import Statistics from './statistics'
 import { take, filter } from 'rxjs/operators'
+import ConnectPhone from './connect-phone'
 
 export default function MainCtrl() {
     useEffect(() => {
@@ -41,6 +42,7 @@ export default function MainCtrl() {
                 <Route path="/option" component={Option} />
                 <Route path="/zip" component={Zipp} />
                 <Route path="/statistics" component={Statistics} />
+                <Route path="/connect_phone" component={ConnectPhone} />
                 <Route component={Empty} />
             </Switch>
         </div>

@@ -33,7 +33,7 @@ const cfg = {
     module: {
         unknownContextCritical: false,
         exprContextCritical: false,
-        noParse: /(prettier\/parser-typescript)|(typescript-etw)/,
+        noParse: /(parser-typescript.js)|(typescript-etw)/,
         rules: [
             {
                 oneOf: [

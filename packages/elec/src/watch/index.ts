@@ -10,6 +10,7 @@ import { watch_book_common } from './book-common'
 import { watch_git } from './git'
 import { watch_editer } from './about-editer'
 import { watch_ui } from './ui'
+import { watch_connect_phone } from './connect-phone'
 
 export function set_watch(win: Electron.BrowserWindow) {
     watch_book()
@@ -23,5 +24,6 @@ export function set_watch(win: Electron.BrowserWindow) {
     watch_git()
     watch_editer()
     watch_ui()
+    watch_connect_phone()
     watch_hotkey(win)
 }

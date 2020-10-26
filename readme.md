@@ -78,4 +78,18 @@ yarn add some -W
 yarn config set registry https://registry.npm.taobao.org -g
 
 yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
+
+electron需要再npmconfig也设置, 如果碰到百度下怎么整
 ```
+
+#### socketio
+
+```
+Cannot find module 'socket.io-client/dist/socket.io.js'
+报这个错误
+执行 elec/scripts/help-socketio.js 文件即可
+```
+
+#### 页面项目启动需要 dll
+
+执行 view 下的 setup-dll 命令
