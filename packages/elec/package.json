@@ -10,7 +10,8 @@
         "electron-start": " node ./scripts/electron-start.js ",
         "electron-build": " npx webpack --mode production && npx electron-builder ",
         "prerelease": " npx webpack --mode production ",
-        "release": " node ./scripts/publish.js "
+        "release": " node ./scripts/publish.js ",
+        "fix-sockio-src": " node ./scripts/help-socketio.js "
     },
     "devDependencies": {
         "bufferutil": "^4.0.1",

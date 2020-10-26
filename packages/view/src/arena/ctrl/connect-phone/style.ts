@@ -20,8 +20,8 @@ export const style: style = StyleSheet.create<style>({
     },
     help: {
         boxSizing: 'border-box',
-        padding: 10,
+        padding: 20,
         fontSize: 14,
-        textIndent: '2em',
+        // textIndent: '2em',
     },
 })
