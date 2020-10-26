@@ -19,6 +19,7 @@ export function create_option(): Electron.BrowserWindowConstructorOptions {
             // devTools: true,
             devTools: process.env.NODE_ENV === 'development',
         },
+        /** 显示最顶部的那一条(带最小化, 关闭的那个), windows关掉了  */
         frame: process.platform === 'darwin',
     }
 }

@@ -29,7 +29,7 @@ export default function WindowSize() {
                             ipc().send('ui_window_full_status', false)
                         }}
                         style={{
-                            margin: '10px',
+                            margin: '10px 0 10px 10px',
                         }}
                     >
                         退出全屏
@@ -43,7 +43,7 @@ export default function WindowSize() {
                             ipc().send('ui_window_full_status', true)
                         }}
                         style={{
-                            margin: '10px',
+                            margin: '10px 0 10px 10px',
                         }}
                     >
                         全屏
@@ -52,7 +52,7 @@ export default function WindowSize() {
                         <>
                             <QvButton
                                 style={{
-                                    marginLeft: '10px',
+                                    margin: '10px 0 10px 10px',
                                 }}
                                 onClick={() => {
                                     ipc().send('ui_window_size', 1)
@@ -62,7 +62,7 @@ export default function WindowSize() {
                             </QvButton>
                             <QvButton
                                 style={{
-                                    marginLeft: '10px',
+                                    margin: '10px 0 10px 10px',
                                 }}
                                 onClick={() => {
                                     ipc().send('ui_window_size', 900, 600)
@@ -72,6 +72,16 @@ export default function WindowSize() {
                             </QvButton>
                         </>
                     )}
+                    <QvButton
+                        style={{
+                            margin: '10px 0 10px 40px',
+                        }}
+                        onDoubleClick={() => {
+                            ipc().send('ui_esc')
+                        }}
+                    >
+                        双击退出
+                    </QvButton>
                 </div>
             )}
         </>

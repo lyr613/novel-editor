@@ -9,6 +9,8 @@ export function watch_ui() {
     ipcMain.on('ui_window_full_status', ui_window_full_status)
     /** 设置窗口尺寸, 不传h认为最大化 */
     ipcMain.on('ui_window_size', ui_window_size)
+    /** 退出 */
+    ipcMain.on('ui_esc', ui_esc)
 }
 
 /** 当前窗口全屏状态, 无参数查询, 有参数设置 */
@@ -36,4 +38,10 @@ function ui_window_size(e: Electron.IpcMainEvent, w: number, h: number) {
     }
     mw.setPosition((W - w) / 2, (H - h) / 2)
     mw.setSize(w, h)
+}
+
+/** 退出 */
+function ui_esc(e: Electron.IpcMainEvent) {
+    const win = get_main_window()
+    win.close()
 }

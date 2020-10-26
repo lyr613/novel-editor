@@ -111,7 +111,8 @@ checkBrowsers(paths.appPath, isInteractive)
             }
 
             console.log(chalk.cyan('Starting the development server...\n'))
-            openBrowser(urls.localUrlForBrowser)
+            console.log(urls.localUrlForBrowser)
+            // openBrowser(urls.localUrlForBrowser)
         })
         ;['SIGINT', 'SIGTERM'].forEach(function(sig) {
             process.on(sig, function() {

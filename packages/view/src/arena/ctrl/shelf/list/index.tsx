@@ -286,7 +286,7 @@ function ButtonBox(book: book, editer_set: setting | null) {
 function Img(book: book) {
     return (
         <div
-            className={css(gs.hoverfocu)}
+            className={css(gs.pointer)}
             onClick={() => {
                 ipc().sendSync('book_set_cover', book.src)
             }}
