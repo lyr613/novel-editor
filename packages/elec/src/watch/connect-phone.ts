@@ -7,6 +7,7 @@ import fs from 'fs-extra'
 import { get_main_window } from '@/util/main-window'
 import SocketIOStatic from 'socket.io'
 import detect from 'detect-port'
+import { get_chapters } from '@/func/fs'
 
 class SocketIt {
     /** app客户端 */
@@ -44,6 +45,9 @@ class SocketIt {
         console.log('使用此端口建立socket', suggest_port)
         http_server.listen(suggest_port)
     }
+    /**
+     * 获取socket连接的地址
+     * 页面使用以展示二维码 */
     get_socket_src() {
         if (this.port_use === null) {
             return ''
@@ -54,6 +58,26 @@ class SocketIt {
         }
         return `http://${ip}:${this.port_use}`
     }
+    /**
+     * 检查app客户端
+     */
+    check_app_client() {
+        if (!this.app_client) {
+            return false
+        }
+        return !this.app_client.disconnected
+    }
+    /** 向手机发送 */
+    send_2_phone(bk: book) {
+        const win = get_main_window()
+        if (!this.check_app_client()) {
+            win.webContents.send('phone-send-2-phone-status', '没有连接到app')
+            return
+        }
+        const cpsrc = path.join(bk.src, 'chapter.json')
+        const cps = get_chapters(bk.src)
+        win.webContents.send('phone-send-2-phone-status', '开始向手机同步文件')
+    }
 }
 
 const socket_it = new SocketIt()
@@ -61,6 +85,7 @@ const socket_it = new SocketIt()
 export function watch_connect_phone() {
     /** 获取socket连接地址, 可能为空字符串 */
     ipcMain.on('phone_socket_src', phone_socket_src)
+    ipcMain.on('phone_send_2_phone', phone_send_2_phone)
 }
 
 /** 获取socket连接地址, 可能为空字符串 */
@@ -68,6 +93,13 @@ async function phone_socket_src(e: Electron.IpcMainEvent) {
     await socket_it.init_server()
     const src = socket_it.get_socket_src()
     reply(e, 'phone_socket_src', src)
+}
+
+/** 向手机发送 */
+function phone_send_2_phone(e: Electron.IpcMainEvent, bk: book) {
+    console.log('bbbbbk', bk)
+
+    socket_it.send_2_phone(bk)
 }
 
 /**

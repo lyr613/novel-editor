@@ -1,6 +1,6 @@
 declare namespace Book {
     interface book {
-        /** 时间戳 */
+        /** uuid */
         id: string
         /** 书名 */
         name: string
