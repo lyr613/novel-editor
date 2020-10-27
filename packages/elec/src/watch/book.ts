@@ -56,7 +56,7 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
                 _safe_readme(src)
                 const opt = _parse_readme(src)
                 return {
-                    id: id32(),
+                    id: get_book_id(src),
                     name: opt.name || path.basename(src),
                     src,
                     cover: find_cover(src),
@@ -98,6 +98,34 @@ function load_books(e: Electron.IpcMainEvent, srcs: string[]) {
     function find_name(src: string) {
         _safe_readme(src)
         return path.basename(src)
+    }
+    function get_book_id(src: string) {
+        const optfile_src = path.join(src, 'shard.json')
+        const opt = {
+            id: id32(),
+        }
+        if (!fs.existsSync(optfile_src)) {
+            fs.writeFileSync(optfile_src, JSON.stringify(opt))
+            return opt.id
+        }
+        try {
+            const existed = fs.readFileSync(optfile_src, 'utf-8')
+            const exopt = JSON.parse(existed)
+            const exid = exopt.id
+            const m = /[a-z0-9]{32}/.test(exid)
+            // console.log('是合适的id32', m)
+            if (m) {
+                return exid
+            } else {
+                Object.assign(opt, exopt)
+                opt.id = id32()
+                fs.writeFileSync(optfile_src, JSON.stringify(opt))
+                return opt.id
+            }
+        } catch (error) {
+            fs.writeFileSync(optfile_src, JSON.stringify(opt))
+            return opt.id
+        }
     }
 }
 
