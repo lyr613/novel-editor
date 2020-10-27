@@ -32,6 +32,8 @@ class SocketIt {
     status_send: 'can_start' | 'did_setup_book' | 'did_json' | 'did_node' = 'can_start'
     stack_json: string[] = []
     stack_node: string[] = []
+    node_length = 1
+    prev_per = -1
 
     /** 初始化服务端 */
     async init_server() {
@@ -48,20 +50,31 @@ class SocketIt {
                 console.log('设置app客户端')
             })
             client.on('send-next', () => {
+                const win = get_main_window()
                 switch (this.status_send) {
                     case 'can_start':
                         if (this.stack_json.length) {
                             this.send_2_phone_json()
                         } else {
                             this.status_send = 'did_json'
+                            win.webContents.send('phone-send-2-phone-status', '章节索引同步完毕')
+                            win.webContents.send('phone-send-2-phone-status', `进度: 0%`)
+
                             this.send_2_phone_node()
                         }
                         break
                     case 'did_json':
                         if (this.stack_node.length) {
                             this.send_2_phone_node()
+                            const per = ((this.stack_node.length * 100) / this.node_length) | 0
+                            if (this.prev_per !== per) {
+                                win.webContents.send('phone-send-2-phone-status', `node-${100 - per}`)
+                                this.prev_per = per
+                            }
                         } else {
                             this.status_send = 'did_node'
+                            win.webContents.send('phone-send-2-phone-status', 'end')
+                            this.status_send = 'can_start'
                         }
                         break
 
@@ -118,6 +131,7 @@ class SocketIt {
         this.book_use = bk
         this.stack_json = ['chapter', 'npc']
         this.stack_node = nodes.map((v) => v.id)
+        this.node_length = nodes.length
 
         this.app_client!.emit('setup-book', bk.id, bk.name)
         // this.app_client!.emit('setup-book', bk.id, 'chapter.json', cptxt)

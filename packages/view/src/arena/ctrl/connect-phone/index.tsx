@@ -106,6 +106,21 @@ function Status() {
     useEffect(() => {
         let sts: string[] = ['进度:']
         const fun = (_: any, msg: string) => {
+            if (msg === 'start') {
+                sts = []
+                next_sts([])
+                return
+            }
+            if (/^node-/.test(msg)) {
+                msg = msg.replace(/^node-/, '')
+                sts[sts.length - 1] = `进度: ${msg}%`
+
+                next_sts([...sts])
+                return
+            }
+            if (msg === 'end') {
+                msg = '同步完成'
+            }
             sts = [...sts, msg]
             next_sts(sts)
         }
