@@ -20,6 +20,18 @@ class SocketIt {
     socket_server: null | SocketIOStatic.Server = null
     /** 使用的端口 */
     port_use: null | number = null
+    /** 正在传送的书  */
+    book_use!: book
+    /**
+     * 发送进度
+     * can_start 可以开始
+     * did_setup_book 已经准备好书目录, 由于文件夹命名不同, 书本信息在此步转化
+     * did_json 已经拷贝了各个json文件
+     * did_node 已经拷贝完所有节文本
+     */
+    status_send: 'can_start' | 'did_setup_book' | 'did_json' | 'did_node' = 'can_start'
+    stack_json: string[] = []
+    stack_node: string[] = []
 
     /** 初始化服务端 */
     async init_server() {
@@ -35,9 +47,27 @@ class SocketIt {
                 this.app_client = client
                 console.log('设置app客户端')
             })
-            client.on('set_it_page', () => {
-                this.page_client = client
-                console.log('设置app客户端')
+            client.on('send-next', () => {
+                switch (this.status_send) {
+                    case 'can_start':
+                        if (this.stack_json.length) {
+                            this.send_2_phone_json()
+                        } else {
+                            this.status_send = 'did_json'
+                            this.send_2_phone_node()
+                        }
+                        break
+                    case 'did_json':
+                        if (this.stack_node.length) {
+                            this.send_2_phone_node()
+                        } else {
+                            this.status_send = 'did_node'
+                        }
+                        break
+
+                    default:
+                        break
+                }
             })
         })
         const suggest_port = await detect(7101)
@@ -70,13 +100,43 @@ class SocketIt {
     /** 向手机发送 */
     send_2_phone(bk: book) {
         const win = get_main_window()
+        win.webContents.send('phone-send-2-phone-status', 'start')
+        if (this.status_send !== 'can_start') {
+            win.webContents.send('phone-send-2-phone-status', '当前有正在进行的同步, 等待完成或alt+r重载app')
+            return
+        }
+        // 确认app_client存在
         if (!this.check_app_client()) {
             win.webContents.send('phone-send-2-phone-status', '没有连接到app')
             return
         }
-        const cpsrc = path.join(bk.src, 'chapter.json')
+        // const cpsrc = path.join(bk.src, 'chapter.json')
         const cps = get_chapters(bk.src)
+        const nodes = cps.map((v) => v.children).flat()
         win.webContents.send('phone-send-2-phone-status', '开始向手机同步文件')
+        // const cptxt = fs.readFileSync(cpsrc, 'utf-8')
+        this.book_use = bk
+        this.stack_json = ['chapter', 'npc']
+        this.stack_node = nodes.map((v) => v.id)
+
+        this.app_client!.emit('setup-book', bk.id, bk.name)
+        // this.app_client!.emit('setup-book', bk.id, 'chapter.json', cptxt)
+    }
+    send_2_phone_json() {
+        const stack = this.stack_json
+        const id = this.book_use.id
+        const file = stack.pop() + '.json'
+        const src = path.join(this.book_use.src, file)
+        const txt = fs.readFileSync(src, 'utf-8')
+        this.app_client!.emit('send-file', id, file, txt)
+    }
+    send_2_phone_node() {
+        const stack = this.stack_node
+        const id = this.book_use.id
+        const file = 'chapters/' + stack.pop() + '.txt'
+        const src = path.join(this.book_use.src, file)
+        const txt = fs.readFileSync(src, 'utf-8')
+        this.app_client!.emit('send-file', id, file, txt)
     }
 }
 
