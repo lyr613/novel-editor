@@ -35,6 +35,7 @@ function default_set(): setting {
             family: 'syhei4',
         },
         git: false,
+        table_size: 2,
     }
 }
 

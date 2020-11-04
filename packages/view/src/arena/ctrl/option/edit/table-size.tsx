@@ -19,7 +19,7 @@ export default function TableSize() {
                 <div className={s.fontsize}>
                     <TextField
                         label="空格数"
-                        value={(opt.table_size ?? 0) + ''}
+                        value={(opt.table_size ?? 2) + ''}
                         onChange={(_, ns) => {
                             // console.log(ns)
                             const nn = Number(ns) || 0

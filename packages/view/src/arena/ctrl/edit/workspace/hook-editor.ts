@@ -136,12 +136,12 @@ function on_key_up(editor: monaco.editor.IStandaloneCodeEditor, event: monaco.IK
     console.log(event.code, 'event.code')
 
     if (event.code === 'Enter' && event.altKey) {
-        const editerset = editer_setting$.value.table_size ?? 0
+        const editerset = editer_setting$.value.table_size ?? 2
         if (!editerset) {
             return
         }
         const prefix = Array(editerset)
-            .fill(' ')
+            .fill('\u3000')
             .join('')
         const t = editor.getValue()
         const t1 = t
