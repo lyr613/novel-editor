@@ -145,9 +145,15 @@ function on_key_up(editor: monaco.editor.IStandaloneCodeEditor, event: monaco.IK
             .join('')
         const t = editor.getValue()
         const t1 = t
-            .replace(/^\s*/, prefix)
-            .replace(/\n+\s*\n+/g, '\n\n')
-            .replace(/\n[ ]*/g, '\n' + prefix)
+            .split(/\n+[\x7F-\xA0\u1680\u180E\u2000-\u200B\u2028\u2029\u202F\u205F\u3000\uFEFF]*\n*/)
+            .map((l) =>
+                l
+                    .replace(/^[\s\u3000]*/, prefix)
+                    .replace(/^/, '\n')
+                    .replace(/\s+$/, ''),
+            )
+            .join('\n')
+            .replace(/^\n*[\x7F-\xA0\u1680\u180E\u2000-\u200B\u2028\u2029\u202F\u205F\u3000\uFEFF]*\n*/, prefix)
             .trimEnd()
         editor.setValue(t1)
         editor.focus()
