@@ -8,7 +8,7 @@ export default function Show() {
     const [wh, next_wh] = useState(null as null | number[])
     const [column_num, next_column_num] = useState(0)
     useEffect(() => {
-        const [W, H] = [window.innerWidth, window.innerHeight]
+        const [W, H] = [window.innerWidth - 20, window.innerHeight]
         const lmt = 300 // 生成低于此的最接近宽度
         if (W <= lmt) {
             next_wh(null)
@@ -19,7 +19,7 @@ export default function Show() {
             k++
             w = (W / k) | 0
         }
-        const h = w * 1.6
+        const h = (w - 20) * 1.5
         next_wh([w, h])
         next_column_num(k)
         console.log(w)
@@ -40,16 +40,20 @@ function List(p: list) {
         <div
             style={{
                 display: 'grid',
-                gridColumn: `repeat(${p.column_num} auto)`,
+                gridTemplateColumns: `repeat(${p.column_num}, auto)`,
+                boxSizing: 'border-box',
+                width: '100vw',
+                gap: 20,
+                padding: 20,
             }}
         >
-            {[1, 2, 3].map((n) => (
+            {[1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13].map((n) => (
                 <div
                     key={n}
                     style={{
-                        display: 'inline-block',
-                        margin: 20,
-                        height: '120px',
+                        boxSizing: 'border-box',
+                        width: '100%',
+                        height: p.wh[1] + 'px',
                         backgroundColor: 'red',
                     }}
                 ></div>

@@ -33,14 +33,14 @@ h2 {
     font-size: 32px;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: 14px;
     height: 14px;
-}
-::-webkit-scrollbar-thumb {
-    /* border-radius: 0.3vw; */
-    background-color: var(--CLRsc);
-}
+} */
+/* ::-webkit-scrollbar-thumb {
+    border-radius: 0.3vw; */
+/* background-color: var(--CLRsc);
+} */
 
 .App {
     display: flex;
