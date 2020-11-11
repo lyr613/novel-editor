@@ -35,6 +35,8 @@ export default function MainContainer() {
 }
 
 function Empty() {
-    next_router('shelf')
+    useEffect(() => {
+        next_router('shelf')
+    }, [])
     return null
 }
