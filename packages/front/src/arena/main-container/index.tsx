@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
 import { router_pusher$ } from 'routers/pusher'
+import Shelf from './shelf'
 
 export default function MainContainer() {
     const rt = useHistory()
@@ -17,8 +18,15 @@ export default function MainContainer() {
         }
     }, [rt])
     return (
-        <Switch>
-            <Route></Route>
-        </Switch>
+        <div
+            style={{
+                overflow: 'hidden',
+                flexGrow: 1,
+            }}
+        >
+            <Switch>
+                <Route component={Shelf}></Route>
+            </Switch>
+        </div>
     )
 }
