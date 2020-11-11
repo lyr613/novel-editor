@@ -1,7 +1,8 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
-import { router_pusher$ } from 'routers/pusher'
+import { router1 } from 'routers/define'
+import { next_router, router_pusher$ } from 'routers/pusher'
 import Shelf from './shelf'
 
 /** 主内容区 */
@@ -26,8 +27,14 @@ export default function MainContainer() {
             }}
         >
             <Switch>
-                <Route component={Shelf}></Route>
+                <Route path={'/' + router1().shelf.en} component={Shelf}></Route>
+                <Route component={Empty} />
             </Switch>
         </div>
     )
+}
+
+function Empty() {
+    next_router('shelf')
+    return null
 }

@@ -18,6 +18,7 @@ export function router1(): { [k in router1_vo]: rt<k> } {
     }
 }
 
+// 书架2级
 export type router2_shelf_vo = 'show' | 'new'
 export function router2shelf(): { [k in router2_shelf_vo]: rt<k> } {
     return {

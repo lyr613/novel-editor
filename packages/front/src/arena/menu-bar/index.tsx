@@ -4,6 +4,7 @@ import { global_style as gs, style_creater as sc } from 'style/global'
 import { style as s } from './style'
 import { fromEvent, Subject } from 'rxjs'
 import { next_router } from 'routers/pusher'
+import { router1, router2shelf } from 'routers/define'
 
 /** MenuBar */
 export default function MenuBar() {
@@ -15,12 +16,14 @@ export default function MenuBar() {
                     name: '查看',
                     click() {
                         next_router('shelf')
+                        menu_use$.next('')
                     },
                 },
                 {
                     name: '新书',
                     click() {
-                        next_router('shelf', 'new')
+                        next_router('shelf', router2shelf().new.en)
+                        menu_use$.next('')
                     },
                 },
             ],
@@ -98,16 +101,7 @@ function MenuItem(p: menu_item) {
                     }}
                 >
                     {p.menu.children.map((cld) => (
-                        <div
-                            key={p.menu.name + cld.name}
-                            className={css(s.MenuExtendItem)}
-                            onClick={() => {
-                                if (cld.click) {
-                                    cld.click()
-                                }
-                                menu_use$.next('')
-                            }}
-                        >
+                        <div key={p.menu.name + cld.name} className={css(s.MenuExtendItem)} onClick={cld.click}>
                             {cld.name}
                         </div>
                     ))}
