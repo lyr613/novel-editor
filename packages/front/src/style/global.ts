@@ -1,6 +1,6 @@
 import { StyleSheet } from 'aphrodite'
 
-interface global_style {
+interface global_style_vo {
     /** 弹性盒子 */
     flex: object
     /** flex && 竖向居中(如果没设置方向)  */
@@ -20,7 +20,7 @@ interface global_style {
 }
 
 /** 复用样式 */
-export const global_style: global_style = StyleSheet.create<global_style>({
+export const global_style: global_style_vo = StyleSheet.create<global_style_vo>({
     flex: {
         display: 'flex',
     },
@@ -200,6 +200,9 @@ export const THEMECOLOR = {
         l6: '#7da3c6',
         l7: '#a5b9d1',
         l8: '#e3ecfa',
+    },
+    l1() {
+        // const e =
     },
 }
 
