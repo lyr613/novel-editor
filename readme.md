@@ -12,7 +12,17 @@
 
 ## 工作区说明
 
-使用 yarn workspace, view 为显示内容, elec 为 electron 服务
+使用 yarn workspace
+
+```
+陈旧的内容:
+view 为显示内容, elec 为 electron 服务
+```
+
+-   pub 公用, 通过脚本分发到各子项目
+-   front 展示
+-   electron 壳
+-   phone 手机端
 
 #### 环境
 
