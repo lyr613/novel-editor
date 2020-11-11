@@ -14,8 +14,10 @@ interface style_vo {
 export const style: style_vo = StyleSheet.create<style_vo>({
     MenuBar: {
         display: 'flex',
-        width: '100%',
+        boxSizing: 'border-box',
+        width: '100vw',
         height: 30,
+        paddingLeft: 30,
         fontSize: 0,
         backgroundColor: THEMECOLOR.word.l1,
         userSelect: 'none',

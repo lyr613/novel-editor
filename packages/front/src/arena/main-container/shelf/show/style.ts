@@ -7,6 +7,7 @@ interface style_vo {
 
 export const style: style_vo = StyleSheet.create<style_vo>({
     Show: {
-        fontSize: 203,
+        overflow: 'hidden',
+        fontSize: 0,
     },
 })
