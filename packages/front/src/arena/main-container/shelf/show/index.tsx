@@ -5,5 +5,5 @@ import { style as s } from './style'
 
 /** Show */
 export default function Show() {
-    return <div className={css(s.Show)}>show</div>
+    return <div className={css(s.Show)}>查看</div>
 }

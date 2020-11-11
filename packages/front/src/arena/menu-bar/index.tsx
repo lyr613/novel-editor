@@ -98,7 +98,16 @@ function MenuItem(p: menu_item) {
                     }}
                 >
                     {p.menu.children.map((cld) => (
-                        <div key={p.menu.name + cld.name} className={css(s.MenuExtendItem)} onClick={cld.click}>
+                        <div
+                            key={p.menu.name + cld.name}
+                            className={css(s.MenuExtendItem)}
+                            onClick={() => {
+                                if (cld.click) {
+                                    cld.click()
+                                }
+                                menu_use$.next('')
+                            }}
+                        >
                             {cld.name}
                         </div>
                     ))}

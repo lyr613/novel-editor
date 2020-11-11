@@ -5,5 +5,5 @@ import { style as s } from './style'
 
 /** NewOne */
 export default function NewOne() {
-    return <div className={css(s.root)}>new</div>
+    return <div className={css(s.root)}>新书</div>
 }

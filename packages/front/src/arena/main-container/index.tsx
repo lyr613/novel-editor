@@ -4,6 +4,7 @@ import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
 import { router_pusher$ } from 'routers/pusher'
 import Shelf from './shelf'
 
+/** 主内容区 */
 export default function MainContainer() {
     const rt = useHistory()
     useEffect(() => {
