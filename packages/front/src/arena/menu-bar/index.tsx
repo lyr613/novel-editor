@@ -75,9 +75,11 @@ interface menu_item {
 }
 function MenuItem(p: menu_item) {
     const [be_useing, next_be_useing] = useState(false)
+    const [cur_menu, next_cur_menu] = useState('')
     useEffect(() => {
         const ob2 = menu_use$.subscribe((nm) => {
             next_be_useing(nm === p.menu.name)
+            next_cur_menu(nm)
         })
         return () => {
             ob2.unsubscribe()
@@ -90,6 +92,11 @@ function MenuItem(p: menu_item) {
             onClick={(e) => {
                 e.stopPropagation()
                 menu_use$.next(p.menu.name)
+            }}
+            onMouseMove={() => {
+                if (cur_menu) {
+                    menu_use$.next(p.menu.name)
+                }
             }}
         >
             {p.menu.name}

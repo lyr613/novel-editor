@@ -18,6 +18,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         height: 30,
         fontSize: 0,
         backgroundColor: THEMECOLOR.word.l1,
+        userSelect: 'none',
     },
     btn: {
         height: 30,
