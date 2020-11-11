@@ -37,7 +37,9 @@ export default function MainContainer() {
 
 function Empty() {
     useEffect(() => {
-        next_router('shelf')
+        setTimeout(() => {
+            next_router('shelf')
+        }, 17)
     }, [])
     return null
 }
