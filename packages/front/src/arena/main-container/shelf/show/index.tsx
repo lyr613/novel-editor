@@ -1,63 +1,79 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { css } from 'aphrodite/no-important'
-import { global_style as gs, style_creater as sc } from 'style/global'
+import { global_style as gs, style_creater as sc, THEMECOLOR } from 'style/global'
 import { style as s } from './style'
+import { screen$ } from 'subject/screen'
+import { debounceTime, sampleTime } from 'rxjs/operators'
 
 /** Show */
 export default function Show() {
-    const [wh, next_wh] = useState(null as null | number[])
-    const [column_num, next_column_num] = useState(0)
+    // [列数, 宽, 高]
+    const [item_size, next_item_size] = useState(null as null | number[])
     useEffect(() => {
-        const [W, H] = [window.innerWidth - 20, window.innerHeight]
-        const lmt = 300 // 生成低于此的最接近宽度
-        if (W <= lmt) {
-            next_wh(null)
+        const ob = screen$(1500).subscribe((WH) => {
+            const W = WH.W - 20
+            const lmt = 300 // 生成低于此的最接近宽度
+            if (W <= lmt) {
+                next_item_size([0, 0, 0])
+                return
+            }
+            let col = 1
+            let w = W
+            while (w > lmt) {
+                col++
+                w = (W / col) | 0
+            }
+            const h = (w - 20) * 1.5
+            next_item_size([col, w, h])
+            console.log(w)
+        })
+        // const [W, H] = [window.innerWidth - 20, window.innerHeight]
+        return () => {
+            ob.unsubscribe()
         }
-        let k = 1
-        let w = W
-        while (w > lmt) {
-            k++
-            w = (W / k) | 0
-        }
-        const h = (w - 20) * 1.5
-        next_wh([w, h])
-        next_column_num(k)
-        console.log(w)
     }, [])
     return (
         <div className={css(s.Show)}>
-            <Suspense fallback={null}>{wh && <List wh={wh} column_num={column_num} />}</Suspense>
+            <Suspense fallback={null}>{item_size && <List item_size={item_size} />}</Suspense>
         </div>
     )
 }
 
 interface list {
-    wh: number[]
-    column_num: number
+    item_size: number[]
 }
 function List(p: list) {
+    const [col, iw, ih] = p.item_size
+    if (col < 1) {
+        return <div>窗口尺寸太小了</div>
+    }
     return (
         <div
             style={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(${p.column_num}, auto)`,
+                gridTemplateColumns: `repeat(${col}, auto)`,
                 boxSizing: 'border-box',
-                width: '100vw',
+                // width: '100vw',
                 gap: 20,
                 padding: 20,
             }}
         >
-            {[1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13].map((n) => (
-                <div
-                    key={n}
-                    style={{
-                        boxSizing: 'border-box',
-                        width: '100%',
-                        height: p.wh[1] + 'px',
-                        backgroundColor: 'red',
-                    }}
-                ></div>
-            ))}
+            {Array(21)
+                .fill(1)
+                .map((n, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            position: 'relative',
+                            boxSizing: 'border-box',
+                            width: '100%',
+                            height: ih + 'px',
+                            backgroundColor: THEMECOLOR.word.l7,
+                        }}
+                    >
+                        <div className={css(s.ItemName)}>书名太长了怎</div>
+                    </div>
+                ))}
         </div>
     )
 }
