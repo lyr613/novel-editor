@@ -3,7 +3,7 @@ import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from 'style/global'
 import { style as s } from './style'
 import { fromEvent, Subject } from 'rxjs'
-import { next_router } from 'routers/pusher'
+import { mk_router, next_router } from 'routers/pusher'
 import { router1, router2shelf } from 'routers/define'
 
 /** MenuBar */
@@ -41,6 +41,14 @@ export default function MenuBar() {
                 },
             ],
         },
+        {
+            name: '设置',
+            click() {
+                const rt = mk_router('option')
+                next_router('option')
+            },
+            children: [],
+        },
     ]
     useEffect(() => {
         const ob1 = fromEvent(document, 'click').subscribe(() => {
@@ -64,9 +72,10 @@ const menu_use$ = new Subject<string>()
 
 interface menu_vo {
     name: string
+    click?: () => void
     children: {
         name: string
-        click: () => void
+        click?: () => void
     }[]
 }
 
@@ -92,6 +101,9 @@ function MenuItem(p: menu_item) {
             onClick={(e) => {
                 e.stopPropagation()
                 menu_use$.next(p.menu.name)
+                if (p.menu.click) {
+                    p.menu.click()
+                }
             }}
             onMouseMove={() => {
                 if (cur_menu) {

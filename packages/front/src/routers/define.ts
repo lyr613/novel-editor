@@ -1,4 +1,4 @@
-export type router1_vo = 'shelf' | 'edit'
+export type router1_vo = 'shelf' | 'edit' | 'option'
 
 interface rt<t> {
     en: t
@@ -14,6 +14,10 @@ export function router1(): { [k in router1_vo]: rt<k> } {
         edit: {
             en: 'edit',
             cn: '编辑',
+        },
+        option: {
+            en: 'option',
+            cn: '设置',
         },
     }
 }
