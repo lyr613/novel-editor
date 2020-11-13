@@ -3,7 +3,6 @@ import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc, THEMECOLOR } from 'style/global'
 import { style as s } from './style'
 import { screen$ } from 'subject/screen'
-import { debounceTime, sampleTime } from 'rxjs/operators'
 
 /** Show */
 export default function Show() {
