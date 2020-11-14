@@ -18,4 +18,11 @@ if (plat === 'win32') {
     cdi.stdout.on('data', (msg) => {
         console.log(msg)
     })
+    cdi.on('close', () => {
+        after_webpack_build()
+    })
+}
+
+function after_webpack_build() {
+    console.log('aaaaa')
 }
