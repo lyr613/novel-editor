@@ -13,6 +13,7 @@ module.exports = {
                 'doc', // Adds or alters documentation. 仅仅修改了文档，比如README, CHANGELOG, CONTRIBUTE等等
                 'chore', // Other changes that don't modify src or test files. 改变构建流程、或者增加依赖库、工具等
                 'merge', // Merge branch ? of ?.
+                'Merge', // Merge branch ? of ?.
                 'perf', // Improves performance. 优化相关，比如提升性能、体验
                 'revert', // Reverts a previous commit. 回滚到上一个版本
                 'test', // Adds or modifies tests. 测试用例，包括单元测试、集成测试等

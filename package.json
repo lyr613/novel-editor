@@ -8,31 +8,22 @@
     "author": "秋无衣",
     "license": "MIT",
     "workspaces": [
-        "packages/view",
-        "packages/elec"
+        "packages/view"
     ],
-    "dependencies": {
+    "dependencies": {},
+    "devDependencies": {
         "@types/fs-extra": "^8.1.0",
         "@types/uuid": "^7.0.0",
-        "uuid": "^7.0.2"
-    },
-    "devDependencies": {
-        "@commitlint/cli": "^8.2.0",
-        "@commitlint/config-angular": "^8.2.0",
-        "@commitlint/config-conventional": "^8.2.0",
         "@types/prettier": "^2.1.0",
         "husky": "^3.1.0",
         "lint-staged": "^9.5.0",
-        "prettier": "^1.19.1",
-        "typescript": "^3.9.7"
+        "prettier": "^1.19.1"
     },
     "scripts": {
-        "install-nod_emodules": " yarn -W ",
         "build": " node ./scripts/build.js "
     },
     "husky": {
         "hooks": {
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "pre-commit": "lint-staged"
         }
     },
