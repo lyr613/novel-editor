@@ -8,7 +8,7 @@
     "author": "秋无衣",
     "license": "MIT",
     "workspaces": [
-        "packages/view"
+        "packages/no"
     ],
     "dependencies": {},
     "devDependencies": {
