@@ -2,6 +2,7 @@ import { get_main_window } from 'window-'
 import url from 'url'
 import path from 'path'
 import { paths } from 'const-/path'
+import { envs } from 'const-/env'
 
 export function first_set() {
     load_page()
@@ -9,14 +10,9 @@ export function first_set() {
 
 function load_page() {
     const mw = get_main_window()
-    if (process.env.NODE_ENV === 'development') {
+    if (envs().dev) {
         // 开发
-        try {
-            mw.loadURL('https://www.baidu.com')
-            // mw.loadURL('http://localhost:7098/#/')
-        } catch (error) {
-            console.log(error)
-        }
+        mw.loadURL(paths().dev_html)
     } else {
         mw.loadURL(
             url.format({
