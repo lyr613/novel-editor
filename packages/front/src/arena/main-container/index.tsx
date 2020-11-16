@@ -1,4 +1,5 @@
 // eslint-disable-next-line
+import EmptyRouter from 'component-/empty-router'
 import React, { useState, useEffect } from 'react'
 import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
 import { router1 } from 'routers/define'
@@ -31,17 +32,8 @@ export default function MainContainer() {
             <Switch>
                 <Route path={mk_router('shelf')} component={Shelf}></Route>
                 <Route path={mk_router('option')} component={Option}></Route>
-                <Route component={Empty} />
+                <Route component={EmptyRouter('/shelf')} />
             </Switch>
         </div>
     )
-}
-
-function Empty() {
-    useEffect(() => {
-        setTimeout(() => {
-            next_router('shelf')
-        }, 17)
-    }, [])
-    return null
 }

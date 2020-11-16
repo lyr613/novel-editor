@@ -4,7 +4,7 @@ import { global_style as gs, style_creater as sc } from 'style/global'
 import { style as s } from './style'
 import { fromEvent, Subject } from 'rxjs'
 import { mk_router, next_router } from 'routers/pusher'
-import { router1, router2shelf } from 'routers/define'
+import { router1, router2_shelf } from 'routers/define'
 
 /** MenuBar */
 export default function MenuBar() {
@@ -22,7 +22,7 @@ export default function MenuBar() {
                 {
                     name: '新书',
                     click() {
-                        next_router('shelf', router2shelf().new.en)
+                        next_router('shelf', router2_shelf().new.en)
                         menu_use$.next('')
                     },
                 },
@@ -46,6 +46,7 @@ export default function MenuBar() {
             click() {
                 const rt = mk_router('option')
                 next_router('option')
+                menu_use$.next('')
             },
             children: [],
         },

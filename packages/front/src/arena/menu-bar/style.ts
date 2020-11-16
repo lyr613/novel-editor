@@ -29,7 +29,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         color: 'white',
         padding: '0 10px',
         lineHeight: '30px',
-        cursor: 'pointer',
         ':hover': {
             backgroundColor: THEMECOLOR.word.l3,
         },
@@ -41,7 +40,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         color: '#dddddd',
         padding: '0 10px',
         lineHeight: '30px',
-        cursor: 'pointer',
         ':hover': {
             backgroundColor: THEMECOLOR.word.l3,
         },
