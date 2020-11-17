@@ -22,4 +22,5 @@ function load_page() {
             }),
         )
     }
+    mw.webContents.openDevTools()
 }

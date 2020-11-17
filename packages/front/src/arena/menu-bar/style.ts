@@ -9,6 +9,7 @@ interface style_vo {
     MenuItemUse: object
     MenuExtend: object
     MenuExtendItem: object
+    Right: object
 }
 
 export const style: style_vo = StyleSheet.create<style_vo>({
@@ -64,5 +65,11 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         ':hover': {
             backgroundColor: THEMECOLOR.word.l5,
         },
+    },
+    Right: {
+        marginLeft: 'auto',
+        width: 60,
+        height: 30,
+        backgroundColor: '#000',
     },
 })

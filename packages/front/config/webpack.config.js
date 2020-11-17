@@ -515,9 +515,7 @@ module.exports = function(webpackEnv) {
             new BundleAnalyzerPlugin({
                 openAnalyzer: false,
             }),
-            new webpack.DllReferencePlugin({
-                manifest: require(path.join(__dirname, '..', 'dll-build', 'dll.manifest.json')),
-            }),
+
             // Generates an `index.html` file with the <script> injected.
             new HtmlWebpackPlugin(
                 Object.assign(
@@ -604,22 +602,22 @@ module.exports = function(webpackEnv) {
             //   `index.html`
             // - "entrypoints" key: Array of files which are included in `index.html`,
             //   can be used to reconstruct the HTML if necessary
-            new ManifestPlugin({
-                fileName: 'asset-manifest.json',
-                publicPath: paths.publicUrlOrPath,
-                generate: (seed, files, entrypoints) => {
-                    const manifestFiles = files.reduce((manifest, file) => {
-                        manifest[file.name] = file.path
-                        return manifest
-                    }, seed)
-                    const entrypointFiles = entrypoints.main.filter((fileName) => !fileName.endsWith('.map'))
+            // new ManifestPlugin({
+            //     fileName: 'asset-manifest.json',
+            //     publicPath: paths.publicUrlOrPath,
+            //     generate: (seed, files, entrypoints) => {
+            //         const manifestFiles = files.reduce((manifest, file) => {
+            //             manifest[file.name] = file.path
+            //             return manifest
+            //         }, seed)
+            //         const entrypointFiles = entrypoints.main.filter((fileName) => !fileName.endsWith('.map'))
 
-                    return {
-                        files: manifestFiles,
-                        entrypoints: entrypointFiles,
-                    }
-                },
-            }),
+            //         return {
+            //             files: manifestFiles,
+            //             entrypoints: entrypointFiles,
+            //         }
+            //     },
+            // }),
             // Moment.js is an extremely popular library that bundles large locale files
             // by default due to how webpack interprets its code. This is a practical
             // solution that requires the user to opt into importing specific locales.
@@ -679,6 +677,9 @@ module.exports = function(webpackEnv) {
                         }),
                     },
                 },
+            }),
+            new webpack.DllReferencePlugin({
+                manifest: require(path.join(__dirname, '..', 'dll-build', 'dll.m.json')),
             }),
         ].filter(Boolean),
         // Some libraries import Node modules but don't use them in the browser.

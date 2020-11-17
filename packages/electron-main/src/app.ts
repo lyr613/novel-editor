@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron'
+import { watch_all } from 'watch-'
 import { create_main_window } from 'window-'
 import { first_set } from 'window-/first-set'
 
@@ -13,6 +14,7 @@ let main_window: BrowserWindow | null
 function createWindow() {
     main_window = create_main_window()
     first_set()
+    watch_all()
 
     // set_watch(main_window)
 

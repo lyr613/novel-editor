@@ -5,6 +5,7 @@ import { style as s } from './style'
 import { fromEvent, Subject } from 'rxjs'
 import { mk_router, next_router } from 'routers/pusher'
 import { router1, router2_shelf } from 'routers/define'
+import { ipc } from 'tool-/electron'
 
 /** MenuBar */
 export default function MenuBar() {
@@ -64,6 +65,7 @@ export default function MenuBar() {
             {menus.map((menu) => (
                 <MenuItem key={menu.name} menu={menu} />
             ))}
+            <Right />
         </div>
     )
 }
@@ -128,5 +130,17 @@ function MenuItem(p: menu_item) {
                 </div>
             )}
         </div>
+    )
+}
+
+function Right() {
+    return (
+        <div
+            className={css(s.Right)}
+            onClick={() => {
+                ipc().sendSync('window_min')
+                console.log(23333)
+            }}
+        ></div>
     )
 }
