@@ -5,6 +5,7 @@ interface sty {
     root: object
     section: object
     h2: object
+    themeItem: object
 }
 
 export const style: sty = StyleSheet.create<sty>({
@@ -16,5 +17,14 @@ export const style: sty = StyleSheet.create<sty>({
     },
     h2: {
         fontSize: 16,
+    },
+    themeItem: {
+        display: 'inline-block',
+        margin: '0 10px 10px 0',
+        width: 60,
+        height: 60,
+        outline: '8px solid red',
+        outlineOffset: -8,
+        cursor: 'pointer',
     },
 })
