@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { css } from 'aphrodite/no-important'
 import { style as s } from './style'
 import { themes } from 'style/theme'
+import OfficeButton from 'component-/button'
 
 /** Ui */
 export default function Ui() {
@@ -30,6 +31,7 @@ function Theme() {
                     }}
                 ></div>
             ))}
+            <OfficeButton with_theme>啦啦</OfficeButton>
         </section>
     )
 }

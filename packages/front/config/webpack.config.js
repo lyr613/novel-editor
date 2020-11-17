@@ -26,6 +26,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin')
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const postcssNormalize = require('postcss-normalize')
 
@@ -510,6 +511,13 @@ module.exports = function(webpackEnv) {
             ],
         },
         plugins: [
+            // 分析插件
+            new BundleAnalyzerPlugin({
+                openAnalyzer: false,
+            }),
+            new webpack.DllReferencePlugin({
+                manifest: require(path.join(__dirname, '..', 'dll-build', 'dll.manifest.json')),
+            }),
             // Generates an `index.html` file with the <script> injected.
             new HtmlWebpackPlugin(
                 Object.assign(
@@ -688,5 +696,9 @@ module.exports = function(webpackEnv) {
         // Turn off performance processing because we utilize
         // our own hints via the FileSizeReporter
         performance: false,
+        externals: [
+            // 不会经过webpack
+            // /@fluentui/,
+        ],
     }
 }
