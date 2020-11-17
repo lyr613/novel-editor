@@ -7,8 +7,7 @@
     "scripts": {
         "watch": " node ./scripts/watch.js ",
         "electron-start": " node ./scripts/electron-start.js ",
-        "build": " node ./scripts/build.js ",
-        "electron-build": " node ./scripts/electron-build.js "
+        "build": " node ./scripts/build.js "
     },
     "dependencies": {
         "@types/node": "^14.14.7",

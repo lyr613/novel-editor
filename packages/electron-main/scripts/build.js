@@ -3,26 +3,47 @@ const path = require('path')
 const cp = require('child_process')
 const os = require('os')
 
-const plat = os.platform()
-const webpack_src = path.join(__dirname, '..', 'node_modules', '.bin', 'webpack')
-const opt_src = path.join(__dirname, '..', 'cli', 'webpack-pro.js')
+main()
 
-if (plat === 'win32') {
-    console.log('在windows上打包')
+async function main() {
+    await webpack_build()
+    electron_build()
 }
-const cdi = cp.exec(`  ${webpack_src} --config ${opt_src}  `, (err, out, de) => {
-    // 这里三个打印都没用
-    console.log(err)
-    console.log(out)
-    console.log(de)
-})
-cdi.stdout.on('data', (msg) => {
-    console.log(msg)
-})
-cdi.on('close', () => {
-    after_webpack_build()
-})
 
-function after_webpack_build() {
-    console.log('aaaaa')
+function webpack_build() {
+    return new Promise((res) => {
+        console.log('---')
+        console.log('开始 webpack 打包')
+        console.log('---')
+        const webpack_src = path.join(__dirname, '..', 'node_modules', '.bin', 'webpack')
+        const opt_src = path.join(__dirname, '..', 'cli', 'webpack-pro.js')
+
+        const cdi = cp.exec(`  ${webpack_src} --config ${opt_src}  `)
+        cdi.stdout.on('data', (msg) => {
+            console.log(msg)
+        })
+        cdi.on('close', () => {
+            setTimeout(() => {
+                res()
+            }, 1000)
+        })
+    })
+}
+
+function electron_build() {
+    return new Promise((res) => {
+        console.log('---')
+        console.log('开始 electron 打包')
+        console.log('---')
+        const electron_bin = path.resolve(__dirname, '..', 'node_modules', '.bin', 'electron-builder')
+        const cdi = cp.exec(electron_bin)
+        cdi.stdout.on('data', (msg) => {
+            console.log(msg)
+        })
+        cdi.on('close', () => {
+            setTimeout(() => {
+                res()
+            }, 1000)
+        })
+    })
 }
