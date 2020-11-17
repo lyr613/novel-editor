@@ -5,6 +5,7 @@ import { router1, router2_option, router2_shelf } from 'routers/define'
 import { mk_router, router_pusher$ } from 'routers/pusher'
 import LabelBar from 'component-/label-bar'
 import EmptyRouter from 'component-/empty-router'
+import Ui from './ui'
 
 /** 设置 */
 export default function Option() {
@@ -21,33 +22,11 @@ export default function Option() {
                 }}
             />
             <Switch>
-                <Route path={mk_router('shelf', router2_shelf().new.en)}></Route>
+                <Route path={mk_router('option', router2_option().edit.en)}></Route>
+                <Route path={mk_router('option', router2_option().remind.en)}></Route>
+                <Route path={mk_router('option', router2_option().ui.en)} component={Ui}></Route>
                 <Route component={EmptyRouter(mk_router('option', router2_option().ui.en))}></Route>
             </Switch>
         </>
     )
 }
-interface item_vo {
-    key: string
-    data: any
-}
-const items: item_vo[] = [
-    {
-        key: '编辑',
-        data: {
-            route: 'edit',
-        },
-    },
-    {
-        key: '显示',
-        data: {
-            route: 'ui',
-        },
-    },
-    {
-        key: '提醒',
-        data: {
-            route: 'remind',
-        },
-    },
-]

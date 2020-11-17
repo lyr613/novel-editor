@@ -44,7 +44,7 @@ module.exports = {
         new CleanWebpackPlugin(),
     ],
     externals: [
-        //
-        'sharp',
+        // 不会经过webpack
+        /images/,
     ],
 }
