@@ -27,7 +27,7 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const postcssNormalize = require('postcss-normalize')
 
 const appPackageJson = require(paths.appPackageJson)
@@ -515,7 +515,20 @@ module.exports = function(webpackEnv) {
             new BundleAnalyzerPlugin({
                 openAnalyzer: false,
             }),
-
+            // 打包时, 替换dll.js
+            isEnvProduction &&
+                new CopyWebpackPlugin({
+                    patterns: [
+                        {
+                            from: path.join(__dirname, 'dll.js'),
+                            to: path.join(paths.appBuild, 'dll-production.js'),
+                        },
+                        {
+                            from: path.join(__dirname, 'dll.js'),
+                            to: path.join(paths.appBuild, 'dll-development.js'),
+                        },
+                    ],
+                }),
             // Generates an `index.html` file with the <script> injected.
             new HtmlWebpackPlugin(
                 Object.assign(
@@ -678,9 +691,14 @@ module.exports = function(webpackEnv) {
                     },
                 },
             }),
-            new webpack.DllReferencePlugin({
-                manifest: require(path.join(__dirname, '..', 'dll-build', 'dll.m.json')),
-            }),
+            isEnvDevelopment &&
+                new webpack.DllReferencePlugin({
+                    manifest: require(path.join(__dirname, '..', 'dll-build', 'dllproduction.m.json')),
+                }),
+            isEnvDevelopment &&
+                new webpack.DllReferencePlugin({
+                    manifest: require(path.join(__dirname, '..', 'dll-build', 'dlldevelopment.m.json')),
+                }),
         ].filter(Boolean),
         // Some libraries import Node modules but don't use them in the browser.
         // Tell webpack to provide empty mocks for them so importing them works.

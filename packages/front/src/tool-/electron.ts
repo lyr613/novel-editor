@@ -1,3 +1,9 @@
 export function ipc() {
-    return window.electron.ipcRenderer
+    const ir = window.electron?.ipcRenderer || {
+        on() {},
+        once() {},
+        send() {},
+        sendSync() {},
+    }
+    return ir
 }

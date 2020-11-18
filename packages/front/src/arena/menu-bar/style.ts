@@ -70,6 +70,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         marginLeft: 'auto',
         width: 60,
         height: 30,
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
     },
 })
