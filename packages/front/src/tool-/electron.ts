@@ -4,6 +4,7 @@ export function ipc() {
         once() {},
         send() {},
         sendSync() {},
+        removeListener() {},
     }
     return ir
 }
