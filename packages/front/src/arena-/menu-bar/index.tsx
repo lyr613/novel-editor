@@ -134,19 +134,14 @@ function MenuItem(p: menu_item) {
 }
 
 function Right() {
-    useEffect(() => {
-        ipc().on('window_min', (e, ...args) => {
-            console.log(args)
-        })
-        ipc().removeListener('win', () => {})
-    }, [])
+    useEffect(() => {}, [])
     return (
         <div
             className={css(s.Right)}
             onClick={() => {
                 ipc().send('window_min')
 
-                console.log(23333)
+                console.log(666)
             }}
         ></div>
     )

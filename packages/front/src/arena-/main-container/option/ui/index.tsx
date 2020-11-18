@@ -23,8 +23,8 @@ function Theme() {
                     key={clr.name}
                     className={css(s.themeItem)}
                     style={{
-                        backgroundColor: clr.color.l5,
-                        outlineColor: theme === clr.name ? clr.color.l3 : 'transparent',
+                        backgroundColor: clr.color.themePrimary,
+                        outlineColor: theme === clr.name ? clr.color.themeDark : 'transparent',
                     }}
                     onClick={() => {
                         next_theme(clr.name)
