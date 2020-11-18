@@ -4,6 +4,9 @@ const path = require('path')
 const vendors_dev = ['react', 'react-dom']
 const vendors_pro = ['rxjs', 'rxjs/operators']
 
+// 'react-router'没有source-map
+// '@fluentui/react' 好像也是没有source-map
+
 // 现在一些需要dev, 一些需要pro
 module.exports = [mk('development'), mk('production')]
 
