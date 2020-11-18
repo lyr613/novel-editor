@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { router_pusher$ } from 'routers/pusher'
+import { router_pusher$ } from 'router-/pusher'
 
 export default function EmptyRouter(goto: string) {
     return function Empty() {

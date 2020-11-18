@@ -2,8 +2,8 @@
 import EmptyRouter from 'component-/empty-router'
 import React, { useState, useEffect } from 'react'
 import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
-import { router1 } from 'routers/define'
-import { mk_router, next_router, router_pusher$ } from 'routers/pusher'
+import { router1 } from 'router-/define'
+import { mk_router, next_router, router_pusher$ } from 'router-/pusher'
 import Option from './option'
 import Shelf from './shelf'
 

@@ -512,9 +512,9 @@ module.exports = function(webpackEnv) {
         },
         plugins: [
             // 分析插件
-            new BundleAnalyzerPlugin({
-                openAnalyzer: false,
-            }),
+            // new BundleAnalyzerPlugin({
+            //     openAnalyzer: false,
+            // }),
             // 打包时, 替换dll.js
             isEnvProduction &&
                 new CopyWebpackPlugin({

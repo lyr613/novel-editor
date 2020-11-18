@@ -1,8 +1,8 @@
 const webpack = require('webpack')
 const path = require('path')
-const vendors = ['react', 'react-dom', 'react-router', 'rxjs', 'rxjs/operators', '@fluentui/react']
+// const vendors = ['react', 'react-dom', 'react-router', 'rxjs', 'rxjs/operators', '@fluentui/react']
 const vendors_dev = ['react', 'react-dom']
-const vendors_pro = ['rxjs', 'rxjs/operators', '@fluentui/react']
+const vendors_pro = ['rxjs', 'rxjs/operators']
 
 // 现在一些需要dev, 一些需要pro
 module.exports = [mk('development'), mk('production')]

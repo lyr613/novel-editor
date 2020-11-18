@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { THEMECOLOR } from 'style/global'
+import { THEMECOLOR } from 'style-/global'
 
 interface style_vo {
     LabelBar: object
