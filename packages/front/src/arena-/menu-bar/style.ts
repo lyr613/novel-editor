@@ -1,5 +1,4 @@
 import { StyleSheet } from 'aphrodite'
-import { THEMECOLOR } from 'style-/global'
 import { themes } from 'style-/theme'
 
 interface style_vo {
@@ -22,7 +21,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         height: 30,
         paddingLeft: 30,
         fontSize: 0,
-        backgroundColor: THEMECOLOR.word.l1,
+        backgroundColor: themes.style_vars.themeDarker,
         userSelect: 'none',
     },
     btn: {
@@ -32,7 +31,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         padding: '0 10px',
         lineHeight: '30px',
         ':hover': {
-            backgroundColor: THEMECOLOR.word.l3,
+            backgroundColor: themes.style_vars.themeDarkAlt,
         },
     },
     MenuItem: {
@@ -43,18 +42,18 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         padding: '0 10px',
         lineHeight: '30px',
         ':hover': {
-            backgroundColor: THEMECOLOR.word.l3,
+            backgroundColor: themes.style_vars.themeDarkAlt,
         },
     },
     MenuItemUse: {
         color: 'white',
-        backgroundColor: THEMECOLOR.word.l3,
+        backgroundColor: themes.style_vars.themeDarkAlt,
     },
     MenuExtend: {
         position: 'absolute',
         left: 0,
         top: 30,
-        boxShadow: `0 0 5px ${THEMECOLOR.word.l1}`,
+        boxShadow: `0 0 5px ${themes.style_vars.themeDarker}`,
     },
     MenuExtendItem: {
         minWidth: 160,
@@ -62,9 +61,9 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         padding: '0 20px',
         lineHeight: '30px',
 
-        backgroundColor: THEMECOLOR.word.l1,
+        backgroundColor: themes.style_vars.themeDarker,
         ':hover': {
-            backgroundColor: THEMECOLOR.word.l5,
+            backgroundColor: themes.style_vars.themeDarkAlt,
         },
     },
     Right: {

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { THEMECOLOR } from 'style-/global'
+import { themes } from 'style-/theme'
 
 interface style_vo {
     LabelBar: object
@@ -13,7 +13,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         width: '100%',
         height: 30,
         // border: '1px solid ' + THEMECOLOR.word.l2,
-        backgroundColor: THEMECOLOR.word.l1,
+        backgroundColor: themes.style_vars.themeDarker,
     },
     LabelItem: {
         height: 30,
@@ -21,8 +21,8 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         padding: ' 0 36px',
         fontSize: 14,
         color: 'white',
-        borderRight: '1px solid ' + THEMECOLOR.word.l1,
-        backgroundColor: THEMECOLOR.word.l3,
+        borderRight: '1px solid ' + themes.style_vars.themeDarker,
+        backgroundColor: themes.style_vars.themeDarkAlt,
         cursor: 'pointer',
         userSelect: 'none',
         ':hover span': {
@@ -30,6 +30,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         },
     },
     LabelItemUse: {
-        backgroundColor: THEMECOLOR.word.l2,
+        backgroundColor: themes.style_vars.themeDark,
     },
 })

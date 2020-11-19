@@ -3,8 +3,8 @@ import { createTheme, loadTheme } from '@fluentui/react'
 type theme_name = 'word' | 'excel' | 'ppt'
 class THEME {
     constructor() {
-        this.office_use('excel')
-        this.ui_use('ppt')
+        this.office_use('word')
+        this.ui_use('word')
     }
     public get word() {
         return {

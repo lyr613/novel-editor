@@ -189,23 +189,6 @@ function _default_px(n: number | string) {
     return n
 }
 
-/** 主题色 */
-export const THEMECOLOR = {
-    word: {
-        l1: '#002050',
-        l2: '#124078',
-        l3: '#2b579a',
-        l4: '#3c65a4',
-        l5: '#4a78b0',
-        l6: '#7da3c6',
-        l7: '#a5b9d1',
-        l8: '#e3ecfa',
-    },
-    l1() {
-        // const e =
-    },
-}
-
 function _safe_key(s: string) {
     return s.replace(/[^0-9a-zA-Z]/g, '')
 }
