@@ -5,5 +5,6 @@ interface fs_dto {
 }
 
 interface fs_json_dto<T = any> extends fs_dto {
+    /** 错误时可能没有 */
     data: T
 }
