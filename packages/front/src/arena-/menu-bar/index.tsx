@@ -6,6 +6,7 @@ import { fromEvent, Subject } from 'rxjs'
 import { mk_router, next_router } from 'router-/pusher'
 import { router1, router2_shelf } from 'router-/define'
 import { ipc } from 'tool-/electron'
+import { Icon } from '@fluentui/react/lib/Icon'
 
 /** MenuBar */
 export default function MenuBar() {
@@ -136,13 +137,31 @@ function MenuItem(p: menu_item) {
 function Right() {
     useEffect(() => {}, [])
     return (
-        <div
-            className={css(s.Right)}
-            onClick={() => {
-                ipc().send('window_min')
-
-                console.log(666)
-            }}
-        ></div>
+        <div className={css(s.Right)}>
+            <div
+                className={css(s.IconBox)}
+                onClick={() => {
+                    ipc().send('window_min')
+                }}
+            >
+                <Icon iconName="ChromeMinimize" />
+            </div>
+            <div
+                className={css(s.IconBox)}
+                onClick={() => {
+                    ipc().send('window_max')
+                }}
+            >
+                <Icon iconName="ChromeRestore" />
+            </div>
+            <div
+                className={css(s.IconBox, s.IconBoxDanger)}
+                onClick={() => {
+                    ipc().send('window_close')
+                }}
+            >
+                <Icon iconName="ChromeClose" />
+            </div>
+        </div>
     )
 }

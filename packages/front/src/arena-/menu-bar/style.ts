@@ -4,12 +4,15 @@ import { themes } from 'style-/theme'
 interface style_vo {
     /** 组件顶层 */
     MenuBar: object
-    btn: object
     MenuItem: object
     MenuItemUse: object
+    /** 展开的子菜单 */
     MenuExtend: object
     MenuExtendItem: object
+    /** 右侧 */
     Right: object
+    IconBox: object
+    IconBoxDanger: object
 }
 
 export const style: style_vo = StyleSheet.create<style_vo>({
@@ -24,21 +27,11 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         backgroundColor: themes.style_vars.themeDarker,
         userSelect: 'none',
     },
-    btn: {
-        height: 30,
-        fontSize: 14,
-        color: 'white',
-        padding: '0 10px',
-        lineHeight: '30px',
-        ':hover': {
-            backgroundColor: themes.style_vars.themeDarkAlt,
-        },
-    },
     MenuItem: {
         position: 'relative',
         height: 30,
         fontSize: 14,
-        color: '#dddddd',
+        color: themes.style_vars.neutralQuaternary,
         padding: '0 10px',
         lineHeight: '30px',
         ':hover': {
@@ -46,7 +39,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         },
     },
     MenuItemUse: {
-        color: 'white',
+        color: themes.style_vars.neutralLight,
         backgroundColor: themes.style_vars.themeDarkAlt,
     },
     MenuExtend: {
@@ -60,16 +53,32 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         height: 30,
         padding: '0 20px',
         lineHeight: '30px',
-
         backgroundColor: themes.style_vars.themeDarker,
         ':hover': {
             backgroundColor: themes.style_vars.themeDarkAlt,
         },
     },
     Right: {
+        display: 'flex',
         marginLeft: 'auto',
-        width: 60,
         height: 30,
-        backgroundColor: themes.style_vars.black,
+    },
+    IconBox: {
+        display: 'flex',
+        width: 48,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: themes.style_vars.neutralQuaternary,
+        fontSize: 12,
+        ':hover': {
+            backgroundColor: themes.style_vars.themeDarkAlt,
+        },
+    },
+    IconBoxDanger: {
+        ':hover': {
+            backgroundColor: `rgb(221,17,68)`,
+            color: themes.style_vars.white,
+        },
     },
 })
