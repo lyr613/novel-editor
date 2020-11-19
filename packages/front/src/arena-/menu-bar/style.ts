@@ -1,5 +1,6 @@
 import { StyleSheet } from 'aphrodite'
 import { THEMECOLOR } from 'style-/global'
+import { themes } from 'style-/theme'
 
 interface style_vo {
     /** 组件顶层 */
@@ -70,6 +71,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         marginLeft: 'auto',
         width: 60,
         height: 30,
-        backgroundColor: '#000',
+        backgroundColor: themes.style_vars.black,
     },
 })

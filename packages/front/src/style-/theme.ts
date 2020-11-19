@@ -2,6 +2,10 @@ import { createTheme, loadTheme } from '@fluentui/react'
 
 type theme_name = 'word' | 'excel' | 'ppt'
 class THEME {
+    constructor() {
+        this.office_use('excel')
+        this.ui_use('ppt')
+    }
     public get word() {
         return {
             palette: {
@@ -86,6 +90,7 @@ class THEME {
             },
         }
     }
+    /** 列举主题配置 */
     public get list() {
         const names = ['word', 'excel', 'ppt']
         const arr = [this.word, this.excel, this.ppt]
@@ -94,15 +99,44 @@ class THEME {
             color: color.palette,
         }))
     }
-    constructor() {
-        const t = this.word
-        const t2 = createTheme(t)
-        loadTheme(t2)
+    /** css变量 var(--some) */
+    public get style_vars() {
+        const o = this.word.palette
+        const nobj = Object.assign({}, o)
+        const ks = Object.keys(o)
+        ks.forEach((k) => {
+            ;(nobj as any)[k] = `var(--QV${k})`
+        })
+        return nobj
     }
-    use(theme: theme_name) {
+    /** office ui 变更主题 */
+    private office_use(theme: theme_name) {
         const t = this[theme]
         const t2 = createTheme(t)
         loadTheme(t2)
+    }
+    /** 配色 变更主题 */
+    private ui_use(theme: theme_name) {
+        const id = 'qv-theme'
+        const old_dom = document.head.querySelector('#' + id)
+        if (old_dom) {
+            document.head.removeChild(old_dom)
+        }
+        const s = this[theme].palette
+        const ss = Object.entries(s)
+            .map((kv) => {
+                const [k, v] = kv
+                return `--QV${k}: ${v};`
+            })
+            .join('\n')
+        const txt = `
+        html {
+            ${ss}
+        }`
+        const dom = document.createElement('style')
+        dom.id = id
+        dom.innerHTML = txt
+        document.head.appendChild(dom)
     }
 }
 
