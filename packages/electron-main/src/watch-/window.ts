@@ -13,7 +13,6 @@ function window_min(e: Electron.IpcMainEvent) {
     console.log('最小化')
     const mw = get_main_window()
     mw.minimize()
-    e.returnValue = undefined
     reply(e, 'window_min')
 }
 function window_max(e: Electron.IpcMainEvent) {
@@ -24,13 +23,11 @@ function window_max(e: Electron.IpcMainEvent) {
     } else {
         mw.maximize()
     }
-    e.returnValue = undefined
     reply(e, 'window_max')
 }
 function window_close(e: Electron.IpcMainEvent) {
     console.log('关闭')
     const mw = get_main_window()
     mw.close()
-    e.returnValue = undefined
     reply(e, 'window_close')
 }

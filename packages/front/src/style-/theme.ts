@@ -1,6 +1,5 @@
 import { createTheme, loadTheme } from '@fluentui/react'
 
-type theme_name = 'word' | 'excel' | 'ppt'
 class THEME {
     constructor() {
         this.office_use('word')
@@ -95,7 +94,7 @@ class THEME {
         const names = ['word', 'excel', 'ppt']
         const arr = [this.word, this.excel, this.ppt]
         return arr.map((color, i) => ({
-            name: names[i] as theme_name,
+            name: names[i] as theme_vo,
             color: color.palette,
         }))
     }
@@ -110,13 +109,13 @@ class THEME {
         return nobj
     }
     /** office ui 变更主题 */
-    private office_use(theme: theme_name) {
+    private office_use(theme: theme_vo) {
         const t = this[theme]
         const t2 = createTheme(t)
         loadTheme(t2)
     }
     /** 配色 变更主题 */
-    private ui_use(theme: theme_name) {
+    private ui_use(theme: theme_vo) {
         const id = 'qv-theme'
         const old_dom = document.head.querySelector('#' + id)
         if (old_dom) {
