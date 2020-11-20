@@ -1,4 +1,4 @@
-import { StyleSheet } from 'aphrodite'
+import { StyleSheet, css, child, nthchild } from 'style-/aphrodite'
 
 interface sty {
     /** 组件顶层 */
@@ -7,6 +7,16 @@ interface sty {
     h2: object
     themeItem: object
 }
+
+export const sty_mit = StyleSheet.create({
+    inner: {
+        width: '100%',
+        height: '100%',
+        boxSizing: 'border-box',
+        borderWidth: 8,
+        borderStyle: 'solid',
+    },
+})
 
 export const style: sty = StyleSheet.create<sty>({
     root: {
@@ -23,8 +33,14 @@ export const style: sty = StyleSheet.create<sty>({
         margin: '0 10px 10px 0',
         width: 60,
         height: 60,
-        outline: '8px solid red',
-        outlineOffset: -8,
         cursor: 'pointer',
+        fontSize: 0,
+        [child(sty_mit.inner)]: {
+            width: '100%',
+            height: '100%',
+            boxSizing: 'border-box',
+            borderWidth: 8,
+            borderStyle: 'solid',
+        },
     },
 })
