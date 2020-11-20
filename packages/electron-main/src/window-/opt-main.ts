@@ -1,11 +1,12 @@
 import path from 'path'
 import url from 'url'
 import Electron, { globalShortcut, MenuItem, Menu, dialog, screen, app } from 'electron'
+import os from 'os'
 
 export function window_option_main(): Electron.BrowserWindowConstructorOptions {
     return {
-        width: screen.getPrimaryDisplay().workAreaSize.width,
-        height: screen.getPrimaryDisplay().workAreaSize.height,
+        width: os.platform() === 'win32' ? 800 : screen.getPrimaryDisplay().workAreaSize.width,
+        height: os.platform() === 'win32' ? 600 : screen.getPrimaryDisplay().workAreaSize.height,
         // fullscreen: true,
         autoHideMenuBar: true,
 

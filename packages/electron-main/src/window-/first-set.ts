@@ -6,6 +6,7 @@ import { envs } from 'const-/env'
 
 export function first_set() {
     load_page()
+    set_window()
 }
 
 function load_page() {
@@ -22,5 +23,10 @@ function load_page() {
             }),
         )
     }
+}
+
+function set_window() {
+    const mw = get_main_window()
     mw.webContents.openDevTools()
+    mw.maximize()
 }

@@ -77,7 +77,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     IconBoxDanger: {
         ':hover': {
-            backgroundColor: `rgb(221,17,68)`,
+            backgroundColor: `rgb(212,18,35)`,
             color: themes.style_vars.white,
         },
     },
