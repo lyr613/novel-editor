@@ -3,9 +3,17 @@ import { css } from 'style-/aphrodite'
 import { style as s, sty_mit } from './style'
 import { themes } from 'style-/theme'
 import OfficeButton from 'component-/button'
+import { ipc } from 'tool-/electron'
+import { load_option, option$ } from 'subject-/option'
+import { useObservable } from 'rxjs-hooks'
 
 /** Ui */
 export default function Ui() {
+    useEffect(() => {
+        setTimeout(() => {
+            load_option()
+        }, 0)
+    }, [])
     return (
         <div className={css(s.root)}>
             <Theme />
@@ -14,7 +22,10 @@ export default function Ui() {
 }
 
 function Theme() {
-    const [theme, next_theme] = useState('')
+    const opt = useObservable(() => option$)
+    if (!opt) {
+        return null
+    }
     return (
         <section className={css(s.section)}>
             <h2 className={css(s.h2)}>主题</h2>
@@ -26,13 +37,14 @@ function Theme() {
                         backgroundColor: clr.color.themePrimary,
                     }}
                     onClick={() => {
-                        next_theme(clr.name)
+                        opt.ui.theme = clr.name
+                        option$.next({ ...opt })
                     }}
                 >
                     <div
                         className={css(sty_mit.inner)}
                         style={{
-                            borderColor: theme === clr.name ? clr.color.themeLight : 'transparent',
+                            borderColor: opt.ui.theme === clr.name ? clr.color.themeLight : 'transparent',
                         }}
                     ></div>
                 </div>
