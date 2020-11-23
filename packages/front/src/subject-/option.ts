@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { debounceTime } from 'rxjs/operators'
+import { debounceTime, skip } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
 import { fs_write } from 'tool-/fs'
 
@@ -30,6 +30,9 @@ export function load_option() {
     option$.next(opt2)
 }
 
-option$.pipe(debounceTime(2000)).subscribe((opt) => {
-    // fs_write()
+option$.pipe(skip(1), debounceTime(2000)).subscribe((opt) => {
+    console.log('保存option')
+
+    const optsrc = ipc().sendSync('path', 'option')
+    fs_write(optsrc, JSON.stringify(opt))
 })
