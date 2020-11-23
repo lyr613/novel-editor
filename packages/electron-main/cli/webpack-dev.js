@@ -6,5 +6,7 @@ const devopt = {
 }
 
 Object.assign(baseopt, devopt)
+// 会报一个警告
+baseopt.externals.push(/prettier/)
 
 module.exports = baseopt
