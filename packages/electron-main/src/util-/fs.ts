@@ -52,13 +52,15 @@ export function effect_fs_read_json(src: string): fs_json_dto {
 
 /** 安全的创建文件夹, 出现多级缺失也可以创建, 已存在不会创建 */
 export function effect_fs_mk_dir(src: string) {
-    const save = []
-    let it = src
-    while (!fs.existsSync(it)) {
-        save.push(it)
-        it = path.join(it, '..')
-    }
-    for (let i = save.length - 1; i >= 0; i--) {
-        fs.mkdirSync(save[i])
-    }
+    try {
+        const save = []
+        let it = src
+        while (!fs.existsSync(it)) {
+            save.push(it)
+            it = path.join(it, '..')
+        }
+        for (let i = save.length - 1; i >= 0; i--) {
+            fs.mkdirSync(save[i])
+        }
+    } catch (error) {}
 }
