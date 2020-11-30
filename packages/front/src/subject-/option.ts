@@ -14,11 +14,7 @@ function formatter_option(old: option_vo | null): option_vo {
 
     const ui = joi
         .object({
-            theme: joi
-                .required()
-                .only()
-                .allow('word', 'excel', 'ppt')
-                .failover('word'),
+            theme: joi.required().only().allow('word', 'excel', 'ppt').failover('word'),
         })
         .required()
         .failover(defopt.ui)
@@ -49,8 +45,7 @@ export function load_option() {
 
 // 自动保存编辑器配置
 option$.pipe(skip(1), debounceTime(2000)).subscribe((opt) => {
-    console.log('保存option')
-
+    console.log('保存编辑器配置')
     const optsrc = ipc().sendSync('path', 'option')
     fs_write(optsrc, JSON.stringify(opt))
 })
