@@ -3,6 +3,7 @@ import { debounceTime, skip } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
 import { fs_write } from 'tool-/fs'
 import joi from 'joi'
+import { themes } from 'style-/theme'
 
 /** 编辑器配置 */
 export const option$ = new BehaviorSubject(null as null | option_vo)
@@ -38,9 +39,10 @@ export function default_option(): option_vo {
 
 /** 加载编辑器配置 */
 export function load_option() {
-    const opt = ipc().sendSync('shard_load_editer_option').data
-    const opt2 = formatter_option(opt)
-    option$.next(opt2)
+    const opt_maybe_err = ipc().sendSync('shard_load_editer_option').data
+    const opt = formatter_option(opt_maybe_err)
+    option$.next(opt)
+    themes.use(opt.ui.theme)
 }
 
 // 自动保存编辑器配置

@@ -9,22 +9,25 @@ interface item_vo {
 }
 export interface LabelBarOption {
     items: item_vo[]
-    hook_select_end?: (item: item_vo) => void
+    /** 根据此进行高亮 */
+    use_key: string
+    default_key?: string
+    /** 点击触发, 参数为item */
+    on_item_click?: (item: item_vo) => void
 }
 /** LabelBar */
 export default function LabelBar(p: LabelBarOption) {
-    const { items, hook_select_end } = p
-    const [use, next_use] = useState(items[0])
+    const { items, on_item_click } = p
+    const use_key = p.default_key || p.use_key
     return (
         <div className={css(s.LabelBar)}>
             {items.map((it) => (
                 <div
                     key={it.key}
-                    className={css(s.LabelItem, use?.key === it.key && s.LabelItemUse)}
+                    className={css(s.LabelItem, use_key === it.key && s.LabelItemUse)}
                     onClick={() => {
-                        next_use(it)
-                        if (hook_select_end) {
-                            hook_select_end(it)
+                        if (on_item_click) {
+                            on_item_click(it)
                         }
                     }}
                 >

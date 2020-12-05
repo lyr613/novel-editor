@@ -25,7 +25,7 @@ export default function Show() {
             }
             const h = (w - 20) * 1.5
             next_item_size([col, w, h])
-            console.log(w)
+            console.log('书item宽度', w)
         })
         // const [W, H] = [window.innerWidth - 20, window.innerHeight]
         return () => {

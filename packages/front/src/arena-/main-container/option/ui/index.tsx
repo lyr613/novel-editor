@@ -3,7 +3,6 @@ import { css } from 'style-/aphrodite'
 import { style as s, sty_mit } from './style'
 import { themes } from 'style-/theme'
 import OfficeButton from 'component-/button'
-import { ipc } from 'tool-/electron'
 import { load_option, option$ } from 'subject-/option'
 import { useObservable } from 'rxjs-hooks'
 
@@ -11,7 +10,7 @@ import { useObservable } from 'rxjs-hooks'
 export default function Ui() {
     useEffect(() => {
         setTimeout(() => {
-            load_option()
+            // load_option()
         }, 0)
     }, [])
     return (
