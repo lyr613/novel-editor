@@ -39,6 +39,7 @@ function Theme() {
                     onClick={() => {
                         opt.ui.theme = clr.name
                         option$.next({ ...opt })
+                        themes.use(clr.name)
                     }}
                 >
                     <div

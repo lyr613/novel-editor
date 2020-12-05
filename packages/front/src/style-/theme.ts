@@ -2,9 +2,12 @@ import { createTheme, loadTheme } from '@fluentui/react'
 
 class THEME {
     constructor() {
-        this.office_use('word')
-        this.ui_use('word')
+        this.use('word')
     }
+    /**
+     * @deprecated
+     * word 不建议外部使用
+     */
     public get word() {
         return {
             palette: {
@@ -33,6 +36,10 @@ class THEME {
             },
         }
     }
+    /**
+     * @deprecated
+     * excel 不建议外部使用
+     */
     public get excel() {
         return {
             palette: {
@@ -61,6 +68,10 @@ class THEME {
             },
         }
     }
+    /**
+     * @deprecated
+     * ppt 不建议外部使用
+     */
     public get ppt() {
         return {
             palette: {
@@ -98,7 +109,9 @@ class THEME {
             color: color.palette,
         }))
     }
-    /** css变量 var(--some) */
+    /** css变量 var(--some)
+     * 使用此获得动态background-color
+     */
     public get style_vars() {
         const o = this.word.palette
         const nobj = Object.assign({}, o)
@@ -107,6 +120,13 @@ class THEME {
             ;(nobj as any)[k] = `var(--QV${k})`
         })
         return nobj
+    }
+    /**
+     * 使用主题
+     */
+    public use(theme: theme_vo) {
+        this.office_use(theme)
+        this.ui_use(theme)
     }
     /** office ui 变更主题 */
     private office_use(theme: theme_vo) {
@@ -139,4 +159,5 @@ class THEME {
     }
 }
 
+/** 主题 唯一实例 */
 export const themes = new THEME()
