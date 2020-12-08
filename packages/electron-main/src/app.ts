@@ -21,7 +21,7 @@ function createWindow() {
     // did_create(main_window)
     // update_check(main_window)
 
-    main_window.on('closed', function() {
+    main_window.on('closed', () => {
         main_window = null
     })
 }
@@ -33,9 +33,9 @@ export function setup() {
         app.quit()
     })
 
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow()
-        }
-    })
+    // app.on('activate', () => {
+    //     if (BrowserWindow.getAllWindows().length === 0) {
+    //         createWindow()
+    //     }
+    // })
 }

@@ -29,5 +29,5 @@ function window_close(e: Electron.IpcMainEvent) {
     console.log('关闭')
     const mw = get_main_window()
     mw.close()
-    reply(e, 'window_close')
+    // reply(e, 'window_close')
 }
