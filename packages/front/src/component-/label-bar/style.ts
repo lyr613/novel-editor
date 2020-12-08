@@ -20,16 +20,17 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         lineHeight: '30px',
         padding: ' 0 36px',
         fontSize: 14,
-        color: 'white',
+        color: themes.style_vars.themeLight,
         borderRight: '1px solid ' + themes.style_vars.themeDarker,
         backgroundColor: themes.style_vars.themeDarkAlt,
         cursor: 'pointer',
         userSelect: 'none',
-        ':hover span': {
-            color: 'red',
+        ':hover': {
+            color: themes.style_vars.white,
         },
     },
     LabelItemUse: {
         backgroundColor: themes.style_vars.themeDark,
+        color: themes.style_vars.white,
     },
 })

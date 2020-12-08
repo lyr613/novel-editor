@@ -24,7 +24,7 @@ export default function MenuBar() {
                 {
                     name: '新书',
                     click() {
-                        next_router('shelf', router2_shelf().new.en)
+                        next_router('shelf', router2_shelf().edit.en)
                         menu_use$.next('')
                     },
                 },

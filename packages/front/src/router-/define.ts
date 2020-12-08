@@ -23,16 +23,16 @@ export function router1(): { [k in router1_vo]: rt<k> } {
 }
 
 // 书架2级
-export type router2_shelf_vo = 'show' | 'new'
+export type router2_shelf_vo = 'show' | 'edit'
 export function router2_shelf(): { [k in router2_shelf_vo]: rt<k> } {
     return {
         show: {
             en: 'show',
             cn: '查看',
         },
-        new: {
-            en: 'new',
-            cn: '查看',
+        edit: {
+            en: 'edit',
+            cn: '编辑',
         },
     }
 }

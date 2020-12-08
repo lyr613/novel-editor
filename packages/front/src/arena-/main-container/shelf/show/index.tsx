@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from 'style-/global'
-import { style as s } from './style'
+import { style as s, style_item } from './style'
 import { screen$ } from 'subject-/screen'
 import { themes } from 'style-/theme'
 
@@ -53,7 +53,6 @@ function List(p: list) {
                 display: 'grid',
                 gridTemplateColumns: `repeat(${col}, auto)`,
                 boxSizing: 'border-box',
-                // width: '100vw',
                 gap: 20,
                 padding: 20,
             }}
@@ -63,15 +62,12 @@ function List(p: list) {
                 .map((n, i) => (
                     <div
                         key={i}
+                        className={css(s.Item)}
                         style={{
-                            position: 'relative',
-                            boxSizing: 'border-box',
-                            width: '100%',
                             height: ih + 'px',
-                            backgroundColor: themes.style_vars.themeDark,
                         }}
                     >
-                        <div className={css(s.ItemName)}>书名太长了怎</div>
+                        <div className={css(style_item.Name)}>书名太长了怎书名太长了怎书名太长了怎书名太长了怎</div>
                     </div>
                 ))}
         </div>
