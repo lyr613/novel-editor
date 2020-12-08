@@ -1,5 +1,6 @@
-const fs = require('fs-extra')
+const fs = require('fs')
 const path = require('path')
+const util = require('./util')
 
 const pkg_src = path.join(__dirname, '..', 'packages')
 const re_src = path.join(__dirname, '..', 'project-report', '代码量统计.txt')
@@ -10,8 +11,8 @@ main()
 
 function main() {
     init()
-    const elec = path.join(pkg_src, 'elec', 'src')
-    const view = path.join(pkg_src, 'view', 'src')
+    const elec = path.join(util.paths().elec, 'src')
+    const view = path.join(util.paths().front, 'src')
     count('elec', elec)
     count('view', view)
     report()
