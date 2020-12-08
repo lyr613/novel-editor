@@ -6,7 +6,7 @@ import { effect_fs_read, effect_fs_read_json } from 'util-/fs'
 import prettier from 'prettier'
 import path from 'path'
 
-/** 窗口控制 */
+/** 文件控制 */
 export function _watch_fs() {
     ipcMain.on('fs_read', fs_read)
     ipcMain.on('fs_read_json', fs_read_json)

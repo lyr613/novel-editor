@@ -4,6 +4,7 @@ import { global_style as gs, style_creater as sc } from 'style-/global'
 import { style as s } from './style'
 import { Icon, Label, Stack, TextField } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
+import { ipc } from 'tool-/electron'
 /** Edit */
 export default function Edit() {
     const book_src_id = useId('book_src_id')
@@ -20,7 +21,14 @@ export default function Edit() {
                             }}
                             className={css(sc.wh(400))}
                         />
-                        <Icon iconName="Settings" className={css(s.iconSrcSel)}></Icon>
+                        <Icon
+                            onClick={() => {
+                                const src = ipc().sendSync('path_pick')
+                                console.log('src--', src)
+                            }}
+                            iconName="Settings"
+                            className={css(s.iconSrcSel)}
+                        ></Icon>
                     </Stack>
                 </div>
                 <TextField label="书名" className={css(sc.wh(400))} />
