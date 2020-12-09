@@ -28,11 +28,11 @@ export function effect_fs_read(src: string): fs_dto {
     }
 }
 
-export function effect_fs_read_json(src: string): fs_json_dto {
+export function effect_fs_read_json<T = any>(src: string): fs_json_dto<T> {
     try {
         const re = effect_fs_read(src)
         if (!re.b) {
-            return { ...re, data: {} }
+            return { ...re, data: {} as any }
         }
         const data = JSON.parse(re.txt)
         const re2: fs_json_dto = {

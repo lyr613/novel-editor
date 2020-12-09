@@ -23,6 +23,7 @@ function _get_path(path_code: path_dto) {
     return ''
 }
 
+/** 通过选择获取目录 */
 function path_pick(e: Electron.IpcMainEvent) {
     dialog
         .showOpenDialog({

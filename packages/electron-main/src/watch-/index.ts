@@ -1,4 +1,5 @@
 import { _watch_fs } from './fs'
+import { _watch_option } from './option'
 import { _watch_path } from './path'
 import { _watch_shard } from './shard'
 import { _watch_window } from './window'
@@ -9,4 +10,5 @@ export function watch_all() {
     _watch_fs()
     _watch_shard()
     _watch_path()
+    _watch_option()
 }
