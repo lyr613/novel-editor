@@ -5,16 +5,25 @@ import { style as s } from './style'
 import { Icon, Label, Stack, TextField } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import { ipc } from 'tool-/electron'
+import { useObservable } from 'rxjs-hooks'
+import { book_edit$, mk_book } from 'subject-/book'
+import { shallowCopy } from 'tool-/rx-shallow-copy'
+import path from 'path'
+
 /** Edit */
 export default function Edit() {
     const book_src_id = useId('book_src_id')
+    const bk = useObservable(() => book_edit$.pipe(shallowCopy()), mk_book())
     return (
         <div className={css(s.root)}>
             <section className={css(s.form)}>
+                {/* 路径 */}
                 <div>
                     <Label htmlFor={book_src_id}>路径</Label>
                     <Stack horizontal verticalAlign="center">
                         <TextField
+                            value={bk.src}
+                            disabled
                             id={book_src_id}
                             onClick={() => {
                                 console.log(234567)
@@ -23,7 +32,12 @@ export default function Edit() {
                         />
                         <Icon
                             onClick={() => {
-                                const src = ipc().sendSync('path_pick')
+                                const src: string = ipc().sendSync('path_pick')
+                                if (src) {
+                                    bk.name = src.replace(/^.*[/\\]/, '')
+                                }
+                                bk.src = src
+                                book_edit$.next(bk)
                                 console.log('src--', src)
                             }}
                             iconName="Settings"
@@ -31,7 +45,16 @@ export default function Edit() {
                         ></Icon>
                     </Stack>
                 </div>
-                <TextField label="书名" className={css(sc.wh(400))} />
+                {/* 书名 */}
+                <TextField
+                    label="书名"
+                    value={bk.name}
+                    onChange={(_, ns) => {
+                        bk.name = ns || ''
+                        book_edit$.next(bk)
+                    }}
+                    className={css(sc.wh(400))}
+                />
                 <Label>封面</Label>
             </section>
         </div>
