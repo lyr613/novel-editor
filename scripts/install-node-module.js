@@ -16,5 +16,10 @@ const opts = [
         log: '安装 elec 依赖包',
         cmd: 'yarn',
     },
+    {
+        src: util.paths().pub,
+        log: '安装 公共 依赖包',
+        cmd: 'yarn',
+    },
 ]
 util.link_run_cmds(opts)

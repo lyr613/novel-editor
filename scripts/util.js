@@ -39,6 +39,7 @@ function paths() {
         pkg_root: path.join(root, 'packages'),
         front: path.join(root, 'packages', 'front'),
         elec: path.join(root, 'packages', 'electron-main'),
+        pub: path.join(root, 'packages', 'pub'),
     }
 }
 

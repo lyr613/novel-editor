@@ -28,19 +28,20 @@ function fs_write(e: Electron.IpcMainEvent, src: string, txt: string) {
         b: false,
         txt: '未知错误',
     }
+    // 尝试对json格式化
     try {
-        try {
-            const extname = path.extname(src)
-            if (extname === '.json') {
-                txt = prettier.format(txt, {
-                    parser: 'json',
-                })
-            }
-        } catch (error) {
-            re.txt = 'json格式化错误'
-            reply(e, 'fs_write', re)
-            return
+        const extname = path.extname(src)
+        if (extname === '.json') {
+            txt = prettier.format(txt, {
+                parser: 'json',
+            })
         }
+    } catch (error) {
+        re.txt = 'json格式化错误'
+        reply(e, 'fs_write', re)
+        return
+    }
+    try {
         fs.writeFileSync(src, txt)
         re.b = true
         reply(e, 'fs_write', re)

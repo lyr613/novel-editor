@@ -30,6 +30,10 @@ const opts = [
         files: [path.join(frontp, 'book.d.ts'), path.join(electp, 'book.d.ts')],
         title: '类型 book',
     },
+    {
+        files: [path.join(frontp, '..', 'tool-', 'uuid.ts'), path.join(electp, '..', 'util-', 'uuid.ts')],
+        title: '工具 uuid',
+    },
 ]
 
 opts.forEach((opt) => {
