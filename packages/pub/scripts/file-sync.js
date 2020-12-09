@@ -12,7 +12,9 @@ console.log(`
 const electp = path.join(paths.elec, 'src', 'type-')
 const frontp = path.join(paths.front, 'src', 'type-')
 
-/** 要同步的文件配置 */
+/** 要同步的文件配置
+ * 如果刚创建, 写到arr[0]的位置
+ */
 const opts = [
     {
         /** 自动取最后修改的文件 */
@@ -23,6 +25,10 @@ const opts = [
     {
         files: [path.join(electp, 'option.d.ts'), path.join(frontp, 'option.d.ts')],
         title: '类型 option',
+    },
+    {
+        files: [path.join(frontp, 'book.d.ts'), path.join(electp, 'book.d.ts')],
+        title: '类型 book',
     },
 ]
 
