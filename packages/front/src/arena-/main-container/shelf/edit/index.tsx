@@ -2,18 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from 'style-/global'
 import { style as s } from './style'
-import { Icon, Label, Stack, TextField } from '@fluentui/react'
+import { Button, Icon, Label, Stack, TextField } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import { ipc } from 'tool-/electron'
 import { useObservable } from 'rxjs-hooks'
 import { book_edit$, mk_book } from 'subject-/book'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
 import path from 'path'
+import { useLocation } from 'react-router-dom'
 
 /** Edit */
 export default function Edit() {
     const book_src_id = useId('book_src_id')
     const bk = useObservable(() => book_edit$.pipe(shallowCopy()), mk_book())
+    useEffect(() => {
+        return () => {
+            book_edit$.next(mk_book())
+        }
+    }, [])
     return (
         <div className={css(s.root)}>
             <section className={css(s.form)}>
@@ -56,6 +62,10 @@ export default function Edit() {
                     className={css(sc.wh(400))}
                 />
                 <Label>封面</Label>
+                {/* 好 */}
+                <Button primary={true} onClick={() => {}}>
+                    好
+                </Button>
             </section>
         </div>
     )
