@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { css } from 'style-/aphrodite'
 import { style as s, sty_mit } from './style'
 import { themes } from 'style-/theme'
-import OfficeButton from 'component-/button'
 import { load_option, option$ } from 'subject-/option'
 import { useObservable } from 'rxjs-hooks'
+import { PrimaryButton } from '@fluentui/react'
 
 /** Ui */
 export default function Ui() {
@@ -49,7 +49,7 @@ function Theme() {
                     ></div>
                 </div>
             ))}
-            <OfficeButton with_theme>啦啦</OfficeButton>
+            <PrimaryButton>啦啦</PrimaryButton>
         </section>
     )
 }
