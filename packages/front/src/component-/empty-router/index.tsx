@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { router_pusher$ } from 'router-/pusher'
+import { Rt } from 'router-'
 
 export default function EmptyRouter(goto: string) {
     return function Empty() {
         useEffect(() => {
             setTimeout(() => {
-                router_pusher$.next(goto)
+                Rt.pusher$.next(goto)
             }, 0)
         }, [])
         return null

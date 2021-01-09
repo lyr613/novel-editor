@@ -3,10 +3,10 @@ import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from 'style-/global'
 import { style as s } from './style'
 import { fromEvent, Subject } from 'rxjs'
-import { mk_router, next_router } from 'router-/pusher'
 import { router1, router2_shelf } from 'router-/define'
 import { ipc } from 'tool-/electron'
 import { Icon } from '@fluentui/react/lib/Icon'
+import { Rt } from 'router-'
 
 /** MenuBar */
 export default function MenuBar() {
@@ -17,14 +17,14 @@ export default function MenuBar() {
                 {
                     name: '查看',
                     click() {
-                        next_router('shelf')
+                        Rt.next('shelf')
                         menu_use$.next('')
                     },
                 },
                 {
                     name: '新书',
                     click() {
-                        next_router('shelf', router2_shelf().edit.en)
+                        Rt.next('shelf', router2_shelf().edit.en)
                         menu_use$.next('')
                     },
                 },
@@ -46,8 +46,8 @@ export default function MenuBar() {
         {
             name: '设置',
             click() {
-                const rt = mk_router('option')
-                next_router('option')
+                const rt = Rt.make('option')
+                Rt.next('option')
                 menu_use$.next('')
             },
             children: [],

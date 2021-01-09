@@ -2,8 +2,8 @@
 import EmptyRouter from 'component-/empty-router'
 import React, { useState, useEffect } from 'react'
 import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
+import { Rt } from 'router-'
 import { router1 } from 'router-/define'
-import { mk_router, next_router, router_pusher$ } from 'router-/pusher'
 import Option from './option'
 import Shelf from './shelf'
 
@@ -11,7 +11,7 @@ import Shelf from './shelf'
 export default function MainContainer() {
     const rt = useHistory()
     useEffect(() => {
-        const ob = router_pusher$.subscribe((next) => {
+        const ob = Rt.pusher$.subscribe((next) => {
             const cur = rt.location.pathname
             if (next !== cur) {
                 rt.push(next)
@@ -30,8 +30,8 @@ export default function MainContainer() {
             }}
         >
             <Switch>
-                <Route path={mk_router('shelf')} component={Shelf}></Route>
-                <Route path={mk_router('option')} component={Option}></Route>
+                <Route path={Rt.make('shelf')} component={Shelf}></Route>
+                <Route path={Rt.make('option')} component={Option}></Route>
                 <Route component={EmptyRouter('/shelf')} />
             </Switch>
         </div>
