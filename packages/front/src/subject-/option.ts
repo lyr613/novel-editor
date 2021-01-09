@@ -1,8 +1,8 @@
 import { BehaviorSubject } from 'rxjs'
 import { debounceTime, skip } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
-import { fs_write } from 'tool-/fs'
 import { themes } from 'style-/theme'
+import { ToolFs } from 'tool-/fs'
 
 /** 编辑器配置 */
 export const option$ = new BehaviorSubject(null as null | option_vo)
@@ -18,5 +18,5 @@ export function load_option() {
 option$.pipe(skip(1), debounceTime(2000)).subscribe((opt) => {
     console.log('保存编辑器配置, 不管是否成功')
     const optsrc = ipc().sendSync('path', 'option')
-    fs_write(optsrc, JSON.stringify(opt))
+    ToolFs.write(optsrc, JSON.stringify(opt))
 })
