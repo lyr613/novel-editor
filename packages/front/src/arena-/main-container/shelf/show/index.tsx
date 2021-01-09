@@ -60,16 +60,27 @@ function List(p: list) {
             {Array(21)
                 .fill(1)
                 .map((n, i) => (
-                    <div
-                        key={i}
-                        className={css(s.Item)}
-                        style={{
-                            height: ih + 'px',
-                        }}
-                    >
-                        <div className={css(style_item.Name)}>书名太长了怎书名太长了怎书名太长了怎书名太长了怎</div>
-                    </div>
+                    <Item key={i} ih={ih} />
                 ))}
+        </div>
+    )
+}
+
+interface one {
+    ih: number
+}
+function Item(p: one) {
+    return (
+        <div
+            className={css(s.Item)}
+            style={{
+                height: p.ih + 'px',
+            }}
+        >
+            <div className={css(style_item.name)}>书名太长了怎书名太长了怎书名太长了怎书名太长了怎</div>
+            <div className={css(style_item.btn_box)}>
+                <div className={css(style_item.line)}></div>
+            </div>
         </div>
     )
 }

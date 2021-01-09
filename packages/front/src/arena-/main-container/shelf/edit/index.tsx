@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from 'style-/global'
 import { style as s } from './style'
-import { Button, Icon, Label, Stack, TextField } from '@fluentui/react'
+import { DefaultButton, Icon, Label, Stack, TextField } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import { ipc } from 'tool-/electron'
 import { useObservable } from 'rxjs-hooks'
@@ -63,9 +63,9 @@ export default function Edit() {
                 />
                 <Label>封面</Label>
                 {/* 好 */}
-                <Button primary={true} onClick={() => {}}>
+                <DefaultButton primary={true} onClick={() => {}}>
                     好
-                </Button>
+                </DefaultButton>
             </section>
         </div>
     )
