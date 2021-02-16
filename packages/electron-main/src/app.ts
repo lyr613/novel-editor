@@ -23,6 +23,7 @@ function createWindow() {
 
     main_window.on('closed', () => {
         main_window = null
+        app.quit()
     })
 }
 
