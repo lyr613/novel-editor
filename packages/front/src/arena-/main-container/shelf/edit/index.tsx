@@ -6,18 +6,16 @@ import { DefaultButton, Icon, Label, Stack, TextField } from '@fluentui/react'
 import { useId } from '@fluentui/react-hooks'
 import { ipc } from 'tool-/electron'
 import { useObservable } from 'rxjs-hooks'
-import { book_edit$, mk_book } from 'subject-/book'
+import { SubBook } from 'subject-/book'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
-import path from 'path'
-import { useLocation } from 'react-router-dom'
 
 /** Edit */
 export default function Edit() {
     const book_src_id = useId('book_src_id')
-    const bk = useObservable(() => book_edit$.pipe(shallowCopy()), mk_book())
+    const bk = useObservable(() => SubBook.edit$.pipe(shallowCopy()), SubBook.make())
     useEffect(() => {
         return () => {
-            book_edit$.next(mk_book())
+            SubBook.edit$.next(SubBook.make())
         }
     }, [])
     return (
@@ -43,7 +41,7 @@ export default function Edit() {
                                     bk.name = src.replace(/^.*[/\\]/, '')
                                 }
                                 bk.src = src
-                                book_edit$.next(bk)
+                                SubBook.edit$.next(bk)
                                 console.log('src--', src)
                             }}
                             iconName="Settings"
@@ -57,7 +55,7 @@ export default function Edit() {
                     value={bk.name}
                     onChange={(_, ns) => {
                         bk.name = ns || ''
-                        book_edit$.next(bk)
+                        SubBook.edit$.next(bk)
                     }}
                     className={css(sc.wh(400))}
                 />
