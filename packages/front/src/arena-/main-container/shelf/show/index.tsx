@@ -6,6 +6,7 @@ import { screen$ } from 'subject-/screen'
 import { themes } from 'style-/theme'
 import { SubBook } from 'subject-/book'
 import { useObservable } from 'rxjs-hooks'
+import { ipc } from 'tool-/electron'
 
 /** Show */
 export default function Show() {
@@ -82,6 +83,10 @@ function Item(p: one) {
             className={css(s.Item)}
             style={{
                 height: p.ih + 'px',
+            }}
+            onClick={() => {
+                console.log('打开书')
+                ipc().send('book_open_child_window', p.book)
             }}
         >
             <div className={css(style_item.name)}>{p.book.name}</div>
