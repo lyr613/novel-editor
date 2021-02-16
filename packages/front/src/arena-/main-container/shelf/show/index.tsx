@@ -4,6 +4,8 @@ import { global_style as gs, style_creater as sc } from 'style-/global'
 import { style as s, style_item } from './style'
 import { screen$ } from 'subject-/screen'
 import { themes } from 'style-/theme'
+import { SubBook } from 'subject-/book'
+import { useObservable } from 'rxjs-hooks'
 
 /** Show */
 export default function Show() {
@@ -32,6 +34,11 @@ export default function Show() {
             ob.unsubscribe()
         }
     }, [])
+    useEffect(() => {
+        setTimeout(() => {
+            SubBook.load()
+        }, 17)
+    }, [])
     return (
         <div className={css(s.Show)}>
             <Suspense fallback={null}>{item_size && <List item_size={item_size} />}</Suspense>
@@ -44,6 +51,7 @@ interface list {
 }
 function List(p: list) {
     const [col, iw, ih] = p.item_size
+    const li = useObservable(() => SubBook.li$, [])
     if (col < 1) {
         return <div>窗口尺寸太小了</div>
     }
@@ -57,17 +65,16 @@ function List(p: list) {
                 padding: 20,
             }}
         >
-            {Array(21)
-                .fill(1)
-                .map((n, i) => (
-                    <Item key={i} ih={ih} />
-                ))}
+            {li.map((bk, i) => (
+                <Item key={bk.id} ih={ih} book={bk} />
+            ))}
         </div>
     )
 }
 
 interface one {
     ih: number
+    book: book_vo
 }
 function Item(p: one) {
     return (
@@ -77,7 +84,7 @@ function Item(p: one) {
                 height: p.ih + 'px',
             }}
         >
-            <div className={css(style_item.name)}>书名太长了怎书名太长了怎书名太长了怎书名太长了怎</div>
+            <div className={css(style_item.name)}>{p.book.name}</div>
             <div className={css(style_item.btn_box)}>
                 <div className={css(style_item.line)}></div>
             </div>

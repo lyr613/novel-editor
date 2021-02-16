@@ -9,7 +9,7 @@ function App() {
     useEffect(() => {
         setTimeout(() => {
             SubOption.load()
-        }, 3)
+        }, 0)
     }, [])
     return (
         <div className="App">

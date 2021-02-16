@@ -14,12 +14,12 @@ export function _watch_option() {
 
 /** 读取编辑器配置 */
 function option_load(e: Electron.IpcMainEvent) {
-    const re = LoadOption.effect_load()
+    const re = OptionLoad.effect_load()
     reply(e, 'option_load', re)
 }
 
 /** 读取配置集合 */
-class LoadOption {
+export class OptionLoad {
     /** 读取并标准化编辑器配置 */
     static effect_load(): option_vo {
         const opt_dir = path.join(paths().option, '..')
@@ -27,7 +27,7 @@ class LoadOption {
             fs.mkdirSync(opt_dir)
         }
         const jn = effect_fs_read_json<option_vo>(paths().option)
-        return LoadOption.mk_standard_option(jn.data)
+        return OptionLoad.mk_standard_option(jn.data)
     }
     /** 默认配置 */
     static default_option(): option_vo {
@@ -46,7 +46,7 @@ class LoadOption {
 
     /** 标准化配置 */
     static mk_standard_option(old: option_vo | null): option_vo {
-        const defopt = LoadOption.default_option()
+        const defopt = OptionLoad.default_option()
         const readed: option_vo = Object.assign({}, old)
         // 分配置
         const shelf = joi

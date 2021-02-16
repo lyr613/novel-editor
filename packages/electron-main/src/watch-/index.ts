@@ -1,3 +1,4 @@
+import { _watch_book } from './book'
 import { _watch_fs } from './fs'
 import { _watch_option } from './option'
 import { _watch_path } from './path'
@@ -11,4 +12,5 @@ export function watch_all() {
     _watch_shard()
     _watch_path()
     _watch_option()
+    _watch_book()
 }

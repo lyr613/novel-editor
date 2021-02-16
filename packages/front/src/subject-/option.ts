@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs'
 import { debounceTime, skip } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
 import { themes } from 'style-/theme'

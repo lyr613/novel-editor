@@ -61,7 +61,13 @@ export default function Edit() {
                 />
                 <Label>封面</Label>
                 {/* 好 */}
-                <DefaultButton primary={true} onClick={() => {}}>
+                <DefaultButton
+                    primary={true}
+                    onClick={() => {
+                        console.log(bk)
+                        ipc().sendSync('book_add', bk)
+                    }}
+                >
                     好
                 </DefaultButton>
             </section>
