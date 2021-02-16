@@ -70,6 +70,7 @@ function book_open_child_window(e: Electron.IpcMainEvent, book: book_vo) {
     const opt = window_option_main()
     opt.title = book.name
     const child_win = new BrowserWindow(opt)
+    child_win.maximize()
     window_map.set(book.id, child_win)
     child_win.on('close', () => {
         console.log('关闭子窗口', book)
