@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { css } from 'style-/aphrodite'
 import { style as s, sty_mit } from './style'
 import { themes } from 'style-/theme'
-import { load_option, option$ } from 'subject-/option'
+import { SubOption } from 'subject-/option'
 import { useObservable } from 'rxjs-hooks'
 import { PrimaryButton } from '@fluentui/react'
 
@@ -21,7 +21,7 @@ export default function Ui() {
 }
 
 function Theme() {
-    const opt = useObservable(() => option$)
+    const opt = useObservable(() => SubOption.edit$)
     if (!opt) {
         return null
     }
@@ -37,7 +37,7 @@ function Theme() {
                     }}
                     onClick={() => {
                         opt.ui.theme = clr.name
-                        option$.next({ ...opt })
+                        SubOption.edit$.next({ ...opt })
                         themes.use(clr.name)
                     }}
                 >

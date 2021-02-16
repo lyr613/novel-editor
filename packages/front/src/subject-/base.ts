@@ -30,6 +30,6 @@ export class _sub_base<T> {
     readonly edit$ = new BehaviorSubject(this.make())
     /** 创建新的 */
     make(): T {
-        return {} as any
+        return null as any
     }
 }
