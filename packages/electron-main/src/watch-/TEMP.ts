@@ -1,6 +1,5 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { reply } from 'util-/reply'
-import { get_main_window } from 'window-'
 
 /** 窗口控制 */
 export function _watch_TEMP() {

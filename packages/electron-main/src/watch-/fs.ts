@@ -1,6 +1,5 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { reply } from 'util-/reply'
-import { get_main_window } from 'window-'
 import fs from 'fs-extra'
 import { effect_fs_read, effect_fs_read_json } from 'util-/fs'
 import prettier from 'prettier'

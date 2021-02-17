@@ -1,6 +1,6 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { reply } from 'util-/reply'
-import { get_main_window } from 'window-'
+import { WindowUtil } from 'window-'
 
 /** 窗口控制 */
 export function _watch_window() {
@@ -11,13 +11,13 @@ export function _watch_window() {
 
 function window_min(e: Electron.IpcMainEvent) {
     console.log('最小化')
-    const mw = get_main_window()
+    const mw = WindowUtil.main_window
     mw.minimize()
     reply(e, 'window_min')
 }
 function window_max(e: Electron.IpcMainEvent) {
     console.log('最大化')
-    const mw = get_main_window()
+    const mw = WindowUtil.main_window
     if (mw.isMaximized()) {
         mw.unmaximize()
     } else {
@@ -27,7 +27,7 @@ function window_max(e: Electron.IpcMainEvent) {
 }
 function window_close(e: Electron.IpcMainEvent) {
     console.log('关闭')
-    const mw = get_main_window()
+    const mw = WindowUtil.main_window
     mw.close()
     // reply(e, 'window_close')
 }

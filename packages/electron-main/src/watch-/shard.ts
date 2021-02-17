@@ -1,6 +1,5 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { reply } from 'util-/reply'
-import { get_main_window } from 'window-'
 import path from 'path'
 import { paths } from 'const-/path'
 import fs from 'fs-extra'
