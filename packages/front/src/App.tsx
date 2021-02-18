@@ -16,7 +16,7 @@ function App() {
         <div className="App">
             <HashRouter>
                 <Switch>
-                    <Route path="/" component={FirstLoad}></Route>
+                    <Route path="/load" component={FirstLoad}></Route>
                     <MenuBar />
                     <MainContainer />
                     <StatusFoo />

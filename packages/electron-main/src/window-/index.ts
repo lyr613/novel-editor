@@ -32,7 +32,7 @@ class _win {
     /** 创建主窗口 */
     create_main() {
         this.main_window = new BrowserWindow(this.option)
-        this.load_page(this.main_window)
+        this.load_page(this.main_window, 'load?type=main')
         this.main_window.maximize()
         if (envs().dev) {
             this.main_window.webContents.openDevTools()
@@ -44,6 +44,7 @@ class _win {
         if (envs().dev) {
             // 开发
             win.loadURL(paths().dev_html + rest_url)
+            console.log('加载', paths().dev_html + rest_url)
         } else {
             win.loadURL(
                 url.format({
