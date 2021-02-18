@@ -29,7 +29,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const postcssNormalize = require('postcss-normalize')
-
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const appPackageJson = require(paths.appPackageJson)
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -71,7 +71,7 @@ const hasJsxRuntime = (() => {
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv) {
+module.exports = function (webpackEnv) {
     const isEnvDevelopment = webpackEnv === 'development'
     const isEnvProduction = webpackEnv === 'production'
 
@@ -699,6 +699,9 @@ module.exports = function(webpackEnv) {
                 new webpack.DllReferencePlugin({
                     manifest: require(path.join(__dirname, '..', 'dll-build', 'dlldevelopment.m.json')),
                 }),
+            new MonacoWebpackPlugin({
+                languages: [],
+            }),
         ].filter(Boolean),
         // Some libraries import Node modules but don't use them in the browser.
         // Tell webpack to provide empty mocks for them so importing them works.
