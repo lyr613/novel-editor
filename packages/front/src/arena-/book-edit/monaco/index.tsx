@@ -4,6 +4,6 @@ import { css } from 'aphrodite/no-important'
 
 /**
  */
-export default function TEMP() {
+export default function MonacoEdit() {
     return <div className={css(style.root)}></div>
 }

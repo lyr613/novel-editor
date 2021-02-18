@@ -32,7 +32,7 @@ class _win {
     /** 创建主窗口 */
     create_main() {
         this.main_window = new BrowserWindow(this.option)
-        this.load_page(this.main_window, 'load?type=main')
+        this.load_page(this.main_window, 'shelf?type=main')
         this.main_window.maximize()
         if (envs().dev) {
             this.main_window.webContents.openDevTools()
@@ -55,8 +55,10 @@ class _win {
             )
         }
     }
-    /** 子窗口 */
+    /** id: 子窗口 */
     child_map = new Map<string, BrowserWindow | false>()
+    /** id: 书目信息 */
+    book_map = new Map<string, book_vo>()
 }
 
 /** 窗口类 */

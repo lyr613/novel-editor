@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
-import MenuBar from 'arena-/menu-bar'
-import MainContainer from 'arena-/main-container'
-import StatusFoo from 'arena-/status-foo'
 import { SubOption } from 'subject-/option'
-import FirstLoad from './arena-/load'
+import Shelf from 'arena-/shelf'
+import { Rt } from 'router-'
+import BookEdit from 'arena-/book-edit'
 
 function App() {
     useEffect(() => {
@@ -15,14 +14,30 @@ function App() {
     return (
         <div className="App">
             <HashRouter>
-                <Switch>
-                    <Route path="/load" component={FirstLoad}></Route>
-                    <MenuBar />
-                    <MainContainer />
-                    <StatusFoo />
-                </Switch>
+                <Routebox />
             </HashRouter>
         </div>
+    )
+}
+
+function Routebox() {
+    const rt = useHistory()
+    useEffect(() => {
+        const ob = Rt.pusher$.subscribe((next) => {
+            const cur = rt.location.pathname
+            if (next !== cur) {
+                rt.push(next)
+            }
+        })
+        return () => {
+            ob.unsubscribe()
+        }
+    }, [rt])
+    return (
+        <Switch>
+            <Route path="/shelf" component={Shelf} />
+            <Route path="/bookedit" component={BookEdit} />
+        </Switch>
     )
 }
 

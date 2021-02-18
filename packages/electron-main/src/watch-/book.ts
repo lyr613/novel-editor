@@ -9,7 +9,7 @@ import { WindowUtil } from 'window-'
 
 /** 书目 */
 export function _watch_book() {
-    const li = [load_book_li, book_add, book_open_child_window]
+    const li = [load_book_li, load_book, book_add, book_open_child_window]
     for (const fun of li) {
         ipcMain.on(fun.name, fun)
     }
@@ -19,6 +19,16 @@ export function _watch_book() {
 function load_book_li(e: Electron.IpcMainEvent, srcs: string[]) {
     const re: book_vo[] = srcs.map(_load_book)
     reply(e, 'load_book_li', re)
+}
+
+/** 加载一本书 */
+function load_book(e: Electron.IpcMainEvent, bid: string) {
+    const bk = WindowUtil.book_map.get(bid)
+    if (!bk) {
+        reply(e, 'load_book', null)
+        return
+    }
+    reply(e, 'load_book', bk)
 }
 
 function _load_book(src: string): book_vo {
@@ -70,8 +80,9 @@ function book_open_child_window(e: Electron.IpcMainEvent, book: book_vo) {
     opt.title = book.name
     const child_win = new BrowserWindow(opt)
     child_win.maximize()
-    WindowUtil.load_page(child_win, 'option')
+    WindowUtil.load_page(child_win, `bookedit?bid=${book.id}`)
     window_map.set(book.id, child_win)
+    WindowUtil.book_map.set(book.id, book)
     child_win.on('close', () => {
         console.log('关闭子窗口', book)
         window_map.set(book.id, false)
