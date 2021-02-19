@@ -13,6 +13,7 @@ import { Rt } from 'router-'
 export default function FirstLoad() {
     return (
         <div className={css(style.root)}>
+            123
             <LoadList />
         </div>
     )

@@ -9,6 +9,7 @@ import MonacoEdit from './monaco'
 import { SubMonaco } from 'subject-/monaco'
 import { SubOption } from 'subject-/option'
 import Volume from './volume'
+import { SubVolume } from 'subject-/volume'
 
 /**
  * #### 编辑选中的书目
@@ -29,7 +30,7 @@ function LoadInfor() {
 
     useEffect(() => {
         const so = parse(p.search)
-        const bookid = so.bid
+        const bookid = so.bid as string
         // console.log(bookid, 'bookid')
         const book: book_vo | null = ipc().sendSync('load_book', bookid)
         if (!book) {
@@ -43,8 +44,7 @@ function LoadInfor() {
         document.title = book.name
         // console.log('book', book)
         // 加载章节
-        const volumes = ipc().sendSync('chapter_load', bookid)
-        console.log('volumes', volumes)
+        SubVolume.load(bookid)
 
         // 加载monaco
         /**

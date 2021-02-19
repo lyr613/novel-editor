@@ -7,7 +7,8 @@ main()
 
 async function main() {
     await webpack_build()
-    electron_build()
+    await electron_build()
+    open_dir()
 }
 
 function webpack_build() {
@@ -45,5 +46,16 @@ function electron_build() {
                 res()
             }, 1000)
         })
+    })
+}
+
+function open_dir() {
+    return new Promise((res) => {
+        const src = path.join(__dirname, '..', 'build-final')
+        if (os.platform() === 'win32') {
+            cp.exec(`start ${src}`)
+        } else {
+            cp.exec(`open ${src}`)
+        }
     })
 }

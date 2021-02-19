@@ -9,9 +9,14 @@ import { WindowUtil } from 'window-'
 
 /** 书目 */
 export function _watch_book() {
-    const li = [load_book_li, load_book, book_add, book_open_child_window]
-    for (const fun of li) {
-        ipcMain.on(fun.name, fun)
+    const funcs: [string, any][] = [
+        ['load_book_li', load_book_li],
+        ['load_book', load_book],
+        ['book_add', book_add],
+        ['book_open_child_window', book_open_child_window],
+    ]
+    for (const fun of funcs) {
+        ipcMain.on(fun[0], fun[1])
     }
 }
 

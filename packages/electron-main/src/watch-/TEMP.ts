@@ -3,9 +3,14 @@ import { reply } from 'util-/reply'
 
 /**   */
 export function _watch_TEMP() {
-    const funcs = [temp]
+    const funcs: [string, any][] = [
+        ['temp', temp],
+        ['temp', temp],
+        ['temp', temp],
+        ['temp', temp],
+    ]
     for (const fun of funcs) {
-        ipcMain.on(fun.name, fun)
+        ipcMain.on(fun[0], fun[1])
     }
 }
 

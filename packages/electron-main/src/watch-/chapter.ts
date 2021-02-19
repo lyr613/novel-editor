@@ -8,9 +8,12 @@ import { effect_fs_read_json } from 'util-/fs'
 
 /**   */
 export function _watch_chapter() {
-    const funcs = [chapter_load]
+    const funcs: [string, any][] = [
+        ['chapter_load', chapter_load],
+        //
+    ]
     for (const fun of funcs) {
-        ipcMain.on(fun.name, fun)
+        ipcMain.on(fun[0], fun[1])
     }
 }
 

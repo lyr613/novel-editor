@@ -4,6 +4,7 @@ import { SubOption } from 'subject-/option'
 import Shelf from 'arena-/shelf'
 import { Rt } from 'router-'
 import BookEdit from 'arena-/book-edit'
+import FirstLoad from 'arena-/load'
 
 function App() {
     useEffect(() => {
@@ -37,6 +38,7 @@ function Routebox() {
         <Switch>
             <Route path="/shelf" component={Shelf} />
             <Route path="/bookedit" component={BookEdit} />
+            {/* <Route path="/load" component={FirstLoad} /> */}
         </Switch>
     )
 }

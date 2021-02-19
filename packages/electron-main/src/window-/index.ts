@@ -22,8 +22,8 @@ class _win {
                 /** 查看本地图片, 设置成false才可以 */
                 webSecurity: false,
                 /** 允许打开控制台 */
-                // devTools: true,
-                devTools: process.env.NODE_ENV === 'development',
+                devTools: true,
+                // devTools: process.env.NODE_ENV === 'development',
             },
             /** 显示最顶部的那一条(带最小化, 关闭的那个), windows关掉了  */
             frame: !!process.platform,
@@ -32,9 +32,10 @@ class _win {
     /** 创建主窗口 */
     create_main() {
         this.main_window = new BrowserWindow(this.option)
-        this.load_page(this.main_window, 'shelf?type=main')
+        this.load_page(this.main_window, 'shelf')
         this.main_window.maximize()
-        if (envs().dev) {
+        // if (envs().dev) {
+        if (true) {
             this.main_window.webContents.openDevTools()
         }
         return this.main_window
@@ -46,13 +47,15 @@ class _win {
             win.loadURL(paths().dev_html + rest_url)
             console.log('加载', paths().dev_html + rest_url)
         } else {
-            win.loadURL(
+            const burl =
                 url.format({
-                    pathname: paths().did_build_html + rest_url,
+                    pathname: paths().did_build_html,
                     protocol: 'file:',
                     slashes: true,
-                }),
-            )
+                }) +
+                '#/' +
+                rest_url
+            win.loadURL(burl)
         }
     }
     /** id: 子窗口 */
