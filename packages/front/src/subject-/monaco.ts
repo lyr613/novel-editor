@@ -1,10 +1,12 @@
 import * as monaco from 'monaco-editor'
-import { from } from 'rxjs'
+import { BehaviorSubject, from } from 'rxjs'
 import { themes } from 'style-/theme'
 import { SubOption } from './option'
 
 class _mo {
-    editer_map = new Map<string, monaco.editor.IStandaloneCodeEditor>()
+    readonly editer_map = new Map<string, monaco.editor.IStandaloneCodeEditor>()
+    /** 已经加载完成monaco */
+    readonly did_load_monaco$ = new BehaviorSubject(false)
     /** 加载monaco, 只执行一次即可 */
     load_monaco() {
         const regedid = monaco.languages.getEncodedLanguageId('book')
@@ -17,6 +19,7 @@ class _mo {
         })
         this.auto_keyword()
         this.auto_theme()
+        this.did_load_monaco$.next(true)
 
         // const reged2 = monaco.languages.getEncodedLanguageId('book')
         // console.log('reged', reged2)
@@ -93,6 +96,7 @@ class _mo {
             })
         })
     }
+    /** 编辑器默认配置 */
     get default_option(): monaco.editor.IStandaloneEditorConstructionOptions {
         const app_opt = SubOption.edit$.value
         const opt: monaco.editor.IStandaloneEditorConstructionOptions = {

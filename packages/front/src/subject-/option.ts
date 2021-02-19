@@ -1,4 +1,4 @@
-import { debounceTime, skip } from 'rxjs/operators'
+import { debounceTime, skip, take } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
 import { themes } from 'style-/theme'
 import { ToolFs } from 'tool-/fs'
@@ -11,12 +11,14 @@ class _option extends _sub_base<option_vo> {
         this.edit$.next(opt)
         themes.use(opt.ui.theme)
     }
+    save() {
+        this.edit$.pipe(take(1)).subscribe((opt) => {
+            console.log('保存编辑器配置, 不管是否成功')
+            const optsrc = ipc().sendSync('path', 'option')
+            ToolFs.write(optsrc, JSON.stringify(opt))
+        })
+    }
 }
 
 /** 编辑器配置 */
 export const SubOption = new _option()
-SubOption.edit$.pipe(skip(1), debounceTime(2000)).subscribe((opt) => {
-    console.log('保存编辑器配置, 不管是否成功')
-    const optsrc = ipc().sendSync('path', 'option')
-    ToolFs.write(optsrc, JSON.stringify(opt))
-})

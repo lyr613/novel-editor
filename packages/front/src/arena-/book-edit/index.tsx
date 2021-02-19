@@ -7,6 +7,8 @@ import { ipc } from 'tool-/electron'
 import { SubBook } from 'subject-/book'
 import MonacoEdit from './monaco'
 import { SubMonaco } from 'subject-/monaco'
+import { SubOption } from 'subject-/option'
+import Volume from './volume'
 
 /**
  * #### 编辑选中的书目
@@ -16,6 +18,7 @@ export default function BookEdit() {
         <div className={css(style.book_edit)}>
             <LoadInfor />
             <MonacoEdit />
+            <Volume />
         </div>
     )
 }
@@ -32,11 +35,21 @@ function LoadInfor() {
         if (!book) {
             return
         }
+        const app_opt = ipc().sendSync('option_load')
+        SubOption.edit$.next(app_opt)
+        //
         SubBook.li$.next([book])
         SubBook.use_id$.next(book.id)
         document.title = book.name
         // console.log('book', book)
+        // 加载章节
+        const volumes = ipc().sendSync('chapter_load', bookid)
+        console.log('volumes', volumes)
+
         // 加载monaco
+        /**
+         * 始终最后加载monaco, 加载完成后显示可编辑模块
+         */
         SubMonaco.load_monaco()
     }, [p])
     return null

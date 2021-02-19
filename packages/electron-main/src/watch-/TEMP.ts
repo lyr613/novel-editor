@@ -1,9 +1,12 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { reply } from 'util-/reply'
 
-/** 窗口控制 */
+/**   */
 export function _watch_TEMP() {
-    ipcMain.on('temp', temp)
+    const funcs = [temp]
+    for (const fun of funcs) {
+        ipcMain.on(fun.name, fun)
+    }
 }
 
 function temp(e: Electron.IpcMainEvent) {
