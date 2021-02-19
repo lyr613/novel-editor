@@ -6,13 +6,14 @@ import { parse } from 'query-string'
 import { ipc } from 'tool-/electron'
 import { SubBook } from 'subject-/book'
 import MonacoEdit from './monaco'
+import { SubMonaco } from 'subject-/monaco'
 
 /**
  * #### 编辑选中的书目
  */
 export default function BookEdit() {
     return (
-        <div className={css(style.root)}>
+        <div className={css(style.book_edit)}>
             <LoadInfor />
             <MonacoEdit />
         </div>
@@ -33,7 +34,10 @@ function LoadInfor() {
         }
         SubBook.li$.next([book])
         SubBook.use_id$.next(book.id)
+        document.title = book.name
         // console.log('book', book)
+        // 加载monaco
+        SubMonaco.load_monaco()
     }, [p])
     return null
 }
