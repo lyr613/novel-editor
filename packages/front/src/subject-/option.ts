@@ -18,6 +18,10 @@ class _option extends _sub_base<option_vo> {
             ToolFs.write(optsrc, JSON.stringify(opt))
         })
     }
+    update_shelf() {
+        const opt = ipc().sendSync('option_load')
+        this.edit$.next(opt)
+    }
 }
 
 /** 编辑器配置 */

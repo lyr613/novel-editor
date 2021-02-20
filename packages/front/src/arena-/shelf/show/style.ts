@@ -46,6 +46,7 @@ interface style_vo {
     Show: object
     /** 一本书 */
     Item: object
+    JumpNew: object
 }
 /** 样式 */
 export const style: style_vo = StyleSheet.create<style_vo>({
@@ -66,6 +67,25 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         },
         [`:hover .${css(style_item.btn_box)}`]: {
             display: 'block',
+        },
+    },
+    JumpNew: {
+        display: 'flex',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: themes.style_vars.themeDark,
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        color: themes.style_vars.neutralLight,
+
+        fontSize: 40,
+        opacity: 0.31,
+        ':hover': {
+            opacity: 1,
         },
     },
 })

@@ -8,6 +8,8 @@ import { ipc } from 'tool-/electron'
 import { useObservable } from 'rxjs-hooks'
 import { SubBook } from 'subject-/book'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
+import { Rt } from 'router-'
+import { SubOption } from 'subject-/option'
 
 /** Edit */
 export default function Edit() {
@@ -66,9 +68,26 @@ export default function Edit() {
                     onClick={() => {
                         console.log(bk)
                         ipc().sendSync('book_add', bk)
+                        SubOption.update_shelf()
+                        setTimeout(() => {
+                            Rt.next('shelf')
+                        }, 500)
                     }}
                 >
                     好
+                </DefaultButton>
+                <DefaultButton
+                    styles={{
+                        root: {
+                            marginLeft: 10,
+                        },
+                    }}
+                    onClick={() => {
+                        console.log(bk)
+                        Rt.next('shelf')
+                    }}
+                >
+                    取消
                 </DefaultButton>
             </section>
         </div>

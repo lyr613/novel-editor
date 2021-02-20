@@ -7,6 +7,8 @@ import { themes } from 'style-/theme'
 import { SubBook } from 'subject-/book'
 import { useObservable } from 'rxjs-hooks'
 import { ipc } from 'tool-/electron'
+import { Rt } from 'router-'
+import { Icon } from '@fluentui/react'
 
 /** Show */
 export default function Show() {
@@ -69,6 +71,7 @@ function List(p: list) {
             {li.map((bk, i) => (
                 <Item key={bk.id} ih={ih} book={bk} />
             ))}
+            {JumpNew(ih)}
         </div>
     )
 }
@@ -92,6 +95,24 @@ function Item(p: one) {
             <div className={css(style_item.name)}>{p.book.name}</div>
             <div className={css(style_item.btn_box)}>
                 <div className={css(style_item.line)}></div>
+            </div>
+        </div>
+    )
+}
+
+function JumpNew(h: number) {
+    return (
+        <div
+            className={css(s.Item)}
+            style={{
+                height: h + 'px',
+            }}
+            onClick={() => {
+                Rt.next('shelf', Rt.l2shelf.edit.en)
+            }}
+        >
+            <div className={css(s.JumpNew)}>
+                <Icon iconName="Add" />
             </div>
         </div>
     )
