@@ -44,7 +44,8 @@ function LoadInfor() {
         document.title = book.name
         // console.log('book', book)
         // 加载章节
-        SubVolume.load(bookid)
+        SubVolume.bookid = book.id
+        SubVolume.load()
 
         // 加载monaco
         /**

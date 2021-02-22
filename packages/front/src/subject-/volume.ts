@@ -4,6 +4,7 @@ import { map, switchMap, take } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
 
 class _vo {
+    bookid = ''
     /** 卷列表 */
     readonly vo_li$ = new BehaviorSubject([] as volume_vo[])
     readonly vo_use_id$ = new BehaviorSubject('')
@@ -24,12 +25,16 @@ class _vo {
             map((v) => v || null),
         )
     }
-    load(bookid: string) {
-        const volumes_re: fs_json_dto<volume_vo[]> = ipc().sendSync('chapter_load', bookid)
+    load() {
+        const volumes_re: fs_json_dto<volume_vo[]> = ipc().sendSync('chapter_load', this.bookid)
         console.log('volumes', volumes_re.data)
         if (volumes_re.b) {
             this.vo_li$.next(volumes_re.data)
         }
+    }
+    save(new_li: volume_vo[]) {
+        const re = ipc().sendSync('chapter_save', this.bookid, new_li)
+        return re
     }
 }
 
