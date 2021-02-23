@@ -24,13 +24,13 @@ export default function LeftVolume() {
 
 function IconType() {
     return (
-        <div>
-            <div className={StyleComp.child_left_icons(0)}>
-                <Icon iconName="Page" />
-            </div>
-            <div className={StyleComp.child_left_icons(1)}>
-                <Icon iconName="Page" />
-            </div>
+        <div
+            className={StyleComp.child_left_icons(0)}
+            onClick={() => {
+                volume_show_type$.next('tree')
+            }}
+        >
+            <Icon iconName="Page" />
         </div>
     )
 }

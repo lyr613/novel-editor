@@ -6,7 +6,7 @@ import { _volume_set } from './sub'
 import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
 import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
-import { can_show_set$ } from '../subj'
+import { can_show_set$, volume_show_type$ } from '../subj'
 
 /**
  */
@@ -155,7 +155,7 @@ function Esc() {
         >
             <DefaultButton
                 onClick={() => {
-                    can_show_set$.next(false)
+                    volume_show_type$.next('tree')
                 }}
             >
                 退出卷章编辑

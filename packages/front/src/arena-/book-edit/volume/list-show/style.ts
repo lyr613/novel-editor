@@ -5,9 +5,11 @@ import { css } from 'aphrodite/no-important'
 interface style_vo {
     ListShow: object
     Top: object
+    TopIcon: object
     VolItem: object
     VolItemName: object
     ChapItem: object
+    ChapItemHigh: object
 }
 /** 样式 */
 export const style: style_vo = StyleSheet.create<style_vo>({
@@ -24,8 +26,22 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         whiteSpace: 'nowrap',
     },
     Top: {
+        display: 'flex',
         borderBottom: '1px solid ' + themes.style_vars.themeSecondary,
+        width: '100%',
         height: 30,
+        flexDirection: 'row-reverse',
+    },
+    TopIcon: {
+        display: 'flex',
+        width: 30,
+        height: 30,
+        fontSize: 14,
+        justifyContent: 'center',
+        alignItems: 'center',
+        ':hover': {
+            backgroundColor: themes.style_vars.themeSecondary,
+        },
     },
     VolItem: {
         overflow: 'hidden',
@@ -51,5 +67,8 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         ':hover': {
             backgroundColor: themes.style_vars.themeSecondary,
         },
+    },
+    ChapItemHigh: {
+        backgroundColor: themes.style_vars.themeSecondary,
     },
 })
