@@ -54,6 +54,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         boxSizing: 'border-box',
         padding: '0 15px',
         fontSize: 14,
+        fontWeight: 700,
         ':hover': {
             backgroundColor: themes.style_vars.themeSecondary,
         },
