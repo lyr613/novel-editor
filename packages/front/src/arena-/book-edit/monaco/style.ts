@@ -11,7 +11,7 @@ interface style_vo {
 export const style: style_vo = StyleSheet.create<style_vo>({
     monaco: {
         position: 'absolute',
-        left: '50px',
+        left: '450px',
         top: '50px',
         fontSize: 0,
         overflow: 'hidden',
