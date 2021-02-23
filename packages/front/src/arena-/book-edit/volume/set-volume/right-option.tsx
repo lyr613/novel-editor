@@ -7,6 +7,7 @@ import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
 import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
 import { can_show_set$, volume_show_type$ } from '../subj'
+import { take } from 'rxjs/operators'
 
 /**
  */
@@ -42,8 +43,10 @@ function TopInfor() {
             }}
         >
             <div>{txt}, 你是要?</div>
-            {now_sel === 'volume' && vol_n === 1 && <NewChapter />}
+            {now_sel === 'volume' && vol_n === 1 && <ReNameVolume />}
+            {now_sel === 'chapter' && chap_n === 1 && <ReNameChapter />}
             {now_sel !== 'chapter' && <NewVolume />}
+            {now_sel === 'volume' && vol_n === 1 && <NewChapter />}
             <Esc />
         </div>
     )
@@ -99,6 +102,97 @@ function NewChapter() {
     )
 }
 
+/** 修改卷 */
+function ReNameVolume() {
+    const [ipt, next_ipt] = useState('')
+    return (
+        <div className={css(style.ActionBlock)}>
+            <div className={css(style.ActionBlockName)}>修改卷</div>
+            <div>
+                <TextField
+                    value={ipt}
+                    onChange={(_, ns) => {
+                        const ns2 = ns || ''
+                        next_ipt(ns2)
+                    }}
+                />
+            </div>
+            <div
+                style={{
+                    marginTop: 10,
+                }}
+            >
+                <PrimaryButton
+                    text="好"
+                    onClick={() => {
+                        const name = ipt.trim()
+                        if (!name) {
+                            alert('需要非空的名字')
+                            return
+                        }
+                        const vol_seled_i = _volume_set.seled_volume$.value[0]
+
+                        const vols = SubVolume.vo_li$.value
+                        vols[vol_seled_i].name = name
+                        SubVolume.save(vols)
+                        SubVolume.load()
+                        // SubVolume.vo_li$.next()
+                        console.log('vols', vols)
+                    }}
+                />
+            </div>
+        </div>
+    )
+}
+/** 修改章 */
+function ReNameChapter() {
+    const [ipt, next_ipt] = useState('')
+    return (
+        <div className={css(style.ActionBlock)}>
+            <div className={css(style.ActionBlockName)}>修改章</div>
+            <div>
+                <TextField
+                    value={ipt}
+                    onChange={(_, ns) => {
+                        const ns2 = ns || ''
+                        next_ipt(ns2)
+                    }}
+                />
+            </div>
+            <div
+                style={{
+                    marginTop: 10,
+                }}
+            >
+                <PrimaryButton
+                    text="好"
+                    onClick={() => {
+                        const name = ipt.trim()
+                        if (!name) {
+                            alert('需要非空的名字')
+                            return
+                        }
+                        const chaps: chapter_vo[] = []
+                        _volume_set.show_chapters$.pipe(take(1)).subscribe((li) => {
+                            chaps.push(...li)
+                        })
+                        const sel_chap_n2 = _volume_set.seled_chapter$.value
+
+                        const chap_seled_i = sel_chap_n2[0]
+                        chaps[chap_seled_i].name = name
+
+                        const vols = SubVolume.vo_li$.value
+                        SubVolume.save(vols)
+                        SubVolume.load()
+                        _volume_set.seled_chapter$.next([...sel_chap_n2])
+                        // SubVolume.vo_li$.next()
+                        // console.log('vols', vols)
+                    }}
+                />
+            </div>
+        </div>
+    )
+}
 function NewVolume() {
     const [ipt, next_ipt] = useState('')
     return (
@@ -137,7 +231,7 @@ function NewVolume() {
                         SubVolume.save(nvols)
                         SubVolume.load()
                         // SubVolume.vo_li$.next()
-                        console.log('vols', vols)
+                        // console.log('vols', vols)
                     }}
                 />
             </div>

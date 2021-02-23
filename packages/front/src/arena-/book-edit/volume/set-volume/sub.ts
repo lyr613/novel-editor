@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import { SubVolume } from 'subject-/volume'
 
 type now_sel = 'none' | 'chapter' | 'volume'
@@ -25,17 +25,20 @@ class _vs {
     now_sel$ = new BehaviorSubject('none' as now_sel)
     /** 中间展示的章列表 */
     show_chapters$ = this.seled_volume$.pipe(
-        map((n2) => {
-            const vols = SubVolume.vo_li$.value
-            const max = Math.max(...n2)
-            const min = Math.min(...n2)
-            const vols2 = vols.slice(min, max + 1)
-            const re: chapter_vo[] = []
-            vols2.forEach((vol) => {
-                re.push(...vol.children)
-            })
-            return re
-        }),
+        switchMap((n2) =>
+            SubVolume.vo_li$.pipe(
+                map((vols) => {
+                    const max = Math.max(...n2)
+                    const min = Math.min(...n2)
+                    const vols2 = vols.slice(min, max + 1)
+                    const re: chapter_vo[] = []
+                    vols2.forEach((vol) => {
+                        re.push(...vol.children)
+                    })
+                    return re
+                }),
+            ),
+        ),
     )
     /** 选中的卷 */
     get sel_vol_nodes() {

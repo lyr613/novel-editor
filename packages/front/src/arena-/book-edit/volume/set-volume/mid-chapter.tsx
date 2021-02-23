@@ -4,6 +4,7 @@ import { css } from 'aphrodite/no-important'
 import { Icon } from '@fluentui/react'
 import { useObservable } from 'rxjs-hooks'
 import { _volume_set } from './sub'
+import { SubVolume } from 'subject-/volume'
 
 /**
  */

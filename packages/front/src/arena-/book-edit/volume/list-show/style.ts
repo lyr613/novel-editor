@@ -45,6 +45,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     VolItem: {
         overflow: 'hidden',
+        borderTop: '1px dashed ' + themes.style_vars.themeSecondary,
         width: '100%',
         minHeight: 30,
         lineHeight: '30px',
