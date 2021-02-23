@@ -1,19 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import ListShow from './list-show'
+import ListShow from './list-show/index'
 import SetIt from './set-volume'
 import { useObservable } from 'rxjs-hooks'
-import { can_show_set$ } from './subj'
+import { volume_show_type$ } from './subj'
+import { Icon } from '@fluentui/react'
+import { themes } from 'style-/theme'
+import { StyleComp } from 'style-/comp'
 
 /**
  */
 export default function LeftVolume() {
-    const can_show_set = useObservable(() => can_show_set$, false)
+    const tp = useObservable(() => volume_show_type$, 'icon')
     return (
-        <div className={css(style.volume)}>
-            <ListShow />
-            {can_show_set && <SetIt />}
+        <>
+            {tp === 'icon' && <IconType />}
+            {tp === 'set' && <SetIt />}
+            {tp === 'tree' && <ListShow />}
+        </>
+    )
+}
+
+function IconType() {
+    return (
+        <div>
+            <div className={StyleComp.child_left_icons(0)}>
+                <Icon iconName="Page" />
+            </div>
+            <div className={StyleComp.child_left_icons(1)}>
+                <Icon iconName="Page" />
+            </div>
         </div>
     )
 }

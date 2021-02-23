@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { useObservable } from 'rxjs-hooks'
-import { now_sel$, seled_chapter$, seled_chapter_n$, seled_volume$, seled_volume_n$ } from './sub'
-import { PrimaryButton, TextField } from '@fluentui/react'
+import { _volume_set } from './sub'
+import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
 import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
+import { can_show_set$ } from '../subj'
 
 /**
  */
@@ -18,9 +19,9 @@ export default function RightOption() {
 }
 
 function TopInfor() {
-    const now_sel = useObservable(() => now_sel$, 'none')
-    const chap_n = useObservable(() => seled_chapter_n$, 0)
-    const vol_n = useObservable(() => seled_volume_n$, 0)
+    const now_sel = useObservable(() => _volume_set.now_sel$, 'none')
+    const chap_n = useObservable(() => _volume_set.seled_chapter_n$, 0)
+    const vol_n = useObservable(() => _volume_set.seled_volume_n$, 0)
     let txt = ''
     switch (now_sel) {
         case 'none':
@@ -41,7 +42,59 @@ function TopInfor() {
             }}
         >
             <div>{txt}, 你是要?</div>
+            {now_sel === 'volume' && vol_n === 1 && <NewChapter />}
             {now_sel !== 'chapter' && <NewVolume />}
+            <Esc />
+        </div>
+    )
+}
+
+/** 新章 */
+function NewChapter() {
+    const [ipt, next_ipt] = useState('')
+    return (
+        <div className={css(style.ActionBlock)}>
+            <div className={css(style.ActionBlockName)}>新建章</div>
+            <div>
+                <TextField
+                    value={ipt}
+                    onChange={(_, ns) => {
+                        const ns2 = ns || ''
+                        next_ipt(ns2)
+                    }}
+                />
+            </div>
+            <div
+                style={{
+                    marginTop: 10,
+                }}
+            >
+                <PrimaryButton
+                    text="好"
+                    onClick={() => {
+                        const name = ipt.trim()
+                        if (!name) {
+                            alert('需要非空的名字')
+                            return
+                        }
+                        const vols = SubVolume.vo_li$.value
+                        /** 必然只有一个选中的卷 */
+                        const sel_vol = _volume_set.sel_vol_nodes[0]
+                        const n_chap: chapter_vo = {
+                            id: mk_uuid(),
+                            name,
+                            src: '',
+                        }
+                        sel_vol.children.push(n_chap)
+
+                        SubVolume.save(vols)
+                        SubVolume.load()
+                        // SubVolume.vo_li$.next()
+                        console.log('vols', vols)
+                        _volume_set.refresh()
+                    }}
+                />
+            </div>
         </div>
     )
 }
@@ -88,6 +141,25 @@ function NewVolume() {
                     }}
                 />
             </div>
+        </div>
+    )
+}
+
+function Esc() {
+    return (
+        <div
+            className={css(style.ActionBlock)}
+            style={{
+                paddingTop: 20,
+            }}
+        >
+            <DefaultButton
+                onClick={() => {
+                    can_show_set$.next(false)
+                }}
+            >
+                退出卷章编辑
+            </DefaultButton>
         </div>
     )
 }

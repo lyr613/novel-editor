@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { Icon } from '@fluentui/react'
-import { now_sel$, seled_volume$ } from './sub'
+import { _volume_set } from './sub'
 import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
 
@@ -10,7 +10,7 @@ import { SubVolume } from 'subject-/volume'
  */
 export default function LeftVolume() {
     const vols = useObservable(() => SubVolume.vo_li$, [])
-    const seled = useObservable(() => seled_volume$, [-1, -1])
+    const seled = useObservable(() => _volume_set.seled_volume$, [-1, -1])
     const min = Math.min(...seled)
     const max = Math.max(...seled)
     return (
@@ -36,19 +36,22 @@ function VolumeItem(p: p) {
             className={css(style.VolumeItem, high_light ? style.VolumeItemHigh : null)}
             onClick={(e) => {
                 // console.log(e)
-                now_sel$.next('volume')
+                _volume_set.seled_chapter$.next([-1, -1])
+
+                _volume_set.now_sel$.next('volume')
                 const sh = e.shiftKey
                 if (!sh) {
-                    seled_volume$.next([p.index, p.index])
+                    _volume_set.seled_volume$.next([p.index, p.index])
                     return
                 }
-                const n2 = seled_volume$.value
+
+                const n2 = _volume_set.seled_volume$.value
                 const diff0 = Math.abs(n2[0] - p.index)
                 const diff1 = Math.abs(n2[1] - p.index)
                 if (diff0 > diff1) {
-                    seled_volume$.next([n2[0], p.index])
+                    _volume_set.seled_volume$.next([n2[0], p.index])
                 } else {
-                    seled_volume$.next([n2[1], p.index])
+                    _volume_set.seled_volume$.next([n2[1], p.index])
                 }
             }}
         >
