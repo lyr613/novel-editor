@@ -6,6 +6,7 @@ import { mk_uuid } from 'util-/uuid'
 import { OptionLoad } from './option'
 import { paths } from 'const-/path'
 import { WindowUtil } from 'window-'
+import { FileAndDir } from 'const-/file-and-dir'
 
 /** 书目 */
 export function _watch_book() {
@@ -37,7 +38,7 @@ function load_book(e: Electron.IpcMainEvent, bid: string) {
 }
 
 function _load_book(src: string): book_vo {
-    const opt_src = path.join(src, 'opt.json')
+    const opt_src = path.join(src, FileAndDir.option)
     try {
         const opt_txt = fs.readFileSync(opt_src, 'utf-8')
         const opt = JSON.parse(opt_txt)
@@ -62,7 +63,7 @@ function _load_book(src: string): book_vo {
 /** 添加一本书 */
 function book_add(e: Electron.IpcMainEvent, book: book_vo) {
     const opt_txt = JSON.stringify(book)
-    const opt_src = path.join(book.src, 'opt.json')
+    const opt_src = path.join(book.src, FileAndDir.option)
     fs.writeFileSync(opt_src, opt_txt)
     //
     const book_opt = OptionLoad.effect_load()
