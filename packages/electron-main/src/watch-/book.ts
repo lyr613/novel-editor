@@ -1,5 +1,5 @@
 import { ipcMain, shell, dialog, app, BrowserWindow } from 'electron'
-import { reply } from 'util-/reply'
+import { reply, UtilReply } from 'util-/reply'
 import path from 'path'
 import fs from 'fs-extra'
 import { mk_uuid } from 'util-/uuid'
@@ -10,68 +10,83 @@ import { FileAndDir } from 'const-/file-and-dir'
 
 /** 书目 */
 export function _watch_book() {
-    const funcs: [string, any][] = [
-        ['load_book_li', load_book_li],
-        ['load_book', load_book],
-        ['book_add', book_add],
-        ['book_open_child_window', book_open_child_window],
-    ]
-    for (const fun of funcs) {
-        ipcMain.on(fun[0], fun[1])
-    }
+    ipcMain.on('book_load_li', book_load_li)
+    ipcMain.on('book_get_cache', book_get_cache)
+    ipcMain.on('book_add', book_add)
+    ipcMain.on('book_open_child_window', book_open_child_window)
 }
 
 /** 加载书目列表 */
-function load_book_li(e: Electron.IpcMainEvent, srcs: string[]) {
+function book_load_li(e: Electron.IpcMainEvent, srcs: string[]) {
     const re: book_vo[] = srcs.map(_load_book)
-    reply(e, 'load_book_li', re)
+    const msg = UtilReply.msg(re)
+    msg.b = true
+    UtilReply.reply(e, 'book_load_li', msg)
 }
 
 /** 加载一本书 */
-function load_book(e: Electron.IpcMainEvent, bid: string) {
+function book_get_cache(e: Electron.IpcMainEvent, bid: string) {
     const bk = WindowUtil.book_map.get(bid)
-    if (!bk) {
-        reply(e, 'load_book', null)
-        return
+    const msg = UtilReply.msg(bk)
+    if (bk) {
+        msg.b = true
     }
-    reply(e, 'load_book', bk)
+    UtilReply.reply(e, 'book_get_cache', msg)
 }
 
 function _load_book(src: string): book_vo {
     const opt_src = path.join(src, FileAndDir.option)
+    const re = {
+        id: mk_uuid(),
+        name: '查找失败',
+        src: src,
+        cover: '',
+        git: false,
+    }
+    if (!fs.existsSync(src)) {
+        re.name = '!不存在此路径!'
+        return re
+    }
+    if (!fs.existsSync(opt_src)) {
+        re.name = '!不存在配置文件!'
+        return re
+    }
+
     try {
         const opt_txt = fs.readFileSync(opt_src, 'utf-8')
         const opt = JSON.parse(opt_txt)
-        return {
-            id: opt.id,
-            name: opt.name,
-            src: src,
-            cover: '',
-            git: false,
-        }
+        Object.assign(re, opt)
+        return re
     } catch (error) {
-        return {
-            id: mk_uuid(),
-            name: '查找失败',
-            src: src,
-            cover: '',
-            git: false,
-        }
+        return re
     }
 }
 
 /** 添加一本书 */
 function book_add(e: Electron.IpcMainEvent, book: book_vo) {
-    const opt_txt = JSON.stringify(book)
-    const opt_src = path.join(book.src, FileAndDir.option)
-    fs.writeFileSync(opt_src, opt_txt)
+    const msg = UtilReply.msg(null)
     //
-    const book_opt = OptionLoad.effect_load()
-    book_opt.shelf.list.push(book.src)
-    const book_opt_src = paths().option
-    fs.writeFileSync(book_opt_src, JSON.stringify(book_opt))
-    //
-    reply(e, 'book_add', true)
+    try {
+        const book_opt = OptionLoad.effect_load()
+        if (book_opt.shelf.list.includes(book.src)) {
+            msg.txt = '已经添加过此书'
+            UtilReply.reply(e, 'book_add', msg)
+            return
+        }
+        //
+        book_opt.shelf.list.push(book.src)
+        const book_opt_src = paths().option
+        fs.writeFileSync(book_opt_src, JSON.stringify(book_opt))
+        //
+        const opt_txt = JSON.stringify(book)
+        const opt_src = path.join(book.src, FileAndDir.option)
+        fs.writeFileSync(opt_src, opt_txt)
+        //
+        msg.b = true
+        UtilReply.reply(e, 'book_add', msg)
+    } catch (error) {
+        UtilReply.reply(e, 'book_add', msg)
+    }
 }
 
 /** 打开书目子窗口 */

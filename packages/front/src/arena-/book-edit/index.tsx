@@ -32,10 +32,11 @@ function LoadInfor() {
         const so = parse(p.search)
         const bookid = so.bid as string
         // console.log(bookid, 'bookid')
-        const book: book_vo | null = ipc().sendSync('load_book', bookid)
-        if (!book) {
+        const book_re: msg_dto<book_vo> = ipc().sendSync('book_get_cache', bookid)
+        if (!book_re.b) {
             return
         }
+        const book = book_re.data
         const app_opt = ipc().sendSync('option_load')
         SubOption.edit$.next(app_opt)
         //

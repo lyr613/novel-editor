@@ -28,20 +28,20 @@ export function effect_fs_read(src: string): fs_dto {
     }
 }
 
-export function effect_fs_read_json<T = any>(src: string): fs_json_dto<T> {
+export function effect_fs_read_json<T = any>(src: string): msg_dto<T> {
     try {
         const re = effect_fs_read(src)
         if (!re.b) {
             return { ...re, data: {} as any }
         }
         const data = JSON.parse(re.txt)
-        const re2: fs_json_dto = {
+        const re2: msg_dto = {
             ...re,
             data,
         }
         return re2
     } catch (error) {
-        const o: fs_json_dto = {
+        const o: msg_dto = {
             b: false,
             txt: '未知错误',
             data: {},

@@ -11,7 +11,7 @@ export class ToolFs {
     static write_sync(path: string, txt: string): fs_dto {
         return ipc().sendSync('fs_write', path, txt)
     }
-    static read_json<T>(path: string): fs_json_dto<T> {
+    static read_json<T>(path: string): msg_dto<T> {
         return ipc().sendSync('fs_read_json', path)
     }
 }

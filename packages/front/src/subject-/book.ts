@@ -18,10 +18,10 @@ class _book extends _sub_base<book_vo> {
     }
     load() {
         const li = SubOption.edit$.value?.shelf.list ?? []
-        console.log('li', li)
+        // console.log('li', li)
 
-        const books: book_vo[] = ipc().sendSync('load_book_li', li)
-        this.li$.next(books)
+        const re: msg_dto<book_vo[]> = ipc().sendSync('book_load_li', li)
+        this.li$.next(re.data)
     }
 }
 

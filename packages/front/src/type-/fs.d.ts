@@ -4,7 +4,7 @@ interface fs_dto {
     txt: string
 }
 
-interface fs_json_dto<T = any> extends fs_dto {
+interface msg_dto<T = any> extends fs_dto {
     /** 错误时可能没有 */
     data: T
 }

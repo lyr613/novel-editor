@@ -61,7 +61,7 @@ class _vo {
     }
     /** 加载卷章 */
     load() {
-        const volumes_re: fs_json_dto<volume_vo[]> = ipc().sendSync('chapter_load', this.bookid)
+        const volumes_re: msg_dto<volume_vo[]> = ipc().sendSync('chapter_load', this.bookid)
         // console.log('volumes', volumes_re.data)
         if (volumes_re.b) {
             this.vo_li$.next(volumes_re.data)
