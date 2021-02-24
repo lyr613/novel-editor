@@ -1,6 +1,6 @@
 import { paths } from 'const-/path'
 import { ipcMain, shell, dialog, app } from 'electron'
-import { reply } from 'util-/reply'
+import { reply, UtilReply } from 'util-/reply'
 
 /** 获取一些路径 */
 export function _watch_path() {

@@ -1,5 +1,5 @@
 import { ipcMain, shell, dialog, app } from 'electron'
-import { reply } from 'util-/reply'
+import { reply, UtilReply } from 'util-/reply'
 import { WindowUtil } from 'window-'
 import path from 'path'
 import fs from 'fs-extra'

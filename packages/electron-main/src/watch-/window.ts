@@ -1,5 +1,5 @@
 import { ipcMain, shell, dialog, app } from 'electron'
-import { reply } from 'util-/reply'
+import { UtilReply } from 'util-/reply'
 import { WindowUtil } from 'window-'
 
 /** 窗口控制 */
@@ -13,7 +13,6 @@ function window_min(e: Electron.IpcMainEvent) {
     console.log('最小化')
     const mw = WindowUtil.main_window
     mw.minimize()
-    reply(e, 'window_min')
 }
 function window_max(e: Electron.IpcMainEvent) {
     console.log('最大化')
@@ -23,7 +22,6 @@ function window_max(e: Electron.IpcMainEvent) {
     } else {
         mw.maximize()
     }
-    reply(e, 'window_max')
 }
 function window_close(e: Electron.IpcMainEvent) {
     console.log('关闭')
