@@ -32,8 +32,8 @@ class _vo {
             if (!cid) {
                 return ''
             }
-            const txt: string = ipc().sendSync('chapter_load_txt', this.bookid, cid)
-            return txt
+            const txt: msg_dto<string> = ipc().sendSync('chapter_load_txt', this.bookid, cid)
+            return txt.data
         }),
     )
     /** 暂存将要写的

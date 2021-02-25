@@ -1,15 +1,16 @@
 import { paths } from 'const-/path'
 import { ipcMain, shell, dialog, app } from 'electron'
-import { reply, UtilReply } from 'util-/reply'
+import { UtilReply } from 'util-/reply'
 
 /** 获取一些路径 */
 export function _watch_path() {
-    ipcMain.on('path', path)
+    ipcMain.on('path_get', path_get)
     ipcMain.on('path_pick', path_pick)
 }
 
-function path(e: Electron.IpcMainEvent, path_code: path_dto) {
-    reply(e, 'path', _get_path(path_code))
+function path_get(e: Electron.IpcMainEvent, path_code: path_dto) {
+    const msg = UtilReply.msg(_get_path(path_code))
+    UtilReply.reply(e, 'path_get', msg)
 }
 
 function _get_path(path_code: path_dto) {
@@ -30,11 +31,14 @@ function path_pick(e: Electron.IpcMainEvent) {
             properties: ['openDirectory'],
         })
         .then((res) => {
+            const msg = UtilReply.msg('')
             if (!res.filePaths.length) {
-                reply(e, 'path_pick', '')
+                UtilReply.reply(e, 'path_pick', msg)
                 return ''
             }
             const src = res.filePaths[0]
-            reply(e, 'path_pick', src)
+            msg.b = true
+            msg.data = src
+            UtilReply.reply(e, 'path_pick', msg)
         })
 }

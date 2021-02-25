@@ -38,7 +38,8 @@ export default function Edit() {
                         />
                         <Icon
                             onClick={() => {
-                                const src: string = ipc().sendSync('path_pick')
+                                const src_msg: msg_dto<string> = ipc().sendSync('path_pick')
+                                const src: string = src_msg.data
                                 if (src) {
                                     bk.name = src.replace(/^.*[/\\]/, '')
                                 }

@@ -1,5 +1,5 @@
 import { ipcMain, shell, dialog, app } from 'electron'
-import { reply, UtilReply } from 'util-/reply'
+import { UtilReply } from 'util-/reply'
 import path from 'path'
 import { paths } from 'const-/path'
 import fs from 'fs-extra'
@@ -14,7 +14,8 @@ export function _watch_option() {
 /** 读取编辑器配置 */
 function option_load(e: Electron.IpcMainEvent) {
     const re = OptionLoad.effect_load()
-    reply(e, 'option_load', re)
+    const msg = UtilReply.msg(re)
+    UtilReply.reply(e, 'option_load', msg)
 }
 
 /** 读取配置集合 */

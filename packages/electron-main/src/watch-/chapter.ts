@@ -1,10 +1,10 @@
 import { ipcMain, shell, dialog, app } from 'electron'
-import { reply, UtilReply } from 'util-/reply'
+import { UtilReply } from 'util-/reply'
 import { WindowUtil } from 'window-'
 import path from 'path'
 import fs from 'fs-extra'
 import { FileAndDir } from 'const-/file-and-dir'
-import { effect_fs_mk_dir, effect_fs_read_json } from 'util-/fs'
+import { effect_fs_read_json, UtilFs } from 'util-/fs'
 import { HelpPrettier } from 'util-/prett'
 
 /**   */
@@ -20,51 +20,48 @@ function chapter_load(e: Electron.IpcMainEvent, bookid: string) {
     const book = WindowUtil.book_map.get(bookid)!
     try {
         const chasrc = path.join(book.src, FileAndDir.volume)
-        const jn = effect_fs_read_json<volume_vo[]>(chasrc)
-
-        reply(e, 'chapter_load', jn)
+        const msg = UtilFs.read_json<volume_vo[]>(chasrc)
+        UtilReply.reply(e, 'chapter_load', msg)
     } catch (error) {
         // 不会触发err
-        reply(e, 'chapter_load', false)
     }
 }
 
 function chapter_save(e: Electron.IpcMainEvent, bookid: string, vols: volume_vo[]) {
     const book = WindowUtil.book_map.get(bookid)!
+    const msg = UtilReply.msg(null)
     try {
         const chasrc = path.join(book.src, FileAndDir.volume)
         const t0 = JSON.stringify(vols)
         const t1 = HelpPrettier.json(t0)
         fs.writeFileSync(chasrc, t1)
-
-        reply(e, 'chapter_save', true)
+        msg.b = true
+        UtilReply.reply(e, 'chapter_save', msg)
     } catch (error) {
         // 不会触发err
-        reply(e, 'chapter_save', false)
+        UtilReply.reply(e, 'chapter_save', msg)
     }
 }
 
 /** 章读取文本 */
 function chapter_load_txt(e: Electron.IpcMainEvent, bookid: string, chapid: string) {
     const book = WindowUtil.book_map.get(bookid)!
-    try {
-        const chasrc = path.join(book.src, FileAndDir.vol_dir, chapid)
-        const txt = fs.readFileSync(chasrc, 'utf-8')
-        reply(e, 'chapter_load_txt', txt)
-    } catch (error) {
-        reply(e, 'chapter_load_txt', '')
-    }
+    const chasrc = path.join(book.src, FileAndDir.vol_dir, chapid)
+    const msg = UtilFs.read(chasrc)
+    UtilReply.reply(e, 'chapter_load_txt', msg)
 }
 /** 章写入文本 */
 function chapter_write_txt(e: Electron.IpcMainEvent, bookid: string, chapid: string, txt: string) {
     const book = WindowUtil.book_map.get(bookid)!
+    const msg = UtilReply.msg(null)
     try {
         const dirsrc = path.join(book.src, FileAndDir.vol_dir)
-        effect_fs_mk_dir(dirsrc)
+        UtilFs.mk_dir(dirsrc)
         const chasrc = path.join(book.src, FileAndDir.vol_dir, chapid)
         fs.writeFileSync(chasrc, txt)
-        reply(e, 'chapter_write_txt', true)
+        msg.b = true
+        UtilReply.reply(e, 'chapter_write_txt', msg)
     } catch (error) {
-        reply(e, 'chapter_write_txt', false)
+        UtilReply.reply(e, 'chapter_write_txt', msg)
     }
 }

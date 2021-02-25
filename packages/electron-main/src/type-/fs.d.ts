@@ -1,6 +1,6 @@
 interface fs_dto {
     b: boolean
-    /** 错误时为原因 */
+    /** 错误时原因 */
     txt: string
 }
 
