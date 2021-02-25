@@ -5,7 +5,6 @@ import path from 'path'
 import fs from 'fs-extra'
 import { FileAndDir } from 'const-/file-and-dir'
 import { UtilFs } from 'util-/fs'
-import { HelpPrettier } from 'util-/prett'
 
 /**   */
 export function _watch_chapter() {
@@ -33,8 +32,7 @@ function chapter_save(e: Electron.IpcMainEvent, bookid: string, vols: volume_vo[
     try {
         const chasrc = path.join(book.src, FileAndDir.volume)
         const t0 = JSON.stringify(vols)
-        const t1 = HelpPrettier.json(t0)
-        fs.writeFileSync(chasrc, t1)
+        UtilFs.write(chasrc, t0)
         msg.b = true
         UtilReply.reply(e, 'chapter_save', msg)
     } catch (error) {

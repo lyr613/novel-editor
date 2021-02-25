@@ -10,4 +10,5 @@ class _he {
     }
 }
 
-export const HelpPrettier = new _he()
+/** 暂时用不到, 写入的时候自动格式化了 */
+export const UtilPrettier = new _he()
