@@ -4,7 +4,7 @@ import { WindowUtil } from 'window-'
 import path from 'path'
 import fs from 'fs-extra'
 import { FileAndDir } from 'const-/file-and-dir'
-import { effect_fs_read_json, UtilFs } from 'util-/fs'
+import { UtilFs } from 'util-/fs'
 import { HelpPrettier } from 'util-/prett'
 
 /**   */

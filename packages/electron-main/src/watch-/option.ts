@@ -3,7 +3,7 @@ import { UtilReply } from 'util-/reply'
 import path from 'path'
 import { paths } from 'const-/path'
 import fs from 'fs-extra'
-import { effect_fs_read_json } from 'util-/fs'
+import { UtilFs } from 'util-/fs'
 import joi from 'joi'
 
 /** 编辑器配置 */
@@ -26,7 +26,7 @@ export class OptionLoad {
         if (!fs.existsSync(opt_dir)) {
             fs.mkdirSync(opt_dir)
         }
-        const jn = effect_fs_read_json<option_vo>(paths().option)
+        const jn = UtilFs.read_json<option_vo>(paths().option)
         return OptionLoad.mk_standard_option(jn.data)
     }
     /** 默认配置 */

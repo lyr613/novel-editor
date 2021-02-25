@@ -1,7 +1,7 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { UtilReply } from 'util-/reply'
 import fs from 'fs-extra'
-import { effect_fs_read, effect_fs_read_json, UtilFs } from 'util-/fs'
+import { UtilFs } from 'util-/fs'
 import prettier from 'prettier'
 import path from 'path'
 
