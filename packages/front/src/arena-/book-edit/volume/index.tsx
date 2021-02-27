@@ -30,7 +30,7 @@ function IconType() {
                 volume_show_type$.next('tree')
             }}
         >
-            <Icon iconName="Page" />
+            <Icon iconName="DataConnectionLibrary" />
         </div>
     )
 }

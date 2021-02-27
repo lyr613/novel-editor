@@ -15,6 +15,7 @@ interface style_vo {
 export const style: style_vo = StyleSheet.create<style_vo>({
     ListShow: {
         position: 'absolute',
+        zIndex: 10000,
         left: 0,
         top: 0,
 

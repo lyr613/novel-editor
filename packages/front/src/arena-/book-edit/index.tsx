@@ -10,6 +10,7 @@ import { SubMonaco } from 'subject-/monaco'
 import { SubOption } from 'subject-/option'
 import Volume from './volume'
 import { SubVolume } from 'subject-/volume'
+import Npc from './npc'
 
 /**
  * #### 编辑选中的书目
@@ -20,6 +21,7 @@ export default function BookEdit() {
             <LoadInfor />
             <MonacoEdit />
             <Volume />
+            <Npc />
         </div>
     )
 }
