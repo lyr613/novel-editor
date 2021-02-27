@@ -106,7 +106,7 @@ function book_open_child_window(e: Electron.IpcMainEvent, book: book_vo) {
     WindowUtil.load_page(child_win, `bookedit?bid=${book.id}`)
     // child_win.webContents.openDevTools()
     child_win.on('close', () => {
-        console.log('关闭子窗口', book)
+        console.log('关闭子窗口', book.id)
         window_map.set(book.id, false)
     })
 }

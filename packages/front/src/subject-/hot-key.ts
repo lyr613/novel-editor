@@ -8,7 +8,6 @@ class _hk {
     sub_app_hot_key() {
         return this.event$.subscribe((e) => {
             const bid = SubBook.use_id$.value
-            console.log('bid', bid)
 
             if (e.altKey && e.ctrlKey) {
                 if (e.keyCode === 73) {
