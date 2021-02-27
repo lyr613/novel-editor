@@ -5,5 +5,37 @@ import { css } from 'aphrodite/no-important'
 /**
  */
 export default function List() {
-    return <div className={css(style.root)}></div>
+    return (
+        <div className={css(style.root)}>
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+        </div>
+    )
+}
+
+function Item() {
+    return <div className={css(style.Item)}></div>
 }
