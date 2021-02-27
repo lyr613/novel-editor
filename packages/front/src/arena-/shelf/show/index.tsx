@@ -15,7 +15,7 @@ export default function Show() {
     // [列数, 宽, 高]
     const [item_size, next_item_size] = useState(null as null | number[])
     useEffect(() => {
-        const ob = screen$(1500).subscribe((WH) => {
+        const ob = screen$(300).subscribe((WH) => {
             const W = WH.W - 20
             const lmt = 300 // 生成低于此的最接近宽度
             if (W <= lmt) {
