@@ -5,12 +5,17 @@ import Shelf from 'arena-/shelf'
 import { Rt } from 'router-'
 import BookEdit from 'arena-/book-edit'
 import FirstLoad from 'arena-/load'
+import { SubHotKey } from 'subject-/hot-key'
 
 function App() {
     useEffect(() => {
+        const ob = SubHotKey.sub_app_hot_key()
         setTimeout(() => {
             SubOption.load()
         }, 0)
+        return () => {
+            ob.unsubscribe()
+        }
     }, [])
     return (
         <div className="App">

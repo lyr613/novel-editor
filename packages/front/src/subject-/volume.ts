@@ -4,6 +4,7 @@ import { debounceTime, map, switchMap, take } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
 
 class _vo {
+    /** 图方便这里存一下, 应该用SubBook.use_id */
     bookid = ''
     /** 卷列表 */
     readonly vo_li$ = new BehaviorSubject([] as volume_vo[])

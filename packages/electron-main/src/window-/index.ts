@@ -34,8 +34,8 @@ class _win {
         this.main_window = new BrowserWindow(this.option)
         this.load_page(this.main_window, 'shelf')
         this.main_window.maximize()
-        // if (envs().dev) {
-        if (true) {
+        if (envs().dev) {
+            // if (true) {
             this.main_window.webContents.openDevTools()
         }
         return this.main_window
