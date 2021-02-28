@@ -19,16 +19,16 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         boxSizing: 'border-box',
         width: '100vw',
         height: '100vh',
-        padding: 10,
+        padding: '20px 0 0 0',
         backgroundColor: themes.style_vars.themeLight,
     },
     Item: {
         display: 'inline-block',
         verticalAlign: 'top',
+        margin: '0 0 20px 20px',
         boxSizing: 'border-box',
         width: 240,
         height: 'aspect-ratio(9/16)',
-        padding: 10,
         'aspect-ratio': '3 / 4',
     },
 })

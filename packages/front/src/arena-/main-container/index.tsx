@@ -5,7 +5,6 @@ import { HashRouter, Route, Switch, useHistory } from 'react-router-dom'
 import { Rt } from 'router-'
 import { router1 } from 'router-/define'
 import Option from './option'
-import Shelf from './shelf'
 
 /** 主内容区 */
 export default function MainContainer() {
@@ -30,7 +29,6 @@ export default function MainContainer() {
             }}
         >
             <Switch>
-                <Route path={Rt.make('shelf')} component={Shelf}></Route>
                 <Route path={Rt.make('option')} component={Option}></Route>
                 <Route component={EmptyRouter('/shelf')} />
             </Switch>

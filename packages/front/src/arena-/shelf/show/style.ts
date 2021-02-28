@@ -57,9 +57,12 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         height: '100%',
     },
     Item: {
+        display: 'inline-block',
+        verticalAlign: 'top',
         position: 'relative',
+        margin: '0 0 20px 20px',
         boxSizing: 'border-box',
-        width: '100%',
+        'aspect-ratio': '3 / 4',
         backgroundColor: themes.style_vars.themeDark,
         [`:hover .${css(style_item.name)}`]: {
             height: 'unset',

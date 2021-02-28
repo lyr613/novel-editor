@@ -2,41 +2,17 @@ import React, { useState, useEffect, Suspense } from 'react'
 import { css } from 'aphrodite/no-important'
 import { global_style as gs, style_creater as sc } from 'style-/global'
 import { style as s, style_item } from './style'
-import { screen$ } from 'subject-/screen'
+import { SubScreen } from 'subject-/screen'
 import { themes } from 'style-/theme'
 import { SubBook } from 'subject-/book'
 import { useObservable } from 'rxjs-hooks'
 import { ipc } from 'tool-/electron'
 import { Rt } from 'router-'
 import { Icon } from '@fluentui/react'
+import { map, switchMap } from 'rxjs/operators'
 
 /** Show */
 export default function Show() {
-    // [列数, 宽, 高]
-    const [item_size, next_item_size] = useState(null as null | number[])
-    useEffect(() => {
-        const ob = screen$(300).subscribe((WH) => {
-            const W = WH.W - 20
-            const lmt = 300 // 生成低于此的最接近宽度
-            if (W <= lmt) {
-                next_item_size([0, 0, 0])
-                return
-            }
-            let col = 1
-            let w = W
-            while (w > lmt) {
-                col++
-                w = (W / col) | 0
-            }
-            const h = (w - 20) * 1.5
-            next_item_size([col, w, h])
-            console.log('书item宽度', w)
-        })
-        // const [W, H] = [window.innerWidth - 20, window.innerHeight]
-        return () => {
-            ob.unsubscribe()
-        }
-    }, [])
     useEffect(() => {
         setTimeout(() => {
             SubBook.load()
@@ -44,40 +20,49 @@ export default function Show() {
     }, [])
     return (
         <div className={css(s.Show)}>
-            <Suspense fallback={null}>{item_size && <List item_size={item_size} />}</Suspense>
+            <List />
         </div>
     )
 }
 
-interface list {
-    item_size: number[]
-}
-function List(p: list) {
-    const [col, iw, ih] = p.item_size
-    const li = useObservable(() => SubBook.li$, [])
-    if (col < 1) {
-        return <div>窗口尺寸太小了</div>
-    }
+function List() {
+    const li = useObservable(
+        () =>
+            SubBook.li$.pipe(
+                switchMap((bks) =>
+                    SubScreen.sub$(300).pipe(
+                        map((WH) => {
+                            const o = SubScreen.auto_width(WH.W, 260, 20)
+                            return bks.map((item) => ({
+                                item,
+                                w: o.w,
+                            }))
+                        }),
+                    ),
+                ),
+            ),
+        [],
+    )
+    const w = li.length ? li[0].w : 300
     return (
         <div
             style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${col}, auto)`,
+                overflow: 'auto',
                 boxSizing: 'border-box',
-                gap: 20,
-                padding: 20,
+                height: '100vh',
+                padding: '20px 0 0 0',
             }}
         >
             {li.map((bk, i) => (
-                <Item key={bk.id} ih={ih} book={bk} />
+                <Item key={bk.item.id} book={bk.item} w={bk.w} />
             ))}
-            {JumpNew(ih)}
+            {JumpNew(w)}
         </div>
     )
 }
 
 interface one {
-    ih: number
+    w: number
     book: book_vo
 }
 function Item(p: one) {
@@ -85,7 +70,7 @@ function Item(p: one) {
         <div
             className={css(s.Item)}
             style={{
-                height: p.ih + 'px',
+                width: p.w + 'px',
             }}
             onClick={() => {
                 console.log('打开书')
@@ -100,12 +85,12 @@ function Item(p: one) {
     )
 }
 
-function JumpNew(h: number) {
+function JumpNew(w: number) {
     return (
         <div
             className={css(s.Item)}
             style={{
-                height: h + 'px',
+                width: w + 'px',
             }}
             onClick={() => {
                 Rt.next('shelf', Rt.l2shelf.edit.en)

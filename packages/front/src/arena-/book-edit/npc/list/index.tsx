@@ -4,7 +4,7 @@ import { css } from 'aphrodite/no-important'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { map, switchMap } from 'rxjs/operators'
-import { screen$ } from 'subject-/screen'
+import { SubScreen } from 'subject-/screen'
 
 const arr = Array.from({ length: 22 }, (_, i) => i)
 const arr$ = new BehaviorSubject(arr)
@@ -16,14 +16,10 @@ export default function List() {
         () =>
             arr$.pipe(
                 switchMap((li) =>
-                    screen$(300).pipe(
+                    SubScreen.sub$(300).pipe(
                         map((screen) => {
-                            const WW = screen.W - 20
-                            let n = 1
-                            while (300 * n < WW) {
-                                n++
-                            }
-                            const w = (WW / n) | 0
+                            const WW = screen.W
+                            const w = SubScreen.auto_width(WW, 240, 20)
                             return li.map((it) => ({
                                 item: it,
                                 w: w,
@@ -48,7 +44,7 @@ function Item(p: any) {
         <div
             className={css(style.Item)}
             style={{
-                width: p.w + 'px',
+                width: p.w.w + 'px',
             }}
         >
             <div
