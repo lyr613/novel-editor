@@ -10,6 +10,7 @@ import { ipc } from 'tool-/electron'
 import { Rt } from 'router-'
 import { Icon } from '@fluentui/react'
 import { map, switchMap } from 'rxjs/operators'
+import { SubOption } from 'subject-/option'
 
 /** Show */
 export default function Show() {
@@ -84,17 +85,47 @@ function Item(p: one) {
                 >
                     编写
                 </div>
-                <div className={css(style_item.line)}>设置</div>
-                <div className={css(style_item.line)}>打开资源管理器</div>
-                <div className={css(style_item.line)}>打开vscode</div>
+                <div
+                    className={css(style_item.line)}
+                    onClick={() => {
+                        SubBook.edit$.next(p.book)
+                        Rt.next('shelf', Rt.l2shelf.edit.en)
+                    }}
+                >
+                    设置
+                </div>
+                <div
+                    className={css(style_item.line)}
+                    onClick={() => {
+                        ipc().send('fs_show_in_folder', p.book.src)
+                    }}
+                >
+                    打开资源管理器
+                </div>
+                <div
+                    className={css(style_item.line)}
+                    onClick={() => {
+                        ipc().send('fs_vscode', p.book.src)
+                    }}
+                >
+                    打开vscode
+                </div>
                 <div
                     className={css(style_item.line)}
                     style={{
                         color: 'red',
                     }}
-                    onDoubleClick={() => {}}
+                    onDoubleClick={() => {
+                        ipc().sendSync('book_unlink', p.book)
+                        setTimeout(() => {
+                            //
+                            SubOption.update_shelf()
+                            SubBook.load()
+                        }, 100)
+                    }}
                 >
                     移除
+                    <span>(磁盘文件将会保留)</span>
                 </div>
             </div>
         </div>

@@ -48,8 +48,14 @@ export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
         cursor: 'pointer',
         transition: 'all linear 0.3s',
         borderBottom: '1px solid #00000055',
+        ':nth-child(1n) span': {
+            fontSize: 0,
+        },
         ':hover': {
             paddingLeft: 40,
+        },
+        ':hover span': {
+            fontSize: 14,
         },
     },
 })

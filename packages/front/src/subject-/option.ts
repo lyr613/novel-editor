@@ -19,6 +19,7 @@ class _option extends _sub_base<option_vo> {
             ToolFs.write(optsrc.data, JSON.stringify(opt))
         })
     }
+    /** 只更新书架列表 */
     update_shelf() {
         const opt: msg_dto<option_vo> = ipc().sendSync('option_load')
         this.edit$.next(opt.data)

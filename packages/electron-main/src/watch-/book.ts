@@ -7,12 +7,14 @@ import { OptionLoad } from './option'
 import { paths } from 'const-/path'
 import { WindowUtil } from 'window-'
 import { FileAndDir } from 'const-/file-and-dir'
+import { UtilFs } from 'util-/fs'
 
 /** 书目 */
 export function _watch_book() {
     ipcMain.on('book_load_li', book_load_li)
     ipcMain.on('book_get_cache', book_get_cache)
     ipcMain.on('book_add', book_add)
+    ipcMain.on('book_unlink', book_unlink)
     ipcMain.on('book_open_child_window', book_open_child_window)
 }
 
@@ -86,6 +88,23 @@ function book_add(e: Electron.IpcMainEvent, book: book_vo) {
         UtilReply.reply(e, 'book_add', msg)
     } catch (error) {
         UtilReply.reply(e, 'book_add', msg)
+    }
+}
+
+function book_unlink(e: Electron.IpcMainEvent, book: book_vo) {
+    const msg = UtilReply.msg(null)
+    //
+    try {
+        const book_opt = OptionLoad.effect_load()
+        const list2 = book_opt.shelf.list.filter((v) => v !== book.src)
+        book_opt.shelf.list = list2
+        const book_opt_src = paths().option
+        UtilFs.write(book_opt_src, JSON.stringify(book_opt))
+        //
+        msg.b = true
+        UtilReply.reply(e, 'book_unlink', msg)
+    } catch (error) {
+        UtilReply.reply(e, 'book_unlink', msg)
     }
 }
 

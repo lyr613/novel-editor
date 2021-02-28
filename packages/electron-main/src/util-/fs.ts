@@ -2,6 +2,9 @@ import fs from 'fs-extra'
 import path from 'path'
 import { UtilReply } from './reply'
 import prettier from 'prettier'
+import { shell } from 'electron'
+import os from 'os'
+import cp from 'child_process'
 
 class _f {
     read(src: string) {
@@ -52,6 +55,7 @@ class _f {
             if (extname === '.json') {
                 txt = prettier.format(txt, {
                     parser: 'json',
+                    tabWidth: 4,
                 })
             }
         } catch (error) {
@@ -80,6 +84,28 @@ class _f {
                 fs.mkdirSync(save[i])
             }
         } catch (error) {}
+    }
+    /** 在资源管理器中显示 */
+    show_in_folder(src: string) {
+        const msg = UtilReply.msg(null)
+        if (!fs.existsSync(src)) {
+            msg.txt = '路径不存在'
+            return msg
+        }
+        shell.showItemInFolder(src)
+        msg.b = true
+        return msg
+    }
+    /** 用vscode打开 */
+    vscode(src: string) {
+        const msg = UtilReply.msg(null)
+        if (os.platform() === 'win32') {
+            cp.exec(` code ${src} `)
+        } else {
+            cp.exec(` open -a "Visual Studio Code" "${src}" `)
+        }
+        msg.b = true
+        return msg
     }
 }
 
