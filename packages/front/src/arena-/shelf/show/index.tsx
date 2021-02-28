@@ -72,14 +72,30 @@ function Item(p: one) {
             style={{
                 width: p.w + 'px',
             }}
-            onClick={() => {
-                console.log('打开书')
-                ipc().send('book_open_child_window', p.book)
-            }}
         >
             <div className={css(style_item.name)}>{p.book.name}</div>
             <div className={css(style_item.btn_box)}>
-                <div className={css(style_item.line)}></div>
+                <div
+                    className={css(style_item.line)}
+                    onClick={() => {
+                        console.log('打开书')
+                        ipc().send('book_open_child_window', p.book)
+                    }}
+                >
+                    编写
+                </div>
+                <div className={css(style_item.line)}>设置</div>
+                <div className={css(style_item.line)}>打开资源管理器</div>
+                <div className={css(style_item.line)}>打开vscode</div>
+                <div
+                    className={css(style_item.line)}
+                    style={{
+                        color: 'red',
+                    }}
+                    onDoubleClick={() => {}}
+                >
+                    移除
+                </div>
             </div>
         </div>
     )

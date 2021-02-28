@@ -36,8 +36,21 @@ export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
         width: '100%',
     },
     line: {
+        display: 'flex',
+        boxSizing: 'border-box',
         height: 40,
-        backgroundColor: 'red',
+        paddingLeft: 20,
+        alignItems: 'center',
+        fontSize: 14,
+        backgroundColor: themes.style_vars.themeDarker,
+        color: themes.style_vars.white,
+        userSelect: 'none',
+        cursor: 'pointer',
+        transition: 'all linear 0.3s',
+        borderBottom: '1px solid #00000055',
+        ':hover': {
+            paddingLeft: 40,
+        },
     },
 })
 
