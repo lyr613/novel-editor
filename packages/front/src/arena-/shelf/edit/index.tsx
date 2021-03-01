@@ -69,7 +69,7 @@ export default function Edit() {
                     onClick={() => {
                         console.log(bk)
                         ipc().sendSync('book_add', bk)
-                        SubOption.update_shelf()
+                        // SubOption.update_shelf()
                         setTimeout(() => {
                             Rt.next('shelf')
                         }, 500)

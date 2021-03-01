@@ -64,25 +64,24 @@ function _load_book(src: string): book_vo {
     }
 }
 
-/** 添加一本书 */
+/** 添加一本书
+ *  编辑也走这
+ */
 function book_add(e: Electron.IpcMainEvent, book: book_vo) {
     const msg = UtilReply.msg(null)
     //
     try {
-        const book_opt = OptionLoad.effect_load()
-        if (book_opt.shelf.list.includes(book.src)) {
-            msg.txt = '已经添加过此书'
-            UtilReply.reply(e, 'book_add', msg)
-            return
+        const app_opt = OptionLoad.effect_load()
+        if (!app_opt.shelf.list.includes(book.src)) {
+            app_opt.shelf.list.push(book.src)
         }
         //
-        book_opt.shelf.list.push(book.src)
-        const book_opt_src = paths().option
-        fs.writeFileSync(book_opt_src, JSON.stringify(book_opt))
+        const app_opt_src = paths().option
+        UtilFs.write(app_opt_src, JSON.stringify(app_opt))
         //
         const opt_txt = JSON.stringify(book)
         const opt_src = path.join(book.src, FileAndDir.option)
-        fs.writeFileSync(opt_src, opt_txt)
+        UtilFs.write(opt_src, opt_txt)
         //
         msg.b = true
         UtilReply.reply(e, 'book_add', msg)

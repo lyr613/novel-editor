@@ -16,6 +16,7 @@ import { SubOption } from 'subject-/option'
 export default function Show() {
     useEffect(() => {
         setTimeout(() => {
+            SubOption.update_shelf()
             SubBook.load()
         }, 17)
     }, [])
