@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { style } from './style'
+import React, { useState, useEffect, useRef } from 'react'
+import { style, style_item } from './style'
 import { css } from 'aphrodite/no-important'
 import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { map, switchMap } from 'rxjs/operators'
 import { SubScreen } from 'subject-/screen'
-
+import { Icon } from '@fluentui/react'
+import * as monaco from 'monaco-editor'
+import { SubMonaco } from 'subject-/monaco'
 const arr = Array.from({ length: 22 }, (_, i) => i)
 const arr$ = new BehaviorSubject(arr)
 
@@ -40,6 +42,22 @@ export default function List() {
 }
 
 function Item(p: any) {
+    const ref_editer = useRef(null as null | HTMLDivElement)
+    useEffect(() => {
+        const dom = ref_editer.current
+        if (!dom) {
+            return
+        }
+        const opt = SubMonaco.default_option
+        opt.readOnly = true
+        opt.contextmenu = false
+        opt.scrollBeyondLastLine = false
+        const editer = monaco.editor.create(dom, opt)
+        editer.setValue('测试一下\nsdflll')
+        return () => {
+            editer.dispose()
+        }
+    }, [])
     return (
         <div
             className={css(style.Item)}
@@ -47,13 +65,18 @@ function Item(p: any) {
                 width: p.w.w + 'px',
             }}
         >
-            <div
-                style={{
-                    backgroundColor: 'purple',
-                    width: '100%',
-                    height: '100%',
-                }}
-            ></div>
+            <div className={css(style_item.Container)}>
+                <div className={css(style_item.TopLine)}>
+                    <span className={css(style_item.TopLineName)}>名字(昵称)</span>
+                    <div className={css(style_item.TopLineIcon)}>
+                        <Icon iconName="Settings" />
+                    </div>
+                    <div className={css(style_item.TopLineIcon)}>
+                        <Icon iconName="Relationship" />
+                    </div>
+                </div>
+                <div ref={ref_editer} className={css(style_item.Editer)}></div>
+            </div>
         </div>
     )
 }
