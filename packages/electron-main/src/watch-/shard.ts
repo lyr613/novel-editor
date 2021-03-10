@@ -1,7 +1,7 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { UtilReply } from 'util-/reply'
 import path from 'path'
-import { paths } from 'const-/path'
+import { ConstAppPath } from 'const-/app-path'
 import fs from 'fs-extra'
 import {} from 'util-/fs'
 

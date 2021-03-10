@@ -1,7 +1,7 @@
 import { BrowserWindow, globalShortcut, MenuItem, Menu, dialog, screen, app } from 'electron'
 import os from 'os'
-import { envs } from 'const-/env'
-import { paths } from 'const-/path'
+import { ConstEnv } from 'const-/env'
+import { ConstAppPath } from 'const-/app-path'
 import url from 'url'
 import path from 'path'
 
@@ -34,7 +34,7 @@ class _win {
         this.main_window = new BrowserWindow(this.option)
         this.load_page(this.main_window, 'shelf')
         this.main_window.maximize()
-        if (envs().dev) {
+        if (ConstEnv.dev) {
             // if (true) {
             this.main_window.webContents.openDevTools()
         }
@@ -42,14 +42,14 @@ class _win {
     }
     /** 窗口加载页面 */
     load_page(win: BrowserWindow, rest_url = '') {
-        if (envs().dev) {
+        if (ConstEnv.dev) {
             // 开发
-            win.loadURL(paths().dev_html + rest_url)
-            console.log('加载', paths().dev_html + rest_url)
+            win.loadURL(ConstAppPath.dev_html + rest_url)
+            console.log('加载', ConstAppPath.dev_html + rest_url)
         } else {
             const burl =
                 url.format({
-                    pathname: paths().did_build_html,
+                    pathname: ConstAppPath.did_build_html,
                     protocol: 'file:',
                     slashes: true,
                 }) +

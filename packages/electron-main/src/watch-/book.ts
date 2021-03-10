@@ -4,9 +4,9 @@ import path from 'path'
 import fs from 'fs-extra'
 import { mk_uuid } from 'util-/uuid'
 import { OptionLoad } from './option'
-import { paths } from 'const-/path'
+import { ConstAppPath } from 'const-/app-path'
 import { WindowUtil } from 'window-'
-import { FileAndDir } from 'const-/file-and-dir'
+import { ConstBookPath } from 'const-/book-path'
 import { UtilFs } from 'util-/fs'
 
 /** 书目 */
@@ -37,7 +37,7 @@ function book_get_cache(e: Electron.IpcMainEvent, bid: string) {
 }
 
 function _load_book(src: string): book_vo {
-    const opt_src = path.join(src, FileAndDir.option)
+    const opt_src = path.join(src, ConstBookPath.option)
     const re = {
         id: mk_uuid(),
         name: '查找失败',
@@ -76,11 +76,11 @@ function book_add(e: Electron.IpcMainEvent, book: book_vo) {
             app_opt.shelf.list.push(book.src)
         }
         //
-        const app_opt_src = paths().option
+        const app_opt_src = ConstAppPath.option
         UtilFs.write(app_opt_src, JSON.stringify(app_opt))
         //
         const opt_txt = JSON.stringify(book)
-        const opt_src = path.join(book.src, FileAndDir.option)
+        const opt_src = path.join(book.src, ConstBookPath.option)
         UtilFs.write(opt_src, opt_txt)
         //
         msg.b = true
@@ -97,7 +97,7 @@ function book_unlink(e: Electron.IpcMainEvent, book: book_vo) {
         const book_opt = OptionLoad.effect_load()
         const list2 = book_opt.shelf.list.filter((v) => v !== book.src)
         book_opt.shelf.list = list2
-        const book_opt_src = paths().option
+        const book_opt_src = ConstAppPath.option
         UtilFs.write(book_opt_src, JSON.stringify(book_opt))
         //
         msg.b = true

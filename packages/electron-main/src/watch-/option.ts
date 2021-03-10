@@ -1,7 +1,7 @@
 import { ipcMain, shell, dialog, app } from 'electron'
 import { UtilReply } from 'util-/reply'
 import path from 'path'
-import { paths } from 'const-/path'
+import { ConstAppPath } from 'const-/app-path'
 import fs from 'fs-extra'
 import { UtilFs } from 'util-/fs'
 import joi from 'joi'
@@ -22,11 +22,11 @@ function option_load(e: Electron.IpcMainEvent) {
 export class OptionLoad {
     /** 读取并标准化编辑器配置 */
     static effect_load(): option_vo {
-        const opt_dir = path.join(paths().option, '..')
+        const opt_dir = path.join(ConstAppPath.option, '..')
         if (!fs.existsSync(opt_dir)) {
             fs.mkdirSync(opt_dir)
         }
-        const jn = UtilFs.read_json<option_vo>(paths().option)
+        const jn = UtilFs.read_json<option_vo>(ConstAppPath.option)
         return OptionLoad.mk_standard_option(jn.data)
     }
     /** 默认配置 */

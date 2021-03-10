@@ -1,4 +1,4 @@
-import { paths } from 'const-/path'
+import { ConstAppPath } from 'const-/app-path'
 import { ipcMain, shell, dialog, app } from 'electron'
 import { UtilReply } from 'util-/reply'
 
@@ -16,7 +16,7 @@ function path_get(e: Electron.IpcMainEvent, path_code: path_dto) {
 function _get_path(path_code: path_dto) {
     switch (path_code) {
         case 'option':
-            return paths().option
+            return ConstAppPath.option
 
         default:
             break

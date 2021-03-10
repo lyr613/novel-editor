@@ -3,7 +3,7 @@ import { UtilReply } from 'util-/reply'
 import { WindowUtil } from 'window-'
 import path from 'path'
 import fs from 'fs-extra'
-import { FileAndDir } from 'const-/file-and-dir'
+import { ConstBookPath } from 'const-/book-path'
 import { UtilFs } from 'util-/fs'
 
 /**   */
@@ -18,7 +18,7 @@ export function _watch_chapter() {
 function chapter_load(e: Electron.IpcMainEvent, bookid: string) {
     const book = WindowUtil.book_map.get(bookid)!
     try {
-        const chasrc = path.join(book.src, FileAndDir.volume)
+        const chasrc = path.join(book.src, ConstBookPath.volume)
         const msg = UtilFs.read_json<volume_vo[]>(chasrc)
         UtilReply.reply(e, 'chapter_load', msg)
     } catch (error) {
@@ -30,7 +30,7 @@ function chapter_save(e: Electron.IpcMainEvent, bookid: string, vols: volume_vo[
     const book = WindowUtil.book_map.get(bookid)!
     const msg = UtilReply.msg(null)
     try {
-        const chasrc = path.join(book.src, FileAndDir.volume)
+        const chasrc = path.join(book.src, ConstBookPath.volume)
         const t0 = JSON.stringify(vols)
         UtilFs.write(chasrc, t0)
         msg.b = true
@@ -44,7 +44,7 @@ function chapter_save(e: Electron.IpcMainEvent, bookid: string, vols: volume_vo[
 /** 章读取文本 */
 function chapter_load_txt(e: Electron.IpcMainEvent, bookid: string, chapid: string) {
     const book = WindowUtil.book_map.get(bookid)!
-    const chasrc = path.join(book.src, FileAndDir.vol_dir, chapid)
+    const chasrc = path.join(book.src, ConstBookPath.vol_dir, chapid)
     const msg = UtilFs.read(chasrc)
     UtilReply.reply(e, 'chapter_load_txt', msg)
 }
@@ -53,9 +53,9 @@ function chapter_write_txt(e: Electron.IpcMainEvent, bookid: string, chapid: str
     const book = WindowUtil.book_map.get(bookid)!
     const msg = UtilReply.msg(null)
     try {
-        const dirsrc = path.join(book.src, FileAndDir.vol_dir)
+        const dirsrc = path.join(book.src, ConstBookPath.vol_dir)
         UtilFs.mk_dir(dirsrc)
-        const chasrc = path.join(book.src, FileAndDir.vol_dir, chapid)
+        const chasrc = path.join(book.src, ConstBookPath.vol_dir, chapid)
         fs.writeFileSync(chasrc, txt)
         msg.b = true
         UtilReply.reply(e, 'chapter_write_txt', msg)
