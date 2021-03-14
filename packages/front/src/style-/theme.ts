@@ -160,4 +160,4 @@ class THEME {
 }
 
 /** 主题 唯一实例 */
-export const themes = new THEME()
+export const StyleTheme = new THEME()

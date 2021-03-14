@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor'
 import { BehaviorSubject, from } from 'rxjs'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { SubOption } from './option'
 
 class _mo {
@@ -42,7 +42,7 @@ class _mo {
         })
     }
     auto_theme() {
-        const tms = themes.list
+        const tms = StyleTheme.list
         tms.forEach((tm) => {
             //
             monaco.editor.defineTheme(tm.name, {

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { css } from 'aphrodite/no-important'
 
 interface style_vo {
@@ -14,6 +14,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 0,
         width: '100%',
         height: '100vh',
-        backgroundColor: themes.style_vars.themeLight,
+        backgroundColor: StyleTheme.style_vars.themeLight,
     },
 })

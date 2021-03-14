@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 
 interface style_vo {
     /** 组件顶层 */
@@ -24,38 +24,38 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         height: 30,
         paddingLeft: 30,
         fontSize: 0,
-        backgroundColor: themes.style_vars.themeDarker,
+        backgroundColor: StyleTheme.style_vars.themeDarker,
         userSelect: 'none',
     },
     MenuItem: {
         position: 'relative',
         height: 30,
         fontSize: 14,
-        color: themes.style_vars.neutralQuaternary,
+        color: StyleTheme.style_vars.neutralQuaternary,
         padding: '0 10px',
         lineHeight: '30px',
         ':hover': {
-            backgroundColor: themes.style_vars.themeDarkAlt,
+            backgroundColor: StyleTheme.style_vars.themeDarkAlt,
         },
     },
     MenuItemUse: {
-        color: themes.style_vars.neutralLight,
-        backgroundColor: themes.style_vars.themeDarkAlt,
+        color: StyleTheme.style_vars.neutralLight,
+        backgroundColor: StyleTheme.style_vars.themeDarkAlt,
     },
     MenuExtend: {
         position: 'absolute',
         left: 0,
         top: 30,
-        boxShadow: `0 0 5px ${themes.style_vars.themeDarker}`,
+        boxShadow: `0 0 5px ${StyleTheme.style_vars.themeDarker}`,
     },
     MenuExtendItem: {
         minWidth: 160,
         height: 30,
         padding: '0 20px',
         lineHeight: '30px',
-        backgroundColor: themes.style_vars.themeDarker,
+        backgroundColor: StyleTheme.style_vars.themeDarker,
         ':hover': {
-            backgroundColor: themes.style_vars.themeDarkAlt,
+            backgroundColor: StyleTheme.style_vars.themeDarkAlt,
         },
     },
     Right: {
@@ -69,16 +69,16 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         height: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        color: themes.style_vars.neutralQuaternary,
+        color: StyleTheme.style_vars.neutralQuaternary,
         fontSize: 12,
         ':hover': {
-            backgroundColor: themes.style_vars.themeDarkAlt,
+            backgroundColor: StyleTheme.style_vars.themeDarkAlt,
         },
     },
     IconBoxDanger: {
         ':hover': {
             backgroundColor: `rgb(212,18,35)`,
-            color: themes.style_vars.white,
+            color: StyleTheme.style_vars.white,
         },
     },
 })

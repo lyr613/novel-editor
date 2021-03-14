@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { css } from 'aphrodite/no-important'
 
 interface style_item_vo {
@@ -25,7 +25,7 @@ export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
         padding: '5px 10px',
         fontSize: 16,
         backgroundColor: 'rgba(0,0,0,0.3)',
-        color: themes.style_vars.white,
+        color: StyleTheme.style_vars.white,
         opacity: 0.5,
     },
     btn_box: {
@@ -59,7 +59,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         position: 'relative',
         boxSizing: 'border-box',
         width: '100%',
-        backgroundColor: themes.style_vars.themeDark,
+        backgroundColor: StyleTheme.style_vars.themeDark,
         [`:hover .${css(style_item.name)}`]: {
             height: 'unset',
             opacity: 1,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { css } from 'style-/aphrodite'
 import { style as s, sty_mit } from './style'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { SubOption } from 'subject-/option'
 import { useObservable } from 'rxjs-hooks'
 import { PrimaryButton } from '@fluentui/react'
@@ -28,7 +28,7 @@ function Theme() {
     return (
         <section className={css(s.section)}>
             <h2 className={css(s.h2)}>主题</h2>
-            {themes.list.map((clr) => (
+            {StyleTheme.list.map((clr) => (
                 <div
                     key={clr.name}
                     className={css(s.themeItem)}
@@ -38,7 +38,7 @@ function Theme() {
                     onClick={() => {
                         opt.ui.theme = clr.name
                         SubOption.edit$.next({ ...opt })
-                        themes.use(clr.name)
+                        StyleTheme.use(clr.name)
                     }}
                 >
                     <div

@@ -19,8 +19,8 @@ interface global_style_vo {
     overhidd: object
 }
 
-/** 复用样式 */
-export const global_style: global_style_vo = StyleSheet.create<global_style_vo>({
+/** 预设样式 */
+export const StylePreset: global_style_vo = StyleSheet.create<global_style_vo>({
     flex: {
         display: 'flex',
     },
@@ -59,7 +59,8 @@ export const global_style: global_style_vo = StyleSheet.create<global_style_vo>(
 
 //
 type sty_val = number | string
-export const style_creater = {
+/** 制造阿芙罗的样式 */
+export const StyleMake = {
     /** margin */
     mar(top: sty_val, right?: sty_val, bottom?: sty_val, left?: sty_val) {
         top = _default_px(top)

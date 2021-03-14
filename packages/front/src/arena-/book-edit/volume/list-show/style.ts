@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { css } from 'aphrodite/no-important'
 
 interface style_vo {
@@ -22,13 +22,13 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 0,
         width: '300px',
         height: '100vh',
-        backgroundColor: themes.style_vars.themeTertiary,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
         userSelect: 'none',
         whiteSpace: 'nowrap',
     },
     Top: {
         display: 'flex',
-        borderBottom: '1px solid ' + themes.style_vars.themeSecondary,
+        borderBottom: '1px solid ' + StyleTheme.style_vars.themeSecondary,
         width: '100%',
         height: 30,
         flexDirection: 'row-reverse',
@@ -41,12 +41,12 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         justifyContent: 'center',
         alignItems: 'center',
         ':hover': {
-            backgroundColor: themes.style_vars.themeSecondary,
+            backgroundColor: StyleTheme.style_vars.themeSecondary,
         },
     },
     VolItem: {
         overflow: 'hidden',
-        borderTop: '1px dashed ' + themes.style_vars.themeSecondary,
+        borderTop: '1px dashed ' + StyleTheme.style_vars.themeSecondary,
         width: '100%',
         minHeight: 30,
         lineHeight: '30px',
@@ -57,7 +57,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 14,
         fontWeight: 700,
         ':hover': {
-            backgroundColor: themes.style_vars.themeSecondary,
+            backgroundColor: StyleTheme.style_vars.themeSecondary,
         },
     },
     ChapItem: {
@@ -68,10 +68,10 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         lineHeight: '30px',
         fontSize: 14,
         ':hover': {
-            backgroundColor: themes.style_vars.themeSecondary,
+            backgroundColor: StyleTheme.style_vars.themeSecondary,
         },
     },
     ChapItemHigh: {
-        backgroundColor: themes.style_vars.themeSecondary,
+        backgroundColor: StyleTheme.style_vars.themeSecondary,
     },
 })

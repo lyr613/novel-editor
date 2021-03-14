@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 
 interface style_vo {
     /** 组件顶层 */
@@ -22,7 +22,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 16,
         cursor: 'pointer',
         ':hover': {
-            color: themes.style_vars.themePrimary,
+            color: StyleTheme.style_vars.themePrimary,
         },
     },
 })

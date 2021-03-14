@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { css } from 'aphrodite/no-important'
 
 interface style_vo {
@@ -19,7 +19,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     Infor: {
         boxSizing: 'border-box',
         fontSize: 0,
-        borderRight: `2px solid ${themes.style_vars.themeTertiary}`,
+        borderRight: `2px solid ${StyleTheme.style_vars.themeTertiary}`,
         width: 600,
         height: '100%',
         padding: 20,
@@ -34,13 +34,13 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         width: 'calc(100% - 40px)',
         height: 1,
 
-        backgroundColor: themes.style_vars.themeTertiary,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
     },
     SliceSplitIndex: {
         marginBottom: 10,
         width: 80,
         fontSize: 14,
-        color: themes.style_vars.themePrimary,
+        color: StyleTheme.style_vars.themePrimary,
         userSelect: 'none',
         opacity: 0.6,
         ':hover': {

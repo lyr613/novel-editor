@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { css } from 'aphrodite/no-important'
 
 interface style_item_vo {
@@ -25,7 +25,7 @@ export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
         padding: '5px 10px',
         fontSize: 16,
         backgroundColor: 'rgba(0,0,0,0.3)',
-        color: themes.style_vars.white,
+        color: StyleTheme.style_vars.white,
         opacity: 0.5,
     },
     btn_box: {
@@ -42,8 +42,8 @@ export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
         paddingLeft: 20,
         alignItems: 'center',
         fontSize: 14,
-        backgroundColor: themes.style_vars.themeDarker,
-        color: themes.style_vars.white,
+        backgroundColor: StyleTheme.style_vars.themeDarker,
+        color: StyleTheme.style_vars.white,
         userSelect: 'none',
         cursor: 'pointer',
         transition: 'all linear 0.3s',
@@ -82,7 +82,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         margin: '0 0 20px 20px',
         boxSizing: 'border-box',
         'aspect-ratio': '3 / 4',
-        backgroundColor: themes.style_vars.themeDark,
+        backgroundColor: StyleTheme.style_vars.themeDark,
         [`:hover .${css(style_item.name)}`]: {
             height: 'unset',
             opacity: 1,
@@ -98,11 +98,11 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         top: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: themes.style_vars.themeDark,
+        backgroundColor: StyleTheme.style_vars.themeDark,
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'pointer',
-        color: themes.style_vars.neutralLight,
+        color: StyleTheme.style_vars.neutralLight,
 
         fontSize: 40,
         opacity: 0.31,

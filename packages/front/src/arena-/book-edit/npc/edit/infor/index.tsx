@@ -3,7 +3,7 @@ import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { Icon, Label, Stack, StackItem, TextField, TooltipHost } from '@fluentui/react-internal'
 import { DirectionalHint } from '@fluentui/react'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 
 /**
  */
@@ -45,7 +45,7 @@ function Slice() {
                     <Stack horizontal={true} verticalAlign="center">
                         <Label
                             style={{
-                                color: themes.style_vars.themePrimary,
+                                color: StyleTheme.style_vars.themePrimary,
                             }}
                         >
                             片段1

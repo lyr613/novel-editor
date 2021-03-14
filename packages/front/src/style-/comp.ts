@@ -1,6 +1,6 @@
 import { StyleSheet } from 'aphrodite'
 import { css } from 'aphrodite/no-important'
-import { themes } from './theme'
+import { StyleTheme } from './theme'
 
 class _sc {
     /** 编辑页左上icon菜单栏 */
@@ -17,7 +17,7 @@ class _sc {
                 alignItems: 'center',
                 justifyContent: 'center',
                 userSelect: 'none',
-                backgroundColor: themes.style_vars.themeTertiary,
+                backgroundColor: StyleTheme.style_vars.themeTertiary,
                 opacity: 0.3,
                 ':hover': {
                     opacity: 1,

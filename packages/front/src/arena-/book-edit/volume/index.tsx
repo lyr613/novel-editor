@@ -6,7 +6,7 @@ import SetIt from './set-volume'
 import { useObservable } from 'rxjs-hooks'
 import { volume_show_type$ } from './subj'
 import { Icon } from '@fluentui/react'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { StyleComp } from 'style-/comp'
 
 /**

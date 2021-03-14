@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { css } from 'aphrodite/no-important'
 
 interface item_s {
@@ -23,7 +23,7 @@ export const style_item: item_s = StyleSheet.create<item_s>({
         paddingLeft: 10,
         fontSize: 16,
         alignItems: 'center',
-        backgroundColor: themes.style_vars.themeSecondary,
+        backgroundColor: StyleTheme.style_vars.themeSecondary,
         userSelect: 'none',
     },
     TopLineName: {
@@ -37,7 +37,7 @@ export const style_item: item_s = StyleSheet.create<item_s>({
         justifyContent: 'center',
         cursor: 'pointer',
         ':hover': {
-            backgroundColor: themes.style_vars.themePrimary,
+            backgroundColor: StyleTheme.style_vars.themePrimary,
         },
     },
     Editer: {
@@ -63,7 +63,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         width: '100vw',
         height: '100vh',
         padding: '20px 0 0 0',
-        backgroundColor: themes.style_vars.themeLight,
+        backgroundColor: StyleTheme.style_vars.themeLight,
     },
     Item: {
         display: 'inline-block',
@@ -72,7 +72,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         boxSizing: 'border-box',
         width: 240,
         'aspect-ratio': '1 / 1',
-        backgroundColor: themes.style_vars.themeTertiary,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
         [`:hover .${css(style_item.TopLineIcon)}`]: {
             display: 'flex',
         },

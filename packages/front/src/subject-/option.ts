@@ -1,6 +1,6 @@
 import { debounceTime, skip, take } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { ToolFs } from 'tool-/fs'
 import { _sub_base } from './base'
 
@@ -10,7 +10,7 @@ class _option extends _sub_base<option_vo> {
         const opt_msg: msg_dto<option_vo> = ipc().sendSync('option_load')
         const opt = opt_msg.data
         this.edit$.next(opt)
-        themes.use(opt.ui.theme)
+        StyleTheme.use(opt.ui.theme)
     }
     save() {
         this.edit$.pipe(take(1)).subscribe((opt) => {

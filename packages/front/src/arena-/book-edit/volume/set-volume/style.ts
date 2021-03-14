@@ -1,5 +1,5 @@
 import { StyleSheet } from 'aphrodite'
-import { themes } from 'style-/theme'
+import { StyleTheme } from 'style-/theme'
 import { css } from 'aphrodite/no-important'
 
 interface style_vo {
@@ -32,7 +32,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: themes.style_vars.themeLight,
+        backgroundColor: StyleTheme.style_vars.themeLight,
         userSelect: 'none',
     },
     LeftVolume: {
@@ -42,7 +42,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         boxSizing: 'border-box',
         height: '100%',
         padding: 20,
-        borderRight: '1px solid ' + themes.style_vars.themeTertiary,
+        borderRight: '1px solid ' + StyleTheme.style_vars.themeTertiary,
         // backgroundImage: ` linear-gradient(-90deg, ${themes.style_vars.themeLight} , ${themes.style_vars.themeTertiary})`,
     },
     MidChapter: {
@@ -51,7 +51,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         height: '100%',
         width: 790,
         padding: 20,
-        borderRight: '1px solid ' + themes.style_vars.themeTertiary,
+        borderRight: '1px solid ' + StyleTheme.style_vars.themeTertiary,
         // backgroundImage: ` linear-gradient(-90deg, ${themes.style_vars.themeLight} , ${themes.style_vars.themeTertiary})`,
     },
     RightOption: {
@@ -72,7 +72,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         textAlign: 'center',
         border: '1px solid #00000000',
         ':hover': {
-            border: '1px solid ' + themes.style_vars.themePrimary,
+            border: '1px solid ' + StyleTheme.style_vars.themePrimary,
         },
     },
     VolumeItemName: {
@@ -88,18 +88,18 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         textAlign: 'center',
         border: '1px solid #00000000',
         ':hover': {
-            border: '1px solid ' + themes.style_vars.themePrimary,
+            border: '1px solid ' + StyleTheme.style_vars.themePrimary,
         },
     },
     ChapterItemName: {
         fontSize: 14,
     },
     VolumeItemHigh: {
-        backgroundColor: themes.style_vars.themeTertiary,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
     },
     ActionBlock: {
         marginTop: 10,
-        borderTop: '1px solid ' + themes.style_vars.themePrimary,
+        borderTop: '1px solid ' + StyleTheme.style_vars.themePrimary,
     },
     ActionBlockName: {
         height: 24,
