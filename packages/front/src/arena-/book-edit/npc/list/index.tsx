@@ -8,6 +8,8 @@ import { SubScreen } from 'subject-/screen'
 import { Icon } from '@fluentui/react'
 import * as monaco from 'monaco-editor'
 import { SubMonaco } from 'subject-/monaco'
+import { Rt } from 'router-'
+import { _npc } from '../subj'
 const arr = Array.from({ length: 22 }, (_, i) => i)
 const arr$ = new BehaviorSubject(arr)
 
@@ -68,7 +70,12 @@ function Item(p: any) {
             <div className={css(style_item.Container)}>
                 <div className={css(style_item.TopLine)}>
                     <span className={css(style_item.TopLineName)}>名字(昵称)</span>
-                    <div className={css(style_item.TopLineIcon)}>
+                    <div
+                        className={css(style_item.TopLineIcon)}
+                        onClick={() => {
+                            _npc.show_type$.next('edit')
+                        }}
+                    >
                         <Icon iconName="Settings" />
                     </div>
                     <div className={css(style_item.TopLineIcon)}>

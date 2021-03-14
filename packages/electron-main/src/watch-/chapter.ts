@@ -18,7 +18,7 @@ export function _watch_chapter() {
 function chapter_load(e: Electron.IpcMainEvent, bookid: string) {
     const book = WindowUtil.book_map.get(bookid)!
     try {
-        const chasrc = path.join(book.src, ConstBookPath.volume)
+        const chasrc = ConstBookPath.full_src(book.src, 'volume')
         const msg = UtilFs.read_json<volume_vo[]>(chasrc)
         UtilReply.reply(e, 'chapter_load', msg)
     } catch (error) {

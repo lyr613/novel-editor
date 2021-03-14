@@ -6,6 +6,7 @@ import { Icon } from '@fluentui/react'
 import { useObservable } from 'rxjs-hooks'
 import { _npc } from './subj'
 import List from './list'
+import Edit from './edit'
 
 /**
  */
@@ -15,6 +16,7 @@ export default function Npc() {
         <>
             {show_type === 'icon' && <IconType />}
             {show_type === 'list' && <List />}
+            {show_type === 'edit' && <Edit />}
         </>
     )
 }
