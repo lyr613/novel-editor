@@ -24,6 +24,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 16,
         backgroundColor: StyleTheme.style_vars.themeTertiary,
         transition: 'all linear 0.3s',
+        cursor: 'pointer',
 
         ':hover': {
             backgroundColor: StyleTheme.style_vars.themeSecondary,

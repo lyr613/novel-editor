@@ -57,7 +57,9 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         },
     },
     SetStartEndChapter: {
+        height: 14,
         padding: '0 5px',
         cursor: 'pointer',
+        fontSize: 14,
     },
 })

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { Icon, Label, Stack, StackItem, TextField, TooltipHost } from '@fluentui/react-internal'
-import { DirectionalHint } from '@fluentui/react'
+import { Dialog, DialogFooter, Icon, Label, Stack, StackItem, TextField, TooltipHost } from '@fluentui/react-internal'
+import { DefaultButton, DirectionalHint, PrimaryButton } from '@fluentui/react'
 import { StyleTheme } from 'style-/theme'
+import { StylePreset } from 'style-/global'
+import DialogSelChapter, { DialogSelChapterShow$, DialogSelChapterConfirmHook$ } from 'component-/dialog-sel-chapter'
 
 /**
  */
@@ -13,6 +15,7 @@ export default function Infor() {
             <Base />
             <Slice />
             <Slice />
+            <DialogSelChapter />
         </div>
     )
 }
@@ -21,13 +24,13 @@ function Base() {
     return (
         <section>
             <div>
-                <TextField label="名字" value="12345r" onChange={() => {}} />
+                <TextField label="名字" value="111" onChange={() => {}} />
             </div>
             <div>
-                <TextField label="别名(多个以空格分割)" value="12345r" onChange={() => {}} />
+                <TextField label="别名(多个以空格分割)" value="222" onChange={() => {}} />
             </div>
             <div>
-                <TextField label="备注" value="12345r" onChange={() => {}} />
+                <TextField label="备注" value="33" onChange={() => {}} />
             </div>
         </section>
     )
@@ -54,8 +57,15 @@ function Slice() {
                     </Stack>
                 </TooltipHost>
             </div>
-            <Stack>
+            <Stack horizontal={true} verticalAlign="center">
                 <Label>开始章节</Label>
+                <Icon
+                    iconName="Settings"
+                    className={css(style.SetStartEndChapter, StylePreset.hoverfocu)}
+                    onClick={() => {
+                        console.log(234567)
+                    }}
+                />
             </Stack>
             <Stack horizontal={true} verticalAlign="center">
                 <Label>结束章节</Label>
@@ -65,15 +75,17 @@ function Slice() {
                 >
                     <Icon iconName="UnknownSolid" />
                 </TooltipHost>
-                <TooltipHost hostClassName={css(style.TooltipHost)} content="选择结束章节">
-                    <Icon
-                        iconName="Settings"
-                        className={css(style.SetStartEndChapter)}
-                        onClick={() => {
-                            console.log(234567)
-                        }}
-                    />
-                </TooltipHost>
+                <Icon
+                    iconName="Settings"
+                    className={css(style.SetStartEndChapter, StylePreset.hoverfocu)}
+                    onClick={() => {
+                        DialogSelChapterConfirmHook$.next((vol: volume_vo | null, chap: chapter_vo | null) => {
+                            console.log(vol?.name, chap?.name)
+                        })
+                        DialogSelChapterShow$.next(true)
+                        console.log(234567)
+                    }}
+                />
             </Stack>
         </section>
     )

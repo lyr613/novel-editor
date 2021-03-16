@@ -47,7 +47,7 @@ export const StylePreset: global_style_vo = StyleSheet.create<global_style_vo>({
     },
     hoverfocu: {
         cursor: 'pointer',
-        opacity: 0.8,
+        opacity: 0.618,
         ':hover': {
             opacity: 1,
         },

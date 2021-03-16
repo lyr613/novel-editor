@@ -19,6 +19,8 @@ class _sc {
                 userSelect: 'none',
                 backgroundColor: StyleTheme.style_vars.themeTertiary,
                 opacity: 0.3,
+                cursor: 'pointer',
+
                 ':hover': {
                     opacity: 1,
                 },
