@@ -28,6 +28,7 @@ function IconType() {
             onClick={() => {
                 _npc.show_type$.next('list')
             }}
+            title="角色"
         >
             <Icon iconName="People" />
         </div>

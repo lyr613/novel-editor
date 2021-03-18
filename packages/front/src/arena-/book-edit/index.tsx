@@ -11,6 +11,8 @@ import { SubOption } from 'subject-/option'
 import Volume from './volume'
 import { SubVolume } from 'subject-/volume'
 import Npc from './npc'
+import { timer } from 'rxjs'
+import { take } from 'rxjs/operators'
 
 /**
  * #### 编辑选中的书目
@@ -18,17 +20,15 @@ import Npc from './npc'
 export default function BookEdit() {
     return (
         <div className={css(style.book_edit)}>
-            <LoadInfor />
-            <MonacoEdit />
-            <Volume />
-            <Npc />
+            <LoadInforSub />
         </div>
     )
 }
 
 /** 加载书目信息 */
-function LoadInfor() {
+function LoadInforSub() {
     const p = useLocation()
+    const [wait, next_wait] = useState(0)
 
     useEffect(() => {
         const so = parse(p.search)
@@ -56,6 +56,30 @@ function LoadInfor() {
          * 始终最后加载monaco, 加载完成后显示可编辑模块
          */
         SubMonaco.load_monaco()
+        // 显示项目
+        timer(100, 500)
+            .pipe(take(20))
+            .subscribe((n) => {
+                next_wait(n)
+            })
     }, [p])
-    return null
+    if (wait === 0) {
+        return (
+            <div
+                style={{
+                    padding: 20,
+                    fontSize: 16,
+                }}
+            >
+                加载中...
+            </div>
+        )
+    }
+    return (
+        <>
+            {wait > 0 && <MonacoEdit />}
+            {wait > 1 && <Volume />}
+            {wait > 2 && <Npc />}
+        </>
+    )
 }

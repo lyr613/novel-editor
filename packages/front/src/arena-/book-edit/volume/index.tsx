@@ -29,6 +29,7 @@ function IconType() {
             onClick={() => {
                 volume_show_type$.next('tree')
             }}
+            title="卷章"
         >
             <Icon iconName="DataConnectionLibrary" />
         </div>

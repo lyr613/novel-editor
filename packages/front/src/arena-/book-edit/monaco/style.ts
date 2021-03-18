@@ -15,9 +15,11 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         top: '50px',
         fontSize: 0,
         overflow: 'hidden',
-        width: '50%',
-        height: '50%',
+        width: 600,
+        height: 600,
         backgroundColor: 'white',
+        transition: 'opacity linear 0.3s',
+        transitionDelay: '0.5s',
     },
     editer: {
         overflow: 'hidden',

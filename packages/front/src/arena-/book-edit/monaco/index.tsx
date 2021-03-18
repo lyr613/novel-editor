@@ -11,11 +11,24 @@ import { debounceTime, map } from 'rxjs/operators'
  * 文字编辑区
  */
 export default function MonacoEdit() {
-    const loaded = useObservable(() => SubMonaco.did_load_monaco$)
-
+    const [wait, next_wait] = useState(true)
+    useEffect(() => {
+        SubMonaco.did_load_monaco$.subscribe((b) => {
+            if (b) {
+                setTimeout(() => {
+                    next_wait(false)
+                }, 200)
+            }
+        })
+    }, [])
     return (
-        <div className={css(style.monaco)}>
-            <Suspense fallback={null}>{loaded && <Box />}</Suspense>
+        <div
+            className={css(style.monaco)}
+            style={{
+                opacity: wait ? 0 : 1,
+            }}
+        >
+            <Suspense fallback={null}>{!wait && <Box />}</Suspense>
         </div>
     )
 }
