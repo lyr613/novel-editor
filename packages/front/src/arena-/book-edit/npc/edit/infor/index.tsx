@@ -136,15 +136,16 @@ function Slice(p: p_slice) {
                 {p.chap_map.get(slice_obj.end_chapter)?.name}
             </div>
             <div
-                className={css(StyleMake.wh('100%', 40), StyleMake.pos('relative'))}
+                className={css(StyleMake.mar(10, 0), StyleMake.wh('100%', 20), StyleMake.pos('relative'))}
                 style={{
-                    backgroundColor: 'red',
+                    backgroundColor: StyleTheme.style_vars.themeTertiary,
+                    opacity: 0.6,
                 }}
             >
                 <div
                     className={css(StyleMake.pos('absolute', 0, i0 + '%'), StyleMake.wh(i1 + '%', '100%'))}
                     style={{
-                        backgroundColor: 'purple',
+                        backgroundColor: StyleTheme.style_vars.themeSecondary,
                     }}
                 ></div>
             </div>
