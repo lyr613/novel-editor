@@ -10,7 +10,18 @@ class _n extends _sub_base<npc_vo> {
             name: '',
             remark: '',
             alias: '',
-            slices: [],
+            slices: [this.make_slice()],
+        }
+    }
+    make_slice(): npc_slice_vo {
+        return {
+            start_chapter: '',
+            end_chapter: '',
+            remark: '',
+            cube: '',
+            box: [],
+            skill: [],
+            relation: [],
         }
     }
     load() {

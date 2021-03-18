@@ -73,6 +73,27 @@ class _vo {
         const re = ipc().sendSync('chapter_save', this.bookid, new_li)
         return re
     }
+    /**
+     * id: 章
+     */
+    get chapter_map() {
+        const m = new Map<string, chapter_vo>()
+        const chaps = this.chaper_li
+        chaps.forEach((chap) => {
+            m.set(chap.id, chap)
+        })
+        return m
+    }
+    get chaper_li() {
+        const vols = this.vo_li$.value
+        const re: chapter_vo[] = []
+        vols.forEach((vol) => {
+            vol.children.forEach((chap) => {
+                re.push(chap)
+            })
+        })
+        return re
+    }
 }
 
 /** 卷章 */

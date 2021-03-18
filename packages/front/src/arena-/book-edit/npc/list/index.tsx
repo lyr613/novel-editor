@@ -10,6 +10,7 @@ import * as monaco from 'monaco-editor'
 import { SubMonaco } from 'subject-/monaco'
 import { Rt } from 'router-'
 import { _npc } from '../subj'
+import { SubNpc } from 'subject-/npc'
 const arr = Array.from({ length: 22 }, (_, i) => i)
 const arr$ = new BehaviorSubject(arr)
 
@@ -70,9 +71,11 @@ function Item(p: any) {
             <div className={css(style_item.Container)}>
                 <div className={css(style_item.TopLine)}>
                     <span className={css(style_item.TopLineName)}>名字(昵称)</span>
+                    {/* 编辑按钮 */}
                     <div
                         className={css(style_item.TopLineIcon)}
                         onClick={() => {
+                            SubNpc.edit$.next(SubNpc.make())
                             _npc.show_type$.next('edit')
                         }}
                     >
