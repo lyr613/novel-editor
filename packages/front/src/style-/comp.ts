@@ -29,6 +29,31 @@ class _sc {
         const st: any = StyleSheet.create(OBJ)
         return css(st['child_left_icons' + index])
     }
+    get select_item() {
+        const obj = {
+            item: {
+                height: 36,
+                lineHeight: '36px',
+                borderTop: '1px solid ' + StyleTheme.style_vars.themeTertiary,
+                padding: '0 10px',
+                fontSize: 14,
+                userSelect: 'none',
+                backgroundColor: StyleTheme.style_vars.themeLight,
+                cursor: 'pointer',
+                transition: 'all linear 0.3s',
+
+                ':hover': {
+                    backgroundColor: StyleTheme.style_vars.themeTertiary,
+                    paddingLeft: 30,
+                },
+            },
+            high: {
+                backgroundColor: StyleTheme.style_vars.themeTertiary,
+                paddingLeft: 30,
+            },
+        }
+        return StyleSheet.create(obj)
+    }
 }
 
 export const StyleComp = new _sc()

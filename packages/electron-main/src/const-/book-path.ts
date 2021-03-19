@@ -13,6 +13,10 @@ class _s {
     get vol_dir() {
         return 'volume'
     }
+    /** 词条 */
+    get cube() {
+        return 'cube.json'
+    }
     get npc() {
         return 'npc.json'
     }
@@ -27,7 +31,7 @@ class _s {
     }
 }
 
-type json_file = 'option' | 'volume' | 'npc' | 'npc_cube'
+type json_file = 'option' | 'volume' | 'npc' | 'npc_cube' | 'cube'
 
 /** 书目内部路径 */
 export const ConstBookPath = new _s()

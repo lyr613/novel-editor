@@ -13,6 +13,7 @@ import { SubVolume } from 'subject-/volume'
 import Npc from './npc'
 import { timer } from 'rxjs'
 import { take } from 'rxjs/operators'
+import Cube from './cube'
 
 /**
  * #### 编辑选中的书目
@@ -80,6 +81,7 @@ function LoadInforSub() {
             {wait > 0 && <MonacoEdit />}
             {wait > 1 && <Volume />}
             {wait > 2 && <Npc />}
+            {wait > 3 && <Cube />}
         </>
     )
 }

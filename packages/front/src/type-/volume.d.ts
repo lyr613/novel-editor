@@ -9,5 +9,6 @@ interface volume_vo {
 interface chapter_vo {
     id: string
     name: string
+    /** 读取时main给加上的 */
     src: string
 }

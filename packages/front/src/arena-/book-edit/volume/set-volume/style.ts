@@ -71,6 +71,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 60,
         textAlign: 'center',
         border: '1px solid #00000000',
+        cursor: 'pointer',
         ':hover': {
             border: '1px solid ' + StyleTheme.style_vars.themePrimary,
         },
