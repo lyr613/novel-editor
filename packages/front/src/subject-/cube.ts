@@ -5,11 +5,15 @@ import { SubBook } from './book'
 class _c extends _sub_base<cube_group_vo> {
     /** 加载卷章 */
     load() {
-        const volumes_re: msg_dto<cube_group_vo[]> = ipc().sendSync('chapter_load', SubBook.use_id$.value)
+        const re: msg_dto<cube_group_vo[]> = ipc().sendSync('cube_load', SubBook.use_id$.value)
         // console.log('volumes', volumes_re.data)
-        if (volumes_re.b) {
-            this.li$.next(volumes_re.data)
+        if (re.b) {
+            this.li$.next(re.data)
         }
+    }
+    save(new_li: cube_group_vo[]) {
+        const re = ipc().sendSync('cube_save', SubBook.use_id$.value, new_li)
+        return re
     }
 }
 

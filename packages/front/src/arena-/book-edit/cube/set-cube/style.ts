@@ -11,6 +11,8 @@ interface style_vo {
     CubeBoxItem: object
     CubeItemItem: object
     CubeItemRemark: object
+    ActionBlock: object
+    ActionBlockName: object
 }
 /** 样式 */
 export const style: style_vo = StyleSheet.create<style_vo>({
@@ -60,5 +62,15 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     CubeItemRemark: {
         lineHeight: '24px',
         textIndent: '2em',
+    },
+    ActionBlock: {
+        marginTop: 10,
+        borderTop: '1px solid ' + StyleTheme.style_vars.themePrimary,
+    },
+    ActionBlockName: {
+        height: 24,
+        lineHeight: '24px',
+        fontSize: 14,
+        fontWeight: 700,
     },
 })
