@@ -75,7 +75,7 @@
             "createDesktopShortcut": true,
             "createStartMenuShortcut": true,
             "runAfterFinish": true,
-            "shortcutName": "soft-writer"
+            "shortcutName": "秋衣小说编辑器"
         },
         "win": {
             "artifactName": "${productName}_setup_${version}.${ext}",
