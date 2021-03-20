@@ -25,10 +25,11 @@ export default function DialogSelCube() {
     const l2_map = useObservable(() => subj.seled_l2_map$, new Map())
 
     const l2_can_sel_li = useObservable(() => subj.l2_can_show_li$, [])
+
     return (
         <Dialog
             dialogContentProps={{
-                title: '选择词条(按住ctrl多选)',
+                title: '选择词条(按住ctrl或shift多选)',
             }}
             hidden={!show}
             minWidth={600}
@@ -67,6 +68,7 @@ export default function DialogSelCube() {
                 <DefaultButton
                     onClick={() => {
                         DialogSelCubeShow$.next(false)
+                        subj.clear()
                     }}
                 >
                     取消
@@ -81,6 +83,7 @@ export default function DialogSelCube() {
                         const func = DialogSelCubeConfirmHook$.value
                         func(seled)
                         DialogSelCubeShow$.next(false)
+                        subj.clear()
                     }}
                 >
                     好

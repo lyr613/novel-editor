@@ -163,6 +163,12 @@ export class SourceLevel2Select<T extends l1able, K extends l2able> {
         const m = new Map([[id, true]])
         map$.next(m)
     }
+
+    clear() {
+        this.now_sel$.next('none')
+        this.seled_l1_map$.next(new Map())
+        this.seled_l2_map$.next(new Map())
+    }
 }
 
 function count_true_in_map(m: Map<string, boolean>) {

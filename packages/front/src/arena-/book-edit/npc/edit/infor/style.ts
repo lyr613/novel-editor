@@ -14,6 +14,11 @@ interface style_vo {
     /** 设置开始结束章节 */
     SetStartEndChapter: object
     SaveOrEsc: object
+    CubeTable: object
+    CubeTd: object
+    CubeTdLeft: object
+    CubeTdRight: object
+    CubeTdRightItem: object
 }
 /** 样式 */
 export const style: style_vo = StyleSheet.create<style_vo>({
@@ -75,5 +80,29 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         backgroundColor: StyleTheme.style_vars.themeTertiary,
         alignItems: 'center',
         justifyContent: 'flex-end',
+    },
+    CubeTable: {
+        borderCollapse: 'collapse',
+        width: '100%',
+        userSelect: 'none',
+    },
+    CubeTd: {
+        border: `1px solid ${StyleTheme.style_vars.themePrimary}`,
+        padding: '3px 5px',
+        fontSize: 14,
+    },
+    CubeTdLeft: {
+        whiteSpace: 'nowrap',
+    },
+    CubeTdRight: {},
+    CubeTdRightItem: {
+        display: 'inline-block',
+        verticalAlign: 'top',
+        margin: '0px 5px',
+        padding: '3px 5px',
+        cursor: 'pointer',
+        ':hover': {
+            textDecoration: 'underline',
+        },
     },
 })

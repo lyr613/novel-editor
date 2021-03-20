@@ -13,6 +13,10 @@ import { SubVolume } from 'subject-/volume'
 import LabelHelp from 'component-/label-help'
 import { _npc } from '../../subj'
 import DialogSelCube, { DialogSelCubeConfirmHook$, DialogSelCubeShow$ } from 'component-/dialog-sel-cube'
+import DialogSimpleValue, {
+    DialogSimpleValueConfirmHook$,
+    DialogSimpleValueShow$,
+} from 'component-/dialog-simple-value'
 
 /**
  */
@@ -32,6 +36,7 @@ export default function Infor() {
             ))}
             <DialogSelChapter />
             <DialogSelCube />
+            <DialogSimpleValue />
             <SaveOrEsc />
         </div>
     )
@@ -184,49 +189,77 @@ function Slice(p: p_slice) {
                 ]}
             ></LabelHelp>
 
-            <Stack>
-                {slice_obj.cube.map((group, y) => (
-                    <>
-                        {y !== 0 && (
-                            <div
-                                className={css(StyleMake.wh('100%', 1))}
-                                style={{
-                                    backgroundColor: StyleTheme.style_vars.themePrimary,
-                                    opacity: 0.6,
+            <table className={css(style.CubeTable)}>
+                <tbody>
+                    {slice_obj.cube.map((group, y) => (
+                        <tr key={group.id}>
+                            <td
+                                className={css(style.CubeTd, style.CubeTdLeft)}
+                                onClick={() => {
+                                    slice_obj.cube = slice_obj.cube.filter((v) => v.id !== group.id)
+                                    SubNpc.edit$.next(p.npc)
                                 }}
-                            ></div>
-                        )}
-                        <Stack key={group.id} horizontal={true} horizontalAlign="start">
-                            <div className={css(StyleMake.padd(10))}>
-                                <Label>{group.name}</Label>
-                            </div>
-                            <div
-                                className={css(StyleMake.wh(1, 'auto'))}
-                                style={{
-                                    backgroundColor: StyleTheme.style_vars.themePrimary,
-                                    opacity: 0.6,
-                                }}
-                            ></div>
-                            <div className={css(StyleMake.padd(10))}>
-                                <Stack horizontal>
-                                    {group.children.map((item) => (
-                                        <Label key={item.id} className={css(StyleMake.mar(0, 10, 0, 0))}>
-                                            {item.name}
-                                        </Label>
-                                    ))}
-                                </Stack>
-                            </div>
-                        </Stack>
-                    </>
-                ))}
-            </Stack>
+                            >
+                                <div className={css(style.CubeTdRightItem)}>{group.name_show}</div>
+                            </td>
+                            <td className={css(style.CubeTd, style.CubeTdRight)}>
+                                {group.children.map((item, xi) => (
+                                    <div
+                                        key={item.id}
+                                        className={css(style.CubeTdRightItem)}
+                                        onDoubleClick={() => {
+                                            function hook(value: string) {
+                                                const n = parseInt(value, 10)
+                                                slice_obj.cube[y].children[xi].level = n
+                                                SubNpc.edit$.next(p.npc)
+                                            }
+                                            DialogSimpleValueConfirmHook$.next(hook)
+                                            DialogSimpleValueShow$.next(true)
+                                        }}
+                                        onClick={(e) => {
+                                            if (e.ctrlKey) {
+                                                // 删除这个词条
+                                                slice_obj.cube[y].children = slice_obj.cube[y].children.filter(
+                                                    (v) => v.id !== item.id,
+                                                )
+                                                SubNpc.edit$.next(p.npc)
+                                            }
+                                        }}
+                                    >
+                                        {item.name_show}
+                                        {item.level ? `(${item.level})` : ''}
+                                    </div>
+                                ))}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
             {/* 立方体 - 添加按钮 */}
             <Stack>
                 <IconButton
                     iconProps={{ iconName: 'Add' }}
                     onClick={() => {
                         DialogSelCubeConfirmHook$.next((groups) => {
-                            slice_obj.cube = groups
+                            groups.forEach((gp) => {
+                                const maybe_did_has = slice_obj.cube.find((v) => v.id === gp.id)
+                                if (maybe_did_has) {
+                                    // 已经有这个组, 比对词条
+                                    const item_has_map = new Map<string, boolean>()
+                                    maybe_did_has.children.forEach((item) => {
+                                        item_has_map.set(item.id, true)
+                                    })
+                                    gp.children.forEach((item) => {
+                                        if (!item_has_map.get(item.id)) {
+                                            maybe_did_has.children.push(item)
+                                        }
+                                    })
+                                } else {
+                                    slice_obj.cube.push(gp)
+                                }
+                            })
+                            // slice_obj.cube = groups
                             SubNpc.edit$.next(p.npc)
                         })
                         DialogSelCubeShow$.next(true)
