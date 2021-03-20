@@ -81,11 +81,8 @@ function NewGroup() {
                             return
                         }
                         const li = SubCube.li$.value
-                        const obj: cube_group_vo = {
-                            id: mk_uuid(),
-                            name,
-                            children: [],
-                        }
+                        const obj = SubCube.make()
+                        obj.name = name
                         li.push(obj)
                         SubCube.save(li)
                         SubCube.load()
@@ -145,11 +142,9 @@ function NewItem() {
                         const groups = SubCube.li$.value
                         /** 必然只有一个选中的组 */
                         const sel_group = _cube_set.sel_l1_nodes[0]
-                        const n_chap: cube_item_vo = {
-                            id: mk_uuid(),
-                            name,
-                            remark,
-                        }
+                        const n_chap = SubCube.make_item()
+                        n_chap.name = name
+                        n_chap.remark = remark
                         sel_group.children.push(n_chap)
 
                         SubCube.save(groups)

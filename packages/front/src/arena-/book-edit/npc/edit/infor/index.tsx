@@ -11,6 +11,7 @@ import { SubNpc } from 'subject-/npc'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
 import { SubVolume } from 'subject-/volume'
 import LabelHelp from 'component-/label-help'
+import { _npc } from '../../subj'
 
 /**
  */
@@ -21,13 +22,32 @@ export default function Infor() {
     }
     const chap_map = SubVolume.chapter_map
     const chap_li = SubVolume.chaper_li
+
     return (
         <div className={css(style.Infor)}>
             <Base npc={npc} />
-            {npc.slices.map((sl, i) => (
+            {npc.slices.map((_, i) => (
                 <Slice npc={npc} index={i} key={i} chap_li={chap_li} chap_map={chap_map} />
             ))}
             <DialogSelChapter />
+            <SaveOrEsc />
+        </div>
+    )
+}
+
+function SaveOrEsc() {
+    return (
+        <div className={css(style.SaveOrEsc)}>
+            <DefaultButton
+                className={css(StyleMake.mar(0, 10, 0, 0))}
+                onClick={() => {
+                    _npc.show_type$.next('list')
+                }}
+            >
+                {' '}
+                返回列表
+            </DefaultButton>
+            <PrimaryButton className={css(StyleMake.mar(0, 10, 0, 0))}>好</PrimaryButton>
         </div>
     )
 }
@@ -67,7 +87,6 @@ interface p_slice {
 function Slice(p: p_slice) {
     const slice_obj = p.npc.slices[p.index]
     const [i0, i1] = get_chapter_range(slice_obj, p.chap_map, p.chap_li)
-    // console.log(i0, i1)
 
     return (
         <section className={css(style.Slice)}>
@@ -140,17 +159,21 @@ function Slice(p: p_slice) {
             <div className={css(StyleMake.padd(0, 0, 0, 20), StyleMake.fts(14))}>
                 {p.chap_map.get(slice_obj.end_chapter)?.name}
             </div>
+            {/* 范围条 */}
             <div
                 className={css(StyleMake.mar(10, 0), StyleMake.wh('100%', 20), StyleMake.pos('relative'))}
                 style={{
                     backgroundColor: StyleTheme.style_vars.themeTertiary,
                     opacity: 0.6,
+                    overflow: 'hidden',
                 }}
             >
                 <div
                     className={css(StyleMake.pos('absolute', 0, i0 + '%'), StyleMake.wh(i1 + '%', '100%'))}
                     style={{
                         backgroundColor: StyleTheme.style_vars.themeSecondary,
+                        borderBottom: `10px solid ${StyleTheme.style_vars.themePrimary}`,
+                        boxSizing: 'border-box',
                     }}
                 ></div>
             </div>
@@ -179,8 +202,10 @@ function get_chapter_range(slice: npc_slice_vo, chap_map: id_map_of<chapter_vo>,
     if (edc) {
         const edi = chap_li.indexOf(edc)
         i1 = (((edi + 1) * 100) / len) | 0
-        i1 = Math.min(100, i1 + 1)
-        i1 = i1 - i0
     }
+    i1 = Math.min(100, i1 + 1)
+    i1 = i1 - i0
+    // console.log(i0, i1)
+
     return [i0, i1]
 }

@@ -10,6 +10,8 @@ class _n extends _sub_base<npc_vo> {
             name: '',
             remark: '',
             alias: '',
+            sort: Number.MAX_SAFE_INTEGER,
+            name_show: '',
             slices: [this.make_slice()],
         }
     }
@@ -18,9 +20,7 @@ class _n extends _sub_base<npc_vo> {
             start_chapter: '',
             end_chapter: '',
             remark: '',
-            cube: '',
-            box: [],
-            skill: [],
+            cube: [],
             relation: [],
         }
     }

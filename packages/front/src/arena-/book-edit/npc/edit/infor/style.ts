@@ -13,10 +13,12 @@ interface style_vo {
     TooltipHost: object
     /** 设置开始结束章节 */
     SetStartEndChapter: object
+    SaveOrEsc: object
 }
 /** 样式 */
 export const style: style_vo = StyleSheet.create<style_vo>({
     Infor: {
+        position: 'relative',
         boxSizing: 'border-box',
         fontSize: 0,
         borderRight: `2px solid ${StyleTheme.style_vars.themeTertiary}`,
@@ -61,5 +63,17 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         padding: '0 5px',
         cursor: 'pointer',
         fontSize: 14,
+    },
+    SaveOrEsc: {
+        display: 'flex',
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        height: 50,
+        borderTop: `1px solid ${StyleTheme.style_vars.themePrimary}`,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
     },
 })
