@@ -8,7 +8,7 @@ interface style_vo {
     LeftGroup: object
     MidItem: object
     RightOption: object
-    CubeBoxItem: object
+    CubeGroupItem: object
     CubeItemItem: object
     CubeItemRemark: object
     ActionBlock: object
@@ -54,7 +54,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
 
         height: '100%',
     },
-    CubeBoxItem: {},
+    CubeGroupItem: {},
     CubeItemItem: {
         height: 'unset',
         minHeight: '36px',

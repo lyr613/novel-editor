@@ -4,59 +4,38 @@ import { style as s } from './style'
 import { StyleComp } from 'style-/comp'
 import { useObservable } from 'rxjs-hooks'
 import { SubCube } from 'subject-/cube'
-import { _cube_set } from './subj'
+import { _cube_set2 } from './subj'
 
 /** LeftGroup */
 export default function LeftGroup() {
     const li = useObservable(() => SubCube.li$, [])
-    const seled = useObservable(() => _cube_set.seled_l1$, [-1, -1])
-    const min = Math.min(...seled)
-    const max = Math.max(...seled)
+    const selm = useObservable(() => _cube_set2.seled_l1_map$, new Map())
+
     return (
         <div className={css(s.LeftGroup)}>
             {li.map((cube, i) => (
-                <CubeBoxItem key={cube.id} cube={cube} mini={min} maxi={max} index={i} />
+                <CubeGroupItem key={cube.id} group={cube} sel_map={selm} index={i} />
             ))}
         </div>
     )
 }
 
 interface p {
-    mini: number
-    maxi: number
+    sel_map: Map<string, boolean>
     index: number
-    cube: cube_group_vo
+    group: cube_group_vo
 }
-function CubeBoxItem(p: p) {
-    const high_light = p.mini <= p.index && p.index <= p.maxi
+function CubeGroupItem(p: p) {
+    const high_light = p.sel_map.get(p.group.id)
 
     return (
         <div
-            className={css(s.CubeBoxItem, StyleComp.select_item.item, high_light ? StyleComp.select_item.high : null)}
+            className={css(s.CubeGroupItem, StyleComp.select_item.item, high_light ? StyleComp.select_item.high : null)}
             onClick={(e) => {
-                // console.log(e)
-                _cube_set.seled_l2$.next([-1, -1])
-
-                _cube_set.now_sel$.next('l1')
-                const sh = e.shiftKey
-                if (!sh) {
-                    _cube_set.seled_l1$.next([p.index, p.index])
-                    return
-                }
-
-                const n2 = _cube_set.seled_l1$.value
-                // console.log(...n2)
-
-                const diff0 = Math.abs(n2[0] - p.index)
-                const diff1 = Math.abs(n2[1] - p.index)
-                if (diff0 > diff1) {
-                    _cube_set.seled_l1$.next([n2[0], p.index])
-                } else {
-                    _cube_set.seled_l1$.next([n2[1], p.index])
-                }
+                _cube_set2.click_l1(e, p.group.id)
             }}
         >
-            {p.cube.name}
+            {p.group.name}
         </div>
     )
 }

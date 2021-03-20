@@ -4,9 +4,8 @@ import { style as s } from './style'
 import { DefaultButton, Icon, PrimaryButton, TextField } from '@fluentui/react'
 import { _cube } from '../sub'
 import { SubCube } from 'subject-/cube'
-import { mk_uuid } from 'tool-/uuid'
 import { useObservable } from 'rxjs-hooks'
-import { _cube_set } from './subj'
+import { _cube_set2 } from './subj'
 import { StyleMake } from 'style-/global'
 import LabelHelp, { LabelHelpTxtPreset } from 'component-/label-help'
 import { map, switchMap, take } from 'rxjs/operators'
@@ -22,9 +21,9 @@ export default function RightOption() {
 }
 
 function TopInfor() {
-    const now_sel = useObservable(() => _cube_set.now_sel$, 'none')
-    const l2n = useObservable(() => _cube_set.seled_l2_n$, 0)
-    const l1n = useObservable(() => _cube_set.seled_l1_n$, 0)
+    const now_sel = useObservable(() => _cube_set2.now_sel$, 'none')
+    const l2n = useObservable(() => _cube_set2.seled_l2_count$, 0)
+    const l1n = useObservable(() => _cube_set2.seled_l1_count$, 0)
     let txt = ''
     switch (now_sel) {
         case 'none':
@@ -141,7 +140,7 @@ function NewItem() {
                         }
                         const groups = SubCube.li$.value
                         /** 必然只有一个选中的组 */
-                        const sel_group = _cube_set.sel_l1_nodes[0]
+                        const sel_group = _cube_set2.seled_l1_li[0]
                         const n_chap = SubCube.make_item()
                         n_chap.name = name
                         n_chap.remark = remark
@@ -151,7 +150,7 @@ function NewItem() {
                         SubCube.load()
                         // SubVolume.vo_li$.next()
                         // console.log('cubes', vols)
-                        _cube_set.refresh()
+                        // _cube_set.refresh()
                     }}
                 />
             </div>
@@ -162,11 +161,11 @@ function NewItem() {
 function EditGroup() {
     const [ipt, next_ipt] = useState('')
     useEffect(() => {
-        const ob = _cube_set.seled_l1$
-            .pipe(switchMap((n2) => SubCube.li$.pipe(map((li) => li[n2[0]]))))
-            .subscribe((group) => {
-                next_ipt(group.name)
-            })
+        const ob = _cube_set2.seled_l1_li$.subscribe((groups) => {
+            if (groups.length) {
+                next_ipt(groups[0].name)
+            }
+        })
         return () => ob.unsubscribe()
     }, [])
     return (
@@ -194,10 +193,10 @@ function EditGroup() {
                             alert('需要非空的名字')
                             return
                         }
-                        const vol_seled_i = _cube_set.seled_l1$.value[0]
+                        const gp = _cube_set2.seled_l1_li[0]
 
                         const groups = SubCube.li$.value
-                        groups[vol_seled_i].name = name
+                        gp.name = name
                         SubCube.save(groups)
                         SubCube.load()
                         // SubVolume.vo_li$.next()
@@ -214,12 +213,11 @@ function EditItem() {
     const [ipt, next_ipt] = useState('')
     const [remark, next_remark] = useState('')
     useEffect(() => {
-        const ob = _cube_set.show_l2s$
-            .pipe(switchMap((items) => _cube_set.seled_l2$.pipe(map((n2) => items[n2[0]]))))
-            .subscribe((item) => {
-                next_ipt(item?.name)
-                next_remark(item?.remark)
-            })
+        const ob = _cube_set2.seled_l2_li$.subscribe((items) => {
+            const item = items[0]
+            next_ipt(item?.name)
+            next_remark(item?.remark)
+        })
         return () => ob.unsubscribe()
     }, [])
     return (
@@ -261,20 +259,14 @@ function EditItem() {
                             alert('需要非空的名字')
                             return
                         }
-                        const items: cube_item_vo[] = []
-                        _cube_set.show_l2s$.pipe(take(1)).subscribe((li) => {
-                            items.push(...li)
-                        })
-                        const sel_item_n2 = _cube_set.seled_l2$.value
+                        const item = _cube_set2.seled_l2_li[0]
 
-                        const seled_item_i = sel_item_n2[0]
-                        items[seled_item_i].name = name
-                        items[seled_item_i].remark = remark
+                        item.name = name
+                        item.remark = remark
 
                         const vols = SubCube.li$.value
                         SubCube.save(vols)
                         SubCube.load()
-                        _cube_set.seled_l2$.next([...sel_item_n2])
                         // SubVolume.vo_li$.next()
                         // console.log('vols', vols)
                     }}
