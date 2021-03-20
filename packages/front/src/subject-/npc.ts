@@ -24,6 +24,21 @@ class _n extends _sub_base<npc_vo> {
             relation: [],
         }
     }
+    save_edit() {
+        const edit = this.edit$.value
+        const li = this.li$.value
+        const fi = li.findIndex((v) => v.id === edit.id)
+        if (fi === -1) {
+            li.push(edit)
+        } else {
+            li[fi] = edit
+        }
+        this.save(li)
+    }
+    save(li: npc_vo[]) {
+        const bid = SubBook.use_id$.value
+        const re: msg_dto<boolean> = ipc().sendSync('npc_save', bid, li)
+    }
     load() {
         const bid = SubBook.use_id$.value
         const re: msg_dto<npc_vo[]> = ipc().sendSync('npc_load', bid)

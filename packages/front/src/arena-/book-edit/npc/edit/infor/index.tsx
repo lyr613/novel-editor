@@ -51,10 +51,16 @@ function SaveOrEsc() {
                     _npc.show_type$.next('list')
                 }}
             >
-                {' '}
                 返回列表
             </DefaultButton>
-            <PrimaryButton className={css(StyleMake.mar(0, 10, 0, 0))}>好</PrimaryButton>
+            <PrimaryButton
+                className={css(StyleMake.mar(0, 10, 0, 0))}
+                onClick={() => {
+                    SubNpc.save_edit()
+                }}
+            >
+                好
+            </PrimaryButton>
         </div>
     )
 }
@@ -76,10 +82,25 @@ function Base(p: p_base) {
                 />
             </div>
             <div>
-                <TextField label="别名(多个以空格分割)" value="222" onChange={() => {}} />
+                <TextField
+                    label="别名(多个以空格分割)"
+                    value={p.npc.alias}
+                    onChange={(_, ns) => {
+                        p.npc.alias = ns || ''
+                        SubNpc.edit$.next(p.npc)
+                    }}
+                />
             </div>
             <div>
-                <TextField label="备注" value="33" onChange={() => {}} />
+                <TextField
+                    label="描述"
+                    multiline
+                    value={p.npc.remark}
+                    onChange={(_, ns) => {
+                        p.npc.remark = ns || ''
+                        SubNpc.edit$.next(p.npc)
+                    }}
+                />
             </div>
         </section>
     )
@@ -265,6 +286,17 @@ function Slice(p: p_slice) {
                         DialogSelCubeShow$.next(true)
                     }}
                 ></IconButton>
+            </Stack>
+            <Stack>
+                <TextField
+                    label="备注"
+                    multiline
+                    value={slice_obj.remark}
+                    onChange={(_, ns) => {
+                        slice_obj.remark = ns || ''
+                        SubNpc.edit$.next(p.npc)
+                    }}
+                ></TextField>
             </Stack>
         </section>
     )

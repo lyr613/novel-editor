@@ -6,41 +6,41 @@ import { UtilSortName } from 'util-/sort-name'
 import { WindowUtil } from 'window-'
 
 /**   */
-export function _watch_cube() {
-    ipcMain.on('cube_load', cube_load)
-    ipcMain.on('cube_save', cube_save)
+export function _watch_npc() {
+    ipcMain.on('npc_load', npc_load)
+    ipcMain.on('npc_save', npc_save)
 }
 
-function cube_load(e: Electron.IpcMainEvent, bookid: string) {
+function npc_load(e: Electron.IpcMainEvent, bookid: string) {
     // UtilReply. reply(e, 'temp')
     const book = WindowUtil.book_map.get(bookid)!
     try {
-        const chasrc = ConstBookPath.full_src(book.src, 'cube')
-        const msg = UtilFs.read_json<cube_group_vo[]>(chasrc)
+        const chasrc = ConstBookPath.full_src(book.src, 'npc')
+        const msg = UtilFs.read_json<npc_vo[]>(chasrc)
+        console.log('---')
+        console.log(msg.data)
+
         if (msg.b) {
             const li = msg.data || []
-            li.forEach((group) => {
-                UtilSortName.sort(group.children)
-            })
             UtilSortName.sort(li)
         }
-        UtilReply.reply(e, 'cube_load', msg)
+        UtilReply.reply(e, 'npc_load', msg)
     } catch (error) {
         // 不会触发err
     }
 }
 
-function cube_save(e: Electron.IpcMainEvent, bookid: string, cubes: cube_group_vo[]) {
+function npc_save(e: Electron.IpcMainEvent, bookid: string, npcs: npc_vo[]) {
     const book = WindowUtil.book_map.get(bookid)!
     const msg = UtilReply.msg(null)
     try {
-        const chasrc = ConstBookPath.full_src(book.src, 'cube')
-        const t0 = JSON.stringify(cubes)
+        const chasrc = ConstBookPath.full_src(book.src, 'npc')
+        const t0 = JSON.stringify(npcs)
         UtilFs.write(chasrc, t0)
         msg.b = true
-        UtilReply.reply(e, 'cube_save', msg)
+        UtilReply.reply(e, 'npc_save', msg)
     } catch (error) {
         // 不会触发err
-        UtilReply.reply(e, 'cube_save', msg)
+        UtilReply.reply(e, 'npc_save', msg)
     }
 }

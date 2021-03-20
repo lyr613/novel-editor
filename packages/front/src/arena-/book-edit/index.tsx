@@ -15,6 +15,7 @@ import { timer } from 'rxjs'
 import { take } from 'rxjs/operators'
 import Cube from './cube'
 import { SubCube } from 'subject-/cube'
+import { SubNpc } from 'subject-/npc'
 
 /**
  * #### 编辑选中的书目
@@ -55,6 +56,8 @@ function LoadInforSub() {
 
         // 加载词条
         SubCube.load()
+        // 加载角色
+        SubNpc.load()
 
         // 加载monaco
         /**

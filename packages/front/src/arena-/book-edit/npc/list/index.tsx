@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { map, switchMap } from 'rxjs/operators'
 import { SubScreen } from 'subject-/screen'
-import { Icon } from '@fluentui/react'
+import { Icon, PrimaryButton } from '@fluentui/react'
 import * as monaco from 'monaco-editor'
 import { SubMonaco } from 'subject-/monaco'
 import { Rt } from 'router-'
@@ -19,15 +19,15 @@ const arr$ = new BehaviorSubject(arr)
 export default function List() {
     const arr = useObservable(
         () =>
-            arr$.pipe(
+            SubNpc.li$.pipe(
                 switchMap((li) =>
                     SubScreen.sub$(300).pipe(
                         map((screen) => {
                             const WW = screen.W
                             const w = SubScreen.auto_width(WW, 240, 20)
                             return li.map((it) => ({
-                                item: it,
-                                w: w,
+                                npc: it,
+                                w: w.w,
                             }))
                         }),
                     ),
@@ -37,14 +37,34 @@ export default function List() {
     )
     return (
         <div className={css(style.root)}>
+            <Esc />
             {arr.map((it, i) => (
-                <Item key={i} w={it.w} />
+                <Item key={i} w={it.w} npc={it.npc} />
             ))}
         </div>
     )
 }
 
-function Item(p: any) {
+function Esc() {
+    return (
+        <div className={css()}>
+            <PrimaryButton
+                onClick={() => {
+                    _npc.show_type$.next('icon')
+                }}
+            >
+                {' '}
+                离开
+            </PrimaryButton>
+        </div>
+    )
+}
+
+interface p {
+    w: number
+    npc: npc_vo
+}
+function Item(p: p) {
     const ref_editer = useRef(null as null | HTMLDivElement)
     useEffect(() => {
         const dom = ref_editer.current
@@ -56,26 +76,26 @@ function Item(p: any) {
         opt.contextmenu = false
         opt.scrollBeyondLastLine = false
         const editer = monaco.editor.create(dom, opt)
-        editer.setValue('测试一下\nsdflll')
+        editer.setValue(p.npc.remark)
         return () => {
             editer.dispose()
         }
-    }, [])
+    }, [p])
     return (
         <div
             className={css(style.Item)}
             style={{
-                width: p.w.w + 'px',
+                width: p.w + 'px',
             }}
         >
             <div className={css(style_item.Container)}>
                 <div className={css(style_item.TopLine)}>
-                    <span className={css(style_item.TopLineName)}>名字(昵称)</span>
+                    <span className={css(style_item.TopLineName)}>{p.npc.name_show}</span>
                     {/* 编辑按钮 */}
                     <div
                         className={css(style_item.TopLineIcon)}
                         onClick={() => {
-                            SubNpc.edit$.next(SubNpc.make())
+                            SubNpc.edit$.next(p.npc)
                             _npc.show_type$.next('edit')
                         }}
                     >
