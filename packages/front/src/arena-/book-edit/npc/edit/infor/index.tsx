@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { Dialog, DialogFooter, Icon, Label, Stack, StackItem, TextField, TooltipHost } from '@fluentui/react-internal'
-import { DefaultButton, DirectionalHint, PrimaryButton } from '@fluentui/react'
+import { DefaultButton, DirectionalHint, IconButton, PrimaryButton } from '@fluentui/react'
 import { StyleTheme } from 'style-/theme'
 import { StyleMake, StylePreset } from 'style-/global'
 import DialogSelChapter, { DialogSelChapterShow$, DialogSelChapterConfirmHook$ } from 'component-/dialog-sel-chapter'
@@ -12,6 +12,7 @@ import { shallowCopy } from 'tool-/rx-shallow-copy'
 import { SubVolume } from 'subject-/volume'
 import LabelHelp from 'component-/label-help'
 import { _npc } from '../../subj'
+import DialogSelCube, { DialogSelCubeConfirmHook$, DialogSelCubeShow$ } from 'component-/dialog-sel-cube'
 
 /**
  */
@@ -30,6 +31,7 @@ export default function Infor() {
                 <Slice npc={npc} index={i} key={i} chap_li={chap_li} chap_map={chap_map} />
             ))}
             <DialogSelChapter />
+            <DialogSelCube />
             <SaveOrEsc />
         </div>
     )
@@ -129,13 +131,6 @@ function Slice(p: p_slice) {
                 {p.chap_map.get(slice_obj.start_chapter)?.name}
             </div>
             <Stack horizontal={true} verticalAlign="center">
-                {/* <Label>结束章节</Label>
-                <TooltipHost
-                    hostClassName={css(style.TooltipHost)}
-                    content="如果不设置, 自动寻找下一个开始开始章节, 未找到则默认设定为书目最后一章"
-                >
-                    <Icon iconName="UnknownSolid" />
-                </TooltipHost> */}
                 <LabelHelp
                     label_prop={{ children: '结束章节' }}
                     help_txt="如果不设置, 自动寻找下一个开始开始章节, 未找到则默认设定为书目最后一章"
@@ -177,6 +172,55 @@ function Slice(p: p_slice) {
                     }}
                 ></div>
             </div>
+            {/* 立方体 */}
+            <LabelHelp
+                label_prop={{ children: '立方体' }}
+                help_txt="通过预设的词条, 多维度描述角色. 如数据组, 体力99, 智力1; 法术组, 火球术, 神罗天征"
+            ></LabelHelp>
+            <Stack>
+                <IconButton
+                    iconProps={{ iconName: 'Add' }}
+                    onClick={() => {
+                        DialogSelCubeConfirmHook$.next((groups) => {
+                            slice_obj.cube = groups
+                            SubNpc.edit$.next(p.npc)
+                        })
+                        DialogSelCubeShow$.next(true)
+                    }}
+                ></IconButton>
+            </Stack>
+            <Stack>
+                {slice_obj.cube.map((group, y) => (
+                    <>
+                        {y !== 0 && (
+                            <div
+                                className={css(StyleMake.wh('100%', 1))}
+                                style={{
+                                    backgroundColor: StyleTheme.style_vars.themePrimary,
+                                    opacity: 0.6,
+                                }}
+                            ></div>
+                        )}
+                        <Stack key={group.id} horizontal={true} horizontalAlign="start">
+                            <div className={css(StyleMake.padd(10))}>
+                                <Label>{group.name}</Label>
+                            </div>
+                            <div
+                                className={css(StyleMake.wh(1, 'auto'))}
+                                style={{
+                                    backgroundColor: StyleTheme.style_vars.themePrimary,
+                                    opacity: 0.6,
+                                }}
+                            ></div>
+                            <div className={css(StyleMake.padd(10))}>
+                                {group.children.map((item) => (
+                                    <Label key={item.id}>{item.name}</Label>
+                                ))}
+                            </div>
+                        </Stack>
+                    </>
+                ))}
+            </Stack>
         </section>
     )
 }
