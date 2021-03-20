@@ -8,6 +8,7 @@ import { mk_uuid } from 'tool-/uuid'
 import { useObservable } from 'rxjs-hooks'
 import { _cube_set } from './subj'
 import { StyleMake } from 'style-/global'
+import LabelHelp, { LabelHelpTxtPreset } from 'component-/label-help'
 
 /** RightOption */
 export default function RightOption() {
@@ -97,7 +98,7 @@ function NewItem() {
     const [remark, next_remark] = useState('')
     return (
         <div className={css(s.ActionBlock)}>
-            <div className={css(s.ActionBlockName)}>新建词条</div>
+            <LabelHelp label_prop={{ children: '新建词条' }} help_txt={LabelHelpTxtPreset.sort_name}></LabelHelp>
             <div>
                 <TextField
                     placeholder="名称"

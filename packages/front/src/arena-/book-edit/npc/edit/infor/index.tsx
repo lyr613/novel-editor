@@ -10,6 +10,7 @@ import { useObservable } from 'rxjs-hooks'
 import { SubNpc } from 'subject-/npc'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
 import { SubVolume } from 'subject-/volume'
+import LabelHelp from 'component-/label-help'
 
 /**
  */
@@ -109,13 +110,17 @@ function Slice(p: p_slice) {
                 {p.chap_map.get(slice_obj.start_chapter)?.name}
             </div>
             <Stack horizontal={true} verticalAlign="center">
-                <Label>结束章节</Label>
+                {/* <Label>结束章节</Label>
                 <TooltipHost
                     hostClassName={css(style.TooltipHost)}
                     content="如果不设置, 自动寻找下一个开始开始章节, 未找到则默认设定为书目最后一章"
                 >
                     <Icon iconName="UnknownSolid" />
-                </TooltipHost>
+                </TooltipHost> */}
+                <LabelHelp
+                    label_prop={{ children: '结束章节' }}
+                    help_txt="如果不设置, 自动寻找下一个开始开始章节, 未找到则默认设定为书目最后一章"
+                ></LabelHelp>
                 <Icon
                     iconName="Settings"
                     className={css(style.SetStartEndChapter, StylePreset.hoverfocu)}
