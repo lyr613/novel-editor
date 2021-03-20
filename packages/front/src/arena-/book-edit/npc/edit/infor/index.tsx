@@ -133,7 +133,7 @@ function Slice(p: p_slice) {
             <Stack horizontal={true} verticalAlign="center">
                 <LabelHelp
                     label_prop={{ children: '结束章节' }}
-                    help_txt="如果不设置, 自动寻找下一个开始开始章节, 未找到则默认设定为书目最后一章"
+                    help_txt={['如果不设置, 自动寻找下一个开始开始章节, 未找到则默认设定为书目最后一章']}
                 ></LabelHelp>
                 <Icon
                     iconName="Settings"
@@ -175,20 +175,15 @@ function Slice(p: p_slice) {
             {/* 立方体 */}
             <LabelHelp
                 label_prop={{ children: '立方体' }}
-                help_txt="通过预设的词条, 多维度描述角色. 如数据组, 体力99, 智力1; 法术组, 火球术, 神罗天征"
+                help_txt={[
+                    '通过预设的词条, 多维度描述角色 ',
+                    '如法术组: 火球术, 神罗天征; 物品组: 村里最强的剑',
+                    '可以给词条设置数值, 如数据组: 力量99, 智力1',
+                    '----',
+                    '双击词条设置数值, 按住ctrl点击删除词条或组',
+                ]}
             ></LabelHelp>
-            <Stack>
-                <IconButton
-                    iconProps={{ iconName: 'Add' }}
-                    onClick={() => {
-                        DialogSelCubeConfirmHook$.next((groups) => {
-                            slice_obj.cube = groups
-                            SubNpc.edit$.next(p.npc)
-                        })
-                        DialogSelCubeShow$.next(true)
-                    }}
-                ></IconButton>
-            </Stack>
+
             <Stack>
                 {slice_obj.cube.map((group, y) => (
                     <>
@@ -213,13 +208,30 @@ function Slice(p: p_slice) {
                                 }}
                             ></div>
                             <div className={css(StyleMake.padd(10))}>
-                                {group.children.map((item) => (
-                                    <Label key={item.id}>{item.name}</Label>
-                                ))}
+                                <Stack horizontal>
+                                    {group.children.map((item) => (
+                                        <Label key={item.id} className={css(StyleMake.mar(0, 10, 0, 0))}>
+                                            {item.name}
+                                        </Label>
+                                    ))}
+                                </Stack>
                             </div>
                         </Stack>
                     </>
                 ))}
+            </Stack>
+            {/* 立方体 - 添加按钮 */}
+            <Stack>
+                <IconButton
+                    iconProps={{ iconName: 'Add' }}
+                    onClick={() => {
+                        DialogSelCubeConfirmHook$.next((groups) => {
+                            slice_obj.cube = groups
+                            SubNpc.edit$.next(p.npc)
+                        })
+                        DialogSelCubeShow$.next(true)
+                    }}
+                ></IconButton>
             </Stack>
         </section>
     )
