@@ -2,6 +2,7 @@ import { ConstBookPath } from 'const-/book-path'
 import { ipcMain, shell, dialog, app } from 'electron'
 import { UtilFs } from 'util-/fs'
 import { UtilReply } from 'util-/reply'
+import { UtilSortName } from 'util-/sort-name'
 import { WindowUtil } from 'window-'
 
 /**   */
@@ -15,14 +16,21 @@ function cube_load(e: Electron.IpcMainEvent, bookid: string) {
     const book = WindowUtil.book_map.get(bookid)!
     try {
         const chasrc = ConstBookPath.full_src(book.src, 'cube')
-        const msg = UtilFs.read_json<volume_vo[]>(chasrc)
+        const msg = UtilFs.read_json<cube_group_vo[]>(chasrc)
+        if (msg.b) {
+            const li = msg.data || []
+            li.forEach((group) => {
+                UtilSortName.sort(group.children)
+            })
+            UtilSortName.sort(li)
+        }
         UtilReply.reply(e, 'chapter_load', msg)
     } catch (error) {
         // 不会触发err
     }
 }
 
-function cube_save(e: Electron.IpcMainEvent, bookid: string, cubes: volume_vo[]) {
+function cube_save(e: Electron.IpcMainEvent, bookid: string, cubes: cube_group_vo[]) {
     const book = WindowUtil.book_map.get(bookid)!
     const msg = UtilReply.msg(null)
     try {

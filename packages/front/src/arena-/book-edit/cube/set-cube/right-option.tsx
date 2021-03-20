@@ -269,6 +269,7 @@ function EditItem() {
 
                         const seled_item_i = sel_item_n2[0]
                         items[seled_item_i].name = name
+                        items[seled_item_i].remark = remark
 
                         const vols = SubCube.li$.value
                         SubCube.save(vols)
