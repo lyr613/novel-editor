@@ -1,4 +1,4 @@
 import { SubCube } from 'subject-/cube'
-import { SourceDialogSelect } from 'subject-/source-dialog-sel'
+import { SourceLevel2Select } from 'subject-/source-dialog-sel'
 
-export const _cube_set2 = new SourceDialogSelect<cube_group_vo, cube_item_vo>(SubCube.li$)
+export const _cube_set2 = new SourceLevel2Select<cube_group_vo, cube_item_vo>(SubCube.li$)

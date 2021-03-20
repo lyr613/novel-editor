@@ -6,6 +6,7 @@ import { useObservable } from 'rxjs-hooks'
 import { DefaultButton, Dialog, DialogFooter, PrimaryButton } from '@fluentui/react'
 import { StyleMake } from 'style-/global'
 import { SubCube } from 'subject-/cube'
+import { SourceLevel2Select } from 'subject-/source-dialog-sel'
 
 /** 是否显示 */
 export const DialogSelCubeShow$ = new BehaviorSubject(false)
@@ -13,15 +14,17 @@ export const DialogSelCubeShow$ = new BehaviorSubject(false)
 /** 传入一个方法, 在确定时会先执行此方法 */
 export const DialogSelCubeConfirmHook$ = new BehaviorSubject((groups: cube_group_vo[]) => {})
 
+const subj = new SourceLevel2Select<cube_group_vo, cube_item_vo>(SubCube.li$)
+
 /**
  */
 export default function DialogSelCube() {
     const show = useObservable(() => DialogSelCubeShow$, false)
     const l1s = useObservable(() => SubCube.li$, [])
-    const [l1_map, next_l1_map] = useState(new Map<string, boolean>())
-    const [l2_map, next_l2_map] = useState(new Map<string, boolean>())
-    const l1_seled_li = get_seled_li(l1_map, l1s)
-    const l2_can_sel_li = l1_seled_li.map((v) => v.children).flat()
+    const l1_map = useObservable(() => subj.seled_l1_map$, new Map())
+    const l2_map = useObservable(() => subj.seled_l2_map$, new Map())
+
+    const l2_can_sel_li = useObservable(() => subj.l2_can_show_li$, [])
     return (
         <Dialog
             dialogContentProps={{
@@ -38,17 +41,7 @@ export default function DialogSelCube() {
                             className={css(style.Item, l1_map.get(l1.id) ? style.ItemUse : null)}
                             key={l1.id}
                             onClick={(e) => {
-                                next_l2_map(new Map())
-
-                                if (e.ctrlKey) {
-                                    const b = l1_map.get(l1.id)
-                                    l1_map.set(l1.id, !b)
-                                    const nm = new Map(l1_map)
-                                    next_l1_map(nm)
-                                    return
-                                }
-                                const m = new Map([[l1.id, true]])
-                                next_l1_map(m)
+                                subj.click_l1(e, l1.id)
                             }}
                         >
                             {l1.name}
@@ -62,15 +55,7 @@ export default function DialogSelCube() {
                             className={css(style.Item, l2_map.get(l2.id) ? style.ItemUse : null)}
                             key={l2.id}
                             onClick={(e) => {
-                                if (e.ctrlKey) {
-                                    const b = l2_map.get(l2.id)
-                                    l2_map.set(l2.id, !b)
-                                    const nm = new Map(l2_map)
-                                    next_l2_map(nm)
-                                    return
-                                }
-                                const m = new Map([[l2.id, true]])
-                                next_l2_map(m)
+                                subj.click_l2(e, l2.id)
                             }}
                         >
                             {l2.name}
@@ -88,7 +73,7 @@ export default function DialogSelCube() {
                 </DefaultButton>
                 <PrimaryButton
                     onClick={() => {
-                        const seled = l1_seled_li.map((l1) => {
+                        const seled = subj.seled_l1_li.map((l1) => {
                             const l11 = { ...l1 }
                             l11.children = l11.children.filter((v) => l2_map.get(v.id))
                             return l11
@@ -103,8 +88,4 @@ export default function DialogSelCube() {
             </DialogFooter>
         </Dialog>
     )
-}
-
-function get_seled_li<T>(map: Map<string, boolean>, li: T[]): T[] {
-    return li.filter((it) => map.get((it as any).id))
 }

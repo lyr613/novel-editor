@@ -14,7 +14,7 @@ interface l2able {
 /**
  * Source的需要多个实例
  */
-export class SourceDialogSelect<T extends l1able, K extends l2able> {
+export class SourceLevel2Select<T extends l1able, K extends l2able> {
     /** 当前选择 */
     now_sel$ = new BehaviorSubject('none' as now_sel)
     seled_l1_map$ = new BehaviorSubject(new Map<string, boolean>())
