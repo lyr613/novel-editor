@@ -26,7 +26,7 @@ class _vs {
     /** 中间展示的章列表 */
     show_chapters$ = this.seled_volume$.pipe(
         switchMap((n2) =>
-            SubVolume.vo_li$.pipe(
+            SubVolume.li$.pipe(
                 map((vols) => {
                     const max = Math.max(...n2)
                     const min = Math.min(...n2)
@@ -43,7 +43,7 @@ class _vs {
     /** 选中的卷 */
     get sel_vol_nodes() {
         const n2 = this.seled_volume$.value
-        const vols = SubVolume.vo_li$.value
+        const vols = SubVolume.li$.value
         const max = Math.max(...n2)
         const min = Math.min(...n2)
         const vols2 = vols.slice(min, max + 1)

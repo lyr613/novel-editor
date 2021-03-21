@@ -8,3 +8,11 @@ interface sortable {
     /** 从名字103#xxx解析来, 没设置就直接复制, 读取时elec-main解析 */
     name_show: string
 }
+
+interface with_id {
+    id: string
+}
+
+interface with_children<T = any> extends with_id {
+    children: T[]
+}

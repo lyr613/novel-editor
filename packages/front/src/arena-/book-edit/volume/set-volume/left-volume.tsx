@@ -9,7 +9,7 @@ import { SubVolume } from 'subject-/volume'
 /**
  */
 export default function LeftVolume() {
-    const vols = useObservable(() => SubVolume.vo_li$, [])
+    const vols = useObservable(() => SubVolume.li$, [])
     const seled = useObservable(() => _volume_set.seled_volume$, [-1, -1])
     const min = Math.min(...seled)
     const max = Math.max(...seled)

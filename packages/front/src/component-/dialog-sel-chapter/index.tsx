@@ -20,7 +20,7 @@ export const DialogSelChapterConfirmHook$ = new BehaviorSubject((vol: volume_vo 
  */
 export default function DialogSelChapter() {
     const show = useObservable(() => DialogSelChapterShow$, false)
-    const volumes = useObservable(() => SubVolume.vo_li$, [])
+    const volumes = useObservable(() => SubVolume.li$, [])
     const [vol_use, next_vol_use] = useState(null as null | volume_vo)
     const [chap_use, next_chap_use] = useState(null as null | chapter_vo)
 

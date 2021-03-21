@@ -2,32 +2,35 @@ import { BehaviorSubject } from 'rxjs'
 import { _sub_base } from './base'
 import { debounceTime, map, switchMap, take } from 'rxjs/operators'
 import { ipc } from 'tool-/electron'
+import { ToolTranData } from 'tool-/tran-data'
 
-class _vo {
+class _vo extends _sub_base<volume_vo> {
     /** 图方便这里存一下, 应该用SubBook.use_id */
     bookid = ''
-    /** 卷列表 */
-    readonly vo_li$ = new BehaviorSubject([] as volume_vo[])
-    readonly vo_use_id$ = new BehaviorSubject('')
-    /** 正在使用的卷 */
-    get vo_use$() {
-        return this.vo_li$.pipe(
-            switchMap((li) => this.vo_use_id$.pipe(map((id) => li.find((v) => (v as any).id === id)))),
-            map((v) => v || null),
-        )
-    }
     /** 章列表 */
-    readonly ca_li$ = new BehaviorSubject([] as volume_vo[])
-    readonly ca_use_id$ = new BehaviorSubject('')
+    readonly chap_li$ = this.li$.pipe(
+        map((li) => {
+            const re = ToolTranData.flat_children<volume_vo, chapter_vo>(li)
+            return re
+        }),
+    )
+    get chap_li() {
+        let re: chapter_vo[] = []
+        this.chap_li$.pipe(take(1)).subscribe((li) => {
+            re = li
+        })
+        return re
+    }
+    readonly chap_use_id$ = new BehaviorSubject('')
     /** 正在使用的章 */
-    get ca_use$() {
-        return this.ca_li$.pipe(
-            switchMap((li) => this.ca_use_id$.pipe(map((id) => li.find((v) => (v as any).id === id)))),
+    get chap_use$() {
+        return this.chap_li$.pipe(
+            switchMap((li) => this.chap_use_id$.pipe(map((id) => li.find((v) => (v as any).id === id)))),
             map((v) => v || null),
         )
     }
     /** 选中章的文本, monaco编辑器用 */
-    readonly ca_use_txt$ = this.ca_use_id$.pipe(
+    readonly ca_use_txt$ = this.chap_use_id$.pipe(
         debounceTime(100),
         map((cid) => {
             if (!cid) {
@@ -65,7 +68,7 @@ class _vo {
         const volumes_re: msg_dto<volume_vo[]> = ipc().sendSync('chapter_load', this.bookid)
         // console.log('volumes', volumes_re.data)
         if (volumes_re.b) {
-            this.vo_li$.next(volumes_re.data)
+            this.li$.next(volumes_re.data)
         }
     }
     /** 保存卷章, 一般立即再调用load, 保持一致 */
@@ -85,7 +88,7 @@ class _vo {
         return m
     }
     get chaper_li() {
-        const vols = this.vo_li$.value
+        const vols = this.li$.value
         const re: chapter_vo[] = []
         vols.forEach((vol) => {
             vol.children.forEach((chap) => {

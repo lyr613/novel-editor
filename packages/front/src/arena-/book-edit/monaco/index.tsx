@@ -43,7 +43,7 @@ function Box() {
         })
         editer.onKeyUp(() => {
             const t = editer.getValue()
-            const id = SubVolume.ca_use_id$.value
+            const id = SubVolume.chap_use_id$.value
             SubVolume.will_write(id, t)
         })
         return () => {

@@ -80,7 +80,7 @@ function NewChapter() {
                             alert('需要非空的名字')
                             return
                         }
-                        const vols = SubVolume.vo_li$.value
+                        const vols = SubVolume.li$.value
                         /** 必然只有一个选中的卷 */
                         const sel_vol = _volume_set.sel_vol_nodes[0]
                         const n_chap: chapter_vo = {
@@ -132,7 +132,7 @@ function ReNameVolume() {
                         }
                         const vol_seled_i = _volume_set.seled_volume$.value[0]
 
-                        const vols = SubVolume.vo_li$.value
+                        const vols = SubVolume.li$.value
                         vols[vol_seled_i].name = name
                         SubVolume.save(vols)
                         SubVolume.load()
@@ -182,7 +182,7 @@ function ReNameChapter() {
                         const chap_seled_i = sel_chap_n2[0]
                         chaps[chap_seled_i].name = name
 
-                        const vols = SubVolume.vo_li$.value
+                        const vols = SubVolume.li$.value
                         SubVolume.save(vols)
                         SubVolume.load()
                         _volume_set.seled_chapter$.next([...sel_chap_n2])
@@ -221,7 +221,7 @@ function NewVolume() {
                             alert('需要非空的名字')
                             return
                         }
-                        const vols = SubVolume.vo_li$.value
+                        const vols = SubVolume.li$.value
                         const nvol: volume_vo = {
                             id: mk_uuid(),
                             name,
