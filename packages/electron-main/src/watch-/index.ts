@@ -1,6 +1,6 @@
 import { _watch_book } from './book'
 import { _watch_chapter } from './chapter'
-import { _watch_cube } from './cube'
+import { WatchCube } from './cube'
 import { _watch_fs } from './fs'
 import { _watch_hotkey } from './hotkey'
 import { _watch_npc } from './npc'
@@ -19,6 +19,6 @@ export function watch_all() {
     _watch_book()
     _watch_chapter()
     _watch_hotkey()
-    _watch_cube()
+    WatchCube.watch()
     _watch_npc()
 }

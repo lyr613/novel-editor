@@ -48,6 +48,7 @@ function SaveOrEsc() {
             <DefaultButton
                 className={css(StyleMake.mar(0, 10, 0, 0))}
                 onClick={() => {
+                    SubNpc.load()
                     _npc.show_type$.next('list')
                 }}
             >
@@ -57,6 +58,10 @@ function SaveOrEsc() {
                 className={css(StyleMake.mar(0, 10, 0, 0))}
                 onClick={() => {
                     SubNpc.save_edit()
+                    SubNpc.load()
+                    setTimeout(() => {
+                        _npc.show_type$.next('list')
+                    }, 200)
                 }}
             >
                 好
