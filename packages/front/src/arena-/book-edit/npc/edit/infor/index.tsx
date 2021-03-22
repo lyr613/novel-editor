@@ -107,6 +107,7 @@ function Base(p: p_base) {
                         p.npc.remark = ns || ''
                         SubNpc.edit$.next(p.npc)
                     }}
+                    autoAdjustHeight
                 />
             </div>
         </section>
@@ -153,7 +154,14 @@ function Slice(p: p_slice) {
                         SubNpc.edit$.next(p.npc)
                     }}
                 />
-                <IconButton iconProps={{ iconName: 'Delete' }} title="删除切片" />
+                <IconButton
+                    iconProps={{ iconName: 'Delete' }}
+                    title="删除切片"
+                    onClick={() => {
+                        p.npc.slices.splice(p.index, 1)
+                        SubNpc.edit$.next(p.npc)
+                    }}
+                />
             </Stack>
             <Stack horizontal={true} verticalAlign="center">
                 <LabelHelp
@@ -318,6 +326,7 @@ function Slice(p: p_slice) {
                         slice_obj.remark = ns || ''
                         SubNpc.edit$.next(p.npc)
                     }}
+                    autoAdjustHeight
                 ></TextField>
             </Stack>
         </section>
