@@ -8,29 +8,23 @@ class _vo extends _sub_base<volume_vo> {
     /** 图方便这里存一下, 应该用SubBook.use_id */
     bookid = ''
     /** 章列表 */
-    readonly chap_li$ = this.li$.pipe(
+    readonly chapter_li$ = this.li$.pipe(
         map((li) => {
             const re = ToolTranData.flat_children<volume_vo, chapter_vo>(li)
+            // console.log('ddddd', re)
             return re
         }),
     )
-    get chap_li() {
-        let re: chapter_vo[] = []
-        this.chap_li$.pipe(take(1)).subscribe((li) => {
-            re = li
-        })
-        return re
-    }
-    readonly chap_use_id$ = new BehaviorSubject('')
+    readonly chapter_use_id$ = new BehaviorSubject('')
     /** 正在使用的章 */
-    get chap_use$() {
-        return this.chap_li$.pipe(
-            switchMap((li) => this.chap_use_id$.pipe(map((id) => li.find((v) => (v as any).id === id)))),
+    get chapter_use$() {
+        return this.chapter_li$.pipe(
+            switchMap((li) => this.chapter_use_id$.pipe(map((id) => li.find((v) => (v as any).id === id)))),
             map((v) => v || null),
         )
     }
     /** 选中章的文本, monaco编辑器用 */
-    readonly ca_use_txt$ = this.chap_use_id$.pipe(
+    readonly chapter_use_txt$ = this.chapter_use_id$.pipe(
         debounceTime(100),
         map((cid) => {
             if (!cid) {
@@ -80,22 +74,13 @@ class _vo extends _sub_base<volume_vo> {
      * id: 章
      */
     get chapter_map() {
-        const m = new Map<string, chapter_vo>()
-        const chaps = this.chaper_li
-        chaps.forEach((chap) => {
-            m.set(chap.id, chap)
-        })
+        const m = ToolTranData.li2map(this.chaper_li)
         return m
     }
     get chaper_li() {
         const vols = this.li$.value
-        const re: chapter_vo[] = []
-        vols.forEach((vol) => {
-            vol.children.forEach((chap) => {
-                re.push(chap)
-            })
-        })
-        return re
+        const re = ToolTranData.flat_children(vols)
+        return re as chapter_vo[]
     }
 }
 

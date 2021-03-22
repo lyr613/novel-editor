@@ -5,6 +5,7 @@ import { css } from 'aphrodite/no-important'
 interface style_vo {
     /** 组件顶层 */
     Infor: object
+    EditBox: object
     Base: object
     Slice: object
     /** 片段的分割线 */
@@ -23,13 +24,33 @@ interface style_vo {
 /** 样式 */
 export const style: style_vo = StyleSheet.create<style_vo>({
     Infor: {
+        display: 'flex',
         position: 'relative',
-        boxSizing: 'border-box',
+        overflow: 'auto',
         fontSize: 0,
         borderRight: `2px solid ${StyleTheme.style_vars.themeTertiary}`,
         width: 600,
         height: '100%',
+        paddingBottom: 0,
+        flexDirection: 'column',
+    },
+    EditBox: {
+        flexGrow: 1,
+        flexShrink: 0,
+        overflow: 'auto',
+        boxSizing: 'border-box',
+        width: '100%',
+        height: 'calc(100% - 50px)',
         padding: 20,
+    },
+    SaveOrEsc: {
+        display: 'flex',
+        width: '100%',
+        height: 50,
+        borderTop: `1px solid ${StyleTheme.style_vars.themePrimary}`,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
     },
     Base: {},
     Slice: {
@@ -44,7 +65,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         backgroundColor: StyleTheme.style_vars.themeTertiary,
     },
     SliceSplitIndex: {
-        marginBottom: 10,
+        // marginBottom: 10,
         width: 80,
         fontSize: 14,
         color: StyleTheme.style_vars.themePrimary,
@@ -65,22 +86,11 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     SetStartEndChapter: {
         height: 14,
-        padding: '0 5px',
+        padding: '2px 5px 0',
         cursor: 'pointer',
         fontSize: 14,
     },
-    SaveOrEsc: {
-        display: 'flex',
-        position: 'absolute',
-        left: 0,
-        bottom: 0,
-        width: '100%',
-        height: 50,
-        borderTop: `1px solid ${StyleTheme.style_vars.themePrimary}`,
-        backgroundColor: StyleTheme.style_vars.themeTertiary,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-    },
+
     CubeTable: {
         borderCollapse: 'collapse',
         width: '100%',

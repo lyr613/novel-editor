@@ -6,6 +6,7 @@ interface style_vo {
     /** 组件顶层 */
     ChapterSlider: object
     MainSlider: object
+    MainSliderSlider: object
 }
 /** 样式 */
 export const style: style_vo = StyleSheet.create<style_vo>({
@@ -17,8 +18,13 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     MainSlider: {
         display: 'flex',
+        boxSizing: 'border-box',
         width: 'calc(100% - 40px)',
         height: 40,
+        padding: '0 20px 0 20px',
         alignItems: 'center',
+    },
+    MainSliderSlider: {
+        width: '100%',
     },
 })

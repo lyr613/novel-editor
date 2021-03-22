@@ -30,14 +30,16 @@ export default function Infor() {
 
     return (
         <div className={css(style.Infor)}>
-            <Base npc={npc} />
-            {npc.slices.map((_, i) => (
-                <Slice npc={npc} index={i} key={i} chap_li={chap_li} chap_map={chap_map} />
-            ))}
+            <div className={css(style.EditBox)}>
+                <Base npc={npc} />
+                {npc.slices.map((_, i) => (
+                    <Slice npc={npc} index={i} key={i} chap_li={chap_li} chap_map={chap_map} />
+                ))}
+            </div>
+            <SaveOrEsc />
             <DialogSelChapter />
             <DialogSelCube />
             <DialogSimpleValue />
-            <SaveOrEsc />
         </div>
     )
 }
@@ -126,7 +128,7 @@ function Slice(p: p_slice) {
             <div className={css(style.SliceSplitLine)} />
             <div className={css(style.SliceSplitIndex)}>
                 <TooltipHost
-                    content="多个片段可以描述角色的不同时期, 根据开始章节自动排序"
+                    content="多个切片可以描述角色的不同时期, 根据开始章节自动排序"
                     directionalHint={DirectionalHint.topCenter}
                 >
                     <Stack horizontal={true} verticalAlign="center">
@@ -135,14 +137,29 @@ function Slice(p: p_slice) {
                                 color: StyleTheme.style_vars.themePrimary,
                             }}
                         >
-                            片段{p.index + 1}
+                            切片{p.index + 1}
                         </Label>
                         <Icon iconName="UnknownSolid" />
                     </Stack>
                 </TooltipHost>
             </div>
+            <Stack horizontal>
+                <IconButton
+                    iconProps={{ iconName: 'Copy' }}
+                    title="复制切片"
+                    onClick={() => {
+                        const sli2 = SubNpc.copy_slice(slice_obj)
+                        p.npc.slices.splice(p.index, 0, sli2)
+                        SubNpc.edit$.next(p.npc)
+                    }}
+                />
+                <IconButton iconProps={{ iconName: 'Delete' }} title="删除切片" />
+            </Stack>
             <Stack horizontal={true} verticalAlign="center">
-                <Label>开始章节</Label>
+                <LabelHelp
+                    label_prop={{ children: '开始章节' }}
+                    help_txt={['如果只有一个切片可以不设置, 自动设置为第一章', '如果有多个切片必须设置']}
+                ></LabelHelp>
                 <Icon
                     iconName="Settings"
                     className={css(style.SetStartEndChapter, StylePreset.hoverfocu)}
@@ -164,7 +181,7 @@ function Slice(p: p_slice) {
             <Stack horizontal={true} verticalAlign="center">
                 <LabelHelp
                     label_prop={{ children: '结束章节' }}
-                    help_txt={['如果不设置, 自动寻找下一个开始开始章节, 未找到则默认设定为书目最后一章']}
+                    help_txt={['如果不设置, 自动设置为下一个切片的开始章节', '如果是最后一个切片, 自动设置为最后一章']}
                 ></LabelHelp>
                 <Icon
                     iconName="Settings"
@@ -211,7 +228,7 @@ function Slice(p: p_slice) {
                     '如法术组: 火球术, 神罗天征; 物品组: 村里最强的剑',
                     '可以给词条设置数值, 如数据组: 力量99, 智力1',
                     '----',
-                    '双击词条设置数值, 按住ctrl点击删除词条或组',
+                    '双击词条设置数值, 按住ctrl单击删除词条或组',
                 ]}
             ></LabelHelp>
 

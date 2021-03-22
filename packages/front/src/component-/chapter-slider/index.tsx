@@ -4,6 +4,12 @@ import { css } from 'aphrodite/no-important'
 import { StyleMake, StylePreset } from 'style-/global'
 import { Icon, TooltipHost } from '@fluentui/react-internal'
 import { DirectionalHint, IconButton, Slider, Stack } from '@fluentui/react'
+import { useObservable } from 'rxjs-hooks'
+import { SubVolume } from 'subject-/volume'
+import { BehaviorSubject } from 'rxjs'
+
+/** 章节下标 */
+export const ChapterSliderIndex$ = new BehaviorSubject(0)
 
 /**
  * 章节滑竿
@@ -26,9 +32,24 @@ function Exact() {
 }
 
 function MainSlider() {
+    const li = useObservable(() => SubVolume.chapter_li$, [])
+    const [index, next_index] = useState(0)
+
     return (
         <div className={css(style.MainSlider)}>
-            <Slider></Slider>
+            {!!li.length && (
+                <Slider
+                    value={index}
+                    onChange={(n) => {
+                        ChapterSliderIndex$.next(n)
+                        next_index(n)
+                    }}
+                    min={0}
+                    max={li.length}
+                    className={css(style.MainSliderSlider)}
+                    showValue={false}
+                ></Slider>
+            )}
         </div>
     )
 }

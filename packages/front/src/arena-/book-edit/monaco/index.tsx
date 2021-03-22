@@ -38,12 +38,12 @@ function Box() {
     useEffect(() => {
         const dom = ref.current
         const editer = monaco.editor.create(dom, SubMonaco.default_option)
-        const ob_load_txt = SubVolume.ca_use_txt$.subscribe((txt) => {
+        const ob_load_txt = SubVolume.chapter_use_txt$.subscribe((txt) => {
             editer.setValue(txt)
         })
         editer.onKeyUp(() => {
             const t = editer.getValue()
-            const id = SubVolume.chap_use_id$.value
+            const id = SubVolume.chapter_use_id$.value
             SubVolume.will_write(id, t)
         })
         return () => {

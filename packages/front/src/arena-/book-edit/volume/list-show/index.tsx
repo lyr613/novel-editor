@@ -40,7 +40,7 @@ function Top() {
 
 function VolBox() {
     const vols = useObservable(() => SubVolume.li$, [])
-    const chap_use_id = useObservable(() => SubVolume.chap_use_id$, '')
+    const chap_use_id = useObservable(() => SubVolume.chapter_use_id$, '')
     return (
         <>
             {vols.map((vol, i) => (
@@ -81,7 +81,7 @@ function ChapItem(p: p_chap) {
             className={css(style.ChapItem, p.chap.id === p.chap_use_id ? style.ChapItemHigh : null)}
             title={p.chap.name}
             onClick={() => {
-                SubVolume.chap_use_id$.next(p.chap.id)
+                SubVolume.chapter_use_id$.next(p.chap.id)
             }}
         >
             {p.chap.name}
