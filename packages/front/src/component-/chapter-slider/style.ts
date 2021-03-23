@@ -25,7 +25,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         boxSizing: 'border-box',
         width: 'calc(100% - 40px)',
         height: 40,
-        padding: '0 80px 0 20px',
+        padding: '0 80px 0 10px',
         alignItems: 'center',
     },
     MainSliderSlider: {

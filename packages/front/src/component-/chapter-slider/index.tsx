@@ -8,6 +8,7 @@ import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
 import { BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
+import DialogSelChapter, { DialogSelChapterConfirmHook$, DialogSelChapterShow$ } from 'component-/dialog-sel-chapter'
 
 /** 章节下标 */
 export const ChapterSliderIndex$ = new BehaviorSubject(0)
@@ -28,14 +29,27 @@ export default function ChapterSlider() {
 function Exact() {
     return (
         <div className={css(StyleMake.wh(40, 40), StylePreset.flwc, StylePreset.flhc)}>
-            <IconButton iconProps={{ iconName: 'POI' }}></IconButton>
+            <IconButton
+                iconProps={{ iconName: 'POI' }}
+                onClick={() => {
+                    DialogSelChapterConfirmHook$.next((vol, chap) => {
+                        if (vol && chap) {
+                            const mi = SubVolume.chaper_index_map
+                            const i = mi.get(chap.id) ?? 0
+                            ChapterSliderIndex$.next(i)
+                        }
+                    })
+                    DialogSelChapterShow$.next(true)
+                }}
+            ></IconButton>
+            <DialogSelChapter></DialogSelChapter>
         </div>
     )
 }
 
 function MainSlider() {
     const li = useObservable(() => SubVolume.chapter_li$, [])
-    const [index, next_index] = useState(0)
+    const index = useObservable(() => ChapterSliderIndex$, 0)
 
     return (
         <div className={css(style.MainSlider)}>
@@ -44,7 +58,6 @@ function MainSlider() {
                     value={index}
                     onChange={(n) => {
                         ChapterSliderIndex$.next(n)
-                        next_index(n)
                     }}
                     min={0}
                     max={li.length - 1}

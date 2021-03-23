@@ -23,11 +23,23 @@ export default function DialogSelChapter() {
     const volumes = useObservable(() => SubVolume.li$, [])
     const [vol_use, next_vol_use] = useState(null as null | volume_vo)
     const [chap_use, next_chap_use] = useState(null as null | chapter_vo)
+    function clear() {
+        next_vol_use(null)
+        next_chap_use(null)
+        DialogSelChapterConfirmHook$.next((vol: volume_vo | null, chap: chapter_vo | null) => {})
+    }
+
+    function confirm() {
+        const func = DialogSelChapterConfirmHook$.value
+        func(vol_use, chap_use)
+        DialogSelChapterShow$.next(false)
+        clear()
+    }
 
     return (
         <Dialog
             dialogContentProps={{
-                title: '选择卷章',
+                title: '选择卷章(双击章节可直接确认)',
             }}
             hidden={!show}
             minWidth={600}
@@ -54,9 +66,10 @@ export default function DialogSelChapter() {
                         <div
                             className={css(style.Item, chap_use?.id === chap.id ? style.ItemUse : null)}
                             key={chap.id}
-                            onClick={() => {
+                            onMouseDown={() => {
                                 next_chap_use(chap)
                             }}
+                            onDoubleClick={confirm}
                         >
                             {chap.name}
                         </div>
@@ -71,15 +84,7 @@ export default function DialogSelChapter() {
                 >
                     取消
                 </DefaultButton>
-                <PrimaryButton
-                    onClick={() => {
-                        const func = DialogSelChapterConfirmHook$.value
-                        func(vol_use, chap_use)
-                        DialogSelChapterShow$.next(false)
-                    }}
-                >
-                    好
-                </PrimaryButton>
+                <PrimaryButton onClick={confirm}>好</PrimaryButton>
             </DialogFooter>
         </Dialog>
     )
