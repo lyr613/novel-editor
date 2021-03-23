@@ -30,6 +30,8 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 0,
         borderRight: `2px solid ${StyleTheme.style_vars.themeTertiary}`,
         width: 600,
+        flexGrow: 0,
+        flexShrink: 0,
         height: '100%',
         paddingBottom: 0,
         flexDirection: 'column',
