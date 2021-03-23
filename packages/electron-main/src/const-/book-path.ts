@@ -31,7 +31,7 @@ class _s {
     }
 }
 
-type json_file = 'option' | 'volume' | 'npc' | 'npc_cube' | 'cube'
+type json_file = 'option' | 'volume' | 'npc' | 'npc_cube' | 'cube' | 'option'
 
 /** 书目内部路径 */
 export const ConstBookPath = new _s()
