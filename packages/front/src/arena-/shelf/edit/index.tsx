@@ -27,15 +27,7 @@ export default function Edit() {
                 <div>
                     <Label htmlFor={book_src_id}>路径</Label>
                     <Stack horizontal verticalAlign="center">
-                        <TextField
-                            value={bk.src}
-                            disabled
-                            id={book_src_id}
-                            onClick={() => {
-                                console.log(234567)
-                            }}
-                            className={css(sc.wh(400))}
-                        />
+                        <TextField value={bk.src} disabled id={book_src_id} className={css(sc.wh(400))} />
                         <Icon
                             onClick={() => {
                                 const src_msg: msg_dto<string> = ipc().sendSync('path_pick')

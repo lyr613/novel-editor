@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { useLocation } from 'react-router-dom'
@@ -16,6 +16,8 @@ import { take } from 'rxjs/operators'
 import Cube from './cube'
 import { SubCube } from 'subject-/cube'
 import { SubNpc } from 'subject-/npc'
+import EditerSize from './editer-size'
+import { SubBookOption } from 'subject-/book-option'
 
 /**
  * #### 编辑选中的书目
@@ -37,7 +39,7 @@ function LoadInforSub() {
         const so = parse(p.search)
         const bookid = so.bid as string
         // console.log(bookid, 'bookid')
-        const book_re: msg_dto<book_vo> = ipc().sendSync('book_get_cache', bookid)
+        const book_re: msg_dto<book_option_vo> = ipc().sendSync('book_get_cache', bookid)
         if (!book_re.b) {
             return
         }
@@ -49,6 +51,9 @@ function LoadInforSub() {
         SubBook.li$.next([book])
         SubBook.use_id$.next(book.id)
         document.title = book.name
+
+        // 本书设置
+        SubBookOption.load()
         // console.log('book', book)
         // 加载章节
         SubVolume.bookid = book.id
@@ -65,11 +70,10 @@ function LoadInforSub() {
          */
         SubMonaco.load_monaco()
         // 显示项目
-        timer(100, 500)
-            .pipe(take(20))
-            .subscribe((n) => {
-                next_wait(n)
-            })
+        // 这里如果多条timer, 会造成monaco的多次渲染
+        timer(500).subscribe((n) => {
+            next_wait(1)
+        })
     }, [p])
     if (wait === 0) {
         return (
@@ -85,10 +89,11 @@ function LoadInforSub() {
     }
     return (
         <>
-            {wait > 0 && <MonacoEdit />}
-            {wait > 1 && <Volume />}
-            {wait > 2 && <Npc />}
-            {wait > 3 && <Cube />}
+            <MonacoEdit />
+            <Volume />
+            <Npc />
+            <Cube />
+            <EditerSize />
         </>
     )
 }

@@ -5,22 +5,30 @@ import { mk_uuid } from 'tool-/uuid'
 import { _sub_base } from './base'
 import { SubOption } from './option'
 
-class _book extends _sub_base<book_vo> {
+class _book extends _sub_base<book_option_vo> {
     /** 创建新的 */
     make() {
         return {
-            src: '',
             id: mk_uuid(),
             name: '',
+            src: '',
             cover: '',
-            git: false,
+            last_20_chapter: [],
+            editer: {
+                size: {
+                    x: 300,
+                    w: 400,
+                    y: 100,
+                    h: 600,
+                },
+            },
         }
     }
     load() {
         const li = SubOption.edit$.value?.shelf.list ?? []
         // console.log('li', li)
 
-        const re: msg_dto<book_vo[]> = ipc().sendSync('book_load_li', li)
+        const re: msg_dto<book_option_vo[]> = ipc().sendSync('book_load_li', li)
         this.li$.next(re.data)
     }
 }

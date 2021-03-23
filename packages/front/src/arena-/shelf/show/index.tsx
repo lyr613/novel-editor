@@ -64,7 +64,7 @@ function List() {
 
 interface one {
     w: number
-    book: book_vo
+    book: book_option_vo
 }
 function Item(p: one) {
     return (

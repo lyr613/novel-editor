@@ -46,6 +46,11 @@ function npc_load(e: Electron.IpcMainEvent, bookid: string) {
                 })
             })
             UtilSortName.sort(npc_li)
+        } else {
+            if (msg.txt === '文件不存在') {
+                msg.b = true
+                msg.data = []
+            }
         }
         UtilReply.reply(e, 'npc_load', msg)
     } catch (error) {
