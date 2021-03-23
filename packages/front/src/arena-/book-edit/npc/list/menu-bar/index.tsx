@@ -20,6 +20,7 @@ export default function MenuBar() {
 function Add() {
     return (
         <IconButton
+            title="新角色"
             iconProps={{ iconName: 'Add' }}
             onClick={() => {
                 SubNpc.edit$.next(SubNpc.make())
@@ -32,6 +33,7 @@ function Add() {
 function Esc() {
     return (
         <IconButton
+            title="离开角色页"
             className={css(StyleMake.mar(0, 0, 0, 'auto'))}
             iconProps={{ iconName: 'Cancel' }}
             onClick={() => {

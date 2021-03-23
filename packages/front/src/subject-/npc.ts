@@ -50,36 +50,55 @@ class _n extends _sub_base<npc_vo> {
         }
     }
     /**
-     * 补全切片里可能不完整的结束章节
+     * 排序并补全切片里可能不完整的结束章节
      * @param slices 切片[]
      *
      */
     standardization_slice_chapter(slices: npc_slice_vo[]) {
         const chap_li = SubVolume.chaper_li
-        const m_chap_i = new Map<string, number>()
-        chap_li.forEach((chap, i) => {
-            m_chap_i.set(chap.id, i)
-        })
-        const res = slices.map((sli) => {
-            const st = sli.start_chapter
-            const ed = sli.end_chapter
-            const re = {
-                st: -1,
-                ed: -1,
+        const m_chap_i = SubVolume.chaper_index_map
+        // 先检查
+        slices.forEach((sli) => {
+            let si = m_chap_i.get(sli.start_chapter)
+            const ei = m_chap_i.get(sli.end_chapter)
+            if (si === undefined) {
+                sli.start_chapter = chap_li[0].id
+                si = 0
             }
-            if (!st) {
-                return re
+            if (ei === undefined) {
+                sli.end_chapter = ''
+            } else {
+                // 结束必须不早于开始
+                if (ei < si) {
+                    sli.end_chapter = sli.start_chapter
+                }
             }
-            re.st = m_chap_i.get(st) || -1
-            re.ed = m_chap_i.get(ed) || -1
-            return re
         })
-        if (res[0].st === -1) {
-            res[0].st = 0
+        // 排序
+        const slices2 = slices.map((sli) => {
+            // 这里其实肯定有, 前面检查设置了
+            const sort = m_chap_i.get(sli.start_chapter) ?? Number.MAX_SAFE_INTEGER
+            return {
+                sort,
+                slice: sli,
+            }
+        })
+        slices2.sort((a, b) => a.sort - b.sort)
+        // 填充结束章
+        const slices3 = slices2.map((v) => v.slice)
+        let x = slices3.length - 1
+        if (!slices3[x].end_chapter) {
+            // 这里可能没有章节
+            slices3[x].end_chapter = chap_li.slice(-1)[0]?.id ?? ''
         }
-        if (res.slice(-1)[0].ed === -1) {
-            res.slice(-1)[0].ed = chap_li.length - 1
+        x--
+        while (x >= 0) {
+            if (!slices3[x].end_chapter) {
+                slices3[x].end_chapter = slices3[x + 1].start_chapter
+            }
+            x--
         }
+        return slices3
     }
     /** 复制一个切片 */
     copy_slice(source: npc_slice_vo) {

@@ -35,6 +35,7 @@ export default function Infor() {
                 {npc.slices.map((_, i) => (
                     <Slice npc={npc} index={i} key={i} chap_li={chap_li} chap_map={chap_map} />
                 ))}
+                <NewSlice npc={npc} />
             </div>
             <SaveOrEsc />
             <DialogSelChapter />
@@ -59,6 +60,8 @@ function SaveOrEsc() {
             <PrimaryButton
                 className={css(StyleMake.mar(0, 10, 0, 0))}
                 onClick={() => {
+                    const npc = SubNpc.edit$.value
+                    npc.slices = SubNpc.standardization_slice_chapter(npc.slices)
                     SubNpc.save_edit()
                     SubNpc.load()
                     setTimeout(() => {
@@ -330,6 +333,28 @@ function Slice(p: p_slice) {
                 ></TextField>
             </Stack>
         </section>
+    )
+}
+/** 新切片 */
+function NewSlice(p: p_base) {
+    return (
+        <div className={css(style.Slice)}>
+            <div className={css(style.SliceSplitLine)}></div>
+            <IconButton
+                title="新增切片"
+                iconProps={{ iconName: 'Add' }}
+                onClick={() => {
+                    const slice_li = p.npc.slices
+                    const add = SubNpc.make_slice()
+                    if (slice_li.length) {
+                        const last = slice_li.slice(-1)[0]
+                        add.start_chapter = last.end_chapter
+                    }
+                    slice_li.push(add)
+                    SubNpc.edit$.next(p.npc)
+                }}
+            />
+        </div>
     )
 }
 

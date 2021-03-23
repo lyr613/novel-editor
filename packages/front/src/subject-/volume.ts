@@ -82,6 +82,19 @@ class _vo extends _sub_base<volume_vo> {
         const re = ToolTranData.flat_children(vols)
         return re as chapter_vo[]
     }
+    /** chaper.id: index */
+    get chaper_index_map() {
+        const vols = this.li$.value
+        const m = new Map<string, number>()
+        let i = 0
+        vols.forEach((vol) => {
+            vol.children.forEach((chap) => {
+                m.set(chap.id, i)
+                i++
+            })
+        })
+        return m
+    }
 }
 
 /** 卷章 */

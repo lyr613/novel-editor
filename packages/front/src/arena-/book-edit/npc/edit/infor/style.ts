@@ -26,7 +26,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     Infor: {
         display: 'flex',
         position: 'relative',
-        overflow: 'auto',
         fontSize: 0,
         borderRight: `2px solid ${StyleTheme.style_vars.themeTertiary}`,
         width: 600,
@@ -63,7 +62,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         margin: '0 auto 20px',
         width: 'calc(100% - 40px)',
         height: 1,
-
         backgroundColor: StyleTheme.style_vars.themeTertiary,
     },
     SliceSplitIndex: {
