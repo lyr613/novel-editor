@@ -46,6 +46,7 @@ export default function Infor() {
 }
 
 function SaveOrEsc() {
+    const [show_msg, next_show_msg] = useState(false)
     return (
         <div className={css(style.SaveOrEsc)}>
             <DefaultButton
@@ -64,13 +65,16 @@ function SaveOrEsc() {
                     npc.slices = SubNpc.standardization_slice_chapter(npc.slices)
                     SubNpc.save_edit()
                     SubNpc.load()
+                    next_show_msg(true)
                     setTimeout(() => {
-                        _npc.show_type$.next('list')
-                    }, 200)
+                        // _npc.show_type$.next('list')
+                        next_show_msg(false)
+                    }, 2000)
                 }}
             >
                 好
             </PrimaryButton>
+            {show_msg && <div className={css(style.SaveOrEscMsg)}>保存成功</div>}
         </div>
     )
 }

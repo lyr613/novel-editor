@@ -15,6 +15,7 @@ interface style_vo {
     /** 设置开始结束章节 */
     SetStartEndChapter: object
     SaveOrEsc: object
+    SaveOrEscMsg: object
     CubeTable: object
     CubeTd: object
     CubeTdLeft: object
@@ -52,6 +53,12 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         backgroundColor: StyleTheme.style_vars.themeTertiary,
         alignItems: 'center',
         justifyContent: 'flex-end',
+    },
+    SaveOrEscMsg: {
+        fontSize: 14,
+        lineHeight: '50px',
+        paddingRight: 20,
+        color: 'white',
     },
     Base: {},
     Slice: {

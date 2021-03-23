@@ -19,6 +19,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 0,
         width: '100%',
         height: 40,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
     },
     MainSlider: {
         display: 'flex',
@@ -44,13 +45,14 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         lineHeight: '40px',
         fontSize: 14,
         textAlign: 'right',
-        backgroundColor: StyleTheme.style_vars.themeLight,
+        backgroundColor: StyleTheme.style_vars.themeTertiary,
         userSelect: 'none',
         whiteSpace: 'nowrap',
         ':hover': {
             width: 'unset',
-            backgroundColor: StyleTheme.style_vars.themeTertiary,
+            backgroundColor: StyleTheme.style_vars.themePrimary,
             padding: '0 10px',
+            color: 'white',
         },
         ':hover b': {
             fontSize: 14,
