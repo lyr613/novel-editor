@@ -78,7 +78,7 @@ function NameShow() {
                     const chap = chaps[i]
                     const vol = SubVolume.li$.value.find((v) => v.children.find((k) => k.id === chap.id))
                     const t1 = vol?.name || ''
-                    const t2 = chap.name
+                    const t2 = chap?.name || ''
                     return [t1, t2]
                 }),
             ),

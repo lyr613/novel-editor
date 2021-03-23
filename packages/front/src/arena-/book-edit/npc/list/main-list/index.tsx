@@ -28,6 +28,7 @@ export default function MainList() {
                                     const WW = screen.W
                                     const nw = SubScreen.auto_width(WW, 240, 20)
                                     const slice_remark_map = _get_npc_remark_sel_slice(chapter_index)
+                                    const chap_li = SubVolume.chaper_li
                                     return (
                                         npc_li
                                             .map((it) => {
@@ -38,7 +39,8 @@ export default function MainList() {
                                                 }
                                             })
                                             // 这里过滤, 如果没有取到备注, 就是不在任何片段内
-                                            .filter((v) => v.slice_remark.length)
+                                            // 如果没有设置过章节, 也不过滤
+                                            .filter((v) => v.slice_remark.length || chap_li.length === 0)
                                     )
                                 }),
                             ),

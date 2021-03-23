@@ -55,10 +55,10 @@ class _n extends _sub_base<npc_vo> {
      *
      */
     standardization_slice_chapter(slices: npc_slice_vo[]) {
-        if (!slices.length) {
+        const chap_li = SubVolume.chaper_li
+        if (!slices.length || !chap_li.length) {
             return slices
         }
-        const chap_li = SubVolume.chaper_li
         const m_chap_i = SubVolume.chaper_index_map
         // 先检查
         slices.forEach((sli) => {
