@@ -32,7 +32,7 @@ function Top() {
                     volume_show_type$.next('set')
                 }}
             >
-                <Icon iconName="More" />
+                <Icon iconName="Settings" />
             </div>
         </div>
     )

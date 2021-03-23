@@ -40,6 +40,8 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 14,
         justifyContent: 'center',
         alignItems: 'center',
+        cursor: 'pointer',
+
         ':hover': {
             backgroundColor: StyleTheme.style_vars.themeSecondary,
         },
@@ -50,6 +52,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         width: '100%',
         minHeight: 30,
         lineHeight: '30px',
+        // cursor: 'pointer',
     },
     VolItemName: {
         boxSizing: 'border-box',
@@ -57,7 +60,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         fontSize: 14,
         fontWeight: 700,
         ':hover': {
-            backgroundColor: StyleTheme.style_vars.themeSecondary,
+            // backgroundColor: StyleTheme.style_vars.themeSecondary,
         },
     },
     ChapItem: {
@@ -67,6 +70,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         padding: '0 30px',
         lineHeight: '30px',
         fontSize: 14,
+        cursor: 'pointer',
         ':hover': {
             backgroundColor: StyleTheme.style_vars.themeSecondary,
         },
