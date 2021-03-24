@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { Label } from '@fluentui/react-internal'
+import { Label } from '@fluentui/react'
 import { DirectionalHint, Icon, ILabelProps, TooltipHost } from '@fluentui/react'
 import { StylePreset } from 'style-/global'
 

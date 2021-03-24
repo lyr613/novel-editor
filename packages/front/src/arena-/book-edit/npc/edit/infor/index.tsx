@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { Dialog, DialogFooter, Icon, Label, Stack, StackItem, TextField, TooltipHost } from '@fluentui/react-internal'
+import { Dialog, DialogFooter, Icon, Label, Stack, StackItem, TextField, TooltipHost } from '@fluentui/react'
 import { DefaultButton, DirectionalHint, IconButton, PrimaryButton } from '@fluentui/react'
 import { StyleTheme } from 'style-/theme'
 import { StyleMake, StylePreset } from 'style-/global'

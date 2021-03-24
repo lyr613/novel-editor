@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { Dialog, DialogFooter } from '@fluentui/react-internal'
+import { Dialog, DialogFooter } from '@fluentui/react'
 import { DefaultButton, PrimaryButton } from '@fluentui/react'
 import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'

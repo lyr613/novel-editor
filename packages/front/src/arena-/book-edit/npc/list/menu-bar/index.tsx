@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { IconButton } from '@fluentui/react-internal/lib/compat/Button'
+import { IconButton } from '@fluentui/react'
 import { SubNpc } from 'subject-/npc'
 import { _npc } from '../../subj'
 import { StyleMake } from 'style-/global'
