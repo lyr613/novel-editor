@@ -102,8 +102,15 @@ function Item(p: p) {
                     >
                         <Icon iconName="Settings" />
                     </div>
+                    {/* 关系按钮 */}
                     <div className={css(style_item.TopLineIcon)}>
-                        <Icon iconName="Relationship" />
+                        <Icon
+                            iconName="Relationship"
+                            onClick={() => {
+                                SubNpc.edit$.next(p.npc)
+                                _npc.show_type$.next('relationshap')
+                            }}
+                        />
                     </div>
                 </div>
                 <div ref={ref_editer} className={css(style_item.Editer)}></div>

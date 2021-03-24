@@ -7,6 +7,7 @@ import { useObservable } from 'rxjs-hooks'
 import { _npc } from './subj'
 import List from './list'
 import Edit from './edit'
+import Relationshap from './relationshap'
 
 /**
  */
@@ -17,6 +18,7 @@ export default function Npc() {
             {show_type === 'icon' && <IconType />}
             {show_type === 'list' && <List />}
             {show_type === 'edit' && <Edit />}
+            {show_type === 'relationshap' && <Relationshap />}
         </>
     )
 }
