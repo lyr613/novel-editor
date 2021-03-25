@@ -16,6 +16,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     RecentList: {
         position: 'absolute',
+        zIndex: 1100,
         left: 0,
         top: 0,
         borderRight: `1px solid ${StyleTheme.style_vars.themeTertiary}`,

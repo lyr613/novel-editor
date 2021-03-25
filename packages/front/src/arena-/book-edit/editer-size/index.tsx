@@ -22,7 +22,7 @@ export default function EditerSize() {
 function IconType() {
     return (
         <div
-            className={StyleComp.child_left_icons(4)}
+            className={StyleComp.child_left_icons(6)}
             title="调整编辑框尺寸"
             onClick={() => {
                 icon_type$.next(false)
