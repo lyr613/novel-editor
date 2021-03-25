@@ -55,10 +55,15 @@ function LoadInforSub() {
 
         // 本书设置
         SubBookOption.load()
+
         // console.log('book', book)
         // 加载章节
         SubVolume.bookid = book.id
         SubVolume.load()
+
+        // 自动选取上次编辑的章节
+        const book_opt = SubBookOption.option$.value
+        SubVolume.chapter_use_id$.next(book_opt.last_edit_chapter)
 
         // 加载词条
         SubCube.load()

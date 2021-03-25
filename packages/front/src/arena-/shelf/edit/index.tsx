@@ -10,14 +10,15 @@ import { SubBook } from 'subject-/book'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
 import { Rt } from 'router-'
 import { SubOption } from 'subject-/option'
+import { SubBookOption } from 'subject-/book-option'
 
 /** Edit */
 export default function Edit() {
     const book_src_id = useId('book_src_id')
-    const bk = useObservable(() => SubBook.edit$.pipe(shallowCopy()), SubBook.make())
+    const bk = useObservable(() => SubBook.edit$.pipe(shallowCopy()), SubBookOption.make())
     useEffect(() => {
         return () => {
-            SubBook.edit$.next(SubBook.make())
+            SubBook.edit$.next(SubBookOption.make())
         }
     }, [])
     return (

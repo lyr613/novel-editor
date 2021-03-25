@@ -6,13 +6,16 @@ import { _sub_base } from './base'
 import { SubOption } from './option'
 
 class _book extends _sub_base<book_option_vo> {
-    /** 创建新的 */
+    /** 创建新的
+     * @deprecated
+     */
     make() {
         return {
             id: mk_uuid(),
             name: '',
             src: '',
             cover: '',
+            last_edit_chapter: '',
             last_20_chapter: [],
             editer: {
                 size: {

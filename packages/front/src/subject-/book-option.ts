@@ -11,6 +11,7 @@ class _b {
             name: '',
             src: '',
             cover: '',
+            last_edit_chapter: '',
             last_20_chapter: [],
             editer: {
                 size: {
@@ -39,6 +40,7 @@ class _b {
         const li2 = li.filter((v) => v !== id)
         li2.unshift(id)
         opt.last_20_chapter = li2.slice(0, 20)
+        opt.last_edit_chapter = id
         this.save(opt)
         this.load()
     }

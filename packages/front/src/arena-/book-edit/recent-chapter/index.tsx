@@ -73,6 +73,10 @@ function RecentList() {
                     key={chap.id}
                     onClick={() => {
                         SubVolume.chapter_use_id$.next(chap.id)
+                        const opt = SubBookOption.option$.value
+                        opt.last_edit_chapter = chap.id
+                        SubBookOption.save(opt)
+                        SubBookOption.load()
                     }}
                 >
                     {chap.name}
