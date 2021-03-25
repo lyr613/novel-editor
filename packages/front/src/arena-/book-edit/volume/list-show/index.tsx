@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { can_show_set$, volume_show_type$ } from '../subj'
+import { volume_show_type$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
 import { Icon } from '@fluentui/react'

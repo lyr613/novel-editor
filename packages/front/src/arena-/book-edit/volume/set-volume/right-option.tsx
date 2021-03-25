@@ -6,7 +6,7 @@ import { _volume_set } from './sub'
 import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
 import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
-import { can_show_set$, volume_show_type$ } from '../subj'
+import { volume_show_type$ } from '../subj'
 import { take } from 'rxjs/operators'
 
 /**

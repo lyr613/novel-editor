@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import * as d3 from 'd3'
+import { BookEditNpc } from '../subj'
 
 /**
  */
 export default function Relationshap() {
     return (
-        <div className={css(style.Relationshap)}>
+        <div
+            className={css(style.Relationshap)}
+            onClick={() => {
+                BookEditNpc.show_type$.next('list')
+            }}
+        >
             <D3Tty />
         </div>
     )
@@ -15,12 +21,12 @@ export default function Relationshap() {
 
 function D3Tty() {
     useEffect(() => {
-        const width = 900
-        const height = 900
+        const width = 800
+        const height = 800
 
         const data = {
             nodes: [
-                { id: 1, fx: width / 2, fy: height / 2 },
+                { id: 1, x: width / 2, y: height / 2 },
                 { id: 2 },
                 { id: 3 },
                 { id: 4 },
@@ -46,8 +52,11 @@ function D3Tty() {
                 d3.forceLink(links).id((d: any) => d.id),
             )
 
-            .force('charge', d3.forceManyBody().strength(-5000))
+            .force('charge', d3.forceManyBody().strength(-4000))
             .force('center', d3.forceCenter(width / 2, height / 2))
+
+        nodes[0].fx = width / 2
+        nodes[0].fy = width / 2
 
         const svg = d3
             .select('#d3ttt')
@@ -75,6 +84,18 @@ function D3Tty() {
             .join('circle')
             .attr('r', 40)
             .attr('fill', 'red')
+            .call((sel, a, b) => {
+                sel.on('click', (c, d) => {
+                    nodes.forEach((v) => {
+                        v.fx = null
+                        v.fy = null
+                    })
+
+                    d.fx = width / 2
+                    d.fy = height / 2
+                    simulation.alpha(0.3).alphaTarget(0).restart().tick(100)
+                })
+            })
         const name_txt = svg
             .selectAll('.linetext')
             .data(nodes)
@@ -87,6 +108,8 @@ function D3Tty() {
         node.append('title').text((d) => d.id)
 
         simulation.on('tick', () => {
+            // console.log('tick')
+
             link.attr('x1', (d) => d.source.x | 0)
                 .attr('y1', (d) => d.source.y | 0)
                 .attr('x2', (d) => d.target.x | 0)
@@ -97,82 +120,8 @@ function D3Tty() {
                 .attr('x', (d) => d.x | 0)
                 .attr('y', (d) => d.y | 0)
                 .attr('style', 'dominant-baseline:middle;text-anchor:middle;')
-            // svg.select('circle')
-            //     .filter((v: any) => v.id === 1)
-            //     .attr('cx', width / 2)
-            //     .attr('cy', height / 2)
         })
 
-        // const width = 800
-        // const height = 600
-        // const root: any = {
-        //     nodes: [
-        //         { name: '云天河', image: 'tianhe.png' },
-        //         { name: '韩菱纱', image: 'lingsha.png' },
-        //         { name: '柳梦璃', image: 'mengli.png' },
-        //         { name: '慕容紫英', image: 'ziying.png' },
-        //     ],
-        //     edges: [
-        //         { source: 0, target: 1, relation: '挚友' },
-        //         { source: 0, target: 2, relation: '挚友' },
-        //         { source: 0, target: 3, relation: '挚友' },
-        //     ],
-        // }
-        // const force = d3
-        //     .forceSimulation()
-        //     .nodes(root.nodes)
-        //     .links(root.edges)
-        //     .size([width, height])
-        //     .linkDistance(200)
-        //     .charge(-1500)
-        //     .start()
-
-        // const links: any[] = root.links()
-        // const nodes: any[] = root.descendants()
-        // const simulation = d3
-        //     .forceSimulation(nodes)
-        //     .force(
-        //         'link',
-        //         d3
-        //             .forceLink(links)
-        //             .id((d: any) => d.id)
-        //             .distance(0)
-        //             .strength(1),
-        //     )
-        //     .force('charge', d3.forceManyBody().strength(-10000))
-        //     .force('x', d3.forceX())
-        //     .force('y', d3.forceY())
-        // const svg = d3
-        //     .select('#d3ttt')
-        //     .append('svg')
-        //     .attr('viewBox', [-width / 2, -height / 2, width, height] as any)
-
-        // const node = svg
-        //     .append('g')
-        //     .attr('stroke', '#fff')
-        //     .attr('stroke-width', 1.5)
-        //     .selectAll('circle')
-        //     .data(nodes)
-        //     .join('circle')
-        //     .attr('r', 10)
-        //     .attr('fill', 'green')
-        // node.append('title').text((d) => d.data.name)
-        // const link = svg
-        //     .append('g')
-        //     .attr('stroke', '#999')
-        //     .attr('stroke-opacity', 0.6)
-        //     .selectAll('line')
-        //     .data(links)
-        //     .join('line')
-        // // .attr('', 50)
-        // simulation.on('tick', () => {
-        //     link.attr('x1', (d) => d.source.x)
-        //         .attr('y1', (d) => d.source.y)
-        //         .attr('x2', (d) => d.target.x)
-        //         .attr('y2', (d) => d.target.y)
-
-        //     node.attr('cx', (d) => d.x).attr('cy', (d) => d.y)
-        // })
         return () => {
             svg.remove()
         }

@@ -6,4 +6,4 @@ class _n {
     show_type$ = new BehaviorSubject('icon' as show_type)
 }
 
-export const _npc = new _n()
+export const BookEditNpc = new _n()

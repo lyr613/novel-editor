@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { css } from 'aphrodite/no-important'
 import { style as s } from './style'
 import { DefaultButton, Icon, PrimaryButton, TextField } from '@fluentui/react'
-import { _cube } from '../sub'
+import { BookEditCube } from '../sub'
 import { SubCube } from 'subject-/cube'
 import { useObservable } from 'rxjs-hooks'
 import { _cube_set2 } from './subj'
@@ -286,7 +286,7 @@ function Esc() {
         >
             <DefaultButton
                 onClick={() => {
-                    _cube.show_type$.next('icon')
+                    BookEditCube.show_type$.next('icon')
                 }}
             >
                 退出词条编辑

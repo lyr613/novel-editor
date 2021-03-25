@@ -3,7 +3,7 @@ import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { IconButton } from '@fluentui/react'
 import { SubNpc } from 'subject-/npc'
-import { _npc } from '../../subj'
+import { BookEditNpc } from '../../subj'
 import { StyleMake } from 'style-/global'
 
 /**
@@ -24,7 +24,7 @@ function Add() {
             iconProps={{ iconName: 'Add' }}
             onClick={() => {
                 SubNpc.edit$.next(SubNpc.make())
-                _npc.show_type$.next('edit')
+                BookEditNpc.show_type$.next('edit')
             }}
         ></IconButton>
     )
@@ -37,7 +37,7 @@ function Esc() {
             className={css(StyleMake.mar(0, 0, 0, 'auto'))}
             iconProps={{ iconName: 'Cancel' }}
             onClick={() => {
-                _npc.show_type$.next('icon')
+                BookEditNpc.show_type$.next('icon')
             }}
         ></IconButton>
     )

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { can_show_set$ } from '../subj'
 import LeftVolume from './left-volume'
 import MidChapter from './mid-chapter'
 import RightOption from './right-option'

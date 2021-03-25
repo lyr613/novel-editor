@@ -8,7 +8,7 @@ import { SubScreen } from 'subject-/screen'
 import { Icon, PrimaryButton } from '@fluentui/react'
 import * as monaco from 'monaco-editor'
 import { SubMonaco } from 'subject-/monaco'
-import { _npc } from '../../subj'
+import { BookEditNpc } from '../../subj'
 import { SubNpc } from 'subject-/npc'
 import { ChapterSliderIndex$ } from 'component-/chapter-slider'
 import { SubVolume } from 'subject-/volume'
@@ -97,7 +97,7 @@ function Item(p: p) {
                         className={css(style_item.TopLineIcon)}
                         onClick={() => {
                             SubNpc.edit$.next(p.npc)
-                            _npc.show_type$.next('edit')
+                            BookEditNpc.show_type$.next('edit')
                         }}
                     >
                         <Icon iconName="Settings" />
@@ -108,7 +108,7 @@ function Item(p: p) {
                             iconName="Relationship"
                             onClick={() => {
                                 SubNpc.edit$.next(p.npc)
-                                _npc.show_type$.next('relationshap')
+                                BookEditNpc.show_type$.next('relationshap')
                             }}
                         />
                     </div>
