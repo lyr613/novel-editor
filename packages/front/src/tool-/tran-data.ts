@@ -19,4 +19,20 @@ export class ToolTranData {
         })
         return re
     }
+    /** 构造monaco使用的reg
+     * 如果数量0 返回 null
+     */
+    static li2reg(words: string[]) {
+        const li = words.map((v) => v.trim()).filter((v) => !!v)
+        const li2 = [...new Set(li)]
+        if (li2.length) {
+            const string = `(${li2.join('|')})`
+            const reg = new RegExp(string)
+            return {
+                string,
+                reg,
+            }
+        }
+        return null
+    }
 }

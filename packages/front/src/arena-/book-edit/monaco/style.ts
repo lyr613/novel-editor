@@ -14,7 +14,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         left: '450px',
         top: '50px',
         fontSize: 0,
-        overflow: 'hidden',
         width: 600,
         height: 600,
         backgroundColor: 'white',
@@ -22,7 +21,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         transitionDelay: '0.5s',
     },
     editer: {
-        overflow: 'hidden',
         width: '100%',
         height: '100%',
     },
