@@ -32,6 +32,16 @@ class _b {
     save(opt: book_option_vo) {
         const msg: msg_dto<book_option_vo> = ipc().sendSync('book_option_save', SubBook.use_id$.value, opt)
     }
+    /** 自动更新最近编辑章节 */
+    auto_save_recent_chapter(id: string) {
+        const opt = this.option$.value
+        const li = opt.last_20_chapter
+        const li2 = li.filter((v) => v !== id)
+        li2.unshift(id)
+        opt.last_20_chapter = li2.slice(0, 20)
+        this.save(opt)
+        this.load()
+    }
 }
 
 export const SubBookOption = new _b()

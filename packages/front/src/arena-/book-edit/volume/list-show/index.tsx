@@ -5,6 +5,7 @@ import { volume_show_type$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
 import { Icon } from '@fluentui/react'
+import { SubBookOption } from 'subject-/book-option'
 
 export default function ListShow() {
     return (
@@ -82,6 +83,7 @@ function ChapItem(p: p_chap) {
             title={p.chap.name}
             onClick={() => {
                 SubVolume.chapter_use_id$.next(p.chap.id)
+                SubBookOption.auto_save_recent_chapter(p.chap.id)
             }}
         >
             {p.chap.name}

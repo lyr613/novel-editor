@@ -18,6 +18,7 @@ import { SubCube } from 'subject-/cube'
 import { SubNpc } from 'subject-/npc'
 import EditerSize from './editer-size'
 import { SubBookOption } from 'subject-/book-option'
+import RecentChapter from './recent-chapter'
 
 /**
  * #### 编辑选中的书目
@@ -94,6 +95,7 @@ function LoadInforSub() {
             <Npc />
             <Cube />
             <EditerSize />
+            <RecentChapter />
         </>
     )
 }
