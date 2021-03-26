@@ -10,6 +10,7 @@ interface sortable {
 }
 
 interface with_id {
+    /** 32位uuid */
     id: string
 }
 

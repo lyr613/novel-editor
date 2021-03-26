@@ -8,6 +8,7 @@ import { _watch_npc } from './npc'
 import { _watch_option } from './option'
 import { _watch_path } from './path'
 import { _watch_shard } from './shard'
+import { WatchThreads } from './threads'
 import { _watch_window } from './window'
 
 /** 观察所有通信 */
@@ -23,4 +24,5 @@ export function watch_all() {
     WatchCube.watch()
     _watch_npc()
     WatchBookOption.watch()
+    WatchThreads.watch()
 }

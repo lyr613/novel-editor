@@ -24,6 +24,10 @@ class _s {
     get npc_cube() {
         return 'npc-cube.json'
     }
+    /** 线索 */
+    get threads() {
+        return 'threads.drawio'
+    }
     /** 拼接json文件的完整路径 */
     full_src(book_src: string, json_file: json_file) {
         const f = (this as any)[json_file]
@@ -31,7 +35,7 @@ class _s {
     }
 }
 
-type json_file = 'option' | 'volume' | 'npc' | 'npc_cube' | 'cube' | 'option'
+type json_file = 'option' | 'volume' | 'npc' | 'npc_cube' | 'cube' | 'option' | 'threads'
 
 /** 书目内部路径 */
 export const ConstBookPath = new _s()
