@@ -17,7 +17,9 @@ class _t {
             fs.writeFileSync(drawio_src, '')
         }
         cp.execSync(`code ${book.src}`)
-        cp.execSync(`code ${drawio_src}`)
+        setTimeout(() => {
+            cp.execSync(`code ${drawio_src}`)
+        }, 1500)
     }
 }
 
