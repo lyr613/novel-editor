@@ -6,6 +6,7 @@ interface style_vo {
     ListShow: object
     Top: object
     TopIcon: object
+    VolBox: object
     VolItem: object
     VolItemName: object
     ChapItem: object
@@ -30,21 +31,24 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         display: 'flex',
         borderBottom: '1px solid ' + StyleTheme.style_vars.themeSecondary,
         width: '100%',
-        height: 30,
+        height: 33,
         flexDirection: 'row-reverse',
     },
     TopIcon: {
-        display: 'flex',
-        width: 30,
-        height: 30,
-        fontSize: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-        cursor: 'pointer',
-
-        ':hover': {
-            backgroundColor: StyleTheme.style_vars.themeSecondary,
-        },
+        // display: 'flex',
+        // width: 30,
+        // height: 30,
+        // fontSize: 14,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // cursor: 'pointer',
+        // ':hover': {
+        //     backgroundColor: StyleTheme.style_vars.themeSecondary,
+        // },
+    },
+    VolBox: {
+        overflow: 'auto',
+        height: 'calc(100vh - 33px)',
     },
     VolItem: {
         overflow: 'hidden',

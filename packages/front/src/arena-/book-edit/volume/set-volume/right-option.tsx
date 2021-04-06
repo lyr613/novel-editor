@@ -8,6 +8,7 @@ import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
 import { volume_show_type$ } from '../subj'
 import { take } from 'rxjs/operators'
+import { StyleTheme } from 'style-/theme'
 
 /**
  */
@@ -44,8 +45,15 @@ function TopInfor() {
         >
             <div>{txt}, 你是要?</div>
             {now_sel === 'volume' && vol_n === 1 && <ReNameVolume />}
-            {now_sel === 'chapter' && chap_n === 1 && <ReNameChapter />}
             {now_sel !== 'chapter' && <NewVolume />}
+            <div
+                style={{
+                    margin: 20,
+                    height: 2,
+                    backgroundColor: StyleTheme.style_vars.themePrimary,
+                }}
+            ></div>
+            {now_sel === 'chapter' && chap_n === 1 && <ReNameChapter />}
             {now_sel === 'volume' && vol_n === 1 && <NewChapter />}
             <Esc />
         </div>

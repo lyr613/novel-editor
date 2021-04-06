@@ -4,7 +4,7 @@ import { css } from 'aphrodite/no-important'
 import { volume_show_type$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
-import { Icon } from '@fluentui/react'
+import { Icon, IconButton } from '@fluentui/react'
 import { SubBookOption } from 'subject-/book-option'
 
 export default function ListShow() {
@@ -19,22 +19,20 @@ export default function ListShow() {
 function Top() {
     return (
         <div className={css(style.Top)}>
-            <div
+            <IconButton
                 className={css(style.TopIcon)}
+                iconProps={{ iconName: 'Cancel' }}
                 onClick={() => {
                     volume_show_type$.next('icon')
                 }}
-            >
-                <Icon iconName="Cancel" />
-            </div>
-            <div
+            ></IconButton>
+            <IconButton
                 className={css(style.TopIcon)}
+                iconProps={{ iconName: 'Settings' }}
                 onClick={() => {
                     volume_show_type$.next('set')
                 }}
-            >
-                <Icon iconName="Settings" />
-            </div>
+            ></IconButton>
         </div>
     )
 }
@@ -43,11 +41,22 @@ function VolBox() {
     const vols = useObservable(() => SubVolume.li$, [])
     const chap_use_id = useObservable(() => SubVolume.chapter_use_id$, '')
     return (
-        <>
+        <div className={css(style.VolBox)}>
             {vols.map((vol, i) => (
                 <VolItem index={i} vol={vol} key={vol.id} chap_use_id={chap_use_id} />
             ))}
-        </>
+            {!vols.length && (
+                <div
+                    style={{
+                        fontSize: 14,
+                        padding: 20,
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    没有章节
+                </div>
+            )}
+        </div>
     )
 }
 
