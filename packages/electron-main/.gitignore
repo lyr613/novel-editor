@@ -3,3 +3,4 @@ yarn.lock
 dist/
 build/
 watch/
+*.psd
