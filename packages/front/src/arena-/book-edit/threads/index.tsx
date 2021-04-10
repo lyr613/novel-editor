@@ -31,8 +31,8 @@ function IconType() {
         <div
             className={StyleComp.child_left_icons(4)}
             onClick={() => {
-                // BookEditThreads.show_type$.next('edit')
-                ipc().send('threads_vscode', SubBook.use_id$.value)
+                BookEditThreads.show_type$.next('edit')
+                // ipc().send('threads_vscode', SubBook.use_id$.value)
             }}
             title="线索"
         >

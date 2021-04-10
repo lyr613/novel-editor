@@ -16,7 +16,7 @@ function hotkey_devtool(e: Electron.IpcMainEvent, bid: string) {
         return
     }
     const con = win.webContents
-    console.log('con', win, con)
+    // console.log('con', win, con)
 
     con?.toggleDevTools()
     // UtilReply. reply(e, 'temp')
