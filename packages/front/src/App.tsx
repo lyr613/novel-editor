@@ -10,9 +10,9 @@ import { SubHotKey } from 'subject-/hot-key'
 function App() {
     useEffect(() => {
         const ob = SubHotKey.sub_app_hot_key()
-        setTimeout(() => {
-            SubOption.load()
-        }, 0)
+        // setTimeout(() => {
+        //     SubOption.load()
+        // }, 0)
         return () => {
             ob.unsubscribe()
         }

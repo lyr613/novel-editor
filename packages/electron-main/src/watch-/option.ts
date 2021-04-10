@@ -27,6 +27,7 @@ export class OptionLoad {
             fs.mkdirSync(opt_dir)
         }
         const jn = UtilFs.read_json<option_vo>(ConstAppPath.option)
+
         return OptionLoad.mk_standard_option(jn.data)
     }
     /** 默认配置 */

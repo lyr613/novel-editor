@@ -3,6 +3,7 @@ import { Switch } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import { Rt } from 'router-'
 import { router1, router2_shelf } from 'router-/define'
+import { SubOption } from 'subject-/option'
 import Edit from './edit'
 import Show from './show'
 
