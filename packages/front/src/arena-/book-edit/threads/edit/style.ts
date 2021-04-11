@@ -7,6 +7,8 @@ interface style_vo {
     ThreadsEdit: object
     ThreadsCanvas: object
     ThreadsCanvasItem: object
+    /** 编辑状态下, 后续线索 */
+    ThreadsEditNextLinkItem: object
     Ctrl: object
 }
 /** 样式 */
@@ -36,6 +38,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     ThreadsCanvasItem: {
         position: 'absolute',
+        zIndex: 20,
         border: `2px solid ${StyleTheme.style_vars.themePrimary}`,
         padding: '5px 10px',
         fontSize: 16,
@@ -44,6 +47,16 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         backgroundColor: StyleTheme.style_vars.themeLight,
         whiteSpace: 'nowrap',
 
+        ':hover': {
+            backgroundColor: StyleTheme.style_vars.themeTertiary,
+        },
+    },
+    ThreadsEditNextLinkItem: {
+        display: 'inline-block',
+        margin: '0 5px 3px 0',
+        padding: '3px 10px',
+        fontSize: 14,
+        cursor: 'pointer',
         ':hover': {
             backgroundColor: StyleTheme.style_vars.themeTertiary,
         },

@@ -4,7 +4,7 @@ import { css } from 'aphrodite/no-important'
 import { useObservable } from 'rxjs-hooks'
 import { SubThreads } from 'subject-/threads'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
-import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
+import { DefaultButton, IconButton, Label, PrimaryButton, Slider, TextField } from '@fluentui/react'
 import { map, switchMap } from 'rxjs/operators'
 import { StyleTheme } from 'style-/theme'
 import DialogOneCol, {
@@ -14,10 +14,13 @@ import DialogOneCol, {
     DialogOneColTitle$,
 } from 'component-/dialog-one-col'
 import { ToolTranData } from 'tool-/tran-data'
+import { StyleMake } from 'style-/global'
+import LabelHelp from 'component-/label-help'
 
 const ids = {
     box: 'threads-canvas-box',
-    cns: 'threads-canvas',
+    cns_static: 'threads-canvas-static',
+    cns_edit: 'threads-canvas-edit',
 }
 
 /**
@@ -71,6 +74,7 @@ function ThreadsCanvas() {
             })
         return () => ob.unsubscribe()
     }, [])
+    // 静态线索的画布
     useEffect(() => {
         const dom = ref_cns.current
         if (!dom) {
@@ -94,6 +98,46 @@ function ThreadsCanvas() {
         })
         return () => {
             obli.unsubscribe()
+            cns.clearRect(0, 0, dom.clientWidth, dom.clientHeight)
+        }
+    }, [canvas_w, canvas_h])
+    // 编辑线索的画布
+    useEffect(() => {
+        const dom = document.getElementById(ids.cns_edit) as HTMLCanvasElement
+        if (!dom) {
+            return
+        }
+        const cns = dom.getContext('2d')!
+        const ob = SubThreads.editing_item$.subscribe((edit) => {
+            cns.clearRect(0, 0, dom.clientWidth, dom.clientHeight)
+            if (!edit) {
+                return
+            }
+            const li = SubThreads.obj$.value.items
+            const mmm = ToolTranData.li2map(li)
+
+            edit.nexts.forEach((id2) => {
+                const it2 = mmm.get(id2)
+                // console.log(it2, 'it2')
+                if (!it2) {
+                    return
+                }
+                const l = new Path2D()
+                l.moveTo(edit.x, edit.y)
+                l.lineTo(it2.x, it2.y)
+                cns.stroke(l)
+            })
+            const link_self = li.filter((v) => v.nexts.includes(edit.id))
+            link_self.forEach((it2) => {
+                // console.log(it2, 'it2')
+                const l = new Path2D()
+                l.moveTo(edit.x, edit.y)
+                l.lineTo(it2.x, it2.y)
+                cns.stroke(l)
+            })
+        })
+        return () => {
+            ob.unsubscribe()
             cns.clearRect(0, 0, dom.clientWidth, dom.clientHeight)
         }
     }, [canvas_w, canvas_h])
@@ -128,11 +172,26 @@ function ThreadsCanvas() {
             ))}
             {canvas_w && (
                 <canvas
-                    id={ids.cns}
+                    id={ids.cns_static}
                     ref={ref_cns}
                     width={canvas_w}
                     height={canvas_h}
                     style={{
+                        width: canvas_w,
+                        height: canvas_h,
+                    }}
+                ></canvas>
+            )}
+            {canvas_w && (
+                <canvas
+                    id={ids.cns_edit}
+                    width={canvas_w}
+                    height={canvas_h}
+                    style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        zIndex: 0,
                         width: canvas_w,
                         height: canvas_h,
                     }}
@@ -144,6 +203,28 @@ function ThreadsCanvas() {
 
 function Ctrl() {
     const editing_item = useObservable(() => SubThreads.editing_item$.pipe(shallowCopy()), null)
+    const static_items = useObservable(() => SubThreads.static_items$, [])
+    const [cns_w, next_cns_w] = useState(0)
+    const [cns_h, next_cns_h] = useState(0)
+    const m_static = ToolTranData.li2map(static_items)
+    const links = (editing_item?.nexts ?? [])
+        .filter((id) => m_static.get(id))
+        .map((id) => {
+            const it = m_static.get(id)!
+            return it
+        })
+    useEffect(() => {
+        const t = setInterval(() => {
+            const dom = document.getElementById(ids.cns_static)
+            if (dom) {
+                next_cns_w(dom.clientWidth)
+                next_cns_h(dom.clientHeight)
+            }
+        }, 1000)
+        return () => {
+            clearInterval(t)
+        }
+    }, [])
     if (editing_item === null) {
         return (
             <div className={css(style.Ctrl)}>
@@ -151,7 +232,7 @@ function Ctrl() {
                     onClick={() => {
                         const it = SubThreads.make_item()
                         const box_div = document.getElementById(ids.box)!
-                        const cns_dom = document.getElementById(ids.cns)!
+                        const cns_dom = document.getElementById(ids.cns_static)!
                         if (cns_dom.clientWidth > window.innerWidth) {
                             it.x = (window.innerWidth / 2 + box_div.scrollLeft) | 0
                         } else {
@@ -181,8 +262,10 @@ function Ctrl() {
             </div>
         )
     }
+    // 编辑某个线索
     return (
         <div className={css(style.Ctrl)}>
+            {/* 1 */}
             <div
                 style={{
                     marginRight: 10,
@@ -210,8 +293,10 @@ function Ctrl() {
                     }}
                 ></TextField>
             </div>
+            {/* 2 */}
             <div
                 style={{
+                    marginRight: 10,
                     width: 360,
                 }}
             >
@@ -224,6 +309,16 @@ function Ctrl() {
                         SubThreads.editing_item$.next(editing_item)
                     }}
                 ></TextField>
+                <Slider
+                    min={0}
+                    max={cns_w}
+                    showValue={false}
+                    value={editing_item.x}
+                    onChange={(n) => {
+                        editing_item.x = n
+                        SubThreads.editing_item$.next(editing_item)
+                    }}
+                ></Slider>
                 <TextField
                     label="y"
                     value={editing_item.y + ''}
@@ -233,9 +328,54 @@ function Ctrl() {
                         SubThreads.editing_item$.next(editing_item)
                     }}
                 ></TextField>
+                <Slider
+                    min={0}
+                    max={cns_h}
+                    showValue={false}
+                    value={editing_item.y}
+                    onChange={(n) => {
+                        editing_item.y = n
+                        SubThreads.editing_item$.next(editing_item)
+                    }}
+                ></Slider>
             </div>
+            {/* 3 */}
             <div>
-                <DefaultButton
+                <LabelHelp
+                    label_prop={{
+                        children: '后续线索',
+                    }}
+                    help_txt={['按住alt点击线索可以跳转到', '按住ctrl点击删除']}
+                ></LabelHelp>
+                {links.map((link) => (
+                    <div
+                        key={link.id}
+                        className={css(style.ThreadsEditNextLinkItem)}
+                        onClick={(e) => {
+                            if (e.ctrlKey) {
+                                editing_item.nexts = editing_item.nexts.filter((v) => v !== link.id)
+                                SubThreads.editing_item$.next(editing_item)
+                                return
+                            }
+                            if (e.altKey) {
+                                const li = SubThreads.obj$.value.items
+                                const f = li.find((v) => v.id === link.id)
+                                if (f) {
+                                    SubThreads.editing_item$.next(f)
+                                }
+                                e.preventDefault()
+                                return
+                            }
+                        }}
+                    >
+                        {link.name}
+                    </div>
+                ))}
+                <div className={css(StyleMake.wh(0, 10))}></div>
+                <IconButton
+                    iconProps={{
+                        iconName: 'Add',
+                    }}
                     onClick={() => {
                         DialogOneColLiGetter$.next(() => {
                             const obj = SubThreads.obj$
@@ -256,15 +396,25 @@ function Ctrl() {
                     }}
                 >
                     +
-                </DefaultButton>
+                </IconButton>
             </div>
+            {/* 99 */}
             <div
                 style={{
+                    display: 'flex',
                     position: 'absolute',
                     right: 10,
                     bottom: 10,
                 }}
             >
+                <DefaultButton
+                    onClick={() => {
+                        SubThreads.editing_item$.next(null)
+                    }}
+                >
+                    取消
+                </DefaultButton>
+                <div className={css(StyleMake.wh(10))}></div>
                 <PrimaryButton
                     onClick={() => {
                         const obj = SubThreads.obj$.value
