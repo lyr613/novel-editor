@@ -6,6 +6,7 @@ interface style_vo {
     /** 组件顶层 */
     root: object
     Setting: object
+    MoveCenter: object
     Line: object
     LineH: object
     LineW: object
@@ -32,6 +33,13 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         width: '100vw',
         height: '100vh',
         backgroundColor: StyleTheme.style_vars.themeLight,
+    },
+    MoveCenter: {
+        position: 'absolute',
+        transform: 'translate(-50%,-50%)',
+        width: 40,
+        height: 40,
+        backgroundColor: StyleTheme.style_vars.themePrimary,
     },
     Line: {
         position: 'absolute',
