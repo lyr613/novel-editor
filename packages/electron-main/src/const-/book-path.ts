@@ -26,7 +26,7 @@ class _s {
     }
     /** 线索 */
     get threads() {
-        return 'threads.drawio'
+        return 'threads.json'
     }
     /** 拼接json文件的完整路径 */
     full_src(book_src: string, json_file: json_file) {

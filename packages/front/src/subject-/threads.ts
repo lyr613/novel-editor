@@ -1,7 +1,9 @@
 import { BehaviorSubject } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
+import { ipc } from 'tool-/electron'
 import { mk_uuid } from 'tool-/uuid'
 import { _sub_base } from './base'
+import { SubBook } from './book'
 
 class _t {
     obj$ = new BehaviorSubject(this.default_obj)
@@ -39,6 +41,15 @@ class _t {
             link_chapter: '',
         }
         return re
+    }
+    save() {
+        ipc().sendSync('threads_save', SubBook.use_id$.value, this.obj$.value)
+    }
+    load() {
+        const msg: msg_dto<threads_vo> = ipc().sendSync('threads_load', SubBook.use_id$.value)
+        if (msg.b) {
+            this.obj$.next(msg.data)
+        }
     }
 }
 

@@ -14,8 +14,9 @@ import DialogOneCol, {
     DialogOneColTitle$,
 } from 'component-/dialog-one-col'
 import { ToolTranData } from 'tool-/tran-data'
-import { StyleMake } from 'style-/global'
+import { StyleMake, StylePreset } from 'style-/global'
 import LabelHelp from 'component-/label-help'
+import { BookEditThreads } from '../subj'
 
 const ids = {
     box: 'threads-canvas-box',
@@ -231,8 +232,11 @@ function Ctrl() {
                 <DefaultButton
                     onClick={() => {
                         const it = SubThreads.make_item()
-                        const box_div = document.getElementById(ids.box)!
-                        const cns_dom = document.getElementById(ids.cns_static)!
+                        const box_div = document.getElementById(ids.box)
+                        const cns_dom = document.getElementById(ids.cns_static)
+                        if (!box_div || !cns_dom) {
+                            return
+                        }
                         if (cns_dom.clientWidth > window.innerWidth) {
                             it.x = (window.innerWidth / 2 + box_div.scrollLeft) | 0
                         } else {
@@ -259,6 +263,27 @@ function Ctrl() {
                 >
                     向右增加
                 </DefaultButton>
+                <div className={css(StylePreset.flex, StyleMake.pos('absolute', undefined, undefined, 10, 10))}>
+                    <DefaultButton
+                        onClick={() => {
+                            BookEditThreads.show_type$.next('icon')
+                        }}
+                    >
+                        退出
+                    </DefaultButton>
+                    <div className={css(StyleMake.wh(10))}></div>
+                    <PrimaryButton
+                        onClick={() => {
+                            SubThreads.save()
+                            SubThreads.load()
+                            setTimeout(() => {
+                                BookEditThreads.show_type$.next('icon')
+                            }, 100)
+                        }}
+                    >
+                        保存并退出
+                    </PrimaryButton>
+                </div>
             </div>
         )
     }
@@ -425,8 +450,10 @@ function Ctrl() {
                         } else {
                             li[fi] = editing_item
                         }
-                        SubThreads.editing_item$.next(null)
                         SubThreads.obj$.next(obj)
+                        SubThreads.save()
+                        SubThreads.load()
+                        SubThreads.editing_item$.next(null)
                     }}
                 >
                     保存
