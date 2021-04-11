@@ -15,6 +15,7 @@ import { SubVolume } from 'subject-/volume'
 import { _filter$ } from '../subj'
 import { StyleMake } from 'style-/global'
 
+// 逐步收集角色列表, 屏幕信息, 过滤
 const l1$ = SubNpc.li$.pipe(switchMap((npc_li) => SubScreen.sub$(300).pipe(map((screen) => ({ screen, npc_li })))))
 
 const l2$ = l1$.pipe(switchMap((obj) => _filter$.pipe(map((fil) => ({ ...obj, fil })))))
@@ -31,7 +32,6 @@ const l4$ = l3$.pipe(
         const WW = screen.W
         const nw = SubScreen.auto_width(WW, 300, 20)
         const slice_remark_map = _get_npc_remark_sel_slice(chapter_index)
-        const chap_li = SubVolume.chaper_li
         const show_li = npc_li.filter((npc) => {
             if (fil.all) {
                 return true
