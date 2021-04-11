@@ -173,7 +173,7 @@ function Slice(p: p_slice) {
             <Stack horizontal={true} verticalAlign="center">
                 <LabelHelp
                     label_prop={{ children: '开始章节' }}
-                    help_txt={['如果只有一个切片可以不设置, 自动设置为第一章', '如果有多个切片必须设置']}
+                    help_txt={['如果只有一个切片可以不设置', '如果有多个切片必须设置']}
                 ></LabelHelp>
                 <Icon
                     iconName="Settings"
@@ -196,7 +196,11 @@ function Slice(p: p_slice) {
             <Stack horizontal={true} verticalAlign="center">
                 <LabelHelp
                     label_prop={{ children: '结束章节' }}
-                    help_txt={['如果不设置, 自动设置为下一个切片的开始章节', '如果是最后一个切片, 自动设置为最后一章']}
+                    help_txt={[
+                        '如果不设置, 自动设置为下一个切片的开始章节',
+                        '如果是最后一个切片, 自动设置为最后一章',
+                        '--只有一个切片时, 不自动设置',
+                    ]}
                 ></LabelHelp>
                 <Icon
                     iconName="Settings"

@@ -8,6 +8,7 @@ interface item_s {
     TopLineName: object
     TopLineIcon: object
     Editer: object
+    EditerCommon: object
 }
 /** 一个npc */
 export const style_item: item_s = StyleSheet.create<item_s>({
@@ -42,6 +43,14 @@ export const style_item: item_s = StyleSheet.create<item_s>({
     },
     Editer: {
         height: 'calc(100% - 30px)',
+        backgroundColor: StyleTheme.style_vars.themeLighter,
+    },
+    EditerCommon: {
+        fontSize: 16,
+        lineHeight: '26px',
+        boxSizing: 'border-box',
+        padding: '0 20px',
+        whiteSpace: 'pre',
     },
 })
 
@@ -57,7 +66,8 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         overflow: 'auto',
         boxSizing: 'border-box',
         width: '100vw',
-        height: 'calc(100vh - 80px)',
+        // height: 'calc(100vh - 80px)',
+        flexGrow: 1,
         padding: '20px 0 0 0',
         backgroundColor: StyleTheme.style_vars.themeLight,
     },
@@ -66,7 +76,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         verticalAlign: 'top',
         margin: '0 0 20px 20px',
         boxSizing: 'border-box',
-        width: 240,
+        width: 300,
         'aspect-ratio': '1 / 1',
         backgroundColor: StyleTheme.style_vars.themeLight,
         [`:hover .${css(style_item.TopLineIcon)}`]: {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { style, style_item } from './style'
 import { css } from 'aphrodite/no-important'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, from } from 'rxjs'
 import { useObservable } from 'rxjs-hooks'
 import { debounceTime, map, switchMap } from 'rxjs/operators'
 import { SubScreen } from 'subject-/screen'
@@ -12,48 +12,59 @@ import { BookEditNpc } from '../../subj'
 import { SubNpc } from 'subject-/npc'
 import { ChapterSliderIndex$ } from 'component-/chapter-slider'
 import { SubVolume } from 'subject-/volume'
+import { _filter$ } from '../subj'
+import { StyleMake } from 'style-/global'
+
+const l1$ = SubNpc.li$.pipe(switchMap((npc_li) => SubScreen.sub$(300).pipe(map((screen) => ({ screen, npc_li })))))
+
+const l2$ = l1$.pipe(switchMap((obj) => _filter$.pipe(map((fil) => ({ ...obj, fil })))))
+
+const l3$ = l2$.pipe(
+    switchMap((obj) =>
+        (obj.fil.chapter ? ChapterSliderIndex$ : from([0])).pipe(map((chapter_index) => ({ ...obj, chapter_index }))),
+    ),
+)
+
+const l4$ = l3$.pipe(
+    map((obj) => {
+        const { npc_li, screen, fil, chapter_index } = obj
+        const WW = screen.W
+        const nw = SubScreen.auto_width(WW, 300, 20)
+        const slice_remark_map = _get_npc_remark_sel_slice(chapter_index)
+        const chap_li = SubVolume.chaper_li
+        const show_li = npc_li.filter((npc) => {
+            if (fil.all) {
+                return true
+            }
+            if (!npc.name_show.includes(fil.name)) {
+                return false
+            }
+            if (fil.chapter) {
+                const arr = slice_remark_map.get(npc.id) ?? []
+                if (!arr.length) {
+                    return false
+                }
+            }
+            return true
+        })
+        return show_li.map((it) => {
+            return {
+                npc: it,
+                w: nw.w,
+                slice_remark: slice_remark_map.get(it.id) || [],
+            }
+        })
+    }),
+)
 
 /**
  */
 export default function MainList() {
-    const arr = useObservable(
-        () =>
-            SubNpc.li$.pipe(
-                switchMap((npc_li) =>
-                    SubScreen.sub$(300).pipe(
-                        switchMap((screen) =>
-                            ChapterSliderIndex$.pipe(
-                                debounceTime(200),
-                                map((chapter_index) => {
-                                    const WW = screen.W
-                                    const nw = SubScreen.auto_width(WW, 240, 20)
-                                    const slice_remark_map = _get_npc_remark_sel_slice(chapter_index)
-                                    const chap_li = SubVolume.chaper_li
-                                    return (
-                                        npc_li
-                                            .map((it) => {
-                                                return {
-                                                    npc: it,
-                                                    w: nw.w,
-                                                    slice_remark: slice_remark_map.get(it.id) || [],
-                                                }
-                                            })
-                                            // 这里过滤, 如果没有取到备注, 就是不在任何片段内
-                                            // 如果没有设置过章节, 也不过滤
-                                            .filter((v) => v.slice_remark.length || chap_li.length === 0)
-                                    )
-                                }),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        [],
-    )
+    const arr = useObservable(() => l4$, [])
     return (
         <div className={css(style.MainList)}>
             {arr.map((it, i) => (
-                <Item key={i} {...it} />
+                <Item key={it.npc.id} {...it} index={i} />
             ))}
         </div>
     )
@@ -63,6 +74,7 @@ interface p {
     w: number
     npc: npc_vo
     slice_remark: string[]
+    index: number
 }
 function Item(p: p) {
     const ref_editer = useRef(null as null | HTMLDivElement)
@@ -113,7 +125,14 @@ function Item(p: p) {
                         />
                     </div>
                 </div>
-                <div ref={ref_editer} className={css(style_item.Editer)}></div>
+                {/* 前4个用monaco, 之后为了性能, 用普通div */}
+                {p.index < 4 ? (
+                    <div ref={ref_editer} className={css(style_item.Editer)}></div>
+                ) : (
+                    <div className={css(style_item.Editer, style_item.EditerCommon)}>
+                        {[p.npc.remark, ...p.slice_remark].join('\n----\n')}
+                    </div>
+                )}
             </div>
         </div>
     )

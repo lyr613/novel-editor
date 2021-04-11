@@ -56,7 +56,7 @@ class _n extends _sub_base<npc_vo> {
      */
     standardization_slice_chapter(slices: npc_slice_vo[]) {
         const chap_li = SubVolume.chaper_li
-        if (!slices.length || !chap_li.length) {
+        if (!slices.length || !chap_li.length || slices.length === 1) {
             return slices
         }
         const m_chap_i = SubVolume.chaper_index_map
