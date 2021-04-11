@@ -345,7 +345,7 @@ function Ctrl() {
                     label_prop={{
                         children: '后续线索',
                     }}
-                    help_txt={['按住alt点击线索可以跳转到', '按住ctrl点击删除']}
+                    help_txt={['按住alt点击线索跳转到', '按住ctrl点击删除']}
                 ></LabelHelp>
                 {links.map((link) => (
                     <div
