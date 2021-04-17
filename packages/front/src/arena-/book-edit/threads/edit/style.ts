@@ -21,6 +21,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         width: '100vw',
         height: '100vh',
         backgroundColor: StyleTheme.style_vars.themeLight,
+        userSelect: 'none',
     },
     ThreadsCanvas: {
         overflowY: 'hidden',
@@ -46,6 +47,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         cursor: 'pointer',
         backgroundColor: StyleTheme.style_vars.themeLight,
         whiteSpace: 'nowrap',
+        userSelect: 'none',
 
         ':hover': {
             backgroundColor: StyleTheme.style_vars.themeTertiary,

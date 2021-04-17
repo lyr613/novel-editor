@@ -5,7 +5,15 @@ import { useObservable } from 'rxjs-hooks'
 import { SubThreads } from 'subject-/threads'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
 import { DefaultButton, IconButton, Label, PrimaryButton, Slider, TextField } from '@fluentui/react'
-import { map, switchMap } from 'rxjs/operators'
+import {
+    debounceTime,
+    distinctUntilChanged,
+    distinctUntilKeyChanged,
+    map,
+    switchMap,
+    takeUntil,
+    tap,
+} from 'rxjs/operators'
 import { StyleTheme } from 'style-/theme'
 import DialogOneCol, {
     DialogOneColConfirmHook$,
@@ -17,11 +25,14 @@ import { ToolTranData } from 'tool-/tran-data'
 import { StyleMake, StylePreset } from 'style-/global'
 import LabelHelp from 'component-/label-help'
 import { BookEditThreads } from '../subj'
+import { from, fromEvent, merge } from 'rxjs'
 
 const ids = {
     box: 'threads-canvas-box',
     cns_static: 'threads-canvas-static',
     cns_edit: 'threads-canvas-edit',
+    /** 正在编辑的dom */
+    edit_item: 'threads-edit-item',
 }
 
 /**
@@ -43,7 +54,10 @@ function ThreadsCanvas() {
     const [canvas_h, next_canvas_h] = useState(0)
     const [item_li, next_item_li] = useState([] as threads_item_vo[])
     const ref_cns = useRef(null as null | HTMLCanvasElement)
+    // 计算画布的尺寸, 获取静态元素
     useEffect(() => {
+        console.log('计算画布的尺寸, 获取静态元素')
+
         const ob = SubThreads.obj$
             .pipe(
                 switchMap((obj) =>
@@ -77,6 +91,8 @@ function ThreadsCanvas() {
     }, [])
     // 静态线索的画布
     useEffect(() => {
+        console.log('静态线索的画布')
+
         const dom = ref_cns.current
         if (!dom) {
             return
@@ -104,6 +120,8 @@ function ThreadsCanvas() {
     }, [canvas_w, canvas_h])
     // 编辑线索的画布
     useEffect(() => {
+        console.log('编辑线索的画布')
+
         const dom = document.getElementById(ids.cns_edit) as HTMLCanvasElement
         if (!dom) {
             return
@@ -142,11 +160,79 @@ function ThreadsCanvas() {
             cns.clearRect(0, 0, dom.clientWidth, dom.clientHeight)
         }
     }, [canvas_w, canvas_h])
+    // 拖动编辑元素
+    useEffect(() => {
+        console.log('拖动编辑元素')
+
+        const start$ = (editing_item: threads_item_vo) =>
+            fromEvent<MouseEvent>(document.getElementById(ids.edit_item)!, 'mousedown').pipe(
+                map((e) => {
+                    e.stopPropagation()
+                    const x = e.screenX - editing_item.x
+                    const y = e.screenY - editing_item.y
+                    return { x, y }
+                }),
+            )
+        const move$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
+            map((e) => {
+                return {
+                    x: e.screenX,
+                    y: e.screenY,
+                }
+            }),
+        )
+        const stop$ = merge(
+            fromEvent<MouseEvent>(document, 'mouseup'),
+            fromEvent<MouseEvent>(document, 'mouseleave'),
+            fromEvent<MouseEvent>(document, 'mousedown'),
+        )
+        const st$ = SubThreads.editing_item$.pipe(
+            /**
+             * 这里比较一下, 如果id相同说明是自己推自己, 不用切换拖动流
+             */
+            distinctUntilChanged((a, b) => {
+                return a?.id === b?.id
+            }),
+            /** 等100ms防止没渲染 */
+            debounceTime(100),
+            switchMap((edit) => {
+                if (edit) {
+                    return start$(edit).pipe(
+                        switchMap((xy0) =>
+                            move$.pipe(
+                                takeUntil(stop$),
+                                map((xy1) => {
+                                    const x = (((xy1.x - xy0.x) / 10) | 0) * 10
+                                    const y = (((xy1.y - xy0.y) / 10) | 0) * 10
+                                    return { x, y, edit }
+                                }),
+                            ),
+                        ),
+                    )
+                }
+                return from([null])
+            }),
+        )
+        const ob = st$.subscribe((obj) => {
+            if (!obj) {
+                return
+            }
+            // console.log(xy)
+            obj.edit.x = obj.x
+            obj.edit.y = obj.y
+            SubThreads.editing_item$.next(obj.edit)
+        })
+        return () => {
+            ob.unsubscribe()
+        }
+    }, [])
     return (
         <div className={css(style.ThreadsCanvas)} id={ids.box}>
+            {/* 编辑元素 */}
             {editing_item && (
                 <div
                     className={css(style.ThreadsCanvasItem)}
+                    id={ids.edit_item}
                     style={{
                         left: editing_item.x + 'px',
                         top: editing_item.y + 'px',
@@ -156,6 +242,7 @@ function ThreadsCanvas() {
                     {editing_item.name}
                 </div>
             )}
+            {/* 静态元素s */}
             {item_li.map((it) => (
                 <div
                     key={it.id}
@@ -164,13 +251,25 @@ function ThreadsCanvas() {
                         left: it.x + 'px',
                         top: it.y + 'px',
                     }}
-                    onClick={() => {
+                    onClick={(e) => {
+                        // 按住ctrl切换是否后续
+                        if (e.ctrlKey && editing_item) {
+                            const li2 = editing_item.nexts.filter((v) => v !== it.id)
+                            if (li2.length === editing_item.nexts.length) {
+                                li2.push(it.id)
+                            }
+                            editing_item.nexts = li2
+                            SubThreads.editing_item$.next(editing_item)
+
+                            return
+                        }
                         SubThreads.editing_item$.next(it)
                     }}
                 >
                     {it.name}
                 </div>
             ))}
+            {/* 静态画布 */}
             {canvas_w && (
                 <canvas
                     id={ids.cns_static}
@@ -183,6 +282,7 @@ function ThreadsCanvas() {
                     }}
                 ></canvas>
             )}
+            {/* 编辑画布 */}
             {canvas_w && (
                 <canvas
                     id={ids.cns_edit}
@@ -325,8 +425,8 @@ function Ctrl() {
                     width: 360,
                 }}
             >
+                <LabelHelp label_prop={{ children: 'x' }} help_txt={['也可拖动选中的线索设置位置']}></LabelHelp>
                 <TextField
-                    label="x"
                     value={editing_item.x + ''}
                     onChange={(_, ns) => {
                         const a = Number(ns || '') || 0
@@ -370,7 +470,11 @@ function Ctrl() {
                     label_prop={{
                         children: '后续线索',
                     }}
-                    help_txt={['按住alt点击线索跳转到', '按住ctrl点击删除']}
+                    help_txt={[
+                        '按住alt点击线索跳转到',
+                        '按住ctrl点击删除',
+                        '在上方展示区按住ctrl点击线索, 可以切换是否后续',
+                    ]}
                 ></LabelHelp>
                 {links.map((link) => (
                     <div
@@ -432,6 +536,22 @@ function Ctrl() {
                     bottom: 10,
                 }}
             >
+                <DefaultButton
+                    onClick={() => {
+                        const id = editing_item.id
+                        const obj = SubThreads.obj$.value
+                        const li1 = obj.items
+                        const li2 = li1.filter((v) => v.id !== id)
+                        obj.items = li2
+                        SubThreads.obj$.next(obj)
+
+                        SubThreads.editing_item$.next(null)
+                    }}
+                >
+                    删除
+                </DefaultButton>
+                <div className={css(StyleMake.wh(20))}></div>
+
                 <DefaultButton
                     onClick={() => {
                         SubThreads.editing_item$.next(null)

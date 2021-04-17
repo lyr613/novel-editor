@@ -46,11 +46,12 @@ export const style_item: item_s = StyleSheet.create<item_s>({
         backgroundColor: StyleTheme.style_vars.themeLighter,
     },
     EditerCommon: {
+        overflow: 'auto',
         fontSize: 16,
         lineHeight: '26px',
         boxSizing: 'border-box',
         padding: '0 20px',
-        whiteSpace: 'pre',
+        whiteSpace: 'pre-line',
     },
 })
 
