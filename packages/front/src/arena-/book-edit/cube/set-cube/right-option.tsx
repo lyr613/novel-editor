@@ -15,7 +15,7 @@ export default function RightOption() {
     return (
         <div className={css(s.RightOption)}>
             <TopInfor />
-            <Esc />
+            {/* <Esc /> */}
         </div>
     )
 }
@@ -44,8 +44,9 @@ function TopInfor() {
             }}
         >
             <div>{txt}, 你是要?</div>
-            {now_sel === 'l1' && <NewGroup />}
+            {(now_sel === 'l1' || now_sel === 'none') && <NewGroup />}
             {now_sel === 'l1' && l1n === 1 && <EditGroup />}
+            <div className={css(StyleMake.wh(10, 40))}></div>
             {now_sel === 'l1' && l1n === 1 && <NewItem />}
             {now_sel === 'l2' && l2n === 1 && <EditItem />}
         </div>

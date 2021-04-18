@@ -29,10 +29,12 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     Top: {
         display: 'flex',
+        boxSizing: 'border-box',
+        alignItems: 'center',
         borderBottom: '1px solid ' + StyleTheme.style_vars.themeSecondary,
         width: '100%',
-        height: 33,
-        flexDirection: 'row-reverse',
+        height: 40,
+        paddingLeft: 5,
     },
     TopIcon: {
         // display: 'flex',
@@ -48,7 +50,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
     },
     VolBox: {
         overflow: 'auto',
-        height: 'calc(100vh - 33px)',
+        height: 'calc(100vh - 40px)',
     },
     VolItem: {
         overflow: 'hidden',

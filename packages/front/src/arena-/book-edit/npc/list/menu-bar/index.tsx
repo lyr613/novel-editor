@@ -34,7 +34,7 @@ function Esc() {
     return (
         <IconButton
             title="离开角色页"
-            className={css(StyleMake.mar(0, 0, 0, 'auto'))}
+            className={css(StyleMake.mar(0, 0, 0, 0))}
             iconProps={{ iconName: 'Cancel' }}
             onClick={() => {
                 BookEditNpc.show_type$.next('icon')

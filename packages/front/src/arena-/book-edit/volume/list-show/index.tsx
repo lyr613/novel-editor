@@ -21,16 +21,16 @@ function Top() {
         <div className={css(style.Top)}>
             <IconButton
                 className={css(style.TopIcon)}
-                iconProps={{ iconName: 'Cancel' }}
+                iconProps={{ iconName: 'Settings' }}
                 onClick={() => {
-                    volume_show_type$.next('icon')
+                    volume_show_type$.next('set')
                 }}
             ></IconButton>
             <IconButton
                 className={css(style.TopIcon)}
-                iconProps={{ iconName: 'Settings' }}
+                iconProps={{ iconName: 'Cancel' }}
                 onClick={() => {
-                    volume_show_type$.next('set')
+                    volume_show_type$.next('icon')
                 }}
             ></IconButton>
         </div>

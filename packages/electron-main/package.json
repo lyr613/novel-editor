@@ -7,7 +7,8 @@
     "scripts": {
         "watch": " node ./scripts/watch.js ",
         "electron-start": " node ./scripts/electron-start.js ",
-        "build": " node ./scripts/build.js "
+        "build": " node ./scripts/build.js ",
+        "electron-build": " node ./scripts/electron-build.js "
     },
     "dependencies": {
         "directory-named-webpack-plugin": "^4.0.1",

@@ -7,8 +7,8 @@ main()
 
 async function main() {
     await webpack_build()
-    await electron_build()
-    open_dir()
+    // await electron_build()
+    // open_dir()
 }
 
 function webpack_build() {
@@ -58,4 +58,9 @@ function open_dir() {
             cp.exec(`open ${src}`)
         }
     })
+}
+
+module.exports = {
+    electron_build,
+    open_dir,
 }

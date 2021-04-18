@@ -55,9 +55,10 @@ function RecentList() {
     return (
         <div className={css(style.RecentList)}>
             <div
-                className={css(StylePreset.flhc, StyleMake.wh('100%', 36))}
+                className={css(StylePreset.flhc, StyleMake.wh('100%', 40))}
                 style={{
-                    flexDirection: 'row-reverse',
+                    boxSizing: 'border-box',
+                    paddingLeft: 5,
                 }}
             >
                 <IconButton

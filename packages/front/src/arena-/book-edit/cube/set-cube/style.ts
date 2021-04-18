@@ -30,12 +30,14 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         userSelect: 'none',
     },
     LeftGroup: {
+        position: 'relative',
         width: 540,
         overflowY: 'auto',
         flexShrink: 0,
         boxSizing: 'border-box',
         height: '100%',
         padding: 20,
+        paddingTop: 60,
         borderRight: '1px solid ' + StyleTheme.style_vars.themeTertiary,
     },
     MidItem: {
