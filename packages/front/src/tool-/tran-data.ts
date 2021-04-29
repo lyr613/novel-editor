@@ -35,4 +35,20 @@ export class ToolTranData {
         }
         return null
     }
+    /**
+     * 标准化文本
+     * @param txt 原始文本
+     * @param linepad 行首填充
+     * @param linesplit 段落间添加空行
+     */
+    static format_txt(txt: string, linepad = '', linesplit = 0) {
+        const t2 = txt
+            .split('\n')
+            .filter((s) => !!s)
+            .map((s) => s.replace(/^\s*/, ''))
+            .map((s) => linepad + s)
+        const j = Array.from({ length: linesplit + 1 }, () => '\n').join('')
+        const re = t2.join(j)
+        return re
+    }
 }

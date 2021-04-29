@@ -14,6 +14,7 @@ import { ChapterSliderIndex$ } from 'component-/chapter-slider'
 import { SubVolume } from 'subject-/volume'
 import { _filter$ } from '../subj'
 import { StyleMake } from 'style-/global'
+import { ToolTranData } from 'tool-/tran-data'
 
 // 逐步收集角色列表, 屏幕信息, 过滤
 const l1$ = SubNpc.li$.pipe(switchMap((npc_li) => SubScreen.sub$(300).pipe(map((screen) => ({ screen, npc_li })))))
@@ -48,11 +49,18 @@ const l4$ = l3$.pipe(
             return true
         })
         return show_li.map((it) => {
-            return {
+            const o = {
                 npc: it,
                 w: nw.w,
                 slice_remark: slice_remark_map.get(it.id) || [],
+                show_txt: '',
             }
+            o.show_txt = ToolTranData.format_txt(
+                [o.npc.remark, ...o.slice_remark].filter((v) => !!v).join('\n=-=-=-=\n'),
+                '　　',
+                1,
+            )
+            return o
         })
     }),
 )
@@ -73,8 +81,10 @@ export default function MainList() {
 interface p {
     w: number
     npc: npc_vo
+    /** 没用了现在 */
     slice_remark: string[]
     index: number
+    show_txt: string
 }
 function Item(p: p) {
     const ref_editer = useRef(null as null | HTMLDivElement)
@@ -88,7 +98,7 @@ function Item(p: p) {
         opt.contextmenu = false
         opt.scrollBeyondLastLine = false
         const editer = monaco.editor.create(dom, opt)
-        const show_value = [p.npc.remark, ...p.slice_remark].join('\n----\n')
+        const show_value = p.show_txt
         editer.setValue(show_value)
         return () => {
             editer.dispose()
@@ -129,9 +139,7 @@ function Item(p: p) {
                 {p.index < 4 ? (
                     <div ref={ref_editer} className={css(style_item.Editer)}></div>
                 ) : (
-                    <div className={css(style_item.Editer, style_item.EditerCommon)}>
-                        {[p.npc.remark, ...p.slice_remark].join('\n----\n')}
-                    </div>
+                    <div className={css(style_item.Editer, style_item.EditerCommon)}>{p.show_txt}</div>
                 )}
             </div>
         </div>
@@ -149,12 +157,23 @@ function _get_npc_remark_sel_slice(chap_i: number) {
     const npc_li = SubNpc.li$.value
     // 过滤符合范围的片段, 取remark
     npc_li.forEach((npc) => {
+        if (!npc.slices.length) {
+            return
+        }
+        if (npc.slices.length === 1) {
+            // 这里补充, 单片段的无设置直接塞进去备注
+            const sli = npc.slices[0]
+            if (!sli.start_chapter && !sli.end_chapter) {
+                const txt2 = [sli.remark]
+                re_map.set(npc.id, txt2)
+                return
+            }
+        }
         const txt2 = npc.slices
             .filter((sli) => {
                 const sti = m_chap_i.get(sli.start_chapter) ?? Number.MAX_SAFE_INTEGER
                 const edi = m_chap_i.get(sli.end_chapter) ?? -2
                 // console.log(npc.name, sti, edi, sli.remark)
-
                 return sti <= chap_i && chap_i <= edi
             })
             .map((v) => v.remark)
