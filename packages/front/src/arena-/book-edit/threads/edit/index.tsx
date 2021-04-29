@@ -40,9 +40,31 @@ const ids = {
 export default function ThreadsEdit() {
     return (
         <div className={css(style.ThreadsEdit)}>
+            <Exit />
             <ThreadsCanvas />
             <Ctrl />
             <DialogOneCol />
+        </div>
+    )
+}
+
+function Exit() {
+    return (
+        <div
+            className={css()}
+            style={{
+                position: 'absolute',
+                left: 10,
+                top: 10,
+                zIndex: 9999,
+            }}
+        >
+            <IconButton
+                iconProps={{ iconName: 'Cancel' }}
+                onClick={() => {
+                    BookEditThreads.show_type$.next('icon')
+                }}
+            ></IconButton>
         </div>
     )
 }
@@ -364,13 +386,13 @@ function Ctrl() {
                     向右增加
                 </DefaultButton>
                 <div className={css(StylePreset.flex, StyleMake.pos('absolute', undefined, undefined, 10, 10))}>
-                    <DefaultButton
+                    {/* <DefaultButton
                         onClick={() => {
                             BookEditThreads.show_type$.next('icon')
                         }}
                     >
                         退出
-                    </DefaultButton>
+                    </DefaultButton> */}
                     <div className={css(StyleMake.wh(10))}></div>
                     <PrimaryButton
                         onClick={() => {
