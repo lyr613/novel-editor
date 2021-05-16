@@ -3,14 +3,6 @@ const path = require('path')
 const cp = require('child_process')
 const os = require('os')
 
-main()
-
-async function main() {
-    await webpack_build()
-    // await electron_build()
-    // open_dir()
-}
-
 function webpack_build() {
     return new Promise((res) => {
         console.log('---')
@@ -61,6 +53,7 @@ function open_dir() {
 }
 
 module.exports = {
+    webpack_build,
     electron_build,
     open_dir,
 }

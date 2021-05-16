@@ -1,4 +1,4 @@
-const o = require('./build')
+const o = require('./build-funcs')
 
 main()
 

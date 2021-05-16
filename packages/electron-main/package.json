@@ -5,10 +5,10 @@
     "author": "秋无衣",
     "description": "小说编辑器",
     "scripts": {
-        "watch": " node ./scripts/watch.js ",
-        "electron-start": " node ./scripts/electron-start.js ",
-        "build": " node ./scripts/build.js ",
-        "electron-build": " node ./scripts/electron-build.js "
+        "dev-watch-js": " node ./scripts/dev-watch-js.js ",
+        "dev-start-electron": " node ./scripts/dev-start-electron.js ",
+        "build-js": " node ./scripts/build-js.js ",
+        "build-electron": " node ./scripts/build-electron.js "
     },
     "dependencies": {
         "directory-named-webpack-plugin": "^4.0.1",
