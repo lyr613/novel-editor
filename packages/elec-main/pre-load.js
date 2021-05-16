@@ -1,1 +1,0 @@
-global.electron = require('electron')

@@ -1,6 +1,0 @@
-yarn.lock
-.git
-dist/
-build/
-watch/
-*.psd
