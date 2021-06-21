@@ -54,10 +54,11 @@ function List() {
                 padding: '20px 0 0 0',
             }}
         >
+            {JumpSetting(w)}
+            {JumpNew(w)}
             {li.map((bk, i) => (
                 <Item key={bk.item.id} book={bk.item} w={bk.w} />
             ))}
-            {JumpNew(w)}
         </div>
     )
 }
@@ -145,6 +146,24 @@ function JumpNew(w: number) {
         >
             <div className={css(s.JumpNew)}>
                 <Icon iconName="Add" />
+            </div>
+        </div>
+    )
+}
+
+function JumpSetting(w: number) {
+    return (
+        <div
+            className={css(s.Item)}
+            style={{
+                width: w + 'px',
+            }}
+            onClick={() => {
+                Rt.next(Rt.l1.option.en)
+            }}
+        >
+            <div className={css(s.JumpNew)}>
+                <Icon iconName="Settings" />
             </div>
         </div>
     )
