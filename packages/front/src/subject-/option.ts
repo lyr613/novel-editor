@@ -10,8 +10,10 @@ class _option extends _sub_base<option_vo> {
     load() {
         const opt_msg: msg_dto<option_vo> = ipc().sendSync('option_load')
         const opt = opt_msg.data
+
         this.edit$.next(opt)
         StyleTheme.use(opt.ui.theme)
+        return opt
     }
     save() {
         this.edit$.pipe(take(1)).subscribe((opt) => {

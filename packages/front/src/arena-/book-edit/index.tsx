@@ -47,9 +47,9 @@ function LoadInforSub() {
             return
         }
         const book = book_re.data
-        const app_opt_msg: msg_dto<option_vo> = ipc().sendSync('option_load')
-        const app_opt = app_opt_msg.data
-        SubOption.edit$.next(app_opt)
+        // const app_opt_msg: msg_dto<option_vo> = ipc().sendSync('option_load')
+        const app_opt = SubOption.load()
+        // SubOption.edit$.next(app_opt)
         //
         SubBook.li$.next([book])
         SubBook.use_id$.next(book.id)

@@ -40,6 +40,11 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         width: 40,
         height: 40,
         backgroundColor: StyleTheme.style_vars.themePrimary,
+        cursor: 'pointer',
+        opacity: 0.6,
+        ':hover': {
+            opacity: 1,
+        },
     },
     Line: {
         position: 'absolute',
