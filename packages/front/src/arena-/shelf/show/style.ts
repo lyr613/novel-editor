@@ -9,12 +9,14 @@ interface style_item_vo {
     btn_box: object
     /** 一行 */
     line: object
+    img_box: object
 }
 
 /** 一本书的 */
 export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
     name: {
         position: 'absolute',
+        zIndex: 100,
         left: 0,
         bottom: 0,
         overflow: 'hidden',
@@ -24,13 +26,14 @@ export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
         height: '36px',
         padding: '5px 10px',
         fontSize: 16,
-        backgroundColor: 'rgba(0,0,0,0.3)',
+        backgroundColor: 'rgba(0,0,0,0.9)',
         color: StyleTheme.style_vars.white,
         opacity: 0.5,
     },
     btn_box: {
         display: 'none',
         position: 'absolute',
+        zIndex: 200,
         left: 0,
         top: 0,
         width: '100%',
@@ -57,6 +60,17 @@ export const style_item: style_item_vo = StyleSheet.create<style_item_vo>({
         ':hover span': {
             fontSize: 14,
         },
+    },
+    img_box: {
+        display: 'flex',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        overflow: 'hidden',
+        width: '100%',
+        height: '100%',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
     },
 })
 
@@ -86,6 +100,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         [`:hover .${css(style_item.name)}`]: {
             height: 'unset',
             opacity: 1,
+            backgroundColor: StyleTheme.style_vars.themeDarker,
         },
         [`:hover .${css(style_item.btn_box)}`]: {
             display: 'block',

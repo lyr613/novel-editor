@@ -27,7 +27,7 @@ export default function ChapterSlider() {
 
 function Exact() {
     return (
-        <div className={css(StyleMake.wh(40, 40), StylePreset.flwc, StylePreset.flhc)}>
+        <div className={css(StyleMake.wh(40, 40), StylePreset.flwc, StylePreset.flhc)} title="选择章节">
             <IconButton
                 iconProps={{ iconName: 'POI' }}
                 onClick={() => {

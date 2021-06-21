@@ -11,7 +11,7 @@ interface style_vo {
 
 export const style: style_vo = StyleSheet.create<style_vo>({
     root: {
-        fontSize: 340,
+        fontSize: 0,
     },
     form: {
         margin: 20,

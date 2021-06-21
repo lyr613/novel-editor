@@ -10,12 +10,13 @@ import { Rt } from 'router-'
 import { Icon } from '@fluentui/react'
 import { map, switchMap } from 'rxjs/operators'
 import { SubOption } from 'subject-/option'
+import LocalImg from 'component-/local-img'
 
 /** Show */
 export default function Show() {
     useEffect(() => {
         setTimeout(() => {
-            SubOption.update_shelf()
+            SubOption.load()
             SubBook.load()
         }, 17)
     }, [])
@@ -76,6 +77,16 @@ function Item(p: one) {
             }}
         >
             <div className={css(style_item.name)}>{p.book.name}</div>
+            <div className={css(style_item.img_box)}>
+                <LocalImg
+                    src={p.book.cover}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                    }}
+                ></LocalImg>
+            </div>
             <div className={css(style_item.btn_box)}>
                 <div
                     className={css(style_item.line)}

@@ -12,8 +12,21 @@ export function _watch_fs() {
     ipcMain.on('fs_write', fs_write)
     ipcMain.on('fs_show_in_folder', fs_show_in_folder)
     ipcMain.on('fs_vscode', fs_vscode)
+    ipcMain.on('fs_read_img', fs_read_img)
 }
 
+function fs_read_img(e: Electron.IpcMainEvent, src: string) {
+    const re = UtilReply.msg(null as null | Buffer)
+    const bn = path.basename(src)
+    if (!/(png|jpg)$/.test(bn)) {
+        UtilReply.reply(e, 'fs_read_img', re)
+        return
+    }
+    const buf = fs.readFileSync(src)
+    re.data = buf
+    re.b = true
+    UtilReply.reply(e, 'fs_read_img', re)
+}
 function fs_read(e: Electron.IpcMainEvent, src: string) {
     const re = UtilFs.read(src)
     UtilReply.reply(e, 'fs_read', re)

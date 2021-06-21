@@ -25,10 +25,10 @@ function _get_path(path_code: path_dto) {
 }
 
 /** 通过选择获取目录 */
-function path_pick(e: Electron.IpcMainEvent) {
+function path_pick(e: Electron.IpcMainEvent, properties: string[] = ['openDirectory']) {
     dialog
         .showOpenDialog({
-            properties: ['openDirectory'],
+            properties: properties as any,
         })
         .then((res) => {
             const msg = UtilReply.msg('')

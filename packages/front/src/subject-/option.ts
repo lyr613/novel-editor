@@ -8,6 +8,8 @@ class _option extends _sub_base<option_vo> {
     /** 加载编辑器配置, 只在打开编辑器的时候使用 */
 
     load() {
+        console.log('加载编辑器设置')
+
         const opt_msg: msg_dto<option_vo> = ipc().sendSync('option_load')
         const opt = opt_msg.data
 
