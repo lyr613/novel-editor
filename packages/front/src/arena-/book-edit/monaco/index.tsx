@@ -7,6 +7,7 @@ import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
 import { debounceTime, map } from 'rxjs/operators'
 import { SubBookOption } from 'subject-/book-option'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  * 文字编辑区
@@ -66,11 +67,13 @@ function Box(p: p) {
         /** 更新文本 */
         const ob_load_txt = SubVolume.chapter_use_txt$.subscribe((txt) => {
             editer.setValue(txt)
+            SubBookEdit.cur_editer_txt$.next(txt)
         })
         editer.onKeyUp(() => {
             const t = editer.getValue()
             const id = SubVolume.chapter_use_id$.value
             SubVolume.will_write(id, t)
+            SubBookEdit.cur_editer_txt$.next(t)
         })
         // 本书的设置
         // editer.layout({
