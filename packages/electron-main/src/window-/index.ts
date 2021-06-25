@@ -60,7 +60,9 @@ class _win {
     }
     /** id: 子窗口 */
     child_map = new Map<string, BrowserWindow | false>()
-    /** id: 书目信息 */
+    /** id: 书目信息
+     * 只有打开编辑子窗口时才能添加
+     */
     book_map = new Map<string, book_vo>()
 }
 

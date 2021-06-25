@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { SubBook } from 'subject-/book'
 import { ipc } from 'tool-/electron'
 
 interface p {
     src: string
+    book?: book_option_vo
     style?: React.CSSProperties
 }
 export default function LocalImg(p: p) {
     const [src0, next_src0] = useState('')
     useEffect(() => {
-        const re2 = ipc().sendSync('fs_read_img', p.src)
+        const re2 = ipc().sendSync('fs_read_img', p.src, p.book)
+
         if (!re2.b) {
             return
         }

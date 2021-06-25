@@ -17,7 +17,8 @@ class _o {
             UtilReply.reply(e, 'book_option_save', msg)
         })
         ipcMain.on('book_set_cover', (e, book_src, source) => {
-            this.book_set_cover(e, book_src, source)
+            const msg = this.book_set_cover(e, book_src, source)
+            UtilReply.reply(e, 'book_set_cover', msg)
         })
     }
     /** 读取 */
@@ -43,7 +44,7 @@ class _o {
     }
     /** 设置封面 */
     book_set_cover(e: any, book_src: string, src_source: string) {
-        const msg = UtilReply.msg(null)
+        const msg = UtilReply.msg('')
         const bn = path.extname(src_source)
         const src_dir = path.join(book_src, 'img')
         const src_tar = path.join(src_dir, 'cover' + bn)
@@ -55,6 +56,8 @@ class _o {
             fs.mkdirSync(src_dir)
         }
         fs.copyFileSync(src_source, src_tar)
+        msg.data = path.basename(src_tar)
+        return msg
     }
 }
 

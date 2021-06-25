@@ -35,6 +35,8 @@ function List() {
                     SubScreen.sub$(300).pipe(
                         map((WH) => {
                             const o = SubScreen.auto_width(WH.W, 260, 20)
+                            console.log('书目列表', bks)
+
                             return bks.map((item) => ({
                                 item,
                                 w: o.w,
@@ -85,6 +87,7 @@ function Item(p: one) {
                         height: '100%',
                         objectFit: 'cover',
                     }}
+                    book={p.book}
                 ></LocalImg>
             </div>
             <div className={css(style_item.btn_box)}>

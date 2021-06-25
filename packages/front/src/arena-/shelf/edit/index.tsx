@@ -67,11 +67,11 @@ export default function Edit() {
                     <IconButton
                         iconProps={{ iconName: 'Settings' }}
                         onClick={() => {
-                            const src = ipc().sendSync('path_pick', ['openFile']).data
+                            const src_source = ipc().sendSync('path_pick', ['openFile']).data
 
-                            ipc().send('book_set_cover', bk.src, src)
-                            next_img_src(src)
-                            bk.cover = src
+                            const src_tar = ipc().sendSync('book_set_cover', bk.src, src_source).data
+                            next_img_src(src_tar)
+                            bk.cover = src_tar
                         }}
                     ></IconButton>
                 </Stack>
@@ -81,6 +81,7 @@ export default function Edit() {
                         maxWidth: 800,
                         maxHeight: 600,
                     }}
+                    book={bk}
                 ></LocalImg>
                 <div className={css(StyleMake.wh(0, 40))}></div>
 

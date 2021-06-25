@@ -27,6 +27,7 @@
         "babel-preset-react-app": "^10.0.0",
         "bfj": "^7.0.2",
         "camelcase": "^6.1.0",
+        "caniuse-lite": "^1.0.30001239",
         "case-sensitive-paths-webpack-plugin": "2.3.0",
         "copy-webpack-plugin": "^6.3.1",
         "css-loader": "4.3.0",
