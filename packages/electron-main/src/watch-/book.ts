@@ -20,7 +20,7 @@ export function _watch_book() {
 
 /** 加载书目列表 */
 function book_load_li(e: Electron.IpcMainEvent, srcs: string[]) {
-    const re: book_vo[] = srcs.map(_load_book)
+    const re: book_option_vo[] = srcs.map(_load_book)
     const msg = UtilReply.msg(re)
     msg.b = true
     UtilReply.reply(e, 'book_load_li', msg)
@@ -36,14 +36,23 @@ function book_get_cache(e: Electron.IpcMainEvent, bid: string) {
     UtilReply.reply(e, 'book_get_cache', msg)
 }
 
-function _load_book(src: string): book_vo {
+function _load_book(src: string): book_option_vo {
     const opt_src = path.join(src, ConstBookPath.option)
-    const re = {
+    const re: book_option_vo = {
         id: mk_uuid(),
         name: '查找失败',
         src: src,
         cover: '',
-        git: false,
+        last_edit_chapter: '',
+        last_20_chapter: [],
+        editer: {
+            size: {
+                x: 0,
+                y: 0,
+                w: 0,
+                h: 0,
+            },
+        },
     }
     if (!fs.existsSync(src)) {
         re.name = '!不存在此路径!'
@@ -67,7 +76,7 @@ function _load_book(src: string): book_vo {
 /** 添加一本书
  *  编辑也走这
  */
-function book_add(e: Electron.IpcMainEvent, book: book_vo) {
+function book_add(e: Electron.IpcMainEvent, book: book_option_vo) {
     const msg = UtilReply.msg(null)
     //
     try {
@@ -90,7 +99,7 @@ function book_add(e: Electron.IpcMainEvent, book: book_vo) {
     }
 }
 
-function book_unlink(e: Electron.IpcMainEvent, book: book_vo) {
+function book_unlink(e: Electron.IpcMainEvent, book: book_option_vo) {
     const msg = UtilReply.msg(null)
     //
     try {
@@ -108,7 +117,7 @@ function book_unlink(e: Electron.IpcMainEvent, book: book_vo) {
 }
 
 /** 打开书目子窗口 */
-function book_open_child_window(e: Electron.IpcMainEvent, book: book_vo) {
+function book_open_child_window(e: Electron.IpcMainEvent, book: book_option_vo) {
     const window_map = WindowUtil.child_map
     const maybe_has = window_map.get(book.id)
     if (maybe_has) {

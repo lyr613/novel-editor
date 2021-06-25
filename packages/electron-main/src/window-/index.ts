@@ -63,7 +63,7 @@ class _win {
     /** id: 书目信息
      * 只有打开编辑子窗口时才能添加
      */
-    book_map = new Map<string, book_vo>()
+    book_map = new Map<string, book_option_vo>()
 }
 
 /** 窗口类 */

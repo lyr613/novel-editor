@@ -3,6 +3,8 @@ interface book_option_vo {
     name: string
     src: string
     cover: string
+    /** 最后编辑的章节 */
+    last_edit_chapter: string
     /** 最近20章 */
     last_20_chapter: string[]
     /** 编辑口的尺寸 */
