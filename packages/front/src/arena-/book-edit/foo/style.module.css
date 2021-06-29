@@ -1,6 +1,6 @@
 .Foo {
     position: fixed;
-    z-index: 210;
+    z-index: 800;
     left: 0;
     bottom: 0;
     width: 100vw;

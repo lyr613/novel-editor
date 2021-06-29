@@ -3,7 +3,7 @@ import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { useObservable } from 'rxjs-hooks'
 import { _volume_set } from './sub'
-import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
+import { DefaultButton, PrimaryButton, TextField, Dropdown } from '@fluentui/react'
 import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
 import { take } from 'rxjs/operators'
@@ -48,14 +48,87 @@ function TopInfor() {
             {now_sel !== 'chapter' && <NewVolume />}
             <div
                 style={{
-                    margin: 20,
-                    height: 2,
+                    margin: '20px 0',
+                    height: 10,
                     backgroundColor: StyleTheme.style_vars.themePrimary,
+                    opacity: 0.3,
                 }}
             ></div>
             {now_sel === 'chapter' && chap_n === 1 && <ReNameChapter />}
+            {now_sel === 'chapter' && <MoveTo />}
             {now_sel === 'volume' && vol_n === 1 && <NewChapter />}
             <Esc />
+        </div>
+    )
+}
+
+function MoveTo() {
+    const vols = useObservable(() => SubVolume.li$, [])
+    const data = vols.map((v) => ({
+        key: v.id,
+        text: v.name,
+    }))
+    const [sel_id, next_sel_id] = useState('')
+    return (
+        <div className={css(style.ActionBlock)}>
+            <div className={css(style.ActionBlockName)}>移动这些章到卷</div>
+            <Dropdown
+                options={data}
+                selectedKey={sel_id}
+                onChange={(_, opt) => {
+                    const id = (opt?.key ?? '') as string
+                    next_sel_id(id)
+                }}
+            ></Dropdown>
+            <div
+                style={{
+                    marginTop: 10,
+                }}
+            >
+                <PrimaryButton
+                    text="好"
+                    onClick={() => {
+                        //
+                        let [si, ei] = _volume_set.seled_chapter$.value
+                        if (si > ei) {
+                            ;[si, ei] = [ei, si]
+                        }
+                        let sel_vol_li = [] as chapter_vo[]
+                        _volume_set.show_chapters$.pipe(take(1)).subscribe((li) => {
+                            // console.log(
+                            //     '所有',
+                            //     li.map((v) => v.name),
+                            //     si,
+                            //     ei,
+                            // )
+                            sel_vol_li = li
+                        })
+                        const seled_chap_li = [] as chapter_vo[]
+                        const m = new Map<string, boolean>()
+                        sel_vol_li.forEach((v, i) => {
+                            const b = si <= i && i <= ei
+                            m.set(v.id, b)
+                            if (b) {
+                                seled_chap_li.push(v)
+                            }
+                        })
+                        const all_vol = SubVolume.li$.value
+                        const all2 = all_vol.map((vol) => {
+                            vol.children = vol.children.filter((chap) => !m.get(chap.id))
+                            if (vol.id === sel_id) {
+                                vol.children.push(...seled_chap_li)
+                            }
+                            return vol
+                        })
+                        // console.log(seled_chap_li.map((v) => v.name))
+                        SubVolume.save(all2)
+                        SubVolume.load()
+                        // SubVolume.vo_li$.next()
+                        // console.log('vols', vols)
+                        _volume_set.refresh()
+                    }}
+                />
+            </div>
         </div>
     )
 }
@@ -202,6 +275,7 @@ function ReNameChapter() {
         </div>
     )
 }
+/** 新卷 */
 function NewVolume() {
     const [ipt, next_ipt] = useState('')
     return (
@@ -248,6 +322,7 @@ function NewVolume() {
     )
 }
 
+/** 退出 */
 function Esc() {
     return (
         <div

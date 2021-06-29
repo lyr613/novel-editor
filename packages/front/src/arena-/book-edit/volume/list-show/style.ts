@@ -22,7 +22,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
 
         fontSize: 0,
         width: '300px',
-        height: '100vh',
+        height: 'calc(100vh - 40px)',
         backgroundColor: StyleTheme.style_vars.themeTertiary,
         userSelect: 'none',
         whiteSpace: 'nowrap',

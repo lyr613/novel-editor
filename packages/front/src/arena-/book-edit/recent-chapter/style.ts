@@ -21,7 +21,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         top: 0,
         borderRight: `1px solid ${StyleTheme.style_vars.themeTertiary}`,
         width: 300,
-        height: '100vh',
+        height: 'calc(100vh - 40px)',
         backgroundColor: StyleTheme.style_vars.themeLight,
     },
 })

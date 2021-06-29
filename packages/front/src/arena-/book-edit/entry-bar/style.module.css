@@ -42,7 +42,6 @@
 .ItemContainer {
     display: flex;
     transition: all linear 0.6s;
-    opacity: 0.6;
     flex-shrink: 0;
     width: 300px;
     /* background-color: antiquewhite; */
