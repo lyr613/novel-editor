@@ -22,6 +22,7 @@ import RecentChapter from './recent-chapter'
 import Threads from './threads'
 import { SubThreads } from 'subject-/threads'
 import Foo from './foo'
+import EntryBar from './entry-bar'
 
 /**
  * #### 编辑选中的书目
@@ -108,6 +109,7 @@ function LoadInforSub() {
             <RecentChapter />
             <Threads />
             <Foo />
+            <EntryBar />
         </>
     )
 }

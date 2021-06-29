@@ -8,13 +8,13 @@ import { SubScreen } from 'subject-/screen'
 import { Icon, PrimaryButton } from '@fluentui/react'
 import * as monaco from 'monaco-editor'
 import { SubMonaco } from 'subject-/monaco'
-import { BookEditNpc } from '../../subj'
 import { SubNpc } from 'subject-/npc'
 import { ChapterSliderIndex$ } from 'component-/chapter-slider'
 import { SubVolume } from 'subject-/volume'
 import { _filter$ } from '../subj'
 import { StyleMake } from 'style-/global'
 import { ToolTranData } from 'tool-/tran-data'
+import { SubBookEdit } from 'subject-/book-edit'
 
 // 逐步收集角色列表, 屏幕信息, 过滤
 const l1$ = SubNpc.li$.pipe(switchMap((npc_li) => SubScreen.sub$(300).pipe(map((screen) => ({ screen, npc_li })))))
@@ -119,7 +119,7 @@ function Item(p: p) {
                         className={css(style_item.TopLineIcon)}
                         onClick={() => {
                             SubNpc.edit$.next(p.npc)
-                            BookEditNpc.show_type$.next('edit')
+                            SubBookEdit.entry_show$.next('npc-set')
                         }}
                     >
                         <Icon iconName="Settings" />
@@ -130,7 +130,7 @@ function Item(p: p) {
                             iconName="Relationship"
                             onClick={() => {
                                 SubNpc.edit$.next(p.npc)
-                                BookEditNpc.show_type$.next('relationshap')
+                                SubBookEdit.entry_show$.next('npc-link')
                             }}
                         />
                     </div>

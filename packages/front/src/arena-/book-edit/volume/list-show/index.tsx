@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
-import { volume_show_type$ } from '../subj'
 import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
 import { Icon, IconButton } from '@fluentui/react'
 import { SubBookOption } from 'subject-/book-option'
+import { SubBookEdit } from 'subject-/book-edit'
 
 export default function ListShow() {
     return (
@@ -23,14 +23,15 @@ function Top() {
                 className={css(style.TopIcon)}
                 iconProps={{ iconName: 'Settings' }}
                 onClick={() => {
-                    volume_show_type$.next('set')
+                    SubBookEdit.entry_show$.next('volume-set')
                 }}
             ></IconButton>
             <IconButton
                 className={css(style.TopIcon)}
                 iconProps={{ iconName: 'Cancel' }}
                 onClick={() => {
-                    volume_show_type$.next('icon')
+                    SubBookEdit.entry_show$.next('')
+                    SubBookEdit.entry_hold_volume$.next(false)
                 }}
             ></IconButton>
         </div>

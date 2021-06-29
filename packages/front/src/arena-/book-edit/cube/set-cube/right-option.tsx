@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { css } from 'aphrodite/no-important'
 import { style as s } from './style'
 import { DefaultButton, Icon, PrimaryButton, TextField } from '@fluentui/react'
-import { BookEditCube } from '../sub'
 import { SubCube } from 'subject-/cube'
 import { useObservable } from 'rxjs-hooks'
 import { _cube_set2 } from './subj'
 import { StyleMake } from 'style-/global'
 import LabelHelp, { LabelHelpTxtPreset } from 'component-/label-help'
 import { map, switchMap, take } from 'rxjs/operators'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /** RightOption */
 export default function RightOption() {
@@ -287,7 +287,7 @@ function Esc() {
         >
             <DefaultButton
                 onClick={() => {
-                    BookEditCube.show_type$.next('icon')
+                    SubBookEdit.entry_show$.next('')
                 }}
             >
                 退出词条编辑

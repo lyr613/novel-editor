@@ -10,28 +10,13 @@ import { map, switchMap } from 'rxjs/operators'
 import { SubVolume } from 'subject-/volume'
 import { ToolTranData } from 'tool-/tran-data'
 import { StyleMake, StylePreset } from 'style-/global'
-
-const iconing$ = new BehaviorSubject(true)
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  */
 export default function RecentChapter() {
-    const iconing = useObservable(() => iconing$, true)
-    return iconing ? <IconType /> : <RecentList />
-}
-
-function IconType() {
-    return (
-        <div
-            className={StyleComp.child_left_icons(5)}
-            title="最近章节"
-            onClick={() => {
-                iconing$.next(false)
-            }}
-        >
-            <Icon iconName="Recent" />
-        </div>
-    )
+    const be = useObservable(() => SubBookEdit.entry_hold_recent_volume$, false)
+    return be ? <RecentList /> : null
 }
 
 function RecentList() {
@@ -64,7 +49,7 @@ function RecentList() {
                 <IconButton
                     iconProps={{ iconName: 'Cancel' }}
                     onClick={() => {
-                        iconing$.next(true)
+                        SubBookEdit.entry_hold_recent_volume$.next(false)
                     }}
                 ></IconButton>
             </div>

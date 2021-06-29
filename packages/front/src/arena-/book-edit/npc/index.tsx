@@ -4,35 +4,19 @@ import { css } from 'aphrodite/no-important'
 import { StyleComp } from 'style-/comp'
 import { Icon } from '@fluentui/react'
 import { useObservable } from 'rxjs-hooks'
-import { BookEditNpc } from './subj'
 import List from './list'
 import Edit from './edit'
 import Relationshap from './relationshap'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  */
 export default function Npc() {
-    const show_type = useObservable(() => BookEditNpc.show_type$, 'icon')
+    const be = useObservable(() => SubBookEdit.entry_show$, '')
     return (
         <>
-            {show_type === 'icon' && <IconType />}
-            {show_type === 'list' && <List />}
-            {show_type === 'edit' && <Edit />}
-            {show_type === 'relationshap' && <Relationshap />}
+            {be === 'npc-view' && <List />}
+            {be === 'npc-set' && <Edit />}
         </>
-    )
-}
-
-function IconType() {
-    return (
-        <div
-            className={StyleComp.child_left_icons(1)}
-            onClick={() => {
-                BookEditNpc.show_type$.next('list')
-            }}
-            title="角色"
-        >
-            <Icon iconName="People" />
-        </div>
     )
 }

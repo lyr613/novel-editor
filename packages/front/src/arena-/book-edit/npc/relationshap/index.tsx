@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import * as d3 from 'd3'
-import { BookEditNpc } from '../subj'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  */
@@ -11,7 +11,7 @@ export default function Relationshap() {
         <div
             className={css(style.Relationshap)}
             onClick={() => {
-                BookEditNpc.show_type$.next('list')
+                SubBookEdit.entry_show$.next('npc-view')
             }}
         >
             <D3Tty />

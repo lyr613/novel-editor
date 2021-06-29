@@ -15,6 +15,7 @@ interface style_vo {
 export const style: style_vo = StyleSheet.create<style_vo>({
     ThreadsEdit: {
         position: 'absolute',
+        zIndex: 1000,
         left: 0,
         top: 0,
         fontSize: 0,

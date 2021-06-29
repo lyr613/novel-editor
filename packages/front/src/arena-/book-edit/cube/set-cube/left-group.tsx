@@ -6,8 +6,8 @@ import { useObservable } from 'rxjs-hooks'
 import { SubCube } from 'subject-/cube'
 import { _cube_set2 } from './subj'
 import { IconButton, Stack } from '@fluentui/react'
-import { BookEditCube } from '../sub'
 import { StyleTheme } from 'style-/theme'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /** LeftGroup */
 export default function LeftGroup() {
@@ -33,7 +33,7 @@ export default function LeftGroup() {
                 <IconButton
                     iconProps={{ iconName: 'Cancel' }}
                     onClick={() => {
-                        BookEditCube.show_type$.next('icon')
+                        SubBookEdit.entry_show$.next('')
                     }}
                 ></IconButton>
             </Stack>

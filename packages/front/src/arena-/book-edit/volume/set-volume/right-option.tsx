@@ -6,9 +6,9 @@ import { _volume_set } from './sub'
 import { DefaultButton, PrimaryButton, TextField } from '@fluentui/react'
 import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
-import { volume_show_type$ } from '../subj'
 import { take } from 'rxjs/operators'
 import { StyleTheme } from 'style-/theme'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  */
@@ -258,7 +258,7 @@ function Esc() {
         >
             <DefaultButton
                 onClick={() => {
-                    volume_show_type$.next('tree')
+                    SubBookEdit.entry_show$.next('')
                 }}
             >
                 退出卷章编辑

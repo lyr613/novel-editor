@@ -2,33 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { useObservable } from 'rxjs-hooks'
-import { BookEditCube } from './sub'
 import { StyleComp } from 'style-/comp'
 import { Icon } from '@fluentui/react'
 import SetCube from './set-cube'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  */
 export default function Cube() {
-    const st = useObservable(() => BookEditCube.show_type$, 'icon')
-    return (
-        <>
-            {st === 'icon' && <IconType />}
-            {st === 'edit' && <SetCube />}
-        </>
-    )
-}
-
-function IconType() {
-    return (
-        <div
-            className={StyleComp.child_left_icons(2)}
-            onClick={() => {
-                BookEditCube.show_type$.next('edit')
-            }}
-            title="词条"
-        >
-            <Icon iconName="CubeShape" />
-        </div>
-    )
+    const be = useObservable(() => SubBookEdit.entry_show$, '')
+    return <>{be === 'cube-set' && <SetCube />}</>
 }

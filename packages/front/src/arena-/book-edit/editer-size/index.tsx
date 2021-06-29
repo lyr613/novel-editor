@@ -8,15 +8,14 @@ import { useObservable } from 'rxjs-hooks'
 import { concatMap, concatMapTo, map, switchMap, switchMapTo, takeUntil } from 'rxjs/operators'
 import { StyleMake } from 'style-/global'
 import { SubBookOption } from 'subject-/book-option'
-
-const icon_type$ = new BehaviorSubject(true)
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  * 设置编辑窗口的尺寸
  */
 export default function EditerSize() {
-    const iconing = useObservable(() => icon_type$, true)
-    return iconing ? <IconType /> : <Setting />
+    const be = useObservable(() => SubBookEdit.entry_show$, '')
+    return be === 'editer-size' ? <Setting /> : null
 }
 
 function IconType() {
@@ -25,7 +24,7 @@ function IconType() {
             className={StyleComp.child_left_icons(6)}
             title="调整编辑框尺寸"
             onClick={() => {
-                icon_type$.next(false)
+                SubBookEdit.entry_show$.next('')
             }}
         >
             <Icon iconName="Move" />
@@ -172,7 +171,7 @@ function Setting() {
                         // opt.editer.size.h = real_h
                         // SubBookOption.save(opt)
                         // SubBookOption.load()
-                        icon_type$.next(true)
+                        SubBookEdit.entry_show$.next('')
                     }}
                 >
                     退出
@@ -198,7 +197,7 @@ function Setting() {
                         opt.editer.size.h = real_h
                         SubBookOption.save(opt)
                         SubBookOption.load()
-                        icon_type$.next(true)
+                        SubBookEdit.entry_show$.next('')
                     }}
                 >
                     保存并退出

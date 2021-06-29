@@ -4,34 +4,20 @@ import { css } from 'aphrodite/no-important'
 import ListShow from './list-show/index'
 import SetIt from './set-volume'
 import { useObservable } from 'rxjs-hooks'
-import { volume_show_type$ } from './subj'
 import { Icon } from '@fluentui/react'
 import { StyleTheme } from 'style-/theme'
 import { StyleComp } from 'style-/comp'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  */
 export default function LeftVolume() {
-    const tp = useObservable(() => volume_show_type$, 'icon')
+    const be = useObservable(() => SubBookEdit.entry_show$, '')
+    const hold = useObservable(() => SubBookEdit.entry_hold_volume$, false)
     return (
         <>
-            {tp === 'icon' && <IconType />}
-            {tp === 'set' && <SetIt />}
-            {tp === 'tree' && <ListShow />}
+            {be === 'volume-set' && <SetIt />}
+            {hold && <ListShow />}
         </>
-    )
-}
-
-function IconType() {
-    return (
-        <div
-            className={StyleComp.child_left_icons(0)}
-            onClick={() => {
-                volume_show_type$.next('tree')
-            }}
-            title="卷章"
-        >
-            <Icon iconName="DataConnectionLibrary" />
-        </div>
     )
 }

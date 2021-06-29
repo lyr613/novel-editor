@@ -11,12 +11,12 @@ import { SubNpc } from 'subject-/npc'
 import { shallowCopy } from 'tool-/rx-shallow-copy'
 import { SubVolume } from 'subject-/volume'
 import LabelHelp from 'component-/label-help'
-import { BookEditNpc } from '../../subj'
 import DialogSelCube, { DialogSelCubeConfirmHook$, DialogSelCubeShow$ } from 'component-/dialog-sel-cube'
 import DialogSimpleValue, {
     DialogSimpleValueConfirmHook$,
     DialogSimpleValueShow$,
 } from 'component-/dialog-simple-value'
+import { SubBookEdit } from 'subject-/book-edit'
 
 /**
  */
@@ -53,7 +53,7 @@ function SaveOrEsc() {
                 className={css(StyleMake.mar(0, 10, 0, 0))}
                 onClick={() => {
                     SubNpc.load()
-                    BookEditNpc.show_type$.next('list')
+                    SubBookEdit.entry_show$.next('npc-view')
                 }}
             >
                 返回列表

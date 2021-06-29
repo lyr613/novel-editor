@@ -24,8 +24,8 @@ import DialogOneCol, {
 import { ToolTranData } from 'tool-/tran-data'
 import { StyleMake, StylePreset } from 'style-/global'
 import LabelHelp from 'component-/label-help'
-import { BookEditThreads } from '../subj'
 import { from, fromEvent, merge } from 'rxjs'
+import { SubBookEdit } from 'subject-/book-edit'
 
 const ids = {
     box: 'threads-canvas-box',
@@ -62,7 +62,7 @@ function Exit() {
             <IconButton
                 iconProps={{ iconName: 'Cancel' }}
                 onClick={() => {
-                    BookEditThreads.show_type$.next('icon')
+                    SubBookEdit.entry_show$.next('')
                 }}
             ></IconButton>
         </div>
@@ -399,7 +399,7 @@ function Ctrl() {
                             SubThreads.save()
                             SubThreads.load()
                             setTimeout(() => {
-                                BookEditThreads.show_type$.next('icon')
+                                SubBookEdit.entry_show$.next('')
                             }, 100)
                         }}
                     >
