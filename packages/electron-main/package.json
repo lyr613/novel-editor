@@ -7,7 +7,7 @@
     "scripts": {
         "dev-watch-js": " node ./scripts/dev-watch-js.js ",
         "dev-start-electron": " node ./scripts/dev-start-electron.js ",
-        "build-js": " node ./scripts/build-js.js ",
+        "build-js": " node ./scripts/esbuild-ts.js ",
         "build-electron": " node ./scripts/build-electron.js "
     },
     "dependencies": {
@@ -28,6 +28,7 @@
         "clean-webpack-plugin": "^3.0.0",
         "electron": "13.1.4",
         "electron-builder": "^22.9.1",
+        "esbuild": "^0.12.12",
         "path-browserify": "^1.0.1",
         "webpack": "^5.4.0",
         "webpack-cli": "^4.2.0"
