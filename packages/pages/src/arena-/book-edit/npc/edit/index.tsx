@@ -3,6 +3,7 @@ import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import SelList from './sel-list'
 import Infor from './infor'
+import Imgs from './imgs'
 
 /**
  */
@@ -11,6 +12,7 @@ export default function Edit() {
         <div className={css(style.Edit)}>
             <SelList />
             <Infor />
+            <Imgs />
         </div>
     )
 }

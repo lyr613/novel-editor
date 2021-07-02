@@ -14,6 +14,8 @@ class _n extends _sub_base<npc_vo> {
             sort: Number.MAX_SAFE_INTEGER,
             name_show: '',
             slices: [this.make_slice()],
+            head_portrait: '',
+            imgs: [],
         }
     }
     make_slice(): npc_slice_vo {

@@ -1,0 +1,35 @@
+.Imgs {
+    display: flex;
+    flex-grow: 1;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.Lable {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    font-size: 14px;
+    line-height: 40px;
+    padding-left: 10px;
+}
+
+.LableTxt {
+    padding-right: 10px;
+}
+
+.ImgBox {
+    display: flex;
+    height: 200px;
+    justify-content: flex-start;
+    padding: 10px;
+}
+.ImgBox2 {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    flex-grow: 1;
+    justify-content: flex-start;
+    padding: 10px;
+    overflow-x: scroll;
+}

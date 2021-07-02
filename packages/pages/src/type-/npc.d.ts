@@ -4,6 +4,8 @@ interface npc_vo extends sortable {
     remark: string
     alias: string
     slices: npc_slice_vo[]
+    head_portrait: string
+    imgs: string[]
 }
 
 interface npc_slice_vo {

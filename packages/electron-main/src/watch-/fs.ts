@@ -14,6 +14,7 @@ export function _watch_fs() {
     ipcMain.on('fs_show_in_folder', fs_show_in_folder)
     ipcMain.on('fs_vscode', fs_vscode)
     ipcMain.on('fs_read_img', fs_read_img)
+    ipcMain.on('fs_copy', fs_copy)
 }
 
 function fs_read_img(e: Electron.IpcMainEvent, src: string, book?: book_option_vo) {
@@ -28,7 +29,7 @@ function fs_read_img(e: Electron.IpcMainEvent, src: string, book?: book_option_v
     //
     const re = UtilReply.msg(null as null | Buffer)
     const bn = path.basename(src)
-    if (!/(png|jpg)$/.test(bn)) {
+    if (!/(png|jpg)$/.test(bn) && /\./.test(bn)) {
         UtilReply.reply(e, 'fs_read_img', re)
         return
     }
@@ -63,4 +64,14 @@ function fs_show_in_folder(e: Electron.IpcMainEvent, src: string) {
 function fs_vscode(e: Electron.IpcMainEvent, src: string) {
     const re = UtilFs.vscode(src)
     UtilReply.reply(e, 'fs_vscode', re)
+}
+function fs_copy(e: Electron.IpcMainEvent, src_source: string, src_tar: string) {
+    const msg = UtilReply.msg('')
+    try {
+        fs.copyFileSync(src_source, src_tar)
+        msg.b = true
+        UtilReply.reply(e, 'fs_copy', msg)
+    } catch (error) {
+        UtilReply.reply(e, 'fs_copy', msg)
+    }
 }
