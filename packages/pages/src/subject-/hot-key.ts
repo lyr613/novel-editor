@@ -16,15 +16,53 @@ class _hk {
                 }
             }
             if (e.altKey) {
+                e.preventDefault()
+                if (49 <= e.keyCode && e.keyCode <= 54) {
+                    // alt +[1-6]
+                    const cur_show = SubBookEdit.entry_show$.value
+                    switch (e.keyCode) {
+                        case 49:
+                            SubBookEdit.entry_show$.next('')
+                            SubBookEdit.entry_hold_recent_volume$.next(false)
+                            SubBookEdit.entry_hold_volume$.next(
+                                cur_show !== '' ? true : !SubBookEdit.entry_hold_volume$.value,
+                            )
+                            break
+                        case 50:
+                            SubBookEdit.entry_show$.next(cur_show !== 'npc-view' ? 'npc-view' : '')
+                            SubBookEdit.entry_hold_recent_volume$.next(false)
+                            SubBookEdit.entry_hold_volume$.next(false)
+                            break
+                        case 51:
+                            SubBookEdit.entry_show$.next(cur_show !== 'cube-set' ? 'cube-set' : '')
+                            SubBookEdit.entry_hold_recent_volume$.next(false)
+                            SubBookEdit.entry_hold_volume$.next(false)
+                            break
+                        case 52:
+                            SubBookEdit.entry_show$.next(cur_show !== 'threads-set' ? 'threads-set' : '')
+                            SubBookEdit.entry_hold_recent_volume$.next(false)
+                            SubBookEdit.entry_hold_volume$.next(false)
+                            break
+                        case 53:
+                            SubBookEdit.entry_show$.next('')
+                            SubBookEdit.entry_hold_recent_volume$.next(
+                                cur_show !== '' ? true : !SubBookEdit.entry_hold_recent_volume$.value,
+                            )
+                            SubBookEdit.entry_hold_volume$.next(false)
+                            break
+                        case 54:
+                            SubBookEdit.entry_show$.next(cur_show !== 'editer-size' ? 'editer-size' : '')
+                            break
+
+                        default:
+                            break
+                    }
+                }
+                // alt + ~ 清空所有
                 if (e.keyCode === 192) {
                     SubBookEdit.entry_show$.next('')
                     SubBookEdit.entry_hold_recent_volume$.next(false)
                     SubBookEdit.entry_hold_volume$.next(false)
-                }
-                if (e.keyCode === 49) {
-                    SubBookEdit.entry_show$.next('')
-                    SubBookEdit.entry_hold_recent_volume$.next(false)
-                    SubBookEdit.entry_hold_volume$.next(!SubBookEdit.entry_hold_volume$.value)
                 }
             }
         })
@@ -50,4 +88,5 @@ interface key {
     altKey: boolean
     ctrlKey: boolean
     shiftKey: boolean
+    preventDefault: Function
 }

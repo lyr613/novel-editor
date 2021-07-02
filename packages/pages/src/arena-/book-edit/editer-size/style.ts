@@ -32,7 +32,7 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         top: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: StyleTheme.style_vars.themeLight,
+        // backgroundColor: StyleTheme.style_vars.themeLight,
     },
     MoveCenter: {
         position: 'absolute',
@@ -99,5 +99,6 @@ export const style: style_vo = StyleSheet.create<style_vo>({
         zIndex: 1500,
         padding: 10,
         ':hover': {},
+        backgroundColor: StyleTheme.style_vars.themeLight,
     },
 })

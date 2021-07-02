@@ -18,20 +18,6 @@ export default function EditerSize() {
     return be === 'editer-size' ? <Setting /> : null
 }
 
-function IconType() {
-    return (
-        <div
-            className={StyleComp.child_left_icons(6)}
-            title="调整编辑框尺寸"
-            onClick={() => {
-                SubBookEdit.entry_show$.next('')
-            }}
-        >
-            <Icon iconName="Move" />
-        </div>
-    )
-}
-
 function Setting() {
     const [left, next_left] = useState(200)
     const [right, next_right] = useState(600)
