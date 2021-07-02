@@ -69,6 +69,13 @@ function Box(p: p) {
             editer.setValue(txt)
             SubBookEdit.cur_editer_txt$.next(txt)
         })
+        /** 从外部更新文本 */
+        const ob_update_txt_from_other = SubBookEdit.cur_editer_txt_updater$.subscribe((txt) => {
+            editer.setValue(txt)
+            SubBookEdit.cur_editer_txt$.next(txt)
+            const id = SubVolume.chapter_use_id$.value
+            SubVolume.will_write(id, txt)
+        })
         editer.onKeyUp(() => {
             const t = editer.getValue()
             const id = SubVolume.chapter_use_id$.value
@@ -83,6 +90,7 @@ function Box(p: p) {
 
         return () => {
             ob_load_txt.unsubscribe()
+            ob_update_txt_from_other.unsubscribe()
 
             editer.dispose()
         }

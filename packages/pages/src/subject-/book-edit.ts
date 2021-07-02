@@ -1,8 +1,10 @@
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 
 class _s {
     /** 当前编辑器显示的文字 */
-    cur_editer_txt$ = new BehaviorSubject('')
+    readonly cur_editer_txt$ = new BehaviorSubject('')
+    /** 从外部改变编辑窗口文字 */
+    readonly cur_editer_txt_updater$ = new Subject<string>()
     entry_show$ = new BehaviorSubject(
         '' as
             | ''

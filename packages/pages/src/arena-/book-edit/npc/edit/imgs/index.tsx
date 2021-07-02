@@ -48,13 +48,15 @@ export default function Imgs() {
                 ></IconButton>
             </div>
             <div className={style.ImgBox}>
-                <LocalImg
-                    src={npc.head_portrait}
-                    book={book}
-                    style={{
-                        maxHeight: '100%',
-                    }}
-                ></LocalImg>
+                {npc.head_portrait && (
+                    <LocalImg
+                        src={npc.head_portrait}
+                        book={book}
+                        style={{
+                            maxHeight: '100%',
+                        }}
+                    ></LocalImg>
+                )}
             </div>
             <div
                 className={style.Lable}
