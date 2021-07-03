@@ -70,7 +70,7 @@ function VolItem(p: p_vol) {
     return (
         <div className={css(style.VolItem)}>
             <div className={css(style.VolItemName)} title={p.vol.name}>
-                {p.vol.name}
+                {p.vol.name_show}
             </div>
             <div>
                 {p.vol.children.map((chap, i) => (
@@ -96,7 +96,7 @@ function ChapItem(p: p_chap) {
                 SubBookOption.auto_save_recent_chapter(p.chap.id)
             }}
         >
-            {p.chap.name}
+            {p.chap.name_show}
         </div>
     )
 }

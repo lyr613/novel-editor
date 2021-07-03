@@ -88,6 +88,7 @@ export class SourceLevel2Select<T extends l1able, K extends l2able> {
         return re
     }
     click_l1(e: React.MouseEvent<HTMLDivElement, MouseEvent>, id: string) {
+        e.stopPropagation()
         this.seled_l2_map$.next(new Map())
         this.now_sel$.next('l1')
         const map$ = this.seled_l1_map$
@@ -95,6 +96,8 @@ export class SourceLevel2Select<T extends l1able, K extends l2able> {
         this.click_merge(e, id, map$, li)
     }
     click_l2(e: React.MouseEvent<HTMLDivElement, MouseEvent>, id: string) {
+        e.stopPropagation()
+
         this.now_sel$.next('l2')
         const map$ = this.seled_l2_map$
         this.l2_can_show_li$.pipe(take(1)).subscribe((li) => {
@@ -178,5 +181,6 @@ function count_true_in_map(m: Map<string, boolean>) {
             c++
         }
     })
+
     return c
 }

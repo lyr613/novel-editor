@@ -5,6 +5,7 @@ import path from 'path'
 import fs from 'fs-extra'
 import { ConstBookPath } from 'const-/book-path'
 import { UtilFs } from 'util-/fs'
+import { UtilSortName } from 'util-/sort-name'
 
 /**   */
 export function _watch_chapter() {
@@ -20,6 +21,13 @@ function chapter_load(e: Electron.IpcMainEvent, bookid: string) {
     try {
         const chasrc = ConstBookPath.full_src(book.src, 'volume')
         const msg = UtilFs.read_json<volume_vo[]>(chasrc)
+        if (msg.b) {
+            const li = msg.data || []
+            li.forEach((group) => {
+                UtilSortName.sort(group.children)
+            })
+            UtilSortName.sort(li)
+        }
         UtilReply.reply(e, 'chapter_load', msg)
     } catch (error) {
         // 不会触发err

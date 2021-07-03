@@ -4,15 +4,13 @@ import { css } from 'aphrodite/no-important'
 import LeftVolume from './left-volume'
 import MidChapter from './mid-chapter'
 import RightOption from './right-option'
-import { _volume_set } from './sub'
+import { _volume_set2 } from './sub'
 
 /** 配置 */
 export default function SetIt() {
     useEffect(() => {
         return () => {
-            _volume_set.seled_chapter$.next([-1, -1])
-            _volume_set.seled_volume$.next([-1, -1])
-            _volume_set.now_sel$.next('none')
+            _volume_set2.clear()
         }
     }, [])
     return (

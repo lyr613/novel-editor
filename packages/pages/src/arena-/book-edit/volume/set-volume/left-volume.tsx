@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { Icon } from '@fluentui/react'
-import { _volume_set } from './sub'
+import { _volume_set2 } from './sub'
 import { useObservable } from 'rxjs-hooks'
 import { SubVolume } from 'subject-/volume'
 
@@ -10,49 +10,37 @@ import { SubVolume } from 'subject-/volume'
  */
 export default function LeftVolume() {
     const vols = useObservable(() => SubVolume.li$, [])
-    const seled = useObservable(() => _volume_set.seled_volume$, [-1, -1])
-    const min = Math.min(...seled)
-    const max = Math.max(...seled)
+    const sel_map = useObservable(() => _volume_set2.seled_l1_map$)
+    if (!sel_map) {
+        return null
+    }
     return (
-        <div className={css(style.LeftVolume)}>
+        <div
+            className={css(style.LeftVolume)}
+            onClick={() => {
+                _volume_set2.clear()
+            }}
+        >
             {vols.map((vol, i) => (
-                <VolumeItem key={i} mini={min} maxi={max} index={i} vol={vol} />
+                <VolumeItem key={i} index={i} vol={vol} sel_map={sel_map} />
             ))}
         </div>
     )
 }
 
 interface p {
-    mini: number
-    maxi: number
     index: number
     vol: volume_vo
+    sel_map: Map<string, boolean>
 }
 function VolumeItem(p: p) {
-    const high_light = p.mini <= p.index && p.index <= p.maxi
+    const high_light = p.sel_map.get(p.vol.id)
 
     return (
         <div
             className={css(style.VolumeItem, high_light ? style.VolumeItemHigh : null)}
             onClick={(e) => {
-                // console.log(e)
-                _volume_set.seled_chapter$.next([-1, -1])
-
-                _volume_set.now_sel$.next('volume')
-                const sh = e.shiftKey
-                if (!sh) {
-                    _volume_set.seled_volume$.next([p.index, p.index])
-                    return
-                }
-
-                const n2 = _volume_set.seled_volume$.value
-                const diff0 = Math.abs(n2[0] - p.index)
-                const diff1 = Math.abs(n2[1] - p.index)
-                if (diff0 > diff1) {
-                    _volume_set.seled_volume$.next([n2[0], p.index])
-                } else {
-                    _volume_set.seled_volume$.next([n2[1], p.index])
-                }
+                _volume_set2.click_l1(e, p.vol.id)
             }}
         >
             <Icon iconName="OpenFolderHorizontal" />

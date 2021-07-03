@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { style } from './style'
 import { css } from 'aphrodite/no-important'
 import { useObservable } from 'rxjs-hooks'
-import { _volume_set } from './sub'
+import { _volume_set2 } from './sub'
 import { DefaultButton, PrimaryButton, TextField, Dropdown } from '@fluentui/react'
 import { SubVolume } from 'subject-/volume'
 import { mk_uuid } from 'tool-/uuid'
@@ -21,20 +21,20 @@ export default function RightOption() {
 }
 
 function TopInfor() {
-    const now_sel = useObservable(() => _volume_set.now_sel$, 'none')
-    const chap_n = useObservable(() => _volume_set.seled_chapter_n$, 0)
-    const vol_n = useObservable(() => _volume_set.seled_volume_n$, 0)
+    const now_sel = useObservable(() => _volume_set2.now_sel$, 'none')
+    const n_l1 = useObservable(() => _volume_set2.seled_l1_count$, 0)
+    const n_l2 = useObservable(() => _volume_set2.seled_l2_count$, 0)
     let txt = ''
     switch (now_sel) {
         case 'none':
             txt = '选择一个卷或章(按住shift多选)'
             break
-        case 'chapter':
-            txt = `已选择${chap_n}章`
+        case 'l1':
+            txt = `已选择${n_l1}卷`
             break
 
         default:
-            txt = `已选择${vol_n}卷`
+            txt = `已选择${n_l2}章`
             break
     }
     return (
@@ -44,8 +44,8 @@ function TopInfor() {
             }}
         >
             <div>{txt}, 你是要?</div>
-            {now_sel === 'volume' && vol_n === 1 && <ReNameVolume />}
-            {now_sel !== 'chapter' && <NewVolume />}
+            {<NewVolume />}
+            {now_sel === 'l1' && n_l1 === 1 && <ReNameVolume />}
             <div
                 style={{
                     margin: '20px 0',
@@ -54,9 +54,9 @@ function TopInfor() {
                     opacity: 0.3,
                 }}
             ></div>
-            {now_sel === 'chapter' && chap_n === 1 && <ReNameChapter />}
-            {now_sel === 'chapter' && <MoveTo />}
-            {now_sel === 'volume' && vol_n === 1 && <NewChapter />}
+            {now_sel === 'l1' && n_l1 === 1 && <NewChapter />}
+            {now_sel === 'l2' && n_l2 === 1 && <ReNameChapter />}
+            {now_sel === 'l2' && n_l2 > 0 && <MoveTo />}
             <Esc />
         </div>
     )
@@ -89,32 +89,11 @@ function MoveTo() {
                     text="好"
                     onClick={() => {
                         //
-                        let [si, ei] = _volume_set.seled_chapter$.value
-                        if (si > ei) {
-                            ;[si, ei] = [ei, si]
-                        }
-                        let sel_vol_li = [] as chapter_vo[]
-                        _volume_set.show_chapters$.pipe(take(1)).subscribe((li) => {
-                            // console.log(
-                            //     '所有',
-                            //     li.map((v) => v.name),
-                            //     si,
-                            //     ei,
-                            // )
-                            sel_vol_li = li
-                        })
-                        const seled_chap_li = [] as chapter_vo[]
-                        const m = new Map<string, boolean>()
-                        sel_vol_li.forEach((v, i) => {
-                            const b = si <= i && i <= ei
-                            m.set(v.id, b)
-                            if (b) {
-                                seled_chap_li.push(v)
-                            }
-                        })
+                        const seled_chap_li = _volume_set2.seled_l2_li
                         const all_vol = SubVolume.li$.value
+                        const seled_chap_map = _volume_set2.seled_l2_map$.value
                         const all2 = all_vol.map((vol) => {
-                            vol.children = vol.children.filter((chap) => !m.get(chap.id))
+                            vol.children = vol.children.filter((chap) => !seled_chap_map.get(chap.id))
                             if (vol.id === sel_id) {
                                 vol.children.push(...seled_chap_li)
                             }
@@ -125,7 +104,7 @@ function MoveTo() {
                         SubVolume.load()
                         // SubVolume.vo_li$.next()
                         // console.log('vols', vols)
-                        _volume_set.refresh()
+                        _volume_set2.clear()
                     }}
                 />
             </div>
@@ -163,19 +142,22 @@ function NewChapter() {
                         }
                         const vols = SubVolume.li$.value
                         /** 必然只有一个选中的卷 */
-                        const sel_vol = _volume_set.sel_vol_nodes[0]
+                        const sel_vol = _volume_set2.seled_l1_li[0]
                         const n_chap: chapter_vo = {
                             id: mk_uuid(),
                             name,
                             src: '',
+                            sort: 0,
+                            name_show: '',
                         }
                         sel_vol.children.push(n_chap)
 
                         SubVolume.save(vols)
                         SubVolume.load()
+                        next_ipt('')
                         // SubVolume.vo_li$.next()
                         console.log('vols', vols)
-                        _volume_set.refresh()
+                        // _volume_set2.clear()
                     }}
                 />
             </div>
@@ -186,6 +168,13 @@ function NewChapter() {
 /** 修改卷 */
 function ReNameVolume() {
     const [ipt, next_ipt] = useState('')
+    useEffect(() => {
+        const ob = _volume_set2.seled_l1_li$.subscribe((li) => {
+            const names = li.map((v) => v.name).join(', ')
+            next_ipt(names)
+        })
+        return () => ob.unsubscribe()
+    }, [])
     return (
         <div className={css(style.ActionBlock)}>
             <div className={css(style.ActionBlockName)}>修改卷</div>
@@ -211,14 +200,15 @@ function ReNameVolume() {
                             alert('需要非空的名字')
                             return
                         }
-                        const vol_seled_i = _volume_set.seled_volume$.value[0]
+                        const vol_seled = _volume_set2.seled_l1_li[0]
 
                         const vols = SubVolume.li$.value
-                        vols[vol_seled_i].name = name
+                        vol_seled.name = name
                         SubVolume.save(vols)
                         SubVolume.load()
                         // SubVolume.vo_li$.next()
                         console.log('vols', vols)
+                        next_ipt('')
                     }}
                 />
             </div>
@@ -229,6 +219,13 @@ function ReNameVolume() {
 /** 修改章 */
 function ReNameChapter() {
     const [ipt, next_ipt] = useState('')
+    useEffect(() => {
+        const ob = _volume_set2.seled_l2_li$.subscribe((li) => {
+            const n = li.length ? li[0].name : ''
+            next_ipt(n)
+        })
+        return () => ob.unsubscribe()
+    }, [])
     return (
         <div className={css(style.ActionBlock)}>
             <div className={css(style.ActionBlockName)}>修改章</div>
@@ -254,19 +251,14 @@ function ReNameChapter() {
                             alert('需要非空的名字')
                             return
                         }
-                        const chaps: chapter_vo[] = []
-                        _volume_set.show_chapters$.pipe(take(1)).subscribe((li) => {
-                            chaps.push(...li)
-                        })
-                        const sel_chap_n2 = _volume_set.seled_chapter$.value
-
-                        const chap_seled_i = sel_chap_n2[0]
-                        chaps[chap_seled_i].name = name
+                        const chap_seled = _volume_set2.seled_l2_li[0]
+                        chap_seled.name = name
 
                         const vols = SubVolume.li$.value
                         SubVolume.save(vols)
                         SubVolume.load()
-                        _volume_set.seled_chapter$.next([...sel_chap_n2])
+                        next_ipt('')
+                        // _volume_set2.clear()
                         // SubVolume.vo_li$.next()
                         // console.log('vols', vols)
                     }}
@@ -309,10 +301,13 @@ function NewVolume() {
                             name,
                             children: [],
                             expand: true,
+                            sort: 0,
+                            name_show: '',
                         }
                         const nvols = [...vols, nvol]
                         SubVolume.save(nvols)
                         SubVolume.load()
+                        next_ipt('')
                         // SubVolume.vo_li$.next()
                         // console.log('vols', vols)
                     }}

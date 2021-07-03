@@ -23,7 +23,6 @@ export default function Foo() {
 
 /** 字数 */
 function ZiShu() {
-    const [n, next_n] = useState(0)
     const [n_all, next_n_all] = useState(0)
     const [n_fei_kong, next_n_fei_kong] = useState(0)
     const [n_zhongwen, next_n_zhongwen] = useState(0)
