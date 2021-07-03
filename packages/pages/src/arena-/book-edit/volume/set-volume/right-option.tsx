@@ -9,6 +9,7 @@ import { mk_uuid } from 'tool-/uuid'
 import { take } from 'rxjs/operators'
 import { StyleTheme } from 'style-/theme'
 import { SubBookEdit } from 'subject-/book-edit'
+import LabelHelp, { LabelHelpTxtPreset } from 'component-/label-help'
 
 /**
  */
@@ -117,7 +118,8 @@ function NewChapter() {
     const [ipt, next_ipt] = useState('')
     return (
         <div className={css(style.ActionBlock)}>
-            <div className={css(style.ActionBlockName)}>新建章</div>
+            <LabelHelp label_prop={{ children: '新建章' }} help_txt={LabelHelpTxtPreset.sort_name}></LabelHelp>
+
             <div>
                 <TextField
                     value={ipt}
@@ -272,7 +274,7 @@ function NewVolume() {
     const [ipt, next_ipt] = useState('')
     return (
         <div className={css(style.ActionBlock)}>
-            <div className={css(style.ActionBlockName)}>新建卷</div>
+            <LabelHelp label_prop={{ children: '新建卷' }} help_txt={LabelHelpTxtPreset.sort_name}></LabelHelp>
             <div>
                 <TextField
                     value={ipt}
