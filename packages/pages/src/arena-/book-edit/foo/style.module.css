@@ -15,15 +15,34 @@
 }
 
 .ZiShu {
+    display: flex;
     box-sizing: border-box;
 
     padding-left: 20px;
+    height: 40px;
     font-size: 16px;
-    line-height: 40px;
+    align-items: center;
+}
+.ZiShuCell {
+    margin: 0 0 0 20px;
+    width: 100px;
+}
+.ZiShuCell:hover {
+    /* font-weight: 700; */
 }
 
 .FormatT {
     box-sizing: border-box;
 
     padding: 20px;
+}
+
+.FormatTForm {
+    margin: 0 20px;
+    /* width: 200px; */
+}
+.FormatTText {
+    margin-right: 10px;
+    flex-shrink: 0;
+    width: 100px;
 }
