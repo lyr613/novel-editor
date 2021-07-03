@@ -1,8 +1,0 @@
-{
-    "scripts": {
-        "dev-page-port": "node ./scripts/dev-page-port.js"
-    },
-    "dependencies": {
-        "dayjs": "^1.9.6"
-    }
-}
