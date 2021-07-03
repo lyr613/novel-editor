@@ -25,10 +25,7 @@
 }
 .ZiShuCell {
     margin: 0 0 0 20px;
-    width: 100px;
-}
-.ZiShuCell:hover {
-    /* font-weight: 700; */
+    /* width: 120px; */
 }
 
 .FormatT {
