@@ -1,3 +1,6 @@
+# 为方便用户下载使用, 此项目已迁移至gitee, github不再更新
+https://gitee.com/qsoft613/novel-editor
+
 # 小说编辑器
 
 ![预览图-书架](./doc/preview1.png)
